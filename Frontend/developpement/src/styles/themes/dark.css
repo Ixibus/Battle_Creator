@@ -1,8 +1,0 @@
-.dark {
-    background-color: var(--background-dark-01);
-    color: var(--color-dark-01);
-}
-nav.dark a:any-link.active, button.dark {
-    background-color: var(--background-dark-02);
-    color: var(--color-dark-01);
-}
