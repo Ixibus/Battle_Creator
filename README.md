@@ -1,0 +1,1 @@
+Le Saas pour les créateurs de battles Hip-Hop qui vous permet de gérer vos bénévoles, leurs tâches, le matériel et les priorités.
