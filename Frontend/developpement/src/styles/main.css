@@ -1,8 +1,8 @@
 @import "reset.css";
 /* themes */
-@import "themes/colors.css";
-@import "themes/light.css";
-@import "themes/dark.css";
+@import "./global/colors.css";
+@import "./themes/light.css";
+@import "./themes/dark.css";
 @font-face {
   font-family: Classic;
   src: url(../assets/fonts/verdanab.ttf);

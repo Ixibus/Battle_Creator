@@ -4,6 +4,11 @@ import checker from 'vite-plugin-checker'
 
 // https://vite.dev/config/
 export default defineConfig({
+	server : {
+		watch : {
+			usePolling : true 		
+		}
+	},
 	plugins: [
 		react(),
 		checker({

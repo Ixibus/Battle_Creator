@@ -5,8 +5,8 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from './layouts/Layout'
-import Home from "./pages/Home";
-import Contact from "./pages/Contact";
+import AccountCReation from './pages/AccountCreation/AccountCreation';
+
 
 const router = createBrowserRouter([
   {
@@ -15,11 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
-      },
-      {
-        path: "/contact/",
-        element: <Contact />
+        element: <AccountCReation/>
       }
     ]
   }
