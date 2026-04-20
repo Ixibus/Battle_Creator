@@ -1,7 +1,23 @@
 
-.container {
+.accountCreationContainer {
     margin: auto;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: fit-content;
+    height: fit-content;
 }
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+} 
+
+.inputStyle {
+    border: 3px solid black;
+    border-radius: 5px;
+}
+

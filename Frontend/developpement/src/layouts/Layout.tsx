@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom'
 import useThemeStore from '../store/useThemeStore'
 
+import './Layout.css'
+
 import Header from '../components/Header'
 
 export default function Layout() {
@@ -9,13 +11,13 @@ export default function Layout() {
   const setTheme = useThemeStore((state) => state.toggleDarkMode);
 
   return (
-        <div id="page" className={ isDarkModeState ? "dark" : "light" }>
+        <div id="page" className='layoutContainer { isDarkModeState ? "dark" : "light"}'>
             <Header
             key = "header"
             isDarkModeState = { isDarkModeState }
             setTheme = { setTheme }
             />
-            <main>
+            <main className='mainContainer'>
                 <Outlet />
             </main>
         </div>

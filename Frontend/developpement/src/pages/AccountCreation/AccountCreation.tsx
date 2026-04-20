@@ -1,26 +1,57 @@
-import './accountCreation.css';
+import "./accountCreation.css";
 
 export default function AccountCReation() {
   return (
     <>
-      <div className="container" id="">
+      <div className="accountCreationContainer" id="">
         <h1>CREATION DE COMPTE</h1>
-        <label htmlFor="firstname">Votre Prénom</label>
-        <input type="text" name="firstname" id="firstname" />
-        <label htmlFor="lastname">Votre Nom</label>
-        <input type="text" name="lastname" id="lastname" />
-        <label htmlFor="connexionPseudo">Votre pseudo de connexion</label>
-        <input type="text" name="connexionPseudo" id="connexionPseudo" />
-        <label htmlFor="password">veuillez rentrer votre mot de passe</label>
-        <input type="password" name="password" id="password" />
-        <label htmlFor="passwordConfirmation">
-          confirmer votre mot de passe
-        </label>
-        <input
-          type="password"
-          name="passwordConfirmation"
-          id="passwordConfirmation"
-        />
+        <div className="inputContainer firstnameContainer">
+          <label htmlFor="firstname">Votre Prénom</label>
+          <input
+            className="inputStyle"
+            type="text"
+            name="firstname"
+            id="firstname"
+          />
+        </div>
+        <div className="inputContainer lastnameContainer">
+          <label htmlFor="lastname">Votre Nom</label>
+          <input
+            className="inputStyle"
+            type="text"
+            name="lastname"
+            id="lastname"
+          />
+        </div>
+        <div className="inputContainer pseudoConnexionContainer">
+          <label htmlFor="pseudoContainer">Votre pseudo de connexion</label>
+          <input
+            className="inputStyle"
+            type="text"
+            name="pseudoContainer"
+            id="pseudoContainer"
+          />
+        </div>
+        <div className="inputContainer passwordContainer">
+          <label htmlFor="password">veuillez rentrer votre mot de passe</label>
+          <input
+            className="inputStyle"
+            type="password"
+            name="password"
+            id="password"
+          />
+        </div>
+        <div className="inputContainer passwordConfirmationContainer">
+          <label htmlFor="passwordConfirmation">
+            confirmer votre mot de passe
+          </label>
+          <input
+            className="inputStyle"
+            type="password"
+            name="passwordConfirmation"
+            id="passwordConfirmation"
+          />
+        </div>
       </div>
     </>
   );
