@@ -3,7 +3,7 @@ import useThemeStore from '../store/useThemeStore'
 
 import './Layout.css'
 
-import Header from '../components/Header'
+import Header from '../components/Header/Header'
 
 export default function Layout() {
   // Store du thème, on récupère l'état et l'action

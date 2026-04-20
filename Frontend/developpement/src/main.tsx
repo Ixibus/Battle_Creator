@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from './layouts/Layout'
-import AccountCReation from './pages/AccountCreation/AccountCreation';
+import AccountCReation from './pages/AccountCreationPage/AccountCreation';
 
 
 const router = createBrowserRouter([
