@@ -6,7 +6,7 @@ import checker from 'vite-plugin-checker'
 export default defineConfig({
 	server : {
 		watch : {
-			usePolling : true 		
+			usePolling : true,
 		}
 	},
 	plugins: [

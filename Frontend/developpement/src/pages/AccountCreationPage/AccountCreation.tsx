@@ -1,11 +1,10 @@
-import "./accountCreation.css";
-
-import InputContainer from "../../components/AccountCreationComponent/InputContainer";
+import "../../styles/form/form.css";
+import InputContainer from "../../components/InputContainer/InputContainer";
 
 export default function AccountCReation() {
   return (
     <>
-      <div className="accountCreationContainer">
+      <div className="form">
         <h1>CREATION DE COMPTE</h1>
         <InputContainer labelName="Votre prénom" htmlFor="firstname" type="text"/>
         <InputContainer labelName="Votre nom" htmlFor="lastname" type="text" />

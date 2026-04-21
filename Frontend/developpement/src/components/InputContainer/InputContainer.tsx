@@ -1,5 +1,5 @@
-import './inputContainer.css'
-
+import '../../styles/global/inputContainer.css'
+import '../../styles/global/inputBorderStyle.css'
 
 type InputType = "text" | "password";
 
@@ -19,7 +19,7 @@ export default function InputContainer({
   return (
     <div className={className}>
       <label htmlFor={htmlFor}>{labelName}</label>
-      <input className="inputStyle" type={type} name={htmlFor} id={htmlFor} />
+      <input className="inputBorderStyle" type={type} name={htmlFor} id={htmlFor} />
     </div>
   );
 }
