@@ -1,15 +1,19 @@
-import './styles/main.css'
+import "./styles/main.css";
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
 
-import Layout from './layouts/Layout'
-import AccountCReation from './pages/AccountCreationPage/AccountCreation';
-import ProjectCreation from './pages/ProjectCreationPage/ProjectCreation';
-import MandatoryMissions from './pages/MandatoryMissions/MandatoryMissions';
-import OptionnalMissions from './pages/OptionnalMissions/OptionnalMissions';
-import HomePage from './pages/HomePage/HomePage';
+import Layout from "./layouts/Layout";
+import ProjectCreation from "./pages/ProjectCreationPage/ProjectCreation";
+import MandatoryMissions from "./pages/MandatoryMissions/MandatoryMissions";
+import OptionnalMissions from "./pages/OptionnalMissions/OptionnalMissions";
+import HomePage from "./pages/HomePage/HomePage";
+// import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
+import App from "./pages/Test/App";
+import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
   {
@@ -18,30 +22,48 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <AccountCReation/>
+        element: <AccountCreation />,
       },
+      // {
+      //   index: true,
+      //   element: <App />,
+      // },
       {
         path: "/projectCreation",
-        element: <ProjectCreation/>
+        element: <ProjectCreation />,
       },
       {
         path: "/mandatoryMissions",
-        element: <MandatoryMissions/>
+        element: <MandatoryMissions />,
       },
       {
         path: "/optionnalMissions",
-        element: <OptionnalMissions/>
+        element: <OptionnalMissions />,
       },
       {
         path: "/homePage",
-        element: <HomePage/>
-      }
-    ]
-  }
+        element: <HomePage />,
+      },
+    ],
+  },
 ]);
 
-createRoot(document.getElementById('root')!).render(
+const queryClient = new QueryClient();
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <Auth0Provider
+      domain={import.meta.env.VITE_AUTH0_DOMAIN}
+      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+      }}
+    >
+    <QueryClientProvider client={queryClient}>
+
       <RouterProvider router={router} />
-  </StrictMode>
-)
+    </QueryClientProvider>
+
+    </Auth0Provider>
+  </StrictMode>,
+);

@@ -1,17 +1,35 @@
 import "../../styles/form/form.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
+import { useState } from "react";
+import LoginButton from "./LoginButton";
 
-export default function AccountCReation() {
+import { useAuth0 } from '@auth0/auth0-react';
+
+export default function AccountCreation() {
+  const { isAuthenticated, isLoading, error } = useAuth0();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [pseudo, setPseudo] = useState("");
+  const [password, setPassword] = useState("");
+
+  // function handlesubmit(firstName, labelName, pseudo, password) {
+    
+  // }
+
   return (
     <>
-      <div className="form">
+      {/* <form className="form" onSubmit={handlesubmit(firstName, lastName, pseudo, password)}>
         <h1>CREATION DE COMPTE</h1>
-        <InputContainer labelName="Votre prénom" htmlFor="firstname" type="text"/>
-        <InputContainer labelName="Votre nom" htmlFor="lastname" type="text" />
-        <InputContainer labelName="Votre pseudo de connexion" htmlFor="pseudoContainer" type="text" />
-        <InputContainer labelName="Veuillez rentrer votre mot de passe" htmlFor="password" type="password" />
-        <InputContainer labelName="Confirmer votre mot de passe" htmlFor="passwordConfirmation" type="password" />
-      </div>
+        <InputContainer labelName="Votre prénom" htmlFor="firstname" type="text" onChange={(e) => setFirstName(e.target.value)}/>
+        <InputContainer labelName="Votre nom" htmlFor="lastname" type="text" onChange={(e) => setLastName(e.target.value)}/>
+        <InputContainer labelName="Votre pseudo de connexion" htmlFor="pseudoContainer" type="text" onChange={(e) => setPseudo(e.target.value)}/>
+        <InputContainer labelName="Veuillez rentrer votre mot de passe" htmlFor="password" type="password" onChange={(e) => setPassword(e.target.value)}/>
+        <InputContainer labelName="Confirmer votre mot de passe" htmlFor="passwordConfirmation" type="password"/>
+      </form> */}
+      {!isAuthenticated &&<LoginButton/>}
     </>
   );
 }
+
+
