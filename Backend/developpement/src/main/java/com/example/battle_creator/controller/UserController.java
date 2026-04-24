@@ -1,5 +1,7 @@
 package com.example.battle_creator.controller;
 
+import com.example.battle_creator.dto.UserCreateDto;
+import com.example.battle_creator.dto.UserUpdateDto;
 import com.example.battle_creator.model.User;
 import com.example.battle_creator.service.UserService;
 import jakarta.validation.Valid;
@@ -32,14 +34,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User userCreated = userService.create(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDto userCreateDto) {
+        User userCreated = userService.create(userCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
-        User userUpdated = userService.update(id, user);
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDto userUpdateDto) {
+        User userUpdated = userService.update(id, userUpdateDto);
         return ResponseEntity.ok(userUpdated);
     }
 

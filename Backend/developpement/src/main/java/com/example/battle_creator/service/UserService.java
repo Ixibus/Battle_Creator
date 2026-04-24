@@ -1,5 +1,8 @@
 package com.example.battle_creator.service;
 
+import com.example.battle_creator.dto.UserCreateDto;
+import com.example.battle_creator.dto.UserUpdateDto;
+import com.example.battle_creator.mapper.UserMapper;
 import com.example.battle_creator.model.User;
 import com.example.battle_creator.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,29 +21,21 @@ public class UserService {
     }
 
     @Transactional
-    public User create(User user) {
-        validateUser(user);
-
-        User userCreated = new User();
-        userCreated.setEmail(cleanText(user.getEmail()));
-        userCreated.setLogin(cleanText(user.getLogin()));
-        userCreated.setIsActive(user.getIsActive());
-
-        return userRepository.save(userCreated);
+    public User create(UserCreateDto dto) {
+        validateCreateDto(dto);
+        User user = UserMapper.toEntity(dto);
+        return userRepository.save(user);
     }
 
     @Transactional
-    public User update(Long id, User user) {
+    public User update(Long id, UserUpdateDto dto) {
         validateId(id);
-        validateUser(user);
+        validateUpdateDto(dto);
 
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable avec l'id : " + id));
 
-        existingUser.setEmail(cleanText(user.getEmail()));
-        existingUser.setLogin(cleanText(user.getLogin()));
-        existingUser.setIsActive(user.getIsActive());
-
+        UserMapper.updateEntity(existingUser, dto);
         return userRepository.save(existingUser);
     }
 
@@ -64,14 +59,26 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private void validateUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("L'utilisateur ne peut pas être nul.");
+    private void validateCreateDto(UserCreateDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Les données de création ne peuvent pas être null.");
         }
-        if (user.getEmail() == null || user.getEmail().trim().isEmpty()) {
+        if (dto.getEmail() == null || dto.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("L'email est obligatoire.");
         }
-        if (user.getLogin() == null || user.getLogin().trim().isEmpty()) {
+        if (dto.getLogin() == null || dto.getLogin().trim().isEmpty()) {
+            throw new IllegalArgumentException("Le login est obligatoire.");
+        }
+    }
+
+    private void validateUpdateDto(UserUpdateDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Les données de mise à jour ne peuvent pas être null.");
+        }
+        if (dto.getEmail() == null || dto.getEmail().trim().isEmpty()) {
+            throw new IllegalArgumentException("L'email est obligatoire.");
+        }
+        if (dto.getLogin() == null || dto.getLogin().trim().isEmpty()) {
             throw new IllegalArgumentException("Le login est obligatoire.");
         }
     }
@@ -80,9 +87,5 @@ public class UserService {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("L'id doit être positif.");
         }
-    }
-
-    private String cleanText(String text) {
-        return text.trim().replaceAll("\\s+", " ");
     }
 }
