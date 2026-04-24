@@ -6,9 +6,9 @@ const LoginButton = () => {
 
   // function trigger () {
      const { data, isLoading, error } = useQuery({
-    queryKey: [],
+    queryKey: ["users"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/projects");
+      const response = await fetch("http://localhost:8080");
 
       return await response.json();
     },
