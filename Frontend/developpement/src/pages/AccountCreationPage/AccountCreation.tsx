@@ -11,23 +11,36 @@ export default function AccountCreation() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pseudo, setPseudo] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // function handlesubmit(firstName, labelName, pseudo, password) {
-    
+  // function handlesubmit(e : any, firstName : string, lastName : string, pseudo: string , password : string) {
+  //   e.preventDefault();
+  //   console.log(firstName, lastName, pseudo, password);
   // }
+  function handlesubmitTester(e : any, email : string, pseudo: string) {
+    e.preventDefault();
+    console.log(email, pseudo);
+  }
 
   return (
     <>
-      {/* <form className="form" onSubmit={handlesubmit(firstName, lastName, pseudo, password)}>
+      {/* {!isAuthenticated && <form className="form" onSubmit={(e) => handlesubmit(e, firstName, lastName, pseudo, password)}>
         <h1>CREATION DE COMPTE</h1>
         <InputContainer labelName="Votre prénom" htmlFor="firstname" type="text" onChange={(e) => setFirstName(e.target.value)}/>
         <InputContainer labelName="Votre nom" htmlFor="lastname" type="text" onChange={(e) => setLastName(e.target.value)}/>
         <InputContainer labelName="Votre pseudo de connexion" htmlFor="pseudoContainer" type="text" onChange={(e) => setPseudo(e.target.value)}/>
         <InputContainer labelName="Veuillez rentrer votre mot de passe" htmlFor="password" type="password" onChange={(e) => setPassword(e.target.value)}/>
         <InputContainer labelName="Confirmer votre mot de passe" htmlFor="passwordConfirmation" type="password"/>
-      </form> */}
-      {!isAuthenticated &&<LoginButton/>}
+        <button type="submit">valider</button>
+      </form>} */}
+      {!isAuthenticated && <form className="form" onSubmit={(e) => handlesubmitTester(e, email, pseudo)}>
+        <h1>TEST CREATION DE COMPTE</h1>
+        <InputContainer labelName="Votre email" htmlFor="email" type="email" onChange={(e) => setEmail(e.target.value)}/>
+        <InputContainer labelName="Votre pseudo" htmlFor="pseudo" type="text" onChange={(e) => setPseudo(e.target.value)}/>
+                <button type="submit">valider</button>
+      </form>}
+      {/* {!isAuthenticated &&<LoginButton/>} */}
     </>
   );
 }
