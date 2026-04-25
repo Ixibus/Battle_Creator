@@ -8,16 +8,17 @@ const LoginButton = () => {
      const { data, isLoading, error } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080");
+      const response = await fetch("http://localhost:8080/users");
 
       return await response.json();
     },
   });
 
-  console.log(data);
-
+  
   if (isLoading) {return <p>Chargement...</p>}
   if (error) {return <p>{error.message}</p>} 
+  
+  return <p>{data.map((el: { email: any; }) => el.email)}</p>;
   // }
 
 
