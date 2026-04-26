@@ -18,10 +18,24 @@ export default function AccountCreation() {
   //   e.preventDefault();
   //   console.log(firstName, lastName, pseudo, password);
   // }
+
+  const form = document.querySelector("form");
   function handlesubmitTester(e : any, email : string, pseudo: string) {
     e.preventDefault();
-    console.log(email, pseudo);
+    // console.log(email, pseudo);
+    const test = new FormData(form!);
+    // test.append("Le pseudo", pseudo);
+    // test.append("Le mail", email);
+    // console.log(test.getAll("Le pseudo"), test.getAll("Le mail"));
+    for (const el of test.entries()) {
+      console.log(el[0] + ", "+ el[1]);
+    }
+
+    // console.log(test.entries());
+
   }
+
+  console.log(form);
 
   return (
     <>
@@ -40,7 +54,7 @@ export default function AccountCreation() {
         <InputContainer labelName="Votre pseudo" htmlFor="pseudo" type="text" onChange={(e) => setPseudo(e.target.value)}/>
                 <button type="submit">valider</button>
       </form>}
-      {/* {!isAuthenticated &&<LoginButton/>} */}
+      {!isAuthenticated &&<LoginButton/>}
     </>
   );
 }
