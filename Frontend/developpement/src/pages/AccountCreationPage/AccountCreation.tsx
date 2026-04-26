@@ -22,20 +22,22 @@ export default function AccountCreation() {
   const form = document.querySelector("form");
   function handlesubmitTester(e : any, email : string, pseudo: string) {
     e.preventDefault();
-    // console.log(email, pseudo);
-    const test = new FormData(form!);
     // test.append("Le pseudo", pseudo);
     // test.append("Le mail", email);
     // console.log(test.getAll("Le pseudo"), test.getAll("Le mail"));
-    for (const el of test.entries()) {
+    
+    // Avec "form!"" par défaut dans le paramètre, l'objet FormData sera rempli en clé/valeur avec :
+    // la clé = la valeur de la propriété "name" de l'input enfant de <form>
+    // la valeur = la valeur de la propriété "valeur" de cette input enfant susvisé
+    const inputDatas = new FormData(form!);
+    for (const el of inputDatas.entries()) {
+      // el[0] = la clé; el[1] = sa valeur
       console.log(el[0] + ", "+ el[1]);
     }
 
     // console.log(test.entries());
 
   }
-
-  console.log(form);
 
   return (
     <>
