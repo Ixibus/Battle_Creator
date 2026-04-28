@@ -63,7 +63,7 @@ export default function ConnexionTest() {
     },
     onSettled : (data, error, variables, onMutateResult, context) => {
       console.log(`onSettled (onMutateResult) : ${onMutateResult}`);
-      console.log(`onSettled (context) : ${context.mutationKey}`);
+      console.log(`onSettled (context) : ${context}`);
     }
   });
 
