@@ -105,20 +105,22 @@ export default function ConnexionTest() {
         <InputContainer labelName="Confirmer votre mot de passe" htmlFor="passwordConfirmation" type="password"/>
         <button type="submit">valider</button>
       </form>} */}
+     {/* {isLoading && <div>Loading...</div>} */}
+     {/* {error && <div>Error : {error.message}</div>} */}
       {!isAuthenticated && (
         <form className="form" onSubmit={(e) => handlesubmitTester(e)}>
           <h1>TEST CREATION DE COMPTE</h1>
-          <InputContainer
-            labelName="Votre email"
-            htmlFor="email"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
           <InputContainer
             labelName="Votre login"
             htmlFor="login"
             type="text"
             onChange={(e) => setLogin(e.target.value)}
+          />
+          <InputContainer
+            labelName="Votre mot de passe"
+            htmlFor="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">valider</button>
         </form>
