@@ -1,37 +1,36 @@
 package com.example.battle_creator.controller;
 
-import com.example.battle_creator.dto.UserCreateDto;
-import com.example.battle_creator.dto.UserUpdateDto;
-import com.example.battle_creator.model.User;
-import com.example.battle_creator.service.UserService;
-import jakarta.validation.Valid;
+import com.example.battle_creator.dto.AuthRequestDto;
+import com.example.battle_creator.service.AuthentificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
 public class AuthentificationController {
 
-    private final User user;
-    private final UserCredentials userCredentials;
+    private final AuthentificationService authentificationService;
 
-    public AuthentificationController(User user, UserCredentials userCredentials) {
-        this.user = user;
-        this.userCredentials = userCredentials;
+    public static void main(String[] args) {
+            System.out.println("Bonjour depuis une autre méthode");
     }
 
-@PostMapping
-public ResponseEntity<User> authCollecter(@Valid @RequestBody User user, @Valid @RequestBody UserCredentials userCredentials) {
-        User userCreated = userService.create(userCreateDto);
-
-
-    if (AuthentificationService.isAuthValid(user, userCredentials)) {
-        return ResponseEntity.status(HttpStatus.CREATED).body("l'authentification a focntionné 🥳");
+    public AuthentificationController(AuthentificationService authentificationService) {
+        this.authentificationService = authentificationService;
     }
 
-    throw new IllegalArgumentException("L'authentification n'a pas marché 😕");
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody AuthRequestDto request) {
+        boolean isValid = authentificationService.isAuthValid(request.getLogin(), request.getPassword());
+
+        if (isValid) {
+            return ResponseEntity.ok("L'authentification a fonctionné 🥳");
+        }
+
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Login ou mot de passe incorrect 😕");
+    }
 }

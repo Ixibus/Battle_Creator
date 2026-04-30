@@ -4,13 +4,17 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users_credentials")
+@Table(name = "user_credentials")
 public class UserCredentials {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "credential_id")
     private Long id;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
     @Column(name = "password_hash", length = 255, nullable = false)
     private String passwordHash;
@@ -24,10 +28,10 @@ public class UserCredentials {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public UserCredentials() {
-    }
+    public UserCredentials() {}
 
-    public UserCredentials(String passwordHash, String passwordSalt, String passwordAlgo) {
+    public UserCredentials(User user, String passwordHash, String passwordSalt, String passwordAlgo) {
+        this.user = user;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
         this.passwordAlgo = passwordAlgo;
@@ -46,43 +50,17 @@ public class UserCredentials {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public String getPasswordHash() { return passwordHash; }
+    public String getPasswordSalt() { return passwordSalt; }
+    public String getPasswordAlgo() { return passwordAlgo; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public String getPasswordSalt() {
-        return passwordSalt;
-    }
-
-    public String getPasswordAlgo() {
-        return passwordAlgo;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public void setPasswordSalt(String passwordSalt) {
-        this.passwordSalt = passwordSalt;
-    }
-
-    public void setPasswordAlgo(String passwordAlgo) {
-        this.passwordAlgo = passwordAlgo;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setUser(User user) { this.user = user; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public void setPasswordSalt(String passwordSalt) { this.passwordSalt = passwordSalt; }
+    public void setPasswordAlgo(String passwordAlgo) { this.passwordAlgo = passwordAlgo; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
