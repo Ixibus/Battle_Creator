@@ -32,7 +32,7 @@ export default function ConnexionTest() {
     });
 
     (await res).ok && console.log("la connexion a marché");
-    !(await res).ok && console.log("la connexion non authorisée" + " le status requête :" + (await res).ok)
+    !(await res).ok && console.log("la connexion non authorisée");
 
 
   }
