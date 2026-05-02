@@ -23,6 +23,18 @@ export default function ConnexionTest() {
     const dataObj = Object.fromEntries(inputDatas.entries());
     Object.assign(dataObj, { isActive: false });
 
+    const res = fetch('http://localhost:8080/auth/login', {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json",
+        },
+      body: JSON.stringify(dataObj),
+    });
+
+    (await res).ok && console.log("la connexion a marché");
+    !(await res).ok && console.log("la connexion non authorisée" + " le status requête :" + (await res).ok)
+
+
   }
 
   return (
