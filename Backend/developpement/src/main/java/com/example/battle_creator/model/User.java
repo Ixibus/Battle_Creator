@@ -27,8 +27,7 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public User() {
-    }
+    public User() {}
 
     public User(Long id, String email, String login, Boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
@@ -50,35 +49,18 @@ public class User {
         }
     }
 
-    // @PreUpdate : met à jour updatedAt quand l’objet change. 
+    // @PreUpdate : met à jour updatedAt quand l’objet change.
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getLogin() {
-        return this.login;
-    }
-
-    public Boolean getIsActive() {
-        return this.isActive;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return this.updatedAt;
-    }
+    public Long getId() { return id; }
+    public String getEmail() { return email; }
+    public String getLogin() { return login; }
+    public Boolean getIsActive() { return isActive; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 
     public void setId(Long id) { this.id = id; }
     public void setEmail(String email) { this.email = email; }
