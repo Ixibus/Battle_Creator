@@ -4,13 +4,17 @@ import com.example.battle_creator.model.User;
 import com.example.battle_creator.model.UserCredentials;
 import com.example.battle_creator.repository.UserCredentialsRepository;
 import com.example.battle_creator.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
-public class AuthentificationService {
+public class AuthentificationService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserCredentialsRepository userCredentialsRepository;
@@ -41,5 +45,39 @@ public class AuthentificationService {
         UserCredentials credentials = optionalCredentials.get();
 
         return rawPassword.equals(credentials.getPasswordHash());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Optional<User> optionalLoginFound = userRepository.findByLogin(login);
+
+        if (optionalLoginFound.isEmpty()) {
+            throw new UsernameNotFoundException("Utilisateur introuvable : " + login);
+        }
+
+        User loginFound = optionalLoginFound.get();
+
+        Optional<UserCredentials> optionalCredentials =
+                userCredentialsRepository.findByUserId(loginFound.getId());
+
+        if (optionalCredentials.isEmpty()) {
+            throw new UsernameNotFoundException("Identifiants introuvables pour : " + login);
+        }
+
+        UserCredentials credentials = optionalCredentials.get();
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(loginFound.getLogin())
+                .password(credentials.getPasswordHash())
+                .authorities(Collections.emptyList())
+                .build();
+    }
+
+    public String getCurrentLogin() {
+        return org.springframework.security.core.context.SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
     }
 }

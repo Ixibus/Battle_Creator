@@ -23,6 +23,9 @@ public class AuthentificationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthRequestDto request) {
+
+
+
         boolean isValid = authentificationService.isAuthValid(request.getLogin(), request.getPassword());
 
         if (isValid) {
