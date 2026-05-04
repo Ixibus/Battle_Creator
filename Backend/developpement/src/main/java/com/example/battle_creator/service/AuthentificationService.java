@@ -25,28 +25,6 @@ public class AuthentificationService implements UserDetailsService {
         this.userCredentialsRepository = userCredentialsRepository;
     }
 
-    @Transactional(readOnly = true)
-    public boolean isAuthValid(String login, String rawPassword) {
-        Optional<User> optionalUser = userRepository.findByLogin(login);
-
-        if (optionalUser.isEmpty()) {
-            return false;
-        }
-
-        User user = optionalUser.get();
-
-        Optional<UserCredentials> optionalCredentials =
-                userCredentialsRepository.findByUserId(user.getId());
-
-        if (optionalCredentials.isEmpty()) {
-            return false;
-        }
-
-        UserCredentials credentials = optionalCredentials.get();
-
-        return rawPassword.equals(credentials.getPasswordHash());
-    }
-
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -80,4 +58,28 @@ public class AuthentificationService implements UserDetailsService {
                 .getAuthentication()
                 .getName();
     }
+
+// // Config authentification simple (sans encoder, sans token)
+//    @Transactional(readOnly = true)
+//    public boolean isAuthValid(String login, String rawPassword) {
+//        Optional<User> optionalUser = userRepository.findByLogin(login);
+//
+//        if (optionalUser.isEmpty()) {
+//            return false;
+//        }
+//
+//        User user = optionalUser.get();
+//
+//        Optional<UserCredentials> optionalCredentials =
+//                userCredentialsRepository.findByUserId(user.getId());
+//
+//        if (optionalCredentials.isEmpty()) {
+//            return false;
+//        }
+//
+//        UserCredentials credentials = optionalCredentials.get();
+//
+//        return rawPassword.equals(credentials.getPasswordHash());
+//    }
+
 }
