@@ -3,7 +3,9 @@ package com.example.battle_creator.controller;
 import ch.qos.logback.classic.Logger;
 import com.example.battle_creator.config.JwtUtils;
 import com.example.battle_creator.dto.AuthRequestDto;
+import com.example.battle_creator.dto.UserCreateDto;
 import com.example.battle_creator.model.User;
+import com.example.battle_creator.model.UserCredentials;
 import com.example.battle_creator.repository.UserRepository;
 import com.example.battle_creator.service.AuthentificationService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -29,12 +31,14 @@ public class AuthentificationController {
 //    this.authentificationService = authentificationService;
 //}
 
+    private final AuthentificationService authentificationService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
-    public AuthentificationController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
+    public AuthentificationController(AuthentificationService authentificationService, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
+        this.authentificationService = authentificationService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
@@ -46,12 +50,13 @@ public class AuthentificationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        if (userRepository.findByLogin(user.getLogin()) != null ) {
+    public ResponseEntity<?> register(@RequestBody UserCreateDto requestUserCreateDto) {
+        if (userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent()) {
             return ResponseEntity.badRequest().body("Le login est déjà utilisé");
         }
-        userCredentials.setPassword(passwordEncoder.encode(userCredentials.getPassword()));
-        return ResponseEntity.ok(userRepository.save(user));
+        User userCreated = authentificationService.create(requestUserCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+
     }
 
     @PostMapping("/login")
