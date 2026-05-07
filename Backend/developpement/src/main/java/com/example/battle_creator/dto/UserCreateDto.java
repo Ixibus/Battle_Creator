@@ -14,15 +14,19 @@ public class UserCreateDto {
     @Size(max = 100)
     private String login;
 
+    @NotBlank
+    private String rawPassword;
+
     @NotNull
     private Boolean isActive;
 
     public UserCreateDto() {
     }
 
-    public UserCreateDto(String email, String login, Boolean isActive) {
+    public UserCreateDto(String email, String login, String rawPassword,Boolean isActive) {
         this.email = email;
         this.login = login;
+        this.rawPassword = rawPassword;
         this.isActive = isActive;
     }
 
@@ -33,6 +37,8 @@ public class UserCreateDto {
     public String getLogin() {
         return login;
     }
+
+    public String getRawPassword() {return rawPassword ;};
 
     public Boolean getIsActive() {
         return isActive;
@@ -45,6 +51,8 @@ public class UserCreateDto {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public void setRawPassword(String rawPassword) { this.rawPassword = rawPassword;}
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
