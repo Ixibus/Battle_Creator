@@ -1,11 +1,9 @@
 package com.example.battle_creator.controller;
 
-import ch.qos.logback.classic.Logger;
 import com.example.battle_creator.config.JwtUtils;
 import com.example.battle_creator.dto.AuthRequestDto;
 import com.example.battle_creator.dto.UserCreateDto;
 import com.example.battle_creator.model.User;
-import com.example.battle_creator.model.UserCredentials;
 import com.example.battle_creator.repository.UserRepository;
 import com.example.battle_creator.service.AuthentificationService;
 import org.springframework.security.core.Authentication;
@@ -32,13 +30,11 @@ public class AuthentificationController {
 
     private final AuthentificationService authentificationService;
     private final UserRepository userRepository;
-    private final UserCredentials userCredentials;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
-    public AuthentificationController(AuthentificationService authentificationService, UserCredentials userCredentials, UserRepository userRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
+    public AuthentificationController(AuthentificationService authentificationService, UserRepository userRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
         this.authentificationService = authentificationService;
-        this.userCredentials = userCredentials;
         this.userRepository = userRepository;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
@@ -64,12 +60,12 @@ public class AuthentificationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody AuthRequestDto authRequestDto) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), userCredentials.getPasswordHash()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
                 Map<String, Object> authData = new HashMap<>();
-                authData.put("token", jwtUtils.generateToken(user.getLogin()));
+                authData.put("token", jwtUtils.generateToken(authRequestDto.getLogin()));
                 authData.put("type", "Bearer");
                 return ResponseEntity.ok(authData);
             }

@@ -1,4 +1,4 @@
-package com.example.battle_creator.filter.JwtFilter;
+package com.example.battle_creator.filter;
 
 import com.example.battle_creator.config.JwtUtils;
 import com.example.battle_creator.service.AuthentificationService;
@@ -10,21 +10,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.beans.Customizer;
 import java.io.IOException;
 
-@Component
 public class JwtFilter extends OncePerRequestFilter {
 
     private final AuthentificationService authentificationService;
     private final JwtUtils jwtUtils;
 
-    public JwtFilter (AuthentificationService authentificationService, JwtUtils jwtUtils) {
+    public JwtFilter(AuthentificationService authentificationService, JwtUtils jwtUtils) {
         this.authentificationService = authentificationService;
         this.jwtUtils = jwtUtils;
+    }
+
+    // ignorer le blocage du filtre JWT sur une route spécifique
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getServletPath().startsWith("/auth/");
     }
 
     @Override
