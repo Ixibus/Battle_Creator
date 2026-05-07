@@ -37,8 +37,12 @@ public class AuthentificationService implements UserDetailsService {
         User userCreated = userRepository.save(user);
 
         UserCredentials userWithPasswordCreated = new UserCredentials();
-        userWithPasswordCreated.setUser(userCreated.getId());
+        userWithPasswordCreated.setUser(userCreated);
         userWithPasswordCreated.setPasswordHash(passwordEncoder.encode(dto.getRawPassword()));
+        userWithPasswordCreated.setPasswordAlgo("argon2id");
+        userCredentialsRepository.save(userWithPasswordCreated);
+
+        return userCreated;
     }
 
     @Override

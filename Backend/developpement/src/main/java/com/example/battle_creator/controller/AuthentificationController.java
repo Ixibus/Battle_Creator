@@ -8,13 +8,12 @@ import com.example.battle_creator.model.User;
 import com.example.battle_creator.model.UserCredentials;
 import com.example.battle_creator.repository.UserRepository;
 import com.example.battle_creator.service.AuthentificationService;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,14 +32,14 @@ public class AuthentificationController {
 
     private final AuthentificationService authentificationService;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserCredentials userCredentials;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
-    public AuthentificationController(AuthentificationService authentificationService, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
+    public AuthentificationController(AuthentificationService authentificationService, UserCredentials userCredentials, UserRepository userRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
         this.authentificationService = authentificationService;
+        this.userCredentials = userCredentials;
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.authenticationManager = authenticationManager;
     }
@@ -67,7 +66,7 @@ public class AuthentificationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), usercredentials.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(), userCredentials.getPasswordHash()));
             if (authentication.isAuthenticated()) {
                 Map<String, Object> authData = new HashMap<>();
                 authData.put("token", jwtUtils.generateToken(user.getLogin()));
@@ -76,8 +75,6 @@ public class AuthentificationController {
             }
             return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le login ou mot de passe est incorrect");
         } catch (AuthenticationException e) {
-            Logger log;
-            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le login ou mot de passe est incorrect");
         }
     }
