@@ -9,6 +9,7 @@ import com.example.battle_creator.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +21,24 @@ public class AuthentificationService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserCredentialsRepository userCredentialsRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AuthentificationService(UserRepository userRepository,
-                                   UserCredentialsRepository userCredentialsRepository) {
+                                   UserCredentialsRepository userCredentialsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userCredentialsRepository = userCredentialsRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public User create(UserCreateDto dto) {
         validateCreateDto(dto);
         User user = UserMapper.toEntity(dto);
-        return userRepository.save(user);
+        User userCreated = userRepository.save(user);
+
+        UserCredentials userWithPasswordCreated = new UserCredentials();
+        userWithPasswordCreated.setUser(userCreated.getId());
+        userWithPasswordCreated.setPasswordHash(passwordEncoder.encode(dto.getRawPassword()));
     }
 
     @Override

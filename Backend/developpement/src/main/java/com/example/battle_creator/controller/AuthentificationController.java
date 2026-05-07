@@ -54,6 +54,11 @@ public class AuthentificationController {
         if (userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent()) {
             return ResponseEntity.badRequest().body("Le login est déjà utilisé");
         }
+
+        if (userRepository.findByLogin(requestUserCreateDto.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("Email dèjà utilisé");
+        }
+
         User userCreated = authentificationService.create(requestUserCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
 
