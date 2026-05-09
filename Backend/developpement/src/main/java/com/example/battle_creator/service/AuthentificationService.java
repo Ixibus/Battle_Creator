@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,7 @@ public class AuthentificationService implements UserDetailsService {
         this.userCredentialsRepository = userCredentialsRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
 
     @Transactional
     public User create(UserCreateDto dto) {
@@ -66,11 +68,14 @@ public class AuthentificationService implements UserDetailsService {
 
         UserCredentials credentials = optionalCredentials.get();
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(loginFound.getLogin())
-                .password(credentials.getPasswordHash())
-                .authorities(Collections.emptyList())
-                .build();
+
+
+//        return org.springframework.security.core.userdetails.User
+//                .withUsername(loginFound.getLogin())
+//                .password(credentials.getPasswordHash())
+//                .authorities(Collections.emptyList())
+//                .build();
+        return new org.springframework.security.core.userdetails.User(loginFound.getLogin(), credentials.getPasswordHash(), Collections.emptyList());
     }
 
     public String getCurrentLogin() {

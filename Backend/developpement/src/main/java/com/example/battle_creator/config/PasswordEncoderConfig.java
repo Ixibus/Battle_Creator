@@ -5,13 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
+
 @Configuration
 public class PasswordEncoderConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-    }
-}
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+//    }
+//}
 
 
 //package com.example.battle_creator.config;
@@ -73,21 +75,21 @@ public class PasswordEncoderConfig {
 //        return salt;
 //    }
 //
-////    // hashage rapide avec Argon2PasswordEncoder de Spring security
-////    //    @Bean
-////    public static PasswordEncoder passwordEncoder() {
-////        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-////    }
-////
-////    final static String mdp = "monMotDePasse";
-////
-////    static String mdpHash = passwordEncoder().encode(mdp);
-////
-////    static String test = "hello";
-////
-////
-////    public static void main(String[] args) {
-////        System.out.println(mdpHash);
-////    }
-//
-//}
+    // hashage rapide avec Argon2PasswordEncoder de Spring security
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+    }
+
+    final static String mdp = "monMotDePasse";
+
+    static String mdpHash = Objects.requireNonNull(passwordEncoder().encode(mdp)).split("p=")[1];
+
+    static String test = "hello";
+
+
+    public static void main(String[] args) {
+        System.out.println(mdpHash);
+    }
+
+}

@@ -41,7 +41,7 @@ public class AuthentificationController {
     }
 
     public static void main(String[] args) {
-            System.out.println("Bonjour depuis une autre méthode");
+        System.out.println("Bonjour depuis une autre méthode");
     }
 
     @PostMapping("/register")
@@ -62,25 +62,18 @@ public class AuthentificationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequestDto authRequestDto) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
                 Map<String, Object> authData = new HashMap<>();
                 authData.put("token", jwtUtils.generateToken(authRequestDto.getLogin()));
                 authData.put("type", "Bearer");
                 return ResponseEntity.ok(authData);
             }
-            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le login ou mot de passe est incorrect");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" [TRY] le login ou mot de passe est incorrect");
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("le login ou mot de passe est incorrect");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" [CATCH] le login ou mot de passe est incorrect : " + e.getMessage());
         }
     }
-
-
-
-
-
-
-
 
 // // Config authentification simple (sans encoder, sans token)
 //    @PostMapping("/login")
