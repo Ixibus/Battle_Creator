@@ -6,6 +6,8 @@ import com.example.battle_creator.dto.UserCreateDto;
 import com.example.battle_creator.model.User;
 import com.example.battle_creator.repository.UserRepository;
 import com.example.battle_creator.service.AuthentificationService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,12 +70,21 @@ public class AuthentificationController {
                 Map<String, Object> authData = new HashMap<>();
                 authData.put("token", jwtUtils.generateToken(authRequestDto.getLogin()));
                 authData.put("type", "Bearer");
-                return ResponseEntity.ok(authData);
+
+                ResponseCookie cookie = ResponseCookie.from("token").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
+                return ResponseEntity.ok(authData).header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" [TRY] le login ou mot de passe est incorrect");
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" [CATCH] le login ou mot de passe est incorrect : " + e.getMessage());
         }
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
     }
 
 // // Config authentification simple (sans encoder, sans token)
