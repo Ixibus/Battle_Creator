@@ -67,12 +67,16 @@ public class AuthentificationController {
         try {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
+
                 Map<String, Object> authData = new HashMap<>();
-                authData.put("token", jwtUtils.generateToken(authRequestDto.getLogin()));
+                String tokenGenerated = jwtUtils.generateToken(authRequestDto.getLogin());
+
+                authData.put("token", tokenGenerated);
                 authData.put("type", "Bearer");
 
-                ResponseCookie cookie = ResponseCookie.from("token").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
-                return ResponseEntity.ok(authData).header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
+                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
+
+                return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authData);
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" [TRY] le login ou mot de passe est incorrect");
         } catch (AuthenticationException e) {
@@ -80,12 +84,12 @@ public class AuthentificationController {
         }
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test() {
-        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
-
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
-    }
+//    @GetMapping("/test")
+//    public ResponseEntity<?> test() {
+//        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
+//
+//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
+//    }
 
 // // Config authentification simple (sans encoder, sans token)
 //    @PostMapping("/login")
