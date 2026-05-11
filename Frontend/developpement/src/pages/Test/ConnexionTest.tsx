@@ -2,11 +2,14 @@ import "../../styles/form/form.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import { useState, type SubmitEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 // import LoginButton from "./LoginButton";
 
 export default function ConnexionTest() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const form = document.querySelector("form");
 
@@ -20,6 +23,7 @@ export default function ConnexionTest() {
 
     const res = fetch("http://localhost:8080/auth/login", {
       method: "POST",
+      credentials : "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -27,8 +31,18 @@ export default function ConnexionTest() {
     });
     console.log(dataObj);
 
-    (await res).ok && console.log("la connexion a marché");
-    !(await res).ok && console.log("la connexion non authorisée");
+    if ((await res).status === 200) {
+      console.log("la connexion a marché");
+      navigate("/homePage");
+    }
+    
+    if (!(await res).ok) {
+      console.log("la connexion non authorisée");
+    }
+    
+    const response = (await res);
+    console.log(response);
+
   }
 
   return (
