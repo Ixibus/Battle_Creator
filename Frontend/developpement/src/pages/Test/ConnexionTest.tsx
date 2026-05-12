@@ -1,4 +1,3 @@
-import "../../styles/form/form.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import { useState, type SubmitEvent } from "react";
 import { useMutation } from "@tanstack/react-query";

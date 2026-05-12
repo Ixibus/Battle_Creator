@@ -1,6 +1,5 @@
 import "./mandatoryMissionsTextDescriptionContainer.css";
 import "./mandatoryMissionInputContainer.css";
-import "../../styles/global/inputContainer.css";
 
 export default function MandatoryMissions() {
   return (

@@ -1,6 +1,5 @@
 import "./optionnalMissionsTextDescriptionContainer.css";
 import "./optionalMissionInputContainer.css";
-import "../../styles/global/inputContainer.css";
 
 export default function OptionnalMissions() {
   return (

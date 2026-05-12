@@ -1,4 +1,6 @@
-import "../../styles/form/form.css";
+import "../../styles/form/formStyle.css";
+import "../../styles/global/titleFormStyle.css";
+// import "../../styles/global/btnStyle.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -39,12 +41,12 @@ export default function AccountCreation() {
     <>
       {!isAuthenticated && (
         <form
-          className="form"
+          className="formStyle"
           onSubmit={(e) =>
             handlesubmit(e)
           }
         >
-          <h1>CREATION DE COMPTE</h1>
+          <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
           <InputContainer
             labelName="Votre login de connexion"
             htmlFor="login"
@@ -57,7 +59,7 @@ export default function AccountCreation() {
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
-          {/* <InputContainer
+          <InputContainer
             labelName="Veuillez rentrer votre mot de passe"
             htmlFor="password"
             type="password"
@@ -67,8 +69,8 @@ export default function AccountCreation() {
             labelName="Confirmer votre mot de passe"
             htmlFor="passwordConfirmation"
             type="password"
-          /> */}
-          <button type="submit">valider</button>
+          />
+          <button type="submit" className="btnStyle3 SubmitBtn_AccountCreation">Valider</button>
         </form>
       )}
     </>

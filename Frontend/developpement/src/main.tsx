@@ -15,6 +15,7 @@ import App from "./pages/Test/App";
 import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ConnexionTest from "./pages/Test/ConnexionTest";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ConnexionTest />,
+        // element: <LandingPage />,
+        // element: <AccountCreation />,
+        // element: <ProjectCreation/>,
+        element: <MandatoryMissions/>,
       },
       // {
       //   index: true,

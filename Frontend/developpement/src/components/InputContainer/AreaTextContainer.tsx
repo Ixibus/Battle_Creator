@@ -4,27 +4,29 @@ import type { ChangeEventHandler } from 'react';
 
 type InputType = "text" | "password" | "email";
 
-interface InputContainerProps {
-  labelName: string;
-  htmlFor: string;
+interface AreaContainerProps {
   className?: string;
   value?: string,
-  type: InputType;
-  onChange?: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
+  htmlFor: string,
+  labelName: string,
+  cols: number;
+  rows: number;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement, HTMLTextAreaElement>;
 }
 
-export default function InputContainer({
+export default function AreaTextContainer({
   className = "inputContainerStyle",
-  labelName,
-  htmlFor,
   value,
-  type,
+  htmlFor,
+  labelName,
+  cols,
+  rows,
   onChange
-}: InputContainerProps) {
+}: AreaContainerProps) {
   return (
     <div className={className}>
       <label htmlFor={htmlFor}>{labelName}</label>
-      <input className="inputItemStyle" value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} />
+      <textarea name={htmlFor} id={htmlFor} className="inputItemStyle" cols={cols} rows={rows} onChange={onChange} />
     </div>
   );
 }
