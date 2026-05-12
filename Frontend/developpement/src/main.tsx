@@ -6,16 +6,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Layout from "./layouts/Layout";
-import ProjectCreation from "./pages/ProjectCreationPage/ProjectCreation";
-import MandatoryMissions from "./pages/MandatoryMissions/MandatoryMissions";
-import OptionnalMissions from "./pages/OptionnalMissions/OptionnalMissions";
-import HomePage from "./pages/HomePage/HomePage";
-// import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
-import App from "./pages/Test/App";
-import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ConnexionTest from "./pages/Test/ConnexionTest";
+
 import LandingPage from "./pages/LandingPage/LandingPage";
+import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
+import ProjectCreation from "./pages/ProjectCreationPage/ProjectCreation";
+import OnboardingMandatoryMissions from "./pages/OnboardingMandatoryMissions/OnboardingMandatoryMissions";
+import OnboardingOptionalMissions from "./pages/OnboardingOptionalMissions/OnboardingOptionalMissions";
+import HomePage from "./pages/HomePage/HomePage";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,8 @@ const router = createBrowserRouter([
         // element: <LandingPage />,
         // element: <AccountCreation />,
         // element: <ProjectCreation/>,
-        element: <MandatoryMissions/>,
+        // element: <OnboardingMandatoryMissions/>,
+        element: <OnboardingOptionalMissions/>,
       },
       // {
       //   index: true,
@@ -35,15 +36,15 @@ const router = createBrowserRouter([
       // },
       {
         path: "/projectCreation",
-        element: <ProjectCreation />,
+        element: <ProjectCreation/>,
       },
       {
         path: "/mandatoryMissions",
-        element: <MandatoryMissions />,
+        element: <OnboardingMandatoryMissions/>,
       },
       {
         path: "/optionnalMissions",
-        element: <OptionnalMissions />,
+        element: <OnboardingOptionalMissions/>,
       },
       {
         path: "/homePage",

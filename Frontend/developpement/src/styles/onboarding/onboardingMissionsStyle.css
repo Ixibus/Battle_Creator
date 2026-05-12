@@ -1,10 +1,10 @@
-.mandatoryMissionInputContainer{
+.onboardingMissionsStyle{
     width: 400px;
-    border: 1px solid black;
+    background: var(--itemColor1);
     border-radius: 5px;
-    margin-top: 2px;
     padding: auto 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+

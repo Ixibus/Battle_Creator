@@ -1,0 +1,8 @@
+.onboardingMissionsDescriptionStyle{
+    background: var(--backgroundColor1);
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    width: 400px;
+    border-radius: 5px;
+}

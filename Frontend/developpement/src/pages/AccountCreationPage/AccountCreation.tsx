@@ -1,5 +1,5 @@
 import "../../styles/form/formStyle.css";
-import "../../styles/global/titleFormStyle.css";
+import "../../styles/form/titleFormStyle.css";
 // import "../../styles/global/btnStyle.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
