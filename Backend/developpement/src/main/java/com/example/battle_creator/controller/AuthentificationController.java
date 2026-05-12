@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:5173", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class AuthentificationController {
 
 // // Config authentification simple (sans encoder, sans token)
@@ -74,7 +74,7 @@ public class AuthentificationController {
                 authData.put("token", tokenGenerated);
                 authData.put("type", "Bearer");
 
-                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
+                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(false).path("/").build();
 
                 return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authData);
             }
