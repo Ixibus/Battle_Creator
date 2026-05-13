@@ -1,3 +1,5 @@
+import NextButton from '../../components/Button/NextButton/NextButton';
+
 import "./LandingPage.css";
 
 export default function LandingPage() {
@@ -9,15 +11,8 @@ export default function LandingPage() {
           Créez et suivez votre projet d'évènement de dance Hiphop
         </h2>
         <div className="btnsContainer_LandingPageContainer">
-          <button className="btnStyle1 getStartedBtn_LandingPageContainer">
-            Commencer
-          </button>
-          <button
-            type="submit"
-            className="btnStyle2 signUpBtn_LandingPageContainer"
-          >
-            Connexion
-          </button>
+          <NextButton styleClassName="btnStyle1" mainClassName="getStartedBtn_LandingPageContainer" text="Commencer"/>
+          <NextButton styleClassName="btnStyle2" mainClassName="signUpBtn_LandingPageContainer" text="Connexion"/>
         </div>
       </main>
     </>

@@ -28,7 +28,8 @@ const router = createBrowserRouter([
         // element: <AccountCreation />,
         // element: <ProjectCreation/>,
         // element: <OnboardingMandatoryMissions/>,
-        element: <OnboardingOptionalMissions/>,
+        // element: <OnboardingOptionalMissions/>,
+        element: <HomePage/>,
       },
       // {
       //   index: true,

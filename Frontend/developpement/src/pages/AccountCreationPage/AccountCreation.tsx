@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import LoginButton from "./LoginButton";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import NextButton from "../../components/Button/NextButton/NextButton";
 
 export default function AccountCreation() {
   const { isAuthenticated, isLoading, error } = useAuth0();
@@ -70,7 +71,7 @@ export default function AccountCreation() {
             htmlFor="passwordConfirmation"
             type="password"
           />
-          <button type="submit" className="btnStyle3 SubmitBtn_AccountCreation">Valider</button>
+          <NextButton type="submit" styleClassName="btnStyle3" mainClassName="SubmitBtn_AccountCreation" text="Valider"/>
         </form>
       )}
     </>

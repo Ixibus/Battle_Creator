@@ -3,6 +3,7 @@ import "../../styles/form/titleFormStyle.css";
 import "../../styles/onboarding/onboardingMissionsDescriptionStyle.css";
 import "../../styles/onboarding/onboardingMissionsContainerStyle.css";
 import "../../styles/onboarding/onboardingMissionsStyle.css";
+import NextButton from "../../components/Button/NextButton/NextButton";
 
 
 
@@ -25,6 +26,7 @@ export default function OnboardingMandatoryMissions() {
           <p className="onboardingMandatoryMission onboardingMissionsStyle">SYSTEME SON</p>
           <p className="onboardingMandatoryMission onboardingMissionsStyle">PHASE DE BATTLE</p>
         </div>
+        <NextButton styleClassName="btnStyle3" mainClassName="onboardingMandatoryMissionsNextBtn" text="Suivant"/>
       </div>
     </>
   );
