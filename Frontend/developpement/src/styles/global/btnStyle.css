@@ -1,6 +1,7 @@
 .button {
     --padding1: 5px 10px;
     --padding2: 5px 30px;
+    --padding3: 5px 20px;
     --border-radius1: 20px;
     --margin-top: 10px;
 }
@@ -24,5 +25,13 @@
     background-color: var(--btnColor1);
     margin-top: var(--margin-top);
     padding: var(--padding2);
+    border-radius: var(--border-radius1);
+}
+
+.plusBtnStyle1 {
+    font-size: 1.5rem;
+    color: var(--fontColor1);
+    background-color: var(--btnColor3);
+    padding: var(--padding3);
     border-radius: var(--border-radius1);
 }

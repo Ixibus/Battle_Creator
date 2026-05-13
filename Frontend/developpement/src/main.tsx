@@ -12,9 +12,12 @@ import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
 import ProjectCreation from "./pages/ProjectCreationPage/ProjectCreation";
 import OnboardingMandatoryMissions from "./pages/OnboardingMandatoryMissions/OnboardingMandatoryMissions";
 import OnboardingOptionalMissions from "./pages/OnboardingOptionalMissions/OnboardingOptionalMissions";
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage from "./pages/HomePage/Homepage";
+import MissionTagsThumbnail from "./components/MissionTagsThumbnail/MissionTagsThumbnail";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MissionTagsContainer from "./components/MissionTagsThumbnail/MissionTagsContainer";
+import PlusButton from "./components/Button/PlusButton/PlusButton";
 
 
 const router = createBrowserRouter([
@@ -29,7 +32,10 @@ const router = createBrowserRouter([
         // element: <ProjectCreation/>,
         // element: <OnboardingMandatoryMissions/>,
         // element: <OnboardingOptionalMissions/>,
-        element: <HomePage/>,
+        // element: <HomePage/>,
+        // element: <MissionTag text="Espace"/>,
+        element: <MissionTagsThumbnail title="Missions obligatoires"/>
+        // element: <PlusButton/>
       },
       // {
       //   index: true,
