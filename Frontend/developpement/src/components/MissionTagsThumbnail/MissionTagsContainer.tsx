@@ -3,17 +3,24 @@ import MissionTag from "../MissionTag/MissionTag";
 
 import "./missionTagsContainerStyle.css";
 
-export default function MissionTagsContainer() {
+type propType = { isOptional : boolean};
+
+const defaultMissionArray = ["MC", "Ticketterie", "Juges", "DJ", "Planning event", "Système son", "Phases des battles"];
+
+let optionalMissionsArray = ["Communication évènement",
+"Vestiaires",
+"Matériels d'ambiance",
+"Signalétiques",
+"Matériels participants",
+"Personnel d'encadrement",
+"Collation juge"];
+
+export default function MissionTagsContainer({isOptional} : propType) {
   return (
       <div className="missionTagsContainer missionTagsContainerStyle">
-        <MissionTag text="Espace" />
-        <MissionTag text="MC" />
-        <MissionTag text="Ticketterie" />
-        <MissionTag text="Juges" />
-        <MissionTag text="DJ" />
-        <MissionTag text="Planning event" />
-        <MissionTag text="Système son" />
-        <MissionTag text="Phases des battles" />
+        { !isOptional ? defaultMissionArray.map((mission) => <MissionTag text={mission}/>) : 
+          optionalMissionsArray.map((mission) => (<MissionTag text={mission}/>)
+        ) }
         <PlusButton/>
       </div>
   );

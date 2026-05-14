@@ -15,6 +15,5 @@
 }
 
 .missionTagsContainerStyle > :last-child {
-    flex-basis: 100%;
-    text-align: center;
+/* text-align: center; */
 }

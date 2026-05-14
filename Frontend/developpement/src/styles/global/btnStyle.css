@@ -1,7 +1,7 @@
 .button {
     --padding1: 5px 10px;
     --padding2: 5px 30px;
-    --padding3: 5px 20px;
+    --padding3: 5px 20px 6px 21px;
     --border-radius1: 20px;
     --margin-top: 10px;
 }
@@ -34,4 +34,6 @@
     background-color: var(--btnColor3);
     padding: var(--padding3);
     border-radius: var(--border-radius1);
+    display: block;
+    text-align: center;
 }

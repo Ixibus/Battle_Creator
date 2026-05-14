@@ -1,0 +1,23 @@
+.homePageTitleContainer {
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.homePageInfoThumbnailContainer {
+    border: 1px solid rgb(0, 255, 55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.homePageMainContainer {
+    border: 1px solid rgb(17, 0, 255);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}

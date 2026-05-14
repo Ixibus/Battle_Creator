@@ -1,12 +1,9 @@
-
 import "../../../styles/global/btnStyle.css";
 
 export default function PlusButton() {
   return (
-    <>
-      <span className="button plusBtnStyle1" style={{border: "1px solid green", display: "block"}}>
-        +
-      </span>
-    </>
+    <div style={{flexBasis : "100%", display : "flex", justifyContent : "center"}}>
+      <span className="button plusBtnStyle1">+</span>
+    </div>
   );
 }
