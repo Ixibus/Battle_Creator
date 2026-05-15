@@ -2,7 +2,7 @@ import "./styles/main.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Routes, Route} from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Layout from "./layouts/Layout";
@@ -15,6 +15,7 @@ import App from "./pages/Test/App";
 import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ConnexionTest from "./pages/Test/ConnexionTest";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ConnexionTest />,
+        element: <HomePage />,
       },
       // {
       //   index: true,
@@ -41,10 +42,6 @@ const router = createBrowserRouter([
         path: "/optionnalMissions",
         element: <OptionnalMissions />,
       },
-      {
-        path: "/homePage",
-        element: <HomePage />,
-      },
     ],
   },
 ]);
@@ -61,8 +58,9 @@ createRoot(document.getElementById("root")!).render(
       }}
     >
     <QueryClientProvider client={queryClient}>
-
-      <RouterProvider router={router} />
+      <Route element={<ProtectedRoute/>}>
+        <RouterProvider router={router} />
+      </Route>
     </QueryClientProvider>
 
     </Auth0Provider>
