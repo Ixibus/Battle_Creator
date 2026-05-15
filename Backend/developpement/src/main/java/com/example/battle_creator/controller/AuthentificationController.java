@@ -84,6 +84,15 @@ public class AuthentificationController {
         }
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> me(Authentication authentication){
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok();
+    }
+
 //    @GetMapping("/test")
 //    public ResponseEntity<?> test() {
 //        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
