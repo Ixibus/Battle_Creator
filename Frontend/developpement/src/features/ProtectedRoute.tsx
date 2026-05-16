@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import HomePage from "./pages/HomePage/HomePage";
+import HomePage from "../pages/HomePage/HomePage";
 
 
 export default function ProtectedRoute() {

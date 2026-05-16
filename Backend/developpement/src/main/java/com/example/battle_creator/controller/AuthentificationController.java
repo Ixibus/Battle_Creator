@@ -90,7 +90,7 @@ public class AuthentificationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        return ResponseEntity.ok();
+        return ResponseEntity.ok().body("connexion autorisée");
     }
 
 //    @GetMapping("/test")

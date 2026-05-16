@@ -15,7 +15,7 @@ import App from "./pages/Test/App";
 import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ConnexionTest from "./pages/Test/ConnexionTest";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./features/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -58,9 +58,11 @@ createRoot(document.getElementById("root")!).render(
       }}
     >
     <QueryClientProvider client={queryClient}>
+    <Routes>
       <Route element={<ProtectedRoute/>}>
         <RouterProvider router={router} />
       </Route>
+    </Routes>
     </QueryClientProvider>
 
     </Auth0Provider>
