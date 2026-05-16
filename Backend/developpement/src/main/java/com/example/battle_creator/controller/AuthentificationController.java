@@ -65,7 +65,7 @@ public class AuthentificationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequestDto authRequestDto) {
         try {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
 
                 Map<String, Object> authData = new HashMap<>();
@@ -85,12 +85,21 @@ public class AuthentificationController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> me(Authentication authentication){
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<?> me(Authentication authentication) {
+        System.out.println("=== /me called ===");
+
+        if (authentication == null) {
+            System.out.println("authentication = null");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No authentication");
         }
 
-        return ResponseEntity.ok().body("connexion autorisée");
+        if (!authentication.isAuthenticated()) {
+            System.out.println("authentication not succeeded");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Not authenticated");
+        }
+
+        System.out.println("authentication succeeded");
+        return ResponseEntity.ok("connexion autorisée");
     }
 
 //    @GetMapping("/test")

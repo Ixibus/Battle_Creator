@@ -18,5 +18,7 @@ export default function ProtectedRoute() {
 
   if (loading) return <div>Chargement...</div>;
 
-  return authed ? <HomePage /> : <Navigate to="/" replace />;
+  console.log(authed);
+
+  return authed ? <HomePage /> : <Navigate to="login" replace />;
 }

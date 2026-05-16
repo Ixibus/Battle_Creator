@@ -2,7 +2,12 @@ import "./styles/main.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Routes, Route} from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Layout from "./layouts/Layout";
@@ -23,25 +28,34 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        index: true,
-        element: <HomePage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path:"/homePage",
+            element: <HomePage />,
+          },
+          // {
+          //   index: true,
+          //   element: <App />,
+          // },
+          {
+            path: "/projectCreation",
+            element: <ProjectCreation />,
+          },
+          {
+            path: "/mandatoryMissions",
+            element: <MandatoryMissions />,
+          },
+          {
+            path: "/optionnalMissions",
+            element: <OptionnalMissions />,
+          },
+        ],
       },
-      // {
-      //   index: true,
-      //   element: <App />,
-      // },
       {
-        path: "/projectCreation",
-        element: <ProjectCreation />,
-      },
-      {
-        path: "/mandatoryMissions",
-        element: <MandatoryMissions />,
-      },
-      {
-        path: "/optionnalMissions",
-        element: <OptionnalMissions />,
-      },
+        path:"login",
+        element: <ConnexionTest/>
+      }
     ],
   },
 ]);
@@ -57,14 +71,9 @@ createRoot(document.getElementById("root")!).render(
         redirect_uri: window.location.origin,
       }}
     >
-    <QueryClientProvider client={queryClient}>
-    <Routes>
-      <Route element={<ProtectedRoute/>}>
+      <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      </Route>
-    </Routes>
-    </QueryClientProvider>
-
+      </QueryClientProvider>
     </Auth0Provider>
   </StrictMode>,
 );
