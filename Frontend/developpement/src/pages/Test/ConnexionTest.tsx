@@ -33,7 +33,7 @@ export default function ConnexionTest() {
 
     if ((await res).status === 200) {
       console.log("La connexion a marché");
-      navigate("/homePage");
+      navigate("/");
     }
     
     if (!(await res).ok) {

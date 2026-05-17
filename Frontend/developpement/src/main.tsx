@@ -33,10 +33,10 @@ const router = createBrowserRouter([
             index: true,
             element: <HomePage />,
           },
-          // {
-          //   index: true,
-          //   element: <App />,
-          // },
+          {
+            path: "homePage",
+            element: <HomePage />,
+          },
           {
             path: "projectCreation",
             element: <ProjectCreation />,
