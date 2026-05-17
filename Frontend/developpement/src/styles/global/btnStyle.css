@@ -1,3 +1,5 @@
+@import './colors.css';
+
 .button {
     --padding1: 5px 10px;
     --padding2: 5px 30px;
@@ -26,6 +28,15 @@
     margin-top: var(--margin-top);
     padding: var(--padding2);
     border-radius: var(--border-radius1);
+}
+
+.btnStyle4 {
+    color: var(--fontColor12);
+    background-color: var(--btnColor4);
+    margin-top: var(--margin-top);
+    padding: var(--padding2);
+    border-radius: var(--border-radius1);
+    font-size: var(--font-size1);
 }
 
 .plusBtnStyle1 {

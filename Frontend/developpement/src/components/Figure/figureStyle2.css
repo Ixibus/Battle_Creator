@@ -1,6 +1,7 @@
-.figureStyle {
+.figureStyle2 {
     background: var(--backgroundColor3);
     padding: 5px;
     border-radius: 5px;
     width: fit-content;
+    font-size: 1.5rem;
 }

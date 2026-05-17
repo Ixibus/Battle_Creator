@@ -27,7 +27,12 @@
     --btnColor1: #6750a4;
     --btnColor2: #ad9ed7;
     --btnColor3: #957bdd;
+    --btnColor4: whitesmoke;
     
-    /* Font color*/
+    /* Font color */
     --fontColor1: whitesmoke;
+    --fontColor2: black;
+
+    /* Font Size */
+    --font-size1: 0.6rem;
 }

@@ -18,8 +18,8 @@ let optionalMissionsArray = ["Communication évènement",
 export default function MissionTagsContainer({isOptional} : propType) {
   return (
       <div className="missionTagsContainer missionTagsContainerStyle">
-        { !isOptional ? defaultMissionArray.map((mission) => <MissionTag text={mission}/>) : 
-          optionalMissionsArray.map((mission) => (<MissionTag text={mission}/>)
+        { !isOptional ? defaultMissionArray.map((mission) => <MissionTag key={mission} text={mission}/>) : 
+          optionalMissionsArray.map((mission) => (<MissionTag key={mission} text={mission}/>)
         ) }
         <PlusButton/>
       </div>

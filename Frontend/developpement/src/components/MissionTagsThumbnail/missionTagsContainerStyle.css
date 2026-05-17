@@ -5,8 +5,8 @@
 .missionTagsContainerStyle {
     padding: 10px;
     display: flex;
+    height: 100%;
     flex-wrap: wrap;
-    width: 30vw;
     justify-content: center;
     align-items: center;
     gap: 10px;

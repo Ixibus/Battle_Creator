@@ -1,3 +1,5 @@
+import '../../styles/global/btnStyle.css';
+
 import NextButton from "../Button/NextButton/NextButton";
 import Figure from "../Figure/Figure";
 
@@ -16,7 +18,7 @@ export default function InfoThumbnail({title, displayFigure, figure, optionalfig
     <div className="infoThumbnailStyle">
       <h3>{title}</h3>
       { displayFigure && <Figure number={figure} symbol={optionalfigureSymbol}/>}
-      <NextButton styleClassName="btnStyle1" mainClassName="seeMoreList" text={nextButtonPhrase}/>
+      <NextButton styleClassName="btnStyle4" mainClassName="seeMoreList" text={nextButtonPhrase}/>
     </div>
   );
 }

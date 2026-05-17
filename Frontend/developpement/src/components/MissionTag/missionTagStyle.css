@@ -8,4 +8,5 @@
     background: var(--backgroundColor1);
     border-radius: 5px;
     color: var(--fontColor1);
+    font-size: var(--font-size1);
 }

@@ -1,23 +1,53 @@
-.homePageTitleContainer {
-    border: 1px solid red;
+.homePageContainer, .homePageHeaderContainer, .homePageInfoThumbnailContainer, .homePageMainContainer{
+border: 1px solid red;
+}
+
+.homePageContainer {
+    height: 100vh;
+    padding: 10px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+}
+
+.homePageHeaderContainer {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+}
+
+.homePageNicknameTitleContainer {
+
+    display: flex;
+}
+
+.homePageNicknameTitle{
+    justify-content: start;
+    font-size: 1.5rem;
+    margin-left: 0;
+    justify-self: left;
+}
+
+.homePageProjectTitleContainer{
+    display: flex;
+    gap : 10px;
+    align-items: center;
+}
+
+.homePageProjectTitle{
+    font-size: 2rem;
 }
 
 .homePageInfoThumbnailContainer {
+    height: 40vh;
     border: 1px solid rgb(0, 255, 55);
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    gap: 20px;
 }
 
 .homePageMainContainer {
-    border: 1px solid rgb(17, 0, 255);
+    height: 100%;
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: space-around;
     align-items: center;
 }
