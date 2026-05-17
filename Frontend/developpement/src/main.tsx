@@ -27,11 +27,10 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
         element: <ProtectedRoute />,
         children: [
           {
-            path: "/homePage",
+            index: true,
             element: <HomePage />,
           },
           // {
@@ -39,21 +38,21 @@ const router = createBrowserRouter([
           //   element: <App />,
           // },
           {
-            path: "/projectCreation",
+            path: "projectCreation",
             element: <ProjectCreation />,
           },
           {
-            path: "/mandatoryMissions",
+            path: "mandatoryMissions",
             element: <MandatoryMissions />,
           },
           {
-            path: "/optionnalMissions",
+            path: "optionnalMissions",
             element: <OptionnalMissions />,
           },
         ],
       },
       {
-        path: "/login",
+        path: "login",
         element: <ConnexionTest />,
       },
     ],

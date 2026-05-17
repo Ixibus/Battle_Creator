@@ -32,12 +32,12 @@ export default function ConnexionTest() {
     console.log(dataObj);
 
     if ((await res).status === 200) {
-      console.log("la connexion a marché");
+      console.log("La connexion a marché");
       navigate("/homePage");
     }
     
     if (!(await res).ok) {
-      console.log("la connexion non authorisée");
+      console.log("Connexion non authorisée");
     }
     
     const response = (await res);
@@ -48,7 +48,7 @@ export default function ConnexionTest() {
   return (
     <>
       <form className="form" onSubmit={(e) => handlesubmitTester(e)}>
-        <h1>TEST CREATION DE COMPTE</h1>
+        <h1>CONNEXION</h1>
         <InputContainer
           labelName="Votre login"
           htmlFor="login"
