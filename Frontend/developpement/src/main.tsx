@@ -24,14 +24,14 @@ import ProtectedRoute from "./features/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <Layout />,
     children: [
       {
+        path: "/",
         element: <ProtectedRoute />,
         children: [
           {
-            path:"/homePage",
+            path: "/homePage",
             element: <HomePage />,
           },
           // {
@@ -53,9 +53,9 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path:"login",
-        element: <ConnexionTest/>
-      }
+        path: "/login",
+        element: <ConnexionTest />,
+      },
     ],
   },
 ]);

@@ -20,5 +20,5 @@ export default function ProtectedRoute() {
 
   console.log(authed);
 
-  return authed ? <HomePage /> : <Navigate to="login" replace />;
+  return authed ? <HomePage /> : <Navigate to="/login" replace />;
 }
