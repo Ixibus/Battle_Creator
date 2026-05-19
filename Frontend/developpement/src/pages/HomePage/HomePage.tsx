@@ -7,6 +7,9 @@ import "./homePageStyle.css";
 import checked from "../../assets/icones/checked.svg";
 import members from "../../assets/icones/members.svg";
 import tools from "../../assets/icones/tools.svg";
+import mandatoryMission from '../../assets/icones/mandatoryMission.svg';
+import optionnalMission from '../../assets/icones/optionnalMission.svg';
+
 
 export default function HomePage() {
   return (
@@ -21,8 +24,9 @@ export default function HomePage() {
         <MissionTagsThumbnail
           title="Missions obligatoires"
           isOptional={false}
-        />
-        <MissionTagsThumbnail title="Missions optionnelles" isOptional={true} />
+          icone={mandatoryMission}
+          />
+        <MissionTagsThumbnail title="Missions optionnelles" isOptional={true} icone={optionnalMission}/>
       </main>
       <div className="secondaryThumbnailsContainer">
         <SecondaryThumbnail

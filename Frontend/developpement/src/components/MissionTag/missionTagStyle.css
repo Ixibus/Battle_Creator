@@ -5,4 +5,5 @@
     color: var(--fontColor2);
     display: flex;
     font-size: var(--font-size3);
+    border: 5px;
 }

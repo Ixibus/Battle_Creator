@@ -4,6 +4,13 @@
     display: grid;
     grid-template-areas:
     "A A A B"
+    "A A A B"
+    "A A A B"
+    "A A A B"
+    "A A A B"
+    "A A A B"
+    "A A A B"
+    "A A A B"
     "C C D D"
     ;
     height: 670px;
@@ -20,8 +27,12 @@
 .homePageMainContainer {
     border: 1px solid red;
     grid-area: C;
+    display: flex;
 }
 .secondaryThumbnailsContainer {
     border: 1px solid red;
     grid-area: D;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
