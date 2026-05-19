@@ -1,14 +1,12 @@
 import Figure2 from "../../components/Figure/Figure2";
-import InfoThumbnail from "../../components/InfoThumbnail/InfoThumbnail";
 import MissionTagsThumbnail from "../../components/MissionTagsThumbnail/MissionTagsThumbnail";
 import SecondaryThumbnail from "../../components/SecondaryThumbnail/SecondaryThumbnail";
 
 import "./homePageStyle.css";
 
-import checked from '../../assets/icones/checked.svg'
-import members from '../../assets/icones/members.svg'
-import tools from '../../assets/icones/tools.svg'
-
+import checked from "../../assets/icones/checked.svg";
+import members from "../../assets/icones/members.svg";
+import tools from "../../assets/icones/tools.svg";
 
 export default function HomePage() {
   return (
@@ -26,23 +24,28 @@ export default function HomePage() {
         />
         <MissionTagsThumbnail title="Missions optionnelles" isOptional={true} />
       </main>
-      <div className="homePageInfoThumbnailContainer">
-        <InfoThumbnail
-          title="Nombre de tâches"
-          displayFigure={true}
+      <div className="secondaryThumbnailsContainer">
+        <SecondaryThumbnail
+          isFigured={true}
           figure={34}
-          nextButtonPhrase="voir toutes les tâches"
+          text="Tâches"
+          icone={checked}
+          buttonText="Voir les tâches"
         />
-        <InfoThumbnail
-          title="Nombre de bénévoles"
-          displayFigure={true}
+        <SecondaryThumbnail
+          isFigured={true}
           figure={15}
-          nextButtonPhrase="voir la liste des membres"
+          text="Bénévoles"
+          icone={members}
+          buttonText="Tous les bénévoles"
+        />
+        <SecondaryThumbnail
+          isFigured={false}
+          text="Matériels"
+          icone={tools}
+          buttonText="Liste de tous les matériels"
         />
       </div>
-      <SecondaryThumbnail isFigured= {true} figure={34} text="Tâches" icone={checked}/>
-      <SecondaryThumbnail isFigured={true} figure={15} text="Bénévoles" icone={members}/>
-      <SecondaryThumbnail isFigured={false} text="Matériels" icone={tools}/>
     </div>
   );
 }

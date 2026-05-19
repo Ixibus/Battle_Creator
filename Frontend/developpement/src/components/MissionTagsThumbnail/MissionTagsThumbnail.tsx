@@ -1,19 +1,36 @@
-import MissionTagsContainer from "./MissionTagsContainer";
-import MissionTagTitle from "./MissionTagTitle";
-
-import './missionTagsThumbnailStyle.css';
+import "./missionTagsThumbnailStyle.css";
 import PlusButton from "../Button/PlusButton/PlusButton";
+import MissionTag from "../MissionTag/MissionTag";
 
 interface propsInterface {
-    title : string,
-    isOptional : boolean
+  title: string;
+  isOptional: boolean;
 }
 
-export default function MissionTagsThumbnail({title, isOptional} : propsInterface) {
+const defaultMissionArray = ["MC", "Ticketterie", "Juges", "DJ", "Planning event", "Système son", "Phases des battles"];
+
+let optionalMissionsArray = ["Communication évènement",
+"Vestiaires",
+"Matériels d'ambiance",
+"Signalétiques",
+"Matériels participants",
+"Personnel d'encadrement",
+"Collation juge"];
+
+export default function MissionTagsThumbnail({
+  title,
+  isOptional,
+}: propsInterface) {
   return (
-    <div className="missionTagsThumbnail missionTagsThumbnailStyle">
-      <MissionTagTitle title={title}/>
-      <MissionTagsContainer isOptional={isOptional}/>
+    <div className="missionThumbnailContainerStyle">
+      <h3>Missions obligatoires</h3>
+      {!isOptional
+        ? defaultMissionArray.map((mission) => (
+            <MissionTag key={mission} text={mission} />
+          ))
+        : optionalMissionsArray.map((mission) => (
+            <MissionTag key={mission} text={mission} />
+          ))}
     </div>
   );
 }

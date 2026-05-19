@@ -1,8 +1,5 @@
-.missionTagsThumbnailStyle {
+.missionThumbnailContainerStyle {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    gap: 10px;
-    height: 60%;
-    width: 40%;
+    gap: 5px;
 }

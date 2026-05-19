@@ -15,11 +15,9 @@ import OnboardingOptionalMissions from "./pages/OnboardingOptionalMissions/Onboa
 import MissionTagsThumbnail from "./components/MissionTagsThumbnail/MissionTagsThumbnail";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MissionTagsContainer from "./components/MissionTagsThumbnail/MissionTagsContainer";
 import PlusButton from "./components/Button/PlusButton/PlusButton";
 import NextButton from "./components/Button/NextButton/NextButton";
 import Figure from "./components/Figure/Figure";
-import InfoThumbnail from "./components/InfoThumbnail/InfoThumbnail";
 import HomePage from "./pages/HomePage/HomePage";
 import MissionTag from "./components/MissionTag/MissionTag";
 import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbnail";

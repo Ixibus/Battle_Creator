@@ -13,6 +13,7 @@
     --backgroundColor1: #e1dbf0;
     --backgroundColor2: #fdd2d8;
     --backgroundColor3: #fca4aebe;
+    --backgroundColor4: #D4E4FC;
     
     /* Item */
     --itemColor1: #f5d8ff;
@@ -36,4 +37,5 @@
     /* Font Size */
     --font-size1: 0.6rem;
     --font-size2: 1.5rem;
+    --font-size3: 0.8rem;
 }

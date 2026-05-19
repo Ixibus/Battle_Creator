@@ -1,0 +1,27 @@
+.homePageContainer{
+    width: 1080px;
+    border: 1px solid red;
+    display: grid;
+    grid-template-areas:
+    "A A A B"
+    "C C D D"
+    ;
+    height: 670px;
+}
+
+.homePageProjectTitleContainer {
+    border: 1px solid red;
+    grid-area: A;
+}
+.homePageFigureContainer {
+    border: 1px solid red;
+    grid-area: B;
+}
+.homePageMainContainer {
+    border: 1px solid red;
+    grid-area: C;
+}
+.secondaryThumbnailsContainer {
+    border: 1px solid red;
+    grid-area: D;
+}

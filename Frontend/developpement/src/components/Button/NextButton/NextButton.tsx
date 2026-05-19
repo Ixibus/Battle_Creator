@@ -4,7 +4,7 @@ interface interfaceProps {
     type?: "submit",
     styleClassName: string,
     mainClassName: string,
-    text: string
+    text?: string
 }
 
 export default function NextButton({type, styleClassName, mainClassName, text} : interfaceProps) {

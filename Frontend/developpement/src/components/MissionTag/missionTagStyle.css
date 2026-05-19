@@ -1,12 +1,8 @@
-.missionTag {
-    --backgroundColor1: #784fe7;
-    --fontColor1: whitesmoke;
-}
-
 .missionTagStyle {
     padding: 2px 10px;
-    background: var(--backgroundColor1);
+    background: var(--backgroundColor4);
     border-radius: 5px;
-    color: var(--fontColor1);
-    font-size: var(--font-size1);
+    color: var(--fontColor2);
+    display: flex;
+    font-size: var(--font-size3);
 }
