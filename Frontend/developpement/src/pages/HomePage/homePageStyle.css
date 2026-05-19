@@ -1,5 +1,5 @@
 .homePageContainer, .homePageHeaderContainer, .homePageInfoThumbnailContainer, .homePageMainContainer{
-border: 1px solid red;
+/* border: 1px solid red; */
 }
 
 .homePageContainer {
@@ -39,7 +39,7 @@ border: 1px solid red;
 
 .homePageInfoThumbnailContainer {
     height: 40vh;
-    border: 1px solid rgb(0, 255, 55);
+    /* border: 1px solid rgb(0, 255, 55); */
     display: flex;
     justify-content: space-around;
     align-items: center;
