@@ -1,21 +1,31 @@
 import Figure2 from "../../components/Figure/Figure2";
 import InfoThumbnail from "../../components/InfoThumbnail/InfoThumbnail";
 import MissionTagsThumbnail from "../../components/MissionTagsThumbnail/MissionTagsThumbnail";
+import SecondaryThumbnail from "../../components/SecondaryThumbnail/SecondaryThumbnail";
 
 import "./homePageStyle.css";
+
+import checked from '../../assets/icones/checked.svg'
+import members from '../../assets/icones/members.svg'
+import tools from '../../assets/icones/tools.svg'
+
 
 export default function HomePage() {
   return (
     <div className="homePageContainer">
-      <header className="homePageHeaderContainer">
-        <div className="homePageNicknameTitleContainer">
-          <p className="homePageNicknameTitle">Hello Nico</p>
-        </div>
-        <div className="homePageProjectTitleContainer">
-          <h1 className="homePageProjectTitle">Battle Infinity</h1>
-          <Figure2 number={60} symbol="%" />
-        </div>
-      </header>
+      <div className="homePageProjectTitleContainer">
+        <h1 className="homePageProjectTitle">Battle Infinity</h1>
+      </div>
+      <div className="homePageFigureContainer">
+        <Figure2 number={60} symbol="%" />
+      </div>
+      <main className="homePageMainContainer">
+        <MissionTagsThumbnail
+          title="Missions obligatoires"
+          isOptional={false}
+        />
+        <MissionTagsThumbnail title="Missions optionnelles" isOptional={true} />
+      </main>
       <div className="homePageInfoThumbnailContainer">
         <InfoThumbnail
           title="Nombre de tâches"
@@ -30,13 +40,9 @@ export default function HomePage() {
           nextButtonPhrase="voir la liste des membres"
         />
       </div>
-      <main className="homePageMainContainer">
-        <MissionTagsThumbnail
-          title="Missions obligatoires"
-          isOptional={false}
-        />
-        <MissionTagsThumbnail title="Missions optionnelles" isOptional={true} />
-      </main>
+      <SecondaryThumbnail isFigured= {true} figure={34} text="Tâches" icone={checked}/>
+      <SecondaryThumbnail isFigured={true} figure={15} text="Bénévoles" icone={members}/>
+      <SecondaryThumbnail isFigured={false} text="Matériels" icone={tools}/>
     </div>
   );
 }

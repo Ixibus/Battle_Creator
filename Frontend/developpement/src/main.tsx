@@ -21,6 +21,9 @@ import NextButton from "./components/Button/NextButton/NextButton";
 import Figure from "./components/Figure/Figure";
 import InfoThumbnail from "./components/InfoThumbnail/InfoThumbnail";
 import HomePage from "./pages/HomePage/HomePage";
+import MissionTag from "./components/MissionTag/MissionTag";
+import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbnail";
+import Figure2 from "./components/Figure/Figure2";
 
 
 const router = createBrowserRouter([
@@ -41,8 +44,10 @@ const router = createBrowserRouter([
         // element: <PlusButton/>
         // element: <NextButton styleClassName="btnStyle1" mainClassName="test" text="voir toute la liste des tâches"/>
         // element: <Figure number={34}/>
+        // element: <Figure2 number={34}/>
         // element: <InfoThumbnail/>
         element: <HomePage/>
+        // element: <SecondaryThumbnail text="tâches"/>
       },
       // {
       //   index: true,
