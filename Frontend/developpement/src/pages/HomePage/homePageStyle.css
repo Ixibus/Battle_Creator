@@ -1,36 +1,48 @@
-.homePageContainer{
+.homePageContainer {
     width: 1080px;
-    border: 1px solid red;
     display: grid;
-    grid-template-areas:
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "A A A B"
-    "C C D D"
+    grid-template:
+    "A A A B" 1fr 
+    "C C D D" 1fr / 2fr 3fr 1fr 2fr
     ;
     height: 670px;
 }
 
 .homePageProjectTitleContainer {
-    border: 1px solid red;
+    margin: var(--cel-margin);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
     grid-area: A;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
+
+
+.homePageProjectInfoContainer {
+    display: flex;
+    align-items: baseline;
+}
+
 .homePageFigureContainer {
-    border: 1px solid red;
+    margin: var(--cel-margin);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
     grid-area: B;
 }
+
 .homePageMainContainer {
-    border: 1px solid red;
+    margin: var(--cel-margin);
+    gap: var(--cel-margin);
     grid-area: C;
     display: flex;
 }
+
 .secondaryThumbnailsContainer {
-    border: 1px solid red;
+    margin: var(--cel-margin);
+    gap: var(--cel-margin);
     grid-area: D;
     display: flex;
     flex-direction: column;

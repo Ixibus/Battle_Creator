@@ -7,7 +7,7 @@ interface propInterface {
 
 export default function Figure2({number, symbol} : propInterface) {
     return(
-        <p className="figureStyle2">
+        <p className="figureStyle2 titleMarginBottomStyle">
             {number} {symbol}
         </p>
     )

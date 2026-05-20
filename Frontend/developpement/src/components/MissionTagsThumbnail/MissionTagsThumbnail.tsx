@@ -1,5 +1,6 @@
 import "./missionTagsThumbnailStyle.css";
-import PlusButton from "../Button/PlusButton/PlusButton";
+import "../../styles/global/marginTitle.css";
+
 import MissionTag from "../MissionTag/MissionTag";
 import Icone from "../Icone/Icone";
 
@@ -37,7 +38,7 @@ export default function MissionTagsThumbnail({
 }: propsInterface) {
   return (
     <div className="missionThumbnailContainerStyle">
-      <div className="missionThumbnailTitleContainerStyle">
+      <div className="titleMarginBottomStyle">
         <h3>Missions obligatoires</h3>
         <Icone srcIcone={icone}/>
       </div>

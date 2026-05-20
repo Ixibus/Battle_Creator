@@ -1,9 +1,9 @@
 .missionTagStyle {
     padding: 2px 10px;
     background: var(--backgroundColor4);
-    border-radius: 5px;
+    border-radius: var(--border-radius1);
     color: var(--fontColor2);
     display: flex;
+    align-items: center;
     font-size: var(--font-size3);
-    border: 5px;
 }
