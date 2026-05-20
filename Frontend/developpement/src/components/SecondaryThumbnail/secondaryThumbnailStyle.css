@@ -12,5 +12,9 @@
     border: var(--border1);
     border-radius: var(--border-radius1);
     color: var(--fontColor2);
-    font-size: var(--font-size2);
+    font-size: var(--font-size3);
+}
+
+.secondaryThumbnailTitleStyle{
+    font-weight: var(--font-weight1);
 }

@@ -2,7 +2,7 @@ import "./missionTagsThumbnailStyle.css";
 import "../../styles/global/marginTitle.css";
 
 import MissionTag from "../MissionTag/MissionTag";
-import Icone from "../Icone/Icone";
+import Icone, {StyleType} from "../Icones/Icone";
 
 
 interface propsInterface {
@@ -38,9 +38,9 @@ export default function MissionTagsThumbnail({
 }: propsInterface) {
   return (
     <div className="missionThumbnailContainerStyle">
-      <div className="titleMarginBottomStyle">
-        <h3>Missions obligatoires</h3>
-        <Icone srcIcone={icone}/>
+      <div className="missionThumbnailTitleContainerStyle">
+        <h3>{title}</h3>
+        <Icone srcIcone={icone} styleType={StyleType.style1}/>
       </div>
       {!isOptional
         ? defaultMissionArray.map((mission) => (

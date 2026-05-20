@@ -5,7 +5,7 @@
     "A A A B" 1fr 
     "C C D D" 1fr / 2fr 3fr 1fr 2fr
     ;
-    height: 670px;
+    height: 600px;
 }
 
 .homePageProjectTitleContainer {
@@ -17,12 +17,15 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    font-size: var(--font-size4);
+    font-weight: var(--font-weight1);
 }
 
 
 .homePageProjectInfoContainer {
     display: flex;
     align-items: baseline;
+    font-size: var(--font-size3);
 }
 
 .homePageFigureContainer {
@@ -31,6 +34,11 @@
     border-radius: var(--border-radius1);
     padding: var(--cel-padding);
     grid-area: B;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+
 }
 
 .homePageMainContainer {

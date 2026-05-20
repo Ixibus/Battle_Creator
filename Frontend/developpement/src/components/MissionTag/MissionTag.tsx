@@ -1,4 +1,4 @@
-import Icone from '../Icone/Icone';
+import Icone from '../Icones/Icone';
 import './missionTagStyle.css';
 
 import forwardArrow from '../../assets/icones/forwardArrow.svg'

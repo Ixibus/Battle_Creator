@@ -23,17 +23,17 @@ export default function HomePage() {
         </div>
       </div>
       <div className="homePageFigureContainer">
-        <h2>Progression</h2>
+        <h2>PROGRESSION</h2>
         <Figure2 number={60} symbol="%" />
       </div>
       <main className="homePageMainContainer">
         <MissionTagsThumbnail
-          title="Missions obligatoires"
+          title="MISSIONS OBLIGATOIRES"
           isOptional={false}
           icone={mandatoryMission}
         />
         <MissionTagsThumbnail
-          title="Missions optionnelles"
+          title="MISSIONS OPTIONNELLES"
           isOptional={true}
           icone={optionnalMission}
         />

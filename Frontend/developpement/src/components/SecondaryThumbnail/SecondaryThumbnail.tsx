@@ -1,6 +1,6 @@
 import NextButton from '../Button/NextButton/NextButton';
 import Figure from '../Figure/Figure';
-import Icone from '../Icone/Icone';
+import Icone, {StyleType} from '../Icones/Icone';
 import './secondaryThumbnailStyle.css';
 
 interface propInterface {
@@ -15,8 +15,8 @@ export default function SecondaryThumbnail({isFigured, figure, text, icone, butt
     return(
         <div className="secondaryThumbnail secondaryThumbnailStyle">
             {isFigured && <Figure number={figure}/>}
-            <p>{text}</p>
-            <Icone srcIcone={icone}/>
+            <p className="secondaryThumbnailTitleStyle">{text}</p>
+            <Icone srcIcone={icone} styleType={StyleType.style1}/>
             <NextButton styleClassName="btnStyle5" mainClassName="tasksButton" text={buttonText}/>
         </div>
     )

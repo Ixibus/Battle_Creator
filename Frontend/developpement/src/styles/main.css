@@ -4,8 +4,8 @@
 @import "./themes/light.css";
 @import "./themes/dark.css";
 @font-face {
-  font-family: Classic;
-  src: url(../assets/fonts/verdanab.ttf);
+  font-family: Inter;
+  src: url(../assets/fonts/inter.ttf);
 }
 
 :root {
@@ -17,7 +17,7 @@
 	min-height: 100dvh;
 	
     /* Custom properties */
-    font-family: Classic;
+    font-family: Inter;
     scroll-behavior: smooth;
 }
 

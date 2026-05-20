@@ -38,7 +38,14 @@
     --font-size1: 0.6rem;
     --font-size2: 1.5rem;
     --font-size3: 0.8rem;
+    --font-size4: 1.3rem;
+    --font-size5: 1.1rem;
+    --font-size6: 2.7rem;
+    
+    /* Font weight */
+    --font-weight1: bolder;
 
+    
     /* Border */
     --border1: 1px solid black;
     --border-radius1: 10px;
@@ -47,5 +54,5 @@
     --cel-margin: 10px;
 
     /* Padding */
-    --cel-padding: 10px 20px;
+    --cel-padding: 15px 20px;
 }
