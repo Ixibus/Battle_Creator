@@ -7,17 +7,20 @@ interface propInterface {
     isFigured? : boolean,
     figure? : number,
     text : string,
-    icone : string,
+    icone : React.FC<React.SVGProps<SVGSVGElement>>,
     buttonText? : string,
 };
 
+
+
 export default function SecondaryThumbnail({isFigured, figure, text, icone, buttonText} : propInterface) {
+    console.log(icone);
     return(
         <div className="secondaryThumbnail secondaryThumbnailStyle">
             {isFigured && <Figure number={figure}/>}
             <p className="secondaryThumbnailTitleStyle">{text}</p>
-            <Icone srcIcone={icone} styleType={StyleType.style1}/>
-            <NextButton styleClassName="btnStyle5" mainClassName="tasksButton" text={buttonText}/>
+            <Icone SrcIcone={icone} styleType={StyleType.style1}/>
+            <NextButton styleClassName="btnStyle6" mainClassName="tasksButton" text={buttonText}/>
         </div>
     )
 }

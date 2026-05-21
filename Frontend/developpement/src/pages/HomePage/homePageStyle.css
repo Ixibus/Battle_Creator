@@ -2,8 +2,9 @@
     width: 1080px;
     display: grid;
     grid-template:
-    "A A A B" 1fr 
-    "C C D D" 1fr / 2fr 3fr 1fr 2fr
+    "A A A B" 40% 
+    /* "C C D D" 1fr / 2fr 3fr 1fr 2fr */
+    "C C D D" 1fr / 3fr 3fr 1fr 3fr
     ;
     height: 600px;
 }
@@ -38,7 +39,11 @@
     flex-direction: column;
     font-size: var(--font-size1);
     font-weight: var(--font-weight1);
+}
 
+.homePageFigureProgressionText {
+    color: var(--fontColor5);
+    letter-spacing: 1px;
 }
 
 .homePageMainContainer {

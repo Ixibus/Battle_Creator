@@ -7,10 +7,10 @@ export enum StyleType {
 }
 
 interface PropType {
-  srcIcone: string;
-  styleType: StyleType;
+  SrcIcone: React.FC<React.SVGProps<SVGSVGElement>>;
+  styleType?: StyleType;
 }
 
-export default function Icone({ srcIcone, styleType }: PropType) {
-  return <img src={srcIcone} className={styleType} />;
+export default function Icone({ SrcIcone, styleType }: PropType) {
+  return <SrcIcone className={styleType}/>;
 }

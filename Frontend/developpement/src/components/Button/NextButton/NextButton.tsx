@@ -1,4 +1,5 @@
 import '../../../styles/global/btnStyle.css';
+import './nextButtonStyle.css'
 
 interface interfaceProps {
     type?: "submit",
@@ -9,8 +10,11 @@ interface interfaceProps {
 
 export default function NextButton({type, styleClassName, mainClassName, text} : interfaceProps) {
   return (
-    <button type={type} className={`button ${styleClassName} ${mainClassName}`}>
+    <div className='nextButtonContainerStyle'>
+      <button type={type} className={`button ${styleClassName} ${mainClassName}`}>
       {text} 
-    </button>
+      </button>
+    </div>
+
   );
 }

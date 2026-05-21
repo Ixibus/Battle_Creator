@@ -8,7 +8,7 @@ import Icone, {StyleType} from "../Icones/Icone";
 interface propsInterface {
   title: string;
   isOptional: boolean;
-  icone: string
+  icone: React.FC<React.SVGProps<SVGSVGElement>>,
 }
 
 const defaultMissionArray = [
@@ -40,7 +40,7 @@ export default function MissionTagsThumbnail({
     <div className="missionThumbnailContainerStyle">
       <div className="missionThumbnailTitleContainerStyle">
         <h3>{title}</h3>
-        <Icone srcIcone={icone} styleType={StyleType.style1}/>
+        <Icone SrcIcone={icone} styleType={StyleType.style1}/>
       </div>
       {!isOptional
         ? defaultMissionArray.map((mission) => (

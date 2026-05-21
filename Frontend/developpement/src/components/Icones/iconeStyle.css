@@ -1,14 +1,17 @@
 .iconeStyle {
     height: 20px;
     margin-left: auto;
+    fill: var(--fontColor5);
 }
 
 .iconeStyle2 {
     height: 20px;
     margin: auto;
+    fill: var(--fontColor5);
 }
 
 .iconeStyle3 {
     height: 20px;
     margin-left: 10px;
+    fill: var(--fontColor5);
 }

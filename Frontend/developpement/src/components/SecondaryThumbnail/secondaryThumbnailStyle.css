@@ -17,4 +17,5 @@
 
 .secondaryThumbnailTitleStyle{
     font-weight: var(--font-weight1);
+    color: var(--fontColor4);
 }

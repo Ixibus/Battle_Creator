@@ -4,12 +4,15 @@ import SecondaryThumbnail from "../../components/SecondaryThumbnail/SecondaryThu
 
 import "./homePageStyle.css";
 
-import checked from "../../assets/icones/checked.svg";
-import members from "../../assets/icones/members.svg";
-import tools from "../../assets/icones/tools.svg";
-import mandatoryMission from "../../assets/icones/mandatoryMission.svg";
-import optionnalMission from "../../assets/icones/optionnalMission.svg";
-import filledPoint from "../../assets/icones/filledPoint.svg";
+import Checked from "../../assets/icones/checked.svg?react";
+import Members from "../../assets/icones/members.svg?react";
+import Tools from "../../assets/icones/tools.svg?react";
+import MandatoryMission from "../../assets/icones/mandatoryMission.svg?react";
+import OptionnalMission from "../../assets/icones/optionnalMission.svg?react";
+import FilledPoint from "../../assets/icones/filledPoint.svg?react";
+import Icone from "../../components/Icones/Icone";
+
+console.log(Checked);
 
 export default function HomePage() {
   return (
@@ -18,24 +21,24 @@ export default function HomePage() {
         <h1 className="homePageProjectTitle">Battle Infinity</h1>
         <div className="homePageProjectInfoContainer">
           <p>CCVA Villeurbanne</p>
-          <img src={filledPoint} />
+          <Icone SrcIcone={FilledPoint}/>
           <p>12 juin 2026</p>
         </div>
       </div>
       <div className="homePageFigureContainer">
-        <h2>PROGRESSION</h2>
+        <h2 className="homePageFigureProgressionText">PROGRESSION</h2>
         <Figure2 number={60} symbol="%" />
       </div>
       <main className="homePageMainContainer">
         <MissionTagsThumbnail
           title="MISSIONS OBLIGATOIRES"
           isOptional={false}
-          icone={mandatoryMission}
+          icone={MandatoryMission}
         />
         <MissionTagsThumbnail
           title="MISSIONS OPTIONNELLES"
           isOptional={true}
-          icone={optionnalMission}
+          icone={OptionnalMission}
         />
       </main>
       <div className="secondaryThumbnailsContainer">
@@ -43,21 +46,21 @@ export default function HomePage() {
           isFigured={true}
           figure={34}
           text="Tâches"
-          icone={checked}
-          buttonText="Voir les tâches"
+          icone={Checked}
+          buttonText="VOIR LES TACHES"
         />
         <SecondaryThumbnail
           isFigured={true}
           figure={15}
           text="Bénévoles"
-          icone={members}
-          buttonText="Tous les bénévoles"
+          icone={Members}
+          buttonText="TOUS LES BENEVOLES"
         />
         <SecondaryThumbnail
           isFigured={false}
           text="Matériels"
-          icone={tools}
-          buttonText="Liste de tous les matériels"
+          icone={Tools}
+          buttonText="VOIR LA LISTE"
         />
       </div>
     </div>

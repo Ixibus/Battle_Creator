@@ -14,6 +14,7 @@
 .greetingtext {
     font-weight: var(--font-weight1);
     font-size: var(--font-size3);
+    color: var(--fontColor4);
 }
 
 .nicoPpStyle {
@@ -36,11 +37,11 @@
     gap: 5px;
     flex-direction: column;
     align-items: baseline;
-    /* border: 1px solid red; */
 }
 
 .navText {
     font-size: var(--font-size1);
+    color: var(--fontColor4);
 }
 
 .logoutContainer {
@@ -52,6 +53,6 @@
 .logoutText {
     font-size: var(--font-size1);
     font-weight: var(--font-weight1);
-
+    color: var(--fontColor4);
 }
 

@@ -1,23 +1,19 @@
 .missionThumbnailContainerStyle {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
+    gap: 10px;
     width: 100%;
     border: var(--border1);
     border-radius: var(--border-radius1);
     padding: var(--cel-padding);
 }
 
-.missionThumbnailTitleContainerStyle{
-    display: flex;
-}
-
 .missionThumbnailTitleContainerStyle {
     display: flex;
     align-items: center;
-    font-size: 0.6rem;
+    font-size: var(--font-size7);
     font-weight: var(--font-weight1);
+    color: var(--fontColor4);
 }
 
 
