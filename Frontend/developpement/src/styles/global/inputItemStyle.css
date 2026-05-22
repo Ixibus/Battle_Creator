@@ -1,4 +1,6 @@
 .inputItemStyle {
-    background-color: var(--inputColor1);
-    border-radius: 5px;
+    background: var(--backgroundColor7);
+    border-radius: var(--border-radius2);
+    height: 40px;
+    width: 100%;
 }

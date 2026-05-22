@@ -14,6 +14,9 @@
     --backgroundColor2: #fdd2d8;
     --backgroundColor3: #fca4aebe;
     --backgroundColor4: #D4E4FC;
+    --backgroundColor5: whitesmoke;
+    --backgroundColor6: linear-gradient(90deg, #D4E4FC, #EDDCFF);
+    --backgroundColor7: #e6dcff;
     
     /* Item */
     --itemColor1: #f5d8ff;
@@ -58,6 +61,7 @@
     --border1: 1px solid var(--border-color1);
     --border2: 1px solid var(--border-color2);
     --border-radius1: 10px;
+    --border-radius2: 50px;
     
     /* Margin */
     --cel-margin: 10px;

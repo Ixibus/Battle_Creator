@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import useThemeStore from '../store/useThemeStore'
 import Nav from '../components/Nav/Nav'
 
-import './Layout.css'
+import './layout.css'
 
 
 export default function Layout() {

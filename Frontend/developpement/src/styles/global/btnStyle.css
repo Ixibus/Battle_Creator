@@ -26,7 +26,7 @@
 .btnStyle3 {
     color: var(--fontColor1);
     background-color: var(--btnColor1);
-    margin-top: var(--margin-top);
+    margin: var(--margin-top);
     padding: var(--padding2);
     border-radius: var(--border-radius1);
 }
@@ -75,6 +75,14 @@
     padding: var(--padding4);
     border-radius: var(--border-radius2);
     letter-spacing: var(--letter-spacing1);
+}
+
+.btnStyle9 {
+    color: var(--fontColor1);
+    background-color: var(--btnColor2);
+    margin: var(--margin-top);
+    padding: var(--padding2);
+    border-radius: var(--border-radius1);
 }
 
 .plusBtnStyle1 {

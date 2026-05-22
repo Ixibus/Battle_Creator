@@ -1,4 +1,5 @@
 import '../../styles/global/inputContainerStyle.css'
+import '../../styles/global/inputLabelStyle.css'
 import '../../styles/global/inputItemStyle.css'
 import type { ChangeEventHandler } from 'react';
 
@@ -23,7 +24,7 @@ export default function InputContainer({
 }: InputContainerProps) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor}>{labelName}</label>
+      <label className="inputLabelStyle" htmlFor={htmlFor}>{labelName}</label>
       <input className="inputItemStyle" value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} />
     </div>
   );

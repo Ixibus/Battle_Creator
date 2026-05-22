@@ -31,8 +31,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LandingPage />,
-        // element: <AccountCreation />,
+        // element: <LandingPage />,
+        element: <AccountCreation />,
         // element: <ProjectCreation/>,
         // element: <OnboardingMandatoryMissions/>,
         // element: <OnboardingOptionalMissions/>,

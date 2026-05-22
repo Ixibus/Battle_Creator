@@ -1,6 +1,8 @@
 import "../../styles/form/formStyle.css";
 import "../../styles/form/titleFormStyle.css";
-// import "../../styles/global/btnStyle.css";
+import "../../styles/form/inputsFormContainerStyle.css";
+import "../../components/Button/NextButton/buttonsContainerStyle.css";
+import "../../styles/global/btnStyle.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -41,37 +43,48 @@ export default function AccountCreation() {
   return (
     <>
       {!isAuthenticated && (
-        <form
-          className="formStyle"
-          onSubmit={(e) =>
-            handlesubmit(e)
-          }
-        >
+        <form className="formStyle" onSubmit={(e) => handlesubmit(e)}>
           <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
-          <InputContainer
-            labelName="Votre login de connexion"
-            htmlFor="login"
-            type="text"
-            onChange={(e) => setLogin(e.target.value)}
-          />
-          <InputContainer
-            labelName="Votre email"
-            htmlFor="email"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <InputContainer
-            labelName="Veuillez rentrer votre mot de passe"
-            htmlFor="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputContainer
-            labelName="Confirmer votre mot de passe"
-            htmlFor="passwordConfirmation"
-            type="password"
-          />
-          <NextButton type="submit" styleClassName="btnStyle3" mainClassName="SubmitBtn_AccountCreation" text="Valider"/>
+          <div className="inputsFormContainerStyle">
+            <InputContainer
+              labelName="Votre login de connexion"
+              htmlFor="login"
+              type="text"
+              onChange={(e) => setLogin(e.target.value)}
+            />
+            <InputContainer
+              labelName="Votre email"
+              htmlFor="email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <InputContainer
+              labelName="Veuillez rentrer votre mot de passe"
+              htmlFor="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputContainer
+              labelName="Confirmer votre mot de passe"
+              htmlFor="passwordConfirmation"
+              type="password"
+            />
+
+            <div className="buttonsContainerStyle">
+              <NextButton
+                type="submit"
+                styleClassName="btnStyle3"
+                mainClassName="SubmitBtn_AccountCreation"
+                text="Valider"
+              />
+              <NextButton
+                type="submit"
+                styleClassName="btnStyle9"
+                mainClassName="SubmitBtn_AccountCreation"
+                text="Effacer"
+              />
+            </div>
+          </div>
         </form>
       )}
     </>

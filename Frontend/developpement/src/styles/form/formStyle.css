@@ -6,5 +6,6 @@
     align-items: center;
     width: fit-content;
     height: fit-content;
-    gap : 2vh;
+    background: transparent;
+    gap : 1vh;
 }
