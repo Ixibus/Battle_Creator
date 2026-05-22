@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
     padding: 0 40px;
     height: 80vh;
     width: 90vw;
@@ -13,11 +13,19 @@
 }
 
 .title_LandingPageContainer {
-    font-size: 3rem;
+    font-size: var(--font-size8);
+    color: var(--fontColor4);
+    letter-spacing: var(--letter-spacing1);
+}
+
+.subtitle_LandingPageContainer{
+    font-size: var(--font-size3);
+    color: var(--fontColor4);
+    letter-spacing: var(--letter-spacing1);
 }
 
 .btnsContainer_LandingPageContainer {
     margin-top: 50px;
     display: flex;
-    gap: 10px;
+    gap: 30px;
 }

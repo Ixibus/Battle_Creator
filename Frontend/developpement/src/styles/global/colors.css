@@ -36,7 +36,7 @@
     --fontColor3: #6A548A;
     --fontColor4: #513C71;
     --fontColor5: #afa2c2;
-
+    
     /* Font Size */
     --font-size1: 0.6rem;
     --font-size2: 1.5rem;
@@ -45,13 +45,18 @@
     --font-size5: 1.1rem;
     --font-size6: 2.7rem;
     --font-size7: 0.7rem;
+    --font-size8: 3rem;
     
     /* Font weight */
     --font-weight1: bolder;
-
+    
+    /* Border color */
+    --border-color1: #513C71;
+    --border-color2: #D5BBF9;
     
     /* Border */
-    --border1: 1px solid var(--fontColor4);
+    --border1: 1px solid var(--border-color1);
+    --border2: 1px solid var(--border-color2);
     --border-radius1: 10px;
     
     /* Margin */
@@ -59,4 +64,7 @@
 
     /* Padding */
     --cel-padding: 15px 20px;
+    
+    /* Letter-Spacing */
+    --letter-spacing1: 1px;
 }

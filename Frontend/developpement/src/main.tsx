@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // element: <LandingPage />,
+        element: <LandingPage />,
         // element: <AccountCreation />,
         // element: <ProjectCreation/>,
         // element: <OnboardingMandatoryMissions/>,
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         // element: <Figure number={34}/>
         // element: <Figure2 number={34}/>
         // element: <InfoThumbnail/>
-        element: <HomePage/>
+        // element: <HomePage/>
         // element: <SecondaryThumbnail text="tâches"/>
       },
       // {
