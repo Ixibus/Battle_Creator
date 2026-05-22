@@ -5,6 +5,5 @@
 
 .mainContainer {
     display: flex;
-    height: 100%;
-    background: var(--backgroundColor6);
+    margin: auto;
 }

@@ -22,50 +22,61 @@ import HomePage from "./pages/HomePage/HomePage";
 import MissionTag from "./components/MissionTag/MissionTag";
 import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbnail";
 import Figure2 from "./components/Figure/Figure2";
-
+import OnboardingLayout from "./layouts/OnboardingLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Layout />,
     children: [
       {
-        index: true,
-        // element: <LandingPage />,
-        element: <AccountCreation />,
-        // element: <ProjectCreation/>,
-        // element: <OnboardingMandatoryMissions/>,
-        // element: <OnboardingOptionalMissions/>,
-        // element: <HomePage/>,
-        // element: <MissionTag text="Espace"/>,
-        // element: <MissionTagsThumbnail title="Missions obligatoires"/>
-        // element: <PlusButton/>
-        // element: <NextButton styleClassName="btnStyle1" mainClassName="test" text="voir toute la liste des tâches"/>
-        // element: <Figure number={34}/>
-        // element: <Figure2 number={34}/>
-        // element: <InfoThumbnail/>
-        // element: <HomePage/>
-        // element: <SecondaryThumbnail text="tâches"/>
-      },
-      // {
-      //   index: true,
-      //   element: <App />,
-      // },
-      {
-        path: "/projectCreation",
-        element: <ProjectCreation/>,
+        element: <OnboardingLayout />,
+        children: [
+          {
+            index: true,
+            // element: <LandingPage />,
+            element: <AccountCreation />,
+            // element: <ProjectCreation/>,
+            // element: <OnboardingMandatoryMissions/>,
+            // element: <OnboardingOptionalMissions/>,
+          },
+        ],
       },
       {
-        path: "/mandatoryMissions",
-        element: <OnboardingMandatoryMissions/>,
-      },
-      {
-        path: "/optionnalMissions",
-        element: <OnboardingOptionalMissions/>,
-      },
-      {
-        path: "/homePage",
-        element: <HomePage />,
+        element: <Layout />,
+        children: [
+          {
+            // index: true,
+            element: <HomePage/>,
+            // element: <MissionTag text="Espace"/>,
+            // element: <MissionTagsThumbnail title="Missions obligatoires"/>
+            // element: <PlusButton/>
+            // element: <NextButton styleClassName="btnStyle1" mainClassName="test" text="voir toute la liste des tâches"/>
+            // element: <Figure number={34}/>
+            // element: <Figure2 number={34}/>
+            // element: <InfoThumbnail/>
+            // element: <HomePage/>
+            // element: <SecondaryThumbnail text="tâches"/>
+          },
+          // {
+          //   index: true,
+          //   element: <App />,
+          // },
+          {
+            path: "/projectCreation",
+            element: <ProjectCreation />,
+          },
+          {
+            path: "/mandatoryMissions",
+            element: <OnboardingMandatoryMissions />,
+          },
+          {
+            path: "/optionnalMissions",
+            element: <OnboardingOptionalMissions />,
+          },
+          {
+            path: "/homePage",
+            element: <HomePage />,
+          },
+        ],
       },
     ],
   },
@@ -82,11 +93,9 @@ createRoot(document.getElementById("root")!).render(
         redirect_uri: window.location.origin,
       }}
     >
-    <QueryClientProvider client={queryClient}>
-
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </Auth0Provider>
   </StrictMode>,
 );

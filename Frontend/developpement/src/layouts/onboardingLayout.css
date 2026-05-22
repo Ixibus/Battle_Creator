@@ -1,0 +1,13 @@
+.onboardingLayoutContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid red;
+}
+
+.onboardingLayoutMainContainer {
+    display: flex;
+    height: 100%;
+    background: var(--backgroundColor6);
+    border: 1px solid red;
+}
