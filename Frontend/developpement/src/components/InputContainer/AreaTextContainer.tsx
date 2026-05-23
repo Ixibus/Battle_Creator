@@ -1,5 +1,5 @@
 import '../../styles/global/inputContainerStyle.css'
-import '../../styles/global/inputItemStyle.css'
+import '../../styles/global/textAreaStyle.css'
 import type { ChangeEventHandler } from 'react';
 
 type InputType = "text" | "password" | "email";
@@ -25,8 +25,8 @@ export default function AreaTextContainer({
 }: AreaContainerProps) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor}>{labelName}</label>
-      <textarea name={htmlFor} id={htmlFor} className="inputItemStyle" cols={cols} rows={rows} onChange={onChange} />
+      <label className="inputLabelStyle" htmlFor={htmlFor}>{labelName}</label>
+      <textarea name={htmlFor} id={htmlFor} className="textAreaStyle" cols={cols} rows={rows} onChange={onChange} />
     </div>
   );
 }

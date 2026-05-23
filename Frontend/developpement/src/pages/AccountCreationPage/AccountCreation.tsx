@@ -73,13 +73,13 @@ export default function AccountCreation() {
             <div className="buttonsContainerStyle">
               <NextButton
                 type="submit"
-                styleClassName="btnStyle3"
+                styleClassName="btnStyle10"
                 mainClassName="SubmitBtn_AccountCreation"
                 text="Valider"
               />
               <NextButton
                 type="submit"
-                styleClassName="btnStyle9"
+                styleClassName="btnStyle11"
                 mainClassName="SubmitBtn_AccountCreation"
                 text="Effacer"
               />

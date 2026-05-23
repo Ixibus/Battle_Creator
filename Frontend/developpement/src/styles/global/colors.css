@@ -17,6 +17,8 @@
     --backgroundColor5: whitesmoke;
     --backgroundColor6: linear-gradient(90deg, #D4E4FC, #EDDCFF);
     --backgroundColor7: #e6dcff;
+    --backgroundColor8: #513C71;
+    --backgroundColor9: #cfddf1;
     
     /* Item */
     --itemColor1: #f5d8ff;
@@ -39,6 +41,7 @@
     --fontColor3: #6A548A;
     --fontColor4: #513C71;
     --fontColor5: #afa2c2;
+    --fontColor6: #526770;
     
     /* Font Size */
     --font-size1: 0.6rem;

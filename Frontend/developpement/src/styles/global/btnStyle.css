@@ -5,6 +5,7 @@
     --padding2: 5px 30px;
     --padding3: 5px 20px 6px 21px;
     --padding4: 10px 30px;
+    --padding5: 15px 50px;
     --border-radius1: 20px;
     --border-radius2: 50px;
     --margin-top: 10px;
@@ -54,7 +55,6 @@
     padding: var(--padding2);
     border-radius: var(--border-radius1);
     border: 1px solid var(--fontColor4);
-    /* flex-basis: 100%; */
     min-width: 230px;
     display: block;
     margin: auto;
@@ -83,6 +83,27 @@
     margin: var(--margin-top);
     padding: var(--padding2);
     border-radius: var(--border-radius1);
+}
+
+.btnStyle10 {
+    color: var(--fontColor1);
+    background-color: var(--btnColor1);
+    margin: var(--margin-top);
+    padding: var(--padding5);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+}
+
+.btnStyle11 {
+    color: var(--fontColor2);
+    background-color: var(--btnColor4);
+    margin: var(--margin-top);
+    padding: var(--padding5);
+    border: var(--border1);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
 }
 
 .plusBtnStyle1 {

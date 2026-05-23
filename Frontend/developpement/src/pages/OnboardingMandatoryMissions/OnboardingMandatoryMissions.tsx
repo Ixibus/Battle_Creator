@@ -26,7 +26,7 @@ export default function OnboardingMandatoryMissions() {
           <p className="onboardingMandatoryMission onboardingMissionsStyle">SYSTEME SON</p>
           <p className="onboardingMandatoryMission onboardingMissionsStyle">PHASE DE BATTLE</p>
         </div>
-        <NextButton styleClassName="btnStyle3" mainClassName="onboardingMandatoryMissionsNextBtn" text="Suivant"/>
+        <NextButton styleClassName="btnStyle10" mainClassName="onboardingMandatoryMissionsNextBtn" text="Suivant"/>
       </div>
     </>
   );

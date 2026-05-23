@@ -38,7 +38,7 @@ export default function OptionalMissions() {
           </p>
         </div>
         <NextButton
-          styleClassName="btnStyle3"
+          styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
           text="Suivant"
         />

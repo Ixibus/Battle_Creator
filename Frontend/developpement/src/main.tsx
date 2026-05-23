@@ -33,8 +33,8 @@ const router = createBrowserRouter([
           {
             index: true,
             // element: <LandingPage />,
-            element: <AccountCreation />,
-            // element: <ProjectCreation/>,
+            // element: <AccountCreation />,
+            element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
             // element: <OnboardingOptionalMissions/>,
           },
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         children: [
           {
             // index: true,
-            element: <HomePage/>,
+            // element: <HomePage/>,
             // element: <MissionTag text="Espace"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires"/>
             // element: <PlusButton/>

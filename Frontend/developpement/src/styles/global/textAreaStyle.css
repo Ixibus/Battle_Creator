@@ -1,0 +1,6 @@
+.textAreaStyle {
+    padding: 15px;
+    background: var(--backgroundColor7);
+    border-radius: var(--border-radius2);
+    width: 100%;
+}

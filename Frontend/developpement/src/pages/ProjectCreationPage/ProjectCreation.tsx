@@ -14,18 +14,33 @@ export default function ProjectCreation() {
     <>
       <form className="formStyle" onSubmit={(e) => handlesubmit(e)}>
         <h1 className="titleFormStyle">CREATION DE PROJET</h1>
-        <InputContainer
-          labelName="Veuillez entrer le nom du projet"
-          htmlFor="projectName"
-          type="text"
-        />
-        <AreaTextContainer
-          htmlFor="projectionDescriptionContainer"
-          labelName="Décriver votre projet"
-          cols={35}
-          rows={10}
-        />
-        <NextButton type="submit" styleClassName="btnStyle3" mainClassName="projectSubmitBtn" text="Valider"/>
+        <div className="inputsFormContainerStyle">
+          <InputContainer
+            labelName="Veuillez entrer le nom du projet"
+            htmlFor="projectName"
+            type="text"
+          />
+          <AreaTextContainer
+            htmlFor="projectionDescriptionContainer"
+            labelName="Décrivez votre projet"
+            cols={35}
+            rows={10}
+          />
+          <div className="buttonsContainerStyle">
+            <NextButton
+              type="submit"
+              styleClassName="btnStyle10"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Valider"
+            />
+            <NextButton
+              type="submit"
+              styleClassName="btnStyle11"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Effacer"
+            />
+          </div>
+        </div>
       </form>
     </>
   );
