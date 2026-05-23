@@ -1,0 +1,35 @@
+.onboardingProgressionBarStyle {
+    display: flex;
+    width: 40vw;
+    margin: 5vh auto 0;
+}
+
+.segment {
+    margin: auto;
+    background: var(--backgroundColor9);
+    width: 100%;
+    height: 3px;
+}
+
+.stepContainer {
+    margin: auto;
+}
+
+.stepNumberContainer {
+    position: relative;
+    background: var(--backgroundColor9);
+    border-radius: var(--border-radius2);
+    height: 30px;
+    width: 30px;
+}
+
+.stepNumberContainer::after {
+    position: absolute;
+    top: 40px;
+    transform: translateX(-40%);
+    content: attr(data-stepTitle);
+    display: block;
+    font-size: var(--font-size7);
+    width: max-content;
+    color: var(--fontColor6);
+}
