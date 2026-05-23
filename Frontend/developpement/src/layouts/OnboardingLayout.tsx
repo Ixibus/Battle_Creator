@@ -3,6 +3,7 @@ import useThemeStore from '../store/useThemeStore'
 
 import './layout.css'
 import './onboardingLayout.css'
+import OnboardingProgressionBar from '../components/OnboardingProgressionBar/OnboardingProgressionBar';
 
 
 export default function OnboardingLayout() {
@@ -11,11 +12,9 @@ export default function OnboardingLayout() {
   const setTheme = useThemeStore((state) => state.toggleDarkMode);
 
   return (
-        <div id="page" className='onboardingLayoutContainer'>
-            <p>tets</p>
-            <main className='onboardingLayoutMainContainer'>
+        <main id="page" className='onboardingLayoutContainer'>
+            <OnboardingProgressionBar/>
                 <Outlet />
-            </main>
-        </div>
+        </main>
   )
 }
