@@ -1,0 +1,44 @@
+.projectListContainer{
+    width: 33vw;
+    margin: auto;
+}
+
+.projectListGreetingContainer {
+    margin: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.projectListGreetingtext {
+    font-weight: var(--font-weight1);
+    font-size: var(--font-size3);
+    color: var(--fontColor4);
+}
+
+.projectListNicoPpStyle {
+    width: 30px;
+    height: 30px;
+    background: url('../../assets/img/Nico.jpg') 1px 0% /cover;
+    border: var(--border1);
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.projectListProjectContainer {
+    margin: var(--cel-margin);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
+    grid-area: A;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: var(--font-size4);
+    font-weight: var(--font-weight1);
+}
+
+.projectListProjectInfoContainer {
+    display: flex;
+    align-items: baseline;
+    font-size: var(--font-size3);
+}

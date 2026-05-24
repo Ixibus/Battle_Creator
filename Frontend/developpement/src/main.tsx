@@ -25,6 +25,7 @@ import Figure2 from "./components/Figure/Figure2";
 import OnboardingLayout from "./layouts/OnboardingLayout";
 import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 import FirstLayout from "./layouts/FirstLayout";
+import ProjectList from "./pages/ProjectList/ProjectList";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,8 @@ const router = createBrowserRouter([
           {
             index: true,
             // element: <LandingPage />,
-            element: <ConnexionPage/>,
+            // element: <ConnexionPage/>,
+            element: <ProjectList/>,
           },
         ],
       },
