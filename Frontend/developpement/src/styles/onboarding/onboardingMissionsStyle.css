@@ -1,7 +1,16 @@
-.onboardingMissionsStyle{
+.onboardingMandatoryMissionsStyle{
     width: 400px;
-    background: var(--itemColor1);
-    border-radius: 5px;
+    background: var(--backgroundColor10);
+    border-radius: var(--border-radius2);
+    padding: auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.onboardingOptionalMissionsStyle{
+    width: 400px;
+    background: var(--backgroundColor9);
+    border-radius: var(--border-radius2);
     padding: auto 10px;
     display: flex;
     align-items: center;

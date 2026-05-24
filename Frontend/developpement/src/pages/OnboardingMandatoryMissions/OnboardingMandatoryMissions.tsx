@@ -17,14 +17,14 @@ export default function OnboardingMandatoryMissions() {
           Hiphop
         </p>
         <div className="onboardingMandatoryMissionContainer onboardingMissionsContainerStyle">
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">ESPACE</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">GESTION MC</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">TICKETTERIE</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">JUGES</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">DJ</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">PLANNING EVENT</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">SYSTEME SON</p>
-          <p className="onboardingMandatoryMission onboardingMissionsStyle">PHASE DE BATTLE</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">ESPACE</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">GESTION MC</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">TICKETTERIE</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">JUGES</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">DJ</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PLANNING EVENT</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">SYSTEME SON</p>
+          <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PHASE DE BATTLE</p>
         </div>
         <NextButton styleClassName="btnStyle10" mainClassName="onboardingMandatoryMissionsNextBtn" text="Suivant"/>
       </div>

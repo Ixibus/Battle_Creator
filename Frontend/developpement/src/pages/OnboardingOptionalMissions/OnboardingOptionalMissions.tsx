@@ -15,25 +15,25 @@ export default function OptionalMissions() {
           fois sur votre espace d'organisation.
         </p>
         <div className="onboardingOptionalMissionContainer onboardingMissionsContainerStyle">
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             COMMUNICATION EVENEMENT
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             VESTIAIRES
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             MATERIELS D'AMBIANCE
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             SIGNALETIQUES
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             MATERIELS PARTICIPANTS
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             PERSONNEL D'ENCADREMENT
           </p>
-          <p className="onboardingOptionalMission onboardingMissionsStyle">
+          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             COLLATION JUGE
           </p>
         </div>

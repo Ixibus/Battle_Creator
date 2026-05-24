@@ -34,9 +34,9 @@ const router = createBrowserRouter([
             index: true,
             // element: <LandingPage />,
             // element: <AccountCreation />,
-            element: <ProjectCreation/>,
+            // element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
-            // element: <OnboardingOptionalMissions/>,
+            element: <OnboardingOptionalMissions/>,
           },
         ],
       },
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           {
-            // index: true,
+            index: true,
             // element: <HomePage/>,
             // element: <MissionTag text="Espace"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires"/>
