@@ -23,6 +23,7 @@ import MissionTag from "./components/MissionTag/MissionTag";
 import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbnail";
 import Figure2 from "./components/Figure/Figure2";
 import OnboardingLayout from "./layouts/OnboardingLayout";
+import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,8 @@ const router = createBrowserRouter([
             // element: <AccountCreation />,
             // element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
-            element: <OnboardingOptionalMissions/>,
+            // element: <OnboardingOptionalMissions/>,
+            element: <ConnexionPage/>,
           },
         ],
       },
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           {
-            index: true,
+            // index: true,
             // element: <HomePage/>,
             // element: <MissionTag text="Espace"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires"/>
