@@ -1,0 +1,7 @@
+.firstLayoutContainer {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--backgroundColor6);
+}

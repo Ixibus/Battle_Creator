@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import useThemeStore from '../store/useThemeStore'
 
-import './layout.css'
 import './onboardingLayout.css'
 import OnboardingProgressionBar from '../components/OnboardingProgressionBar/OnboardingProgressionBar';
 

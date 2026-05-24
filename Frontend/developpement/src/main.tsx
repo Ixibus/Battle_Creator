@@ -24,21 +24,30 @@ import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbna
 import Figure2 from "./components/Figure/Figure2";
 import OnboardingLayout from "./layouts/OnboardingLayout";
 import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
+import FirstLayout from "./layouts/FirstLayout";
 
 const router = createBrowserRouter([
   {
     children: [
       {
-        element: <OnboardingLayout />,
+        element: <FirstLayout />,
         children: [
           {
             index: true,
             // element: <LandingPage />,
+            element: <ConnexionPage/>,
+          },
+        ],
+      },
+      {
+        element: <OnboardingLayout />,
+        children: [
+          {
+            // index: true,
             // element: <AccountCreation />,
             // element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
             // element: <OnboardingOptionalMissions/>,
-            element: <ConnexionPage/>,
           },
         ],
       },
