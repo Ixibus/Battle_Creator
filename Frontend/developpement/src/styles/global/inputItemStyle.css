@@ -4,3 +4,12 @@
     height: 40px;
     width: 100%;
 }
+
+.inputItemStyle2 {
+    background: var(--backgroundColor7);
+    border-radius: var(--border-radius2);
+    height: 40px;
+    width: fit-content;
+    padding: 5px 15px;
+    text-align: center;
+}

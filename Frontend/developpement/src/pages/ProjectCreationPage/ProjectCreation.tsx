@@ -4,6 +4,7 @@ import "../../styles/form/titleFormStyle.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import AreaTextContainer from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
+import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 
 async function handlesubmit(e: any) {
   e.preventDefault();
@@ -20,6 +21,7 @@ export default function ProjectCreation() {
             htmlFor="projectName"
             type="text"
           />
+          <DateInputContainer labelName="Déroulement du Projet" htmlFor="projectDate"/>
           <AreaTextContainer
             htmlFor="projectionDescriptionContainer"
             labelName="Décrivez votre projet"
