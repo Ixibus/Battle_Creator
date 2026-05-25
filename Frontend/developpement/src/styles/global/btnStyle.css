@@ -6,6 +6,7 @@
     --padding3: 5px 20px 6px 21px;
     --padding4: 10px 30px;
     --padding5: 15px 50px;
+    --padding6: 10px 40px;
     --border-radius1: 20px;
     --border-radius2: 50px;
     --margin-top: 10px;
@@ -103,6 +104,17 @@
     border: var(--border1);
     border-radius: var(--border-radius2);
     font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+}
+
+.btnStyle12 {
+    color: var(--fontColor4);
+    background-color: var(--btnColor4);
+    padding: var(--padding6);
+    border: var(--border1);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
     letter-spacing: var(--letter-spacing1);
 }
 

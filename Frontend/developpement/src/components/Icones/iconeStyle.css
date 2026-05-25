@@ -24,3 +24,9 @@
     width: fit-content;
     fill: var(--fontColor7);
 }
+
+.iconeStyle5 {
+    height: 20px;
+    margin: auto;
+    fill: var(--fontColor4);
+}

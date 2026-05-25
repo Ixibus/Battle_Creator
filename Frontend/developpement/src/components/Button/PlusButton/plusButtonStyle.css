@@ -1,0 +1,7 @@
+.plusButtonContainerStyle{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
+    margin: auto;
+}

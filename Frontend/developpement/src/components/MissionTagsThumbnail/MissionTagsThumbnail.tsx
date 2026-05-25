@@ -1,8 +1,12 @@
 import "./missionTagsThumbnailStyle.css";
+import "../MissionTag/missionTagStyle.css"
 import "../../styles/global/marginTitle.css";
+
 
 import MissionTag from "../MissionTag/MissionTag";
 import Icone, {StyleType} from "../Icones/Icone";
+import NextButton from "../Button/NextButton/NextButton";
+import PlusButton from "../Button/PlusButton/PlusButton";
 
 
 interface propsInterface {
@@ -44,11 +48,17 @@ export default function MissionTagsThumbnail({
       </div>
       {!isOptional
         ? defaultMissionArray.map((mission) => (
-            <MissionTag key={mission} text={mission} />
+            <MissionTag key={mission} text={mission} styleClassName="missionTagStyle" />
           ))
-        : optionalMissionsArray.map((mission) => (
-            <MissionTag key={mission} text={mission} />
-          ))}
+        : 
+          <div style={{height:"100%", display:"flex",flexDirection:"column", gap:"10px"}}>
+            {optionalMissionsArray.map((mission) => (
+            <MissionTag key={mission} text={mission} styleClassName="missionTagStyle2"/>
+          ))
+          }
+          <PlusButton btnStyle="btnStyle12" mainClassName="optionnalMissionNextButton" text="AJOUTER MISSION"/>
+          </div>
+          }
     </div>
   );
 }

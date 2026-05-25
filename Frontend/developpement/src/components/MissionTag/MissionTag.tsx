@@ -3,11 +3,14 @@ import './missionTagStyle.css';
 
 import ForwardArrow from '../../assets/icones/forwardArrow.svg?react'
 
-type propType = {text : string};
+interface propInterface {
+    text : string;
+    styleClassName? : string;
+};
 
-export default function MissionTag({text} : propType) {
+export default function MissionTag({text, styleClassName} : propInterface) {
     return(
-        <div className="missionTagStyle">
+        <div className={styleClassName}>
             <p>{text}</p>
             <Icone SrcIcone={ForwardArrow} styleType={StyleType.style1}/>
         </div>

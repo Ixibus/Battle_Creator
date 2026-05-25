@@ -1,9 +1,29 @@
-import "../../../styles/global/btnStyle.css";
+import Icone, { StyleType } from "../../Icones/Icone";
+import Plus from "../../../assets/icones/plus.svg?react";
 
-export default function PlusButton() {
+import "../../../styles/global/btnStyle.css";
+import "../style/buttonContainerStyle.css";
+import "../PlusButton/plusButtonStyle.css";
+
+interface interfaceProps {
+  btnStyle: string;
+  mainClassName: string;
+  text?: string;
+}
+
+export default function PlusButton({
+  btnStyle,
+  mainClassName,
+  text,
+}: interfaceProps) {
   return (
-    <div style={{flexBasis : "100%", display : "flex", justifyContent : "center"}}>
-      <span className="button plusBtnStyle1">+</span>
+    <div className="buttonContainerStyle ">
+      <button
+        className={`button plusButtonContainerStyle ${btnStyle} ${mainClassName}`}
+      >
+        <Icone SrcIcone={Plus} styleType={StyleType.style5}/>
+        {text}
+      </button>
     </div>
   );
 }
