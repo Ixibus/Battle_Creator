@@ -20,6 +20,8 @@
     --backgroundColor8: #513C71;
     --backgroundColor9: #cfddf1;
     --backgroundColor10: #dfd2ff;
+    --backgroundColor11: #EFE680;
+    --backgroundColor12: #BEEECD;
     
     /* Item */
     --itemColor1: #f5d8ff;
@@ -43,6 +45,7 @@
     --fontColor4: #513C71;
     --fontColor5: #afa2c2;
     --fontColor6: #526770;
+    --fontColor7: rgb(61, 61, 61);
     
     /* Font Size */
     --font-size1: 0.6rem;
