@@ -43,6 +43,9 @@ export default function MissionPage() {
                     5 tâches
                 </span>
           </div>
+          <div className="missionPageTasksContainer">
+            
+          </div>
       </div>
     </div>
   );
