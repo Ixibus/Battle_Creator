@@ -8,7 +8,7 @@
     --background-dark-01: #3c3838;
     --background-dark-02: #8e8484;
     --color-dark-01: #e8dede;
-    
+
     /* Background */
     --backgroundColor1: #e1dbf0;
     --backgroundColor2: #fdd2d8;
@@ -22,22 +22,22 @@
     --backgroundColor10: #dfd2ff;
     --backgroundColor11: #EFE680;
     --backgroundColor12: #BEEECD;
-    
+
     /* Item */
     --itemColor1: #f5d8ff;
-    
+
     /* Container */
     --containerColor1: #e7e0ec;
-    
+
     /* Input */
     --inputColor1: #e8def8;
-    
+
     /* Button */
     --btnColor1: #6750a4;
     --btnColor2: #ad9ed7;
     --btnColor3: #957bdd;
     --btnColor4: whitesmoke;
-    
+
     /* Font color */
     --fontColor1: whitesmoke;
     --fontColor2: black;
@@ -46,7 +46,7 @@
     --fontColor5: #afa2c2;
     --fontColor6: #526770;
     --fontColor7: rgb(61, 61, 61);
-    
+
     /* Font Size */
     --font-size1: 0.6rem;
     --font-size2: 1.5rem;
@@ -56,28 +56,36 @@
     --font-size6: 2.7rem;
     --font-size7: 0.7rem;
     --font-size8: 3rem;
-    
+
     /* Font weight */
     --font-weight1: bolder;
     --font-weight2: 400;
     --font-weight3: 300;
-    
+
     /* Border color */
     --border-color1: #513C71;
     --border-color2: #D5BBF9;
-    
+
     /* Border */
     --border1: 1px solid var(--border-color1);
     --border2: 1px solid var(--border-color2);
     --border-radius1: 10px;
     --border-radius2: 50px;
-    
+
     /* Margin */
     --cel-margin: 10px;
 
     /* Padding */
     --cel-padding: 15px 20px;
-    
+
     /* Letter-Spacing */
     --letter-spacing1: 1px;
+}
+
+.backgroundColor9 {
+    background: var(--backgroundColor9);
+}
+
+.backgroundColor10 {
+    background: var(--backgroundColor10);
 }

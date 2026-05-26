@@ -5,16 +5,16 @@ import type { ChangeEventHandler } from 'react';
 
 type InputType = "text" | "password" | "email";
 
-export enum InputIntemStyle {
-  style1 = "inputItemStyle",
-  style2 = "inputItemStyle2",
-  style3 = "inputItemStyle3",
-}
-
 export enum InputLabelStyle {
   style1 = "inputLabelStyle",
   style2 = "inputLabelStyle2",
   style3 = "inputLabelStyle3",
+}
+
+export enum InputIntemStyle {
+  style1 = "inputItemStyle",
+  style2 = "inputItemStyle2",
+  style3 = "inputItemStyle3",
 }
 
 interface InputContainerProps {

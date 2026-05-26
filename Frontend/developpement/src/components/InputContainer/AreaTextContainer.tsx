@@ -1,8 +1,11 @@
+// import '../../styles/global/colors.css'
 import '../../styles/global/inputContainerStyle.css'
 import '../../styles/global/textAreaStyle.css'
+
 import type { ChangeEventHandler } from 'react';
 
 type InputType = "text" | "password" | "email";
+
 
 export enum AreaLabelStyle {
   style1 = "inputLabelStyle",
@@ -12,7 +15,8 @@ export enum AreaLabelStyle {
 
 export enum AreaTextStyle {
   style1 = "textAreaStyle",
-  style2 = "textAreaStyle2"
+  style2 = "textAreaStyle2",
+  style3 = "textAreaStyle3",
 }
 
 interface AreaContainerProps {

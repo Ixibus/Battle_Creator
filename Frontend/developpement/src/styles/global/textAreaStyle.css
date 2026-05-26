@@ -12,3 +12,11 @@
     border-radius: var(--border-radius1);
     width: 100%;
 }
+
+.textAreaStyle3 {
+    padding: 15px;
+    background: var(--backgroundColor9);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    width: 100%;
+}

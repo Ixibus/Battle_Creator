@@ -1,6 +1,15 @@
-.inputLabelStyle{
-color: var(--fontColor3);
+.inputLabelStyle {
+    color: var(--fontColor3);
 }
-.inputLabelStyle2{
-color: var(--fontColor4);
+
+.inputLabelStyle2 {
+    color: var(--fontColor4);
+}
+
+.inputLabelStyle3 {
+    margin-right: auto ;
+    color: var(--fontColor4);
+    font-size: var(--font-size7);
+    font-weight: var(--font-weight1);
+    text-align: left;
 }

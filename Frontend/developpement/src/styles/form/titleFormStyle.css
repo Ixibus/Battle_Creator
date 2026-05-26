@@ -21,3 +21,11 @@
     font-size: 1.5rem;
     letter-spacing: var(--letter-spacing1);
 }
+
+.titleFormStyle4{
+    margin-bottom: 5px;
+    color: var(--fontColor3);
+    font-weight: var(--font-weight1);
+    font-size: 1.5rem;
+    letter-spacing: var(--letter-spacing1);
+}
