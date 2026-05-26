@@ -1,0 +1,26 @@
+.missionPageContainerStyle{
+    width: 80vw;
+    height: 80vh;
+    border: 1px solid red;  
+}
+
+
+
+/* style du conteneur des tâches (ref: ProjectList.css) */
+
+/* style du conteneur entier */
+.missionPageTasksTitleContainerStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: auto;
+}
+
+/* style de l'infographie du nb de tâches */
+.missionPageTasksnumber{
+    width: fit-content;
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+    padding: 5px 10px;
+    border-radius: var(--border-radius2);
+}

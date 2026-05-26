@@ -1,0 +1,5 @@
+.taskTagContainerStyle {
+    margin-top: 3vh;
+    display: flex;
+    gap: 10px;
+}

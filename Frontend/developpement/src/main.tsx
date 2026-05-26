@@ -30,6 +30,9 @@ import ProjectList from "./pages/ProjectList/ProjectList";
 import OptionalMission from "./assets/icones/optionnalMission.svg?react";
 import Members from "./assets/icones/members.svg?react";
 import AddingMissionPage from "./pages/AddingMissionPage/AddingMissionPage";
+import MissionPage from "./pages/MissionPage/MissionPage";
+import MaterialTag from "./components/MaterialTag/MaterialTag";
+import TaskTag from "./components/TaskTag/TaskTag";
 
 const router = createBrowserRouter([
   {
@@ -63,7 +66,7 @@ const router = createBrowserRouter([
           {
             index: true,
             // element: <HomePage/>,
-            // element: <MissionTag text="Espace"/>,
+            // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
             // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
             // element: <NextButton styleClassName="btnStyle10" mainClassName="test" text="voir toute la liste des tâches"/>
@@ -71,7 +74,10 @@ const router = createBrowserRouter([
             // element: <Figure number={34}/>
             // element: <Figure2 number={34}/>
             // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
-            element: <AddingMissionPage/>
+            // element: <AddingMissionPage/>
+            // element: <MissionPage/>
+            // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
+            element: <TaskTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
           },
           // {
           //   index: true,

@@ -7,6 +7,7 @@
     --padding4: 10px 30px;
     --padding5: 15px 50px;
     --padding6: 10px 40px;
+    --padding7: 15px;
     --border-radius1: 20px;
     --border-radius2: 50px;
     --margin-top: 10px;
@@ -116,6 +117,30 @@
     font-size: var(--font-size1);
     font-weight: var(--font-weight1);
     letter-spacing: var(--letter-spacing1);
+}
+
+.btnStyle13 {
+    color: var(--fontColor4);
+    background-color: var(--backgroundColor13);
+    padding: var(--padding4);
+    border: var(--border2);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+    text-transform: uppercase;
+}
+
+.btnStyle14 {
+    color: var(--fontColor4);
+    background-color: var(--btnColor4);
+    padding: var(--padding7);
+    border: var(--border1);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+    text-transform: uppercase;
 }
 
 .plusBtnStyle1 {
