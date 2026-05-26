@@ -27,6 +27,9 @@ import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
 import FirstLayout from "./layouts/FirstLayout";
 import ProjectList from "./pages/ProjectList/ProjectList";
 
+import OptionalMission from "./assets/icones/optionnalMission.svg?react";
+import Members from "./assets/icones/members.svg?react";
+
 const router = createBrowserRouter([
   {
     children: [
@@ -49,7 +52,7 @@ const router = createBrowserRouter([
             // element: <AccountCreation />,
             // element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
-            element: <OnboardingOptionalMissions/>,
+            // element: <OnboardingOptionalMissions/>,
           },
         ],
       },
@@ -58,16 +61,15 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <HomePage/>,
+            // element: <HomePage/>,
             // element: <MissionTag text="Espace"/>,
-            // element: <MissionTagsThumbnail title="Missions obligatoires"/>
-            // element: <PlusButton/>
-            // element: <NextButton styleClassName="btnStyle1" mainClassName="test" text="voir toute la liste des tâches"/>
+            // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
+            // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
+            // element: <NextButton styleClassName="btnStyle10" mainClassName="test" text="voir toute la liste des tâches"/>
+            // element: <NextButton styleClassName="btnStyle5" mainClassName="test" text="voir toute la liste des tâches"/>
             // element: <Figure number={34}/>
             // element: <Figure2 number={34}/>
-            // element: <InfoThumbnail/>
-            // element: <HomePage/>
-            // element: <SecondaryThumbnail text="tâches"/>
+            element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
           },
           // {
           //   index: true,
