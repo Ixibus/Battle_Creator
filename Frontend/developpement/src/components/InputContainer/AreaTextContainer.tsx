@@ -4,9 +4,22 @@ import type { ChangeEventHandler } from 'react';
 
 type InputType = "text" | "password" | "email";
 
+export enum AreaLabelStyle {
+  style1 = "inputLabelStyle",
+  style2 = "inputLabelStyle2",
+  style3 = "inputLabelStyle3",
+}
+
+export enum AreaTextStyle {
+  style1 = "textAreaStyle",
+  style2 = "textAreaStyle2"
+}
+
 interface AreaContainerProps {
-  className?: string;
+  className?: string,
+  areaLabelStyle: AreaLabelStyle,
   value?: string,
+  areaTextStyle: AreaTextStyle,
   htmlFor: string,
   labelName: string,
   cols: number;
@@ -16,7 +29,9 @@ interface AreaContainerProps {
 
 export default function AreaTextContainer({
   className = "inputContainerStyle",
+  areaLabelStyle,
   value,
+  areaTextStyle,
   htmlFor,
   labelName,
   cols,
@@ -25,8 +40,8 @@ export default function AreaTextContainer({
 }: AreaContainerProps) {
   return (
     <div className={className}>
-      <label className="inputLabelStyle" htmlFor={htmlFor}>{labelName}</label>
-      <textarea name={htmlFor} id={htmlFor} className="textAreaStyle" cols={cols} rows={rows} onChange={onChange} />
+      <label className={areaLabelStyle} htmlFor={htmlFor}>{labelName}</label>
+      <textarea name={htmlFor} id={htmlFor} className={areaTextStyle} cols={cols} rows={rows} onChange={onChange} />
     </div>
   );
 }

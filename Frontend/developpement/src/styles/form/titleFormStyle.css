@@ -5,3 +5,19 @@
     font-size: 1.5rem;
     letter-spacing: var(--letter-spacing1);
 }
+
+.titleFormStyle2{
+    margin-bottom: 15px;
+    color: var(--fontColor2);
+    font-weight: var(--font-weight2);
+    font-size: 1.5rem;
+    letter-spacing: var(--letter-spacing1);
+}
+
+.titleFormStyle3{
+    margin-bottom: 5px;
+    color: var(--fontColor3);
+    font-weight: var(--font-weight3);
+    font-size: 1.5rem;
+    letter-spacing: var(--letter-spacing1);
+}

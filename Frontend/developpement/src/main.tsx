@@ -29,6 +29,7 @@ import ProjectList from "./pages/ProjectList/ProjectList";
 
 import OptionalMission from "./assets/icones/optionnalMission.svg?react";
 import Members from "./assets/icones/members.svg?react";
+import AddingMissionPage from "./pages/AddingMissionPage/AddingMissionPage";
 
 const router = createBrowserRouter([
   {
@@ -69,7 +70,8 @@ const router = createBrowserRouter([
             // element: <NextButton styleClassName="btnStyle5" mainClassName="test" text="voir toute la liste des tâches"/>
             // element: <Figure number={34}/>
             // element: <Figure2 number={34}/>
-            element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
+            // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
+            element: <AddingMissionPage/>
           },
           // {
           //   index: true,

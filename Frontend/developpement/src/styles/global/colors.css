@@ -59,6 +59,8 @@
     
     /* Font weight */
     --font-weight1: bolder;
+    --font-weight2: 400;
+    --font-weight3: 300;
     
     /* Border color */
     --border-color1: #513C71;

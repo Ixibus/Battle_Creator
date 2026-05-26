@@ -9,3 +9,14 @@
     background: transparent;
     gap : 1vh;
 }
+
+.formStyle2 {
+    margin: 10px auto auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    min-height: 0;
+    background: transparent;
+}
