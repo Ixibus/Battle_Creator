@@ -30,3 +30,21 @@
     margin: auto;
     fill: var(--fontColor4);
 }
+
+
+.iconeStyle6 {
+    height: 20px;
+    border-radius: 5px;
+    background-color: rgba(97, 184, 97, 0.5);
+    margin-left: 10px;
+    fill: var(--fontColor1);
+}
+
+.iconeStyle7 {
+    height: 20px;
+    padding: 1px;
+    border-radius: 5px;
+    background-color: rgba(184, 97, 97, 0.5);
+    margin-left: 10px;
+    fill: var(--fontColor7);
+}

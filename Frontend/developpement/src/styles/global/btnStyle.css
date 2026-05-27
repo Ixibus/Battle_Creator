@@ -143,6 +143,17 @@
     text-transform: uppercase;
 }
 
+.btnStyle15 {
+    color: var(--fontColor4);
+    background-color: var(--backgroundColor13);
+    border: var(--border2);
+    border-radius: var(--border-radius1);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+    text-transform: uppercase;
+}
+
 .plusBtnStyle1 {
     font-size: 1.5rem;
     color: var(--fontColor1);

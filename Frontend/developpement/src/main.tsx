@@ -77,7 +77,7 @@ const router = createBrowserRouter([
             // element: <AddingMissionPage/>
             // element: <MissionPage/>
             // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
-            element: <TaskTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
+            element: <TaskTag btnStyle="btnStyle15" mainClassName="ciseaux" text="ciseaux"/>
           },
           // {
           //   index: true,
