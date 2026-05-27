@@ -1,9 +1,9 @@
-.taskTagStyleContainer{
+.assignmentTagStyleContainer{
     display: flex;
     align-items: center;
     padding: 7px 15px;
 }
 
-.taskTagTitle{
+.assignmentTagText{
     margin-right: 10px;
 }

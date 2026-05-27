@@ -1,8 +1,14 @@
 import "../../styles/form/formStyle.css";
 import "../../styles/global/btnStyle.css";
 import "../../styles/form/titleFormStyle.css";
-import InputContainer from "../../components/InputContainer/InputContainer";
-import AreaTextContainer from "../../components/InputContainer/AreaTextContainer";
+import InputContainer, {
+  InputLabelStyle,
+  InputItemStyle,
+} from "../../components/InputContainer/InputContainer";
+import AreaTextContainer, {
+  AreaLabelStyle,
+  AreaTextStyle,
+} from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 
@@ -17,12 +23,19 @@ export default function ProjectCreation() {
         <h1 className="titleFormStyle">CREATION DE PROJET</h1>
         <div className="inputsFormContainerStyle">
           <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
             labelName="Veuillez entrer le nom du projet"
             htmlFor="projectName"
             type="text"
           />
-          <DateInputContainer labelName="Déroulement du Projet" htmlFor="projectDate"/>
+          <DateInputContainer
+            labelName="Déroulement du Projet"
+            htmlFor="projectDate"
+          />
           <AreaTextContainer
+            areaLabelStyle={AreaLabelStyle.style1}
+            areaTextStyle={AreaTextStyle.style1}
             htmlFor="projectionDescriptionContainer"
             labelName="Décrivez votre projet"
             cols={35}

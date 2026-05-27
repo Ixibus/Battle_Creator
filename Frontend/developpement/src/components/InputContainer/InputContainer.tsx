@@ -11,7 +11,7 @@ export enum InputLabelStyle {
   style3 = "inputLabelStyle3",
 }
 
-export enum InputIntemStyle {
+export enum InputItemStyle {
   style1 = "inputItemStyle",
   style2 = "inputItemStyle2",
   style3 = "inputItemStyle3",
@@ -20,7 +20,7 @@ export enum InputIntemStyle {
 interface InputContainerProps {
   inputLabelStyle: InputLabelStyle;
   labelName: string;
-  inputIntemStyle: InputIntemStyle;
+  inputItemStyle: InputItemStyle;
   htmlFor: string;
   className?: string;
   value?: string,
@@ -32,7 +32,7 @@ export default function InputContainer({
   className = "inputContainerStyle",
   inputLabelStyle,
   labelName,
-  inputIntemStyle,
+  inputItemStyle,
   htmlFor,
   value,
   type,
@@ -41,7 +41,7 @@ export default function InputContainer({
   return (
     <div className={className}>
       <label className={inputLabelStyle} htmlFor={htmlFor}>{labelName}</label>
-      <input className={inputIntemStyle} value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} />
+      <input className={inputItemStyle} value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} />
     </div>
   );
 }

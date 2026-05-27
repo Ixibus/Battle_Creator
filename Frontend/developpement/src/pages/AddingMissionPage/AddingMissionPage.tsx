@@ -5,7 +5,7 @@ import "../../styles/global/btnStyle.css";
 import "../../styles/form/titleFormStyle.css";
 import InputContainer, {
   InputLabelStyle,
-  InputIntemStyle,
+  InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
 import AreaTextContainer, {
   AreaLabelStyle,
@@ -27,7 +27,7 @@ export default function AddingMissionPage() {
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la mission"
-            inputIntemStyle={InputIntemStyle.style3}
+            inputItemStyle={InputItemStyle.style3}
             htmlFor="misionName"
             type="text"
           />

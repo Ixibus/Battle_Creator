@@ -8,6 +8,7 @@ export enum StyleType {
   style5 = "iconeStyle5",
   style6 = "iconeStyle6",
   style7 = "iconeStyle7",
+  style8 = "iconeStyle8",
 }
 
 interface PropType {
