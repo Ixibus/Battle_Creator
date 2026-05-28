@@ -1,4 +1,4 @@
-import InputContainer from "../../components/InputContainer/InputContainer";
+import InputContainer, {InputLabelStyle, InputItemStyle} from "../../components/InputContainer/InputContainer";
 import { useState, type SubmitEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -50,12 +50,16 @@ export default function ConnexionPage() {
         <h1 className="titleFormStyle">Connexion</h1>
         <div className="inputsFormContainerStyle">
           <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
             labelName="Votre login"
             htmlFor="login"
             type="text"
             onChange={(e) => setLogin(e.target.value)}
           />
           <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
             labelName="Votre mot de passe"
             htmlFor="password"
             type="password"

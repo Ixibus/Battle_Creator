@@ -3,7 +3,10 @@ import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/inputsFormContainerStyle.css";
 import "../../components/Button/NextButton/buttonsContainerStyle.css";
 import "../../styles/global/btnStyle.css";
-import InputContainer from "../../components/InputContainer/InputContainer";
+import InputContainer, {
+  InputLabelStyle,
+  InputItemStyle,
+} from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import LoginButton from "./LoginButton";
@@ -47,24 +50,32 @@ export default function AccountCreation() {
           <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
           <div className="inputsFormContainerStyle">
             <InputContainer
+              inputLabelStyle={InputLabelStyle.style1}
+              inputItemStyle={InputItemStyle.style1}
               labelName="Votre login de connexion"
               htmlFor="login"
               type="text"
               onChange={(e) => setLogin(e.target.value)}
             />
             <InputContainer
+              inputLabelStyle={InputLabelStyle.style1}
+              inputItemStyle={InputItemStyle.style1}
               labelName="Votre email"
               htmlFor="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
             />
             <InputContainer
+              inputLabelStyle={InputLabelStyle.style1}
+              inputItemStyle={InputItemStyle.style1}
               labelName="Veuillez rentrer votre mot de passe"
               htmlFor="password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <InputContainer
+              inputLabelStyle={InputLabelStyle.style1}
+              inputItemStyle={InputItemStyle.style1}
               labelName="Confirmer votre mot de passe"
               htmlFor="passwordConfirmation"
               type="password"
