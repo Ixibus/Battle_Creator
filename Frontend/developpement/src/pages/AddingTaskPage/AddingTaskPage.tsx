@@ -1,4 +1,4 @@
-import './addingMissionPage.css';
+import './AddingMissionPage.css';
 
 import "../../styles/form/formStyle.css";
 import "../../styles/global/btnStyle.css";

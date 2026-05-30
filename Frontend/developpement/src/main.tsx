@@ -76,8 +76,8 @@ const router = createBrowserRouter([
             // element: <Figure number={34}/>
             // element: <Figure2 number={34}/>
             // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
-            // element: <AddingMissionPage/>
-            element: <MissionPage/>
+            element: <AddingMissionPage/>
+            // element: <MissionPage/>
             // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
             // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
             // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
