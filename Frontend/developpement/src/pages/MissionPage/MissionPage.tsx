@@ -74,18 +74,20 @@ export default function MissionPage() {
           </div>
         </div>
       </div>
-      <div className="missionPageContainerRightContainerStyle">
-        <div className="missionPageTasksTitleContainerStyle">
-          <h3 className="missionPageTasksTitle">TACHES</h3>
-          <span className="missionPageTasksnumber">5 tâches</span>
+      <div className="missionPageContainerRightBackgroundStyle">
+        <div className="missionPageContainerRightContainerStyle">
+          <div className="missionPageTasksTitleContainerStyle">
+            <h3 className="missionPageTasksTitle">TACHES</h3>
+            <span className="missionPageTasksnumber">1 tâche(s)</span>
+          </div>
+          <TaskAndAssignmentContainer taskName="envoyer un mail au mc" />
+          <PlusButton
+            topMarginButton="20px"
+            btnStyle="btnStyle14"
+            mainClassName="missionPageMaterialAddingButton"
+            text="Ajouter une tâche"
+          />
         </div>
-        <TaskAndAssignmentContainer taskName="envoyer un mail au mc" />
-        <PlusButton
-          topMarginButton="20px"
-          btnStyle="btnStyle14"
-          mainClassName="missionPageMaterialAddingButton"
-          text="Ajouter une tâche"
-        />
       </div>
     </div>
   );

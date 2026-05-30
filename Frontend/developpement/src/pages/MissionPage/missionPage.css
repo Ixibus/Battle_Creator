@@ -77,15 +77,17 @@
     border-radius: var(--border-radius1);
 }
 
+.missionPageContainerRightBackgroundStyle{
+    margin: 50px 0;
+    background: var(--backgroundColor14);
+}
+
 .missionPageContainerRightContainerStyle {
-    background: var(--backgroundColor13);
     display: flex;
     flex-direction: column;
     justify-content: center;
     max-height: fit-content;
     margin: auto;
-    border: var(--border1);
-    border-radius: var(--border-radius1);
 }
 
 
@@ -103,15 +105,10 @@
 
 /* style de l'infographie du nb de tâches */
 .missionPageTasksnumber {
-    background: var(--backgroundColor5);
+    background: var(--backgroundColor13);
     width: fit-content;
     font-size: var(--font-size3);
     letter-spacing: var(--letter-spacing1);
     padding: 5px 10px;
     border-radius: var(--border-radius2);
-}
-
-.missionPageTasksContainer {
-    display: flex;
-    gap: 5px;
 }
