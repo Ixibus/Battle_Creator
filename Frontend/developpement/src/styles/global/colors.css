@@ -76,12 +76,14 @@
     --border2: 1px solid var(--border-color2);
     --border-radius1: 10px;
     --border-radius2: 50px;
-
+    --border-radius3: 5px;
+    
     /* Margin */
     --cel-margin: 10px;
 
     /* Padding */
     --cel-padding: 15px 20px;
+    --inner-input-padding1: 20px 10px;
 
     /* Letter-Spacing */
     --letter-spacing1: 1px;

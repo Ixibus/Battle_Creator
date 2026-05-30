@@ -35,6 +35,7 @@ import MaterialTag from "./components/MaterialTag/MaterialTag";
 import TaskTag from "./components/TaskTag/TaskTag";
 import MemberAssignmentTag from "./components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "./components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
+import AddingTaskPage from "./pages/AddingTaskPage/AddingTaskPage";
 
 const router = createBrowserRouter([
   {
@@ -76,12 +77,13 @@ const router = createBrowserRouter([
             // element: <Figure number={34}/>
             // element: <Figure2 number={34}/>
             // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
-            element: <AddingMissionPage/>
+            // element: <AddingMissionPage/>
             // element: <MissionPage/>
             // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
             // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
             // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
             // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
+            element: <AddingTaskPage/>
           },
           // {
           //   index: true,
