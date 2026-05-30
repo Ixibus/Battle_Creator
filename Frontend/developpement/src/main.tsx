@@ -36,6 +36,7 @@ import TaskTag from "./components/TaskTag/TaskTag";
 import MemberAssignmentTag from "./components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "./components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import AddingTaskPage from "./pages/AddingTaskPage/AddingTaskPage";
+import TaskAssignmentPage from "./pages/TaskAssignmentPage/TaskAssignmentPage";
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,8 @@ const router = createBrowserRouter([
             // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
             // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
             // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
-            element: <AddingTaskPage/>
+            // element: <AddingTaskPage/>
+            element: <TaskAssignmentPage/>
           },
           // {
           //   index: true,
