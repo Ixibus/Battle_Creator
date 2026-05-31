@@ -23,7 +23,7 @@ export default function AddingMissionPage() {
     <div className="addingMissionPageStyle">
       <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
-        <div className="inputsFormContainerStyle2">
+        <div className="inputsFormContainerStyle">
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la mission"

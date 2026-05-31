@@ -79,13 +79,13 @@ const router = createBrowserRouter([
             // element: <Figure2 number={34}/>
             // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
             // element: <AddingMissionPage/>
-            // element: <MissionPage/>
+            element: <MissionPage/>
             // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
             // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
             // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
             // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
             // element: <AddingTaskPage/>
-            element: <TaskAssignmentPage/>
+            // element: <TaskAssignmentPage/>
           },
           // {
           //   index: true,

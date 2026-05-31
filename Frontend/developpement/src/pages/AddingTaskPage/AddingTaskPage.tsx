@@ -23,7 +23,7 @@ export default function AddingTaskPage() {
     <div className="addingTaskPageStyle">
       <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
         <h1 className="titleFormStyle4">AJOUTER UNE TACHE</h1>
-        <div className="inputsFormContainerStyle2">
+        <div className="inputsFormContainerStyle">
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la tâche"
