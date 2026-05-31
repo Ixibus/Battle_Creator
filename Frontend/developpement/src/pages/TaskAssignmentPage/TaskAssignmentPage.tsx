@@ -20,22 +20,22 @@ async function handlesubmit(e: any) {
 
 export default function TaskAssignmentPage() {
   return (
-    <div className="addingTaskPageStyle">
+    <div className="taskAssignmentPageStyle">
       <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
         <h1 className="titleFormStyle4">ASSIGNER LA TACHE : </h1>
         <div className="taskAssignmentPageInnerInputsFormStyle">
-          <div className="taskAssignmentPageTasksContainer">
-            <p className="taskAssignmentPageTasksTitle">
+          <div className="taskAssignmentPageExistingMemberTasksContainer">
+            <p className="taskAssignmentPageExistingMemberTasksTitle">
               ASSIGNER UN BENEVOLE EXISTANT
             </p>
-            <div className="taskAssignmentPageInnerContainer">
-              <div className="addingTaskPageLinkingPreviousTaskContainer">
-                <label htmlFor="addingTaskPageLinkingPreviousTaskLabel" className="addingTaskPageLinkingPreviousTaskLabelStyle">
+            <div className="taskAssignmentPageExistingMemberInnerContainer">
+              <div className="taskAssignmentPageExistingMemberInputsContainer">
+                <label htmlFor="taskAssignmentPageExistingMemberInputsLabel" className="taskAssignmentPageExistingMemberInputsLabelStyle">
                   Mes bénévoles
                 </label>
                 <select
-                  name="addingTaskPageLinkingPreviousTaskLabel"
-                  className="addingTaskPageLinkingPreviousTaskSelect"
+                  name="taskAssignmentPageExistingMemberInputsSelect"
+                  className="taskAssignmentPageExistingMemberInputsSelectStyle"
                   id=""
                 >
                   <option value="">--Bénévole(s) existant(s)--</option>
@@ -52,30 +52,30 @@ export default function TaskAssignmentPage() {
             </div>
           </div>
           <p className="taskAssignmentPageOrTextStyle"> ou </p>
-          <div className="taskAssignmentPageTasksContainer">
-            <p className="taskAssignmentPageTasksTitle">
+          <div className="taskAssignmentPageCreateAssignTasksContainer">
+            <p className="taskAssignmentPageCreateAssignTasksTitle">
               CREER ET ASSIGNER UN NOUVEAU BENEVOLE
             </p>
-            <div className="taskAssignmentPageInnerContainer">
-              <div className="addingTaskPageLinkingPreviousTaskContainer">
+            <div className="taskAssignmentPageCreateAssignInnerContainer">
+              <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                 <InputContainer
-                  inputLabelStyle={InputLabelStyle.style1}
-                  labelName={"Prénom"}
-                  inputItemStyle={InputItemStyle.style1}
-                  htmlFor={"TaskAssignmentFirstNameMemberInput"}
-                  type={"text"}
+                inputLabelStyle={InputLabelStyle.style1}
+                labelName={"Prénom"}
+                inputItemStyle={InputItemStyle.style3}
+                htmlFor={"TaskAssignmentFirstNameMemberInput"}
+                type={"text"}
                 />
                 <InputContainer
                   inputLabelStyle={InputLabelStyle.style1}
                   labelName={"Nom"}
-                  inputItemStyle={InputItemStyle.style1}
+                  inputItemStyle={InputItemStyle.style3}
                   htmlFor={"TaskAssignmentLastNameMemberInput"}
                   type={"text"}
                 />
                 <NextButton
                   type="submit"
                   styleClassName="btnStyle10"
-                  mainClassName="SubmitBtn_MemberAssignedToTask"
+                  mainClassName="SubmitBtn_CreatedMemberAssignedToTask"
                   text="Créer et Assigner"
                 />
               </div>
@@ -86,7 +86,7 @@ export default function TaskAssignmentPage() {
           <NextButton
             type="submit"
             styleClassName="btnStyle11"
-            mainClassName="SubmitBtn_AccountCreation"
+            mainClassName="SubmitBtn_LeaveTaskAssignmentPage"
             text="Quitter"
           />
         </div>
