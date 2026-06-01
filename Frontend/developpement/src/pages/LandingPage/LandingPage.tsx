@@ -8,7 +8,7 @@ export default function LandingPage() {
       <main className="landingPageContainer">
         <h1 className="title_LandingPageContainer">Battle Creator</h1>
         <h2 className="subtitle_LandingPageContainer">
-          Créez et suivez votre projet d'évènement de dance Hiphop
+          Créez et suivez votre projet d'évènement de danse Hiphop
         </h2>
         <div className="btnsContainer_LandingPageContainer">
           <NextButton styleClassName="btnStyle7" mainClassName="getStartedBtn_LandingPageContainer" text="Commencer"/>

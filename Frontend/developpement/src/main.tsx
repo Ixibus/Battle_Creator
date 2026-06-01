@@ -45,15 +45,15 @@ const router = createBrowserRouter([
         element: <FirstLayout />,
         children: [
           {
-            // index: true,
-            // element: <LandingPage />,
+            index: true,
+            element: <LandingPage />,
             // element: <ConnexionPage/>,
             // element: <ProjectList/>,
           },
         ],
       },
       {
-        element: <OnboardingLayout />,
+        // element: <OnboardingLayout />,
         children: [
           {
             // index: true,
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           {
-            index: true,
+            // index: true,
             // element: <HomePage/>,
             // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
