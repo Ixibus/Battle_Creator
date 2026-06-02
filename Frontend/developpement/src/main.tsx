@@ -45,8 +45,8 @@ const router = createBrowserRouter([
         element: <FirstLayout />,
         children: [
           {
-            index: true,
-            element: <LandingPage />,
+            // index: true,
+            // element: <LandingPage />,
             // element: <ConnexionPage/>,
             // element: <ProjectList/>,
           },
@@ -68,8 +68,8 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
           {
-            // index: true,
-            // element: <HomePage/>,
+            index: true,
+            element: <HomePage/>,
             // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
             // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
             // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
             // element: <Figure2 number={34}/>
             // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
             // element: <AddingMissionPage/>
-            element: <MissionPage/>
+            // element: <MissionPage/>
             // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
             // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
             // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
