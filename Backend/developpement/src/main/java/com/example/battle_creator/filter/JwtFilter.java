@@ -4,6 +4,7 @@ import com.example.battle_creator.config.JwtUtils;
 import com.example.battle_creator.service.AuthentificationService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,21 +25,29 @@ public class JwtFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
-    // ignorer le blocage du filtre JWT sur une route spécifique
+    // le filtre de cookie n'est pas éxécuté sur ces routes
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getServletPath().startsWith("/auth/");
+        String path = request.getServletPath();
+        return path.equals("/auth/login") || path.equals("/auth/register");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-
-        String username = null;
         String jwt = null;
+        String username = null;
 
-        if (authHeader != null &&  authHeader.startsWith("Bearer ")) {
-            jwt = authHeader.substring(7);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("token".equals(cookie.getName())) {
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (jwt != null) {
             username = jwtUtils.extractUsername(jwt);
         }
 
