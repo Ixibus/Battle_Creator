@@ -108,7 +108,7 @@ export default function ConnexionTest() {
       {!isAuthenticated && (
         <form className="form" onSubmit={(e) => handlesubmitTester(e)}>
           <h1>TEST CREATION DE COMPTE</h1>
-          <InputContainer
+          {/* <InputContainer
             labelName="Votre email"
             htmlFor="email"
             type="email"
@@ -119,7 +119,7 @@ export default function ConnexionTest() {
             htmlFor="login"
             type="text"
             onChange={(e) => setLogin(e.target.value)}
-          />
+          /> */}
           <button type="submit">valider</button>
         </form>
       )}

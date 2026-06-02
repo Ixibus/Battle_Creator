@@ -2,10 +2,16 @@ import "./styles/main.css";
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Layout from "./layouts/Layout";
+import ProtectedRoute from "./features/ProtectedRoute";
 
 import LandingPage from "./pages/LandingPage/LandingPage";
 import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
@@ -48,7 +54,6 @@ const router = createBrowserRouter([
             // index: true,
             // element: <LandingPage />,
             // element: <ConnexionPage/>,
-            // element: <ProjectList/>,
           },
         ],
       },
@@ -65,47 +70,55 @@ const router = createBrowserRouter([
         ],
       },
       {
-        element: <Layout />,
+        element: <ProtectedRoute />,
         children: [
           {
-            index: true,
-            element: <HomePage/>,
-            // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
-            // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
-            // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
-            // element: <NextButton styleClassName="btnStyle10" mainClassName="test" text="voir toute la liste des tâches"/>
-            // element: <NextButton styleClassName="btnStyle5" mainClassName="test" text="voir toute la liste des tâches"/>
-            // element: <Figure number={34}/>
-            // element: <Figure2 number={34}/>
-            // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
-            // element: <AddingMissionPage/>
-            // element: <MissionPage/>
-            // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
-            // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
-            // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
-            // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
-            // element: <AddingTaskPage/>
-            // element: <TaskAssignmentPage/>
-          },
-          // {
-          //   index: true,
-          //   element: <App />,
-          // },
-          {
-            path: "/projectCreation",
-            element: <ProjectCreation />,
-          },
-          {
-            path: "/mandatoryMissions",
-            element: <OnboardingMandatoryMissions />,
-          },
-          {
-            path: "/optionnalMissions",
-            element: <OnboardingOptionalMissions />,
-          },
-          {
-            path: "/homePage",
-            element: <HomePage />,
+            element: <Layout />,
+            children: [
+              {
+                // element: <ProjectList/>,
+              },
+              {
+                index: true,
+                element: <HomePage />,
+                // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
+                // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
+                // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
+                // element: <NextButton styleClassName="btnStyle10" mainClassName="test" text="voir toute la liste des tâches"/>
+                // element: <NextButton styleClassName="btnStyle5" mainClassName="test" text="voir toute la liste des tâches"/>
+                // element: <Figure number={34}/>
+                // element: <Figure2 number={34}/>
+                // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
+                // element: <AddingMissionPage/>
+                // element: <MissionPage/>
+                // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
+                // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
+                // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
+                // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
+                // element: <AddingTaskPage/>
+                // element: <TaskAssignmentPage/>
+              },
+              // {
+              //   index: true,
+              //   element: <App />,
+              // },
+              {
+                path: "/projectCreation",
+                element: <ProjectCreation />,
+              },
+              {
+                path: "/mandatoryMissions",
+                element: <OnboardingMandatoryMissions />,
+              },
+              {
+                path: "/optionnalMissions",
+                element: <OnboardingOptionalMissions />,
+              },
+              {
+                path: "/homePage",
+                element: <HomePage />,
+              },
+            ],
           },
         ],
       },
