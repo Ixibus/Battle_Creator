@@ -5,7 +5,7 @@ import "../../styles/onboarding/onboardingMissionsContainerStyle.css";
 import "../../styles/onboarding/onboardingMissionsStyle.css";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
-export default function OptionalMissions() {
+export default function OnboardingOptionalMissions() {
   return (
     <>
       <div className="formStyle">
@@ -38,9 +38,10 @@ export default function OptionalMissions() {
           </p>
         </div>
         <NextButton
+          nav="/connexionPage"
           styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
-          text="Suivant"
+          text="Se connecter"
         />
       </div>
     </>

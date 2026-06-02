@@ -11,11 +11,15 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import LoginButton from "./LoginButton";
 
+import { useNavigate } from "react-router-dom";
+
+
 import { useAuth0 } from "@auth0/auth0-react";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
 export default function AccountCreation() {
   const { isAuthenticated, isLoading, error } = useAuth0();
+  const navigate = useNavigate();
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +35,7 @@ export default function AccountCreation() {
     const dataObj = Object.fromEntries(inputDatas.entries());
     Object.assign(dataObj, { isActive: false });
 
-    const test = await fetch("http://localhost:8080/users", {
+    const test = await fetch("http://localhost:8080/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,12 +45,14 @@ export default function AccountCreation() {
 
     const body = await test.text();
     console.log(test.status, body);
+
+    if (test.status === 201) navigate("/onboardingMandatoryMissions");
   }
 
   return (
     <>
       {!isAuthenticated && (
-        <form className="formStyle" onSubmit={(e) => handlesubmit(e)}>
+        <form className="formStyle3" onSubmit={(e) => handlesubmit(e)}>
           <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
           <div className="inputsFormContainerStyle">
             <InputContainer
@@ -89,7 +95,7 @@ export default function AccountCreation() {
                 text="Valider"
               />
               <NextButton
-                type="submit"
+                type="button"
                 styleClassName="btnStyle11"
                 mainClassName="SubmitBtn_AccountCreation"
                 text="Effacer"

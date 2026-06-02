@@ -51,21 +51,34 @@ const router = createBrowserRouter([
         element: <FirstLayout />,
         children: [
           {
-            // index: true,
-            // element: <LandingPage />,
-            // element: <ConnexionPage/>,
+            index: true,
+            element: <LandingPage />,
+          },
+          {
+            path: "/connexionPage",
+            element: <ConnexionPage />,
           },
         ],
       },
       {
-        // element: <OnboardingLayout />,
+        element: <OnboardingLayout />,
         children: [
           {
+            path: "/accountCreation",
+            element: <AccountCreation />,
+          },
+          {
+            path: "/onboardingMandatoryMissions",
+            element: <OnboardingMandatoryMissions/>,
+          },
+          {
+            path: "/onboardingOptionalMissions",
+            element: <OnboardingOptionalMissions/>,
+          },
+          {
             // index: true,
-            // element: <AccountCreation />,
             // element: <ProjectCreation/>,
             // element: <OnboardingMandatoryMissions/>,
-            // element: <OnboardingOptionalMissions/>,
           },
         ],
       },
@@ -76,32 +89,13 @@ const router = createBrowserRouter([
             element: <Layout />,
             children: [
               {
-                // element: <ProjectList/>,
+                path: "/homePage",
+                element: <HomePage />,
               },
               {
-                index: true,
-                element: <HomePage />,
-                // element: <MissionTag text="Espace" styleClassName="missionTagStyle"/>,
-                // element: <MissionTagsThumbnail title="Missions obligatoires" isOptional={true} icone={OptionalMission}/>
-                // element: <PlusButton btnStyle="btnStyle11" mainClassName="" text="Ajouter"/>
-                // element: <NextButton styleClassName="btnStyle10" mainClassName="test" text="voir toute la liste des tâches"/>
-                // element: <NextButton styleClassName="btnStyle5" mainClassName="test" text="voir toute la liste des tâches"/>
-                // element: <Figure number={34}/>
-                // element: <Figure2 number={34}/>
-                // element: <SecondaryThumbnail isFigured={true} figure={24} icone={Members} buttonText="voir les membres" text="membres"/>
-                // element: <AddingMissionPage/>
-                // element: <MissionPage/>
-                // element: <MaterialTag btnStyle="btnStyle13" mainClassName="ciseaux" text="ciseaux"/>
-                // element: <TaskTag mainClassName="ciseaux" text="ciseaux"/>
-                // element: <MemberAssignmentTag mainClassName="assigner" memberName="assigner"/>
-                // element: <TaskAndAssignmentContainer taskName="exemple de tâche"/>
-                // element: <AddingTaskPage/>
-                // element: <TaskAssignmentPage/>
+                path:"/missionPage",
+                element: <MissionPage />,
               },
-              // {
-              //   index: true,
-              //   element: <App />,
-              // },
               {
                 path: "/projectCreation",
                 element: <ProjectCreation />,
@@ -113,10 +107,6 @@ const router = createBrowserRouter([
               {
                 path: "/optionnalMissions",
                 element: <OnboardingOptionalMissions />,
-              },
-              {
-                path: "/homePage",
-                element: <HomePage />,
               },
             ],
           },

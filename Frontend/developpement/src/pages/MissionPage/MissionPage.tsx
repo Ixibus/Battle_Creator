@@ -13,18 +13,19 @@ export default function MissionPage() {
     <div className="missionPageContainerStyle">
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
-          <h2 className="missionPageMissionTitleStyle">MC</h2>
+          <h2 className="missionPageMissionTitleStyle">Vestiaires</h2>
           <p className="missionPageObjectifStyle">
-            Assurer que l'évènement suit bien l'agenda fixé et que l'ambiance se
-            maintienne
+            assurer que les participants puissent avoir un endroit pour poser leur affaires en sécurité
           </p>
         </div>
         <div className="missionPageDescriptionContainer">
           <h3 className="missionPageDescriptionTitleStyle">DESCRIPTION</h3>
           <p className="missionPageDescriptionStyle">
-            Exemple de tâches importantes : - location du micro - briefing
-            organisation de l'évènement - briefing profil des jurys -
-            présentation du staff
+            A faire absolument :
+            - Désigner un chef d'équipe
+            - Chercher un fournisseur pour les portants, les tables, les numéros, les cintres, etc.
+            - Voir si des proches peuvent pas nous dépanner
+            - Négocier les prix
           </p>
         </div>
         <div className="missionPageMaterialsContainerStyle">
@@ -32,13 +33,13 @@ export default function MissionPage() {
           <div className="missionPageMaterialItemsContainerStyle">
             <MaterialTag
               btnStyle="btnStyle13"
-              mainClassName="micro"
-              text="micro"
+              mainClassName="chair"
+              text="chaise"
             />
             <MaterialTag
               btnStyle="btnStyle13"
-              mainClassName="spareMic"
-              text="micro de rechange"
+              mainClassName="light"
+              text="lumière"
             />
             <MaterialTag
               btnStyle="btnStyle13"
@@ -78,9 +79,9 @@ export default function MissionPage() {
         <div className="missionPageContainerRightContainerStyle">
           <div className="missionPageTasksTitleContainerStyle">
             <h3 className="missionPageTasksTitle">TACHES</h3>
-            <span className="missionPageTasksnumber">1 tâche(s)</span>
+            <span className="missionPageTasksnumber">2 tâche(s)</span>
           </div>
-          <TaskAndAssignmentContainer taskName="envoyer un mail au mc" />
+          <TaskAndAssignmentContainer taskName="envoyer un mail au fournisseur" />
           <PlusButton
             topMarginButton="20px"
             btnStyle="btnStyle14"

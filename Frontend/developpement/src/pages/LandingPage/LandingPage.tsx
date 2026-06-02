@@ -11,8 +11,8 @@ export default function LandingPage() {
           Créez et suivez votre projet d'évènement de danse Hiphop
         </h2>
         <div className="btnsContainer_LandingPageContainer">
-          <NextButton styleClassName="btnStyle7" mainClassName="getStartedBtn_LandingPageContainer" text="Commencer"/>
-          <NextButton styleClassName="btnStyle8" mainClassName="signUpBtn_LandingPageContainer" text="Connexion"/>
+          <NextButton nav="/accountCreation" styleClassName="btnStyle7" mainClassName="getStartedBtn_LandingPageContainer" text="Commencer"/>
+          <NextButton nav="/connexionPage" styleClassName="btnStyle8" mainClassName="signUpBtn_LandingPageContainer" text="Connexion"/>
         </div>
       </main>
     </>

@@ -46,7 +46,7 @@ export default function ConnexionPage() {
 
   return (
     <>
-      <form className="formStyle" onSubmit={(e) => handlesubmitTester(e)}>
+      <form className="formStyle3" onSubmit={(e) => handlesubmitTester(e)}>
         <h1 className="titleFormStyle">Connexion</h1>
         <div className="inputsFormContainerStyle">
           <InputContainer
@@ -73,7 +73,7 @@ export default function ConnexionPage() {
               text="Valider"
             />
             <NextButton
-              type="submit"
+              type="button"
               styleClassName="btnStyle11"
               mainClassName="SubmitBtn_AccountCreation"
               text="Effacer"
