@@ -3,6 +3,9 @@ package com.example.battle_creator.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 
 public class UserCreateDto {
 
@@ -15,6 +18,7 @@ public class UserCreateDto {
     private String login;
 
     @NotBlank
+    @JsonProperty("password")
     private String rawPassword;
 
     @NotNull
