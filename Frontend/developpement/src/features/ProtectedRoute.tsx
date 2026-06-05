@@ -20,5 +20,5 @@ export default function ProtectedRoute() {
 
   if (loading) return <div>Chargement...</div>;
 
-  return authed ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />;
+  return authed ? <Outlet /> : <Navigate to="/connexionPage" replace state={{ from: location }} />;
 }
