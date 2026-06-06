@@ -30,7 +30,10 @@ export default function TaskAssignmentPage() {
             </p>
             <div className="taskAssignmentPageExistingMemberInnerContainer">
               <div className="taskAssignmentPageExistingMemberInputsContainer">
-                <label htmlFor="taskAssignmentPageExistingMemberInputsLabel" className="taskAssignmentPageExistingMemberInputsLabelStyle">
+                <label
+                  htmlFor="taskAssignmentPageExistingMemberInputsLabel"
+                  className="taskAssignmentPageExistingMemberInputsLabelStyle"
+                >
                   Mes bénévoles
                 </label>
                 <select
@@ -44,6 +47,7 @@ export default function TaskAssignmentPage() {
                 </select>
               </div>
               <NextButton
+                nav={-1}
                 type="submit"
                 styleClassName="btnStyle10"
                 mainClassName="SubmitBtn_MemberAssignedToTask"
@@ -59,11 +63,11 @@ export default function TaskAssignmentPage() {
             <div className="taskAssignmentPageCreateAssignInnerContainer">
               <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                 <InputContainer
-                inputLabelStyle={InputLabelStyle.style1}
-                labelName={"Prénom"}
-                inputItemStyle={InputItemStyle.style3}
-                htmlFor={"TaskAssignmentFirstNameMemberInput"}
-                type={"text"}
+                  inputLabelStyle={InputLabelStyle.style1}
+                  labelName={"Prénom"}
+                  inputItemStyle={InputItemStyle.style3}
+                  htmlFor={"TaskAssignmentFirstNameMemberInput"}
+                  type={"text"}
                 />
                 <InputContainer
                   inputLabelStyle={InputLabelStyle.style1}
@@ -73,6 +77,7 @@ export default function TaskAssignmentPage() {
                   type={"text"}
                 />
                 <NextButton
+                  nav={-1}
                   type="submit"
                   styleClassName="btnStyle10"
                   mainClassName="SubmitBtn_CreatedMemberAssignedToTask"
@@ -84,6 +89,7 @@ export default function TaskAssignmentPage() {
         </div>
         <div className="buttonsContainerStyle">
           <NextButton
+            nav={-1}
             type="submit"
             styleClassName="btnStyle11"
             mainClassName="SubmitBtn_LeaveTaskAssignmentPage"

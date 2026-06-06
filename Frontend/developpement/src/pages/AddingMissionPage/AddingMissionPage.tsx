@@ -1,4 +1,4 @@
-import './addingMissionPage.css';
+import "./addingMissionPage.css";
 
 import "../../styles/form/formStyle.css";
 import "../../styles/global/btnStyle.css";
@@ -14,11 +14,15 @@ import AreaTextContainer, {
 import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 
-async function handlesubmit(e: any) {
-  e.preventDefault();
-}
+import { useNavigate } from "react-router-dom";
 
 export default function AddingMissionPage() {
+  const navigate = useNavigate();
+  async function handlesubmit(e: any) {
+    e.preventDefault();
+
+    navigate("/missionPage");
+  }
   return (
     <div className="addingMissionPageStyle">
       <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
@@ -55,7 +59,8 @@ export default function AddingMissionPage() {
               text="Valider"
             />
             <NextButton
-              type="submit"
+              nav={-1}
+              type="button"
               styleClassName="btnStyle11"
               mainClassName="SubmitBtn_AccountCreation"
               text="Quitter"

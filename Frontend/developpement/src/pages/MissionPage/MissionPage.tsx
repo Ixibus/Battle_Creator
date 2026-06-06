@@ -83,6 +83,7 @@ export default function MissionPage() {
           </div>
           <TaskAndAssignmentContainer taskName="envoyer un mail au fournisseur" />
           <PlusButton
+          nav="/addingTaskPage"
             topMarginButton="20px"
             btnStyle="btnStyle14"
             mainClassName="missionPageMaterialAddingButton"

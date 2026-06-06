@@ -5,8 +5,17 @@ import Home from "../../assets/icones/home.svg?react";
 import Project from "../../assets/icones/project.svg?react";
 import Mission from "../../assets/icones/mandatoryMission.svg?react";
 import Logout from "../../assets/icones/logout.svg?react";
+import { useNavigate } from "react-router-dom";
 
 export default function Nav() {
+
+  const navigate = useNavigate();
+
+  function navHandler(nav : string) {
+    nav==="homePage" && navigate("/homePage");
+    nav==="projectList" && navigate("/projectList");
+  }
+
   return (
     <div className="navContainerStyle">
       <div className="greetingContainer">
@@ -14,11 +23,12 @@ export default function Nav() {
         <div className="nicoPpStyle" />
       </div>
       <div className="navigationNavContainer">
-        <div className="homeNavContainer iconeNavContainerStyle">
+        <div className="homeNavContainer iconeNavContainerStyle" 
+        onClick={() => navHandler("homePage")}>
           <Icone SrcIcone={Home} styleType={StyleType.style2} />
           <p className="navText">Home</p>
         </div>
-        <div className="projectsNavContainer iconeNavContainerStyle">
+        <div className="projectsNavContainer iconeNavContainerStyle" onClick={() => navHandler("projectList")}>
           <Icone SrcIcone={Project} styleType={StyleType.style2} />
           <p className="navText">Projects</p>
         </div>

@@ -72,7 +72,8 @@ export default function ProjectList() {
         </div>
       </div>
       <NextButton
-        type="submit"
+        nav={-1}
+        type="button"
         styleClassName="btnStyle11"
         mainClassName="projectListExitButton"
         text="Quitter"

@@ -13,12 +13,15 @@ import AreaTextContainer, {
 } from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
-
-async function handlesubmit(e: any) {
-  e.preventDefault();
-}
+import { useNavigate } from "react-router-dom";
 
 export default function AddingTaskPage() {
+  const navigate = useNavigate();
+  async function handlesubmit(e: any) {
+    e.preventDefault();
+
+    navigate("/missionPage");
+  }
   return (
     <div className="addingTaskPageStyle">
       <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
@@ -65,9 +68,7 @@ export default function AddingTaskPage() {
                   className="addingTaskPageLinkingPreviousTaskSelect"
                   id=""
                 >
-                  <option value="">
-                    --Tâche(s) disponible(s)--
-                  </option>
+                  <option value="">--Tâche(s) disponible(s)--</option>
                   <option value=""></option>
                   <option value=""></option>
                 </select>
@@ -81,9 +82,7 @@ export default function AddingTaskPage() {
                   className="addingTaskPageLinkingNextTaskSelect"
                   id=""
                 >
-                  <option value="">
-                    --Tâche(s) disponible(s)--
-                  </option>
+                  <option value="">--Tâche(s) disponible(s)--</option>
                   <option value=""></option>
                   <option value=""></option>
                 </select>
@@ -94,13 +93,14 @@ export default function AddingTaskPage() {
             <NextButton
               type="submit"
               styleClassName="btnStyle10"
-              mainClassName="SubmitBtn_AccountCreation"
+              mainClassName="SubmitBtn_AddingTaskPage"
               text="Valider"
             />
             <NextButton
-              type="submit"
+              nav={-1}
+              type="button"
               styleClassName="btnStyle11"
-              mainClassName="SubmitBtn_AccountCreation"
+              mainClassName="LeaveBtn_AddingTaskPage"
               text="Quitter"
             />
           </div>

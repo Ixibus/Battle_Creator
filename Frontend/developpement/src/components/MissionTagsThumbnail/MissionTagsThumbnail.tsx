@@ -56,7 +56,7 @@ export default function MissionTagsThumbnail({
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle2"/>
           ))
           }
-          <PlusButton btnStyle="btnStyle12" mainClassName="optionnalMissionNextButton" text="AJOUTER MISSION" topMarginButton="auto"/>
+          <PlusButton nav="/addingMissionPage" btnStyle="btnStyle12" mainClassName="optionnalMissionNextButton" text="AJOUTER MISSION" topMarginButton="auto"/>
           </div>
           }
     </div>

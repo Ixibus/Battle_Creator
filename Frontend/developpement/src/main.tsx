@@ -83,7 +83,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute />,
+        // element: <ProtectedRoute />,
         children: [
           {
             element: <Layout />,
@@ -93,12 +93,28 @@ const router = createBrowserRouter([
                 element: <HomePage />,
               },
               {
+                path: "/addingMissionPage",
+                element: <AddingMissionPage />,
+              },
+              {
                 path:"/missionPage",
                 element: <MissionPage />,
               },
               {
+                path:"/addingTaskPage",
+                element: <AddingTaskPage />,
+              },
+              {
+                path:"/taskAssignmentPage",
+                element: <TaskAssignmentPage />,
+              },
+              {
                 path: "/projectCreation",
                 element: <ProjectCreation />,
+              },
+              {
+                path: "/projectList",
+                element: <ProjectList />,
               },
               {
                 path: "/mandatoryMissions",

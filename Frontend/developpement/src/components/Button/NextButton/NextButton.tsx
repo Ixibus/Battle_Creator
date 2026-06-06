@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 
 interface interfaceProps {
     type?: "submit" | "button",
-    nav?: string,
+    nav?: number,
     styleClassName: string,
     mainClassName: string,
     text?: string
