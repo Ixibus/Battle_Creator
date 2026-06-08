@@ -12,14 +12,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final AuthentificationService authentificationService;
-
-    private final LogoutHandler logoutHandler;
 
     public SecurityConfig( AuthentificationService authentificationService) {
         this.authentificationService = authentificationService;
@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/users", "/test").permitAll().anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout().logoutUrl("/auth/logout").addLogouthandler(logoutHandler).logoutSuccesshandler((request, response, authentification) -> SecurityContextHolder.clearContext()).build();
+        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/users", "/test").permitAll().anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)).deleteCookies("token")).build();
     }
 
 }
