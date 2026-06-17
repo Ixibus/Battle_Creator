@@ -14,7 +14,25 @@ export default function Nav() {
   function navHandler(nav : string) {
     nav==="homePage" && navigate("/homePage");
     nav==="projectList" && navigate("/projectList");
-    nav==="connexionPage" && navigate("/connexionPage");
+  }
+
+  async function logoutHandler(navLinkLogout : string) {
+    const res = fetch("http://localhost:8080/auth/logout", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },}
+    )
+
+    if ((await res).status === 200) {
+      console.log("déconnexion réussie + token effacé");
+      navLinkLogout==="connexionPage" && navigate("/connexionPage");
+    }
+
+    if (!(await res).ok) {
+      console.log("déconnexion non réussie");
+    }
   }
 
   return (
@@ -38,7 +56,7 @@ export default function Nav() {
           <p className="navText">Missions</p>
         </div>
       </div>
-      <div className="logoutContainer" onClick={() => navHandler("connexionPage")}>
+      <div className="logoutContainer" onClick={() => logoutHandler("connexionPage")}>
         <p className="logoutText">Déconnexion</p>
           <Icone SrcIcone={Logout} styleType={StyleType.style3} />
       </div>
