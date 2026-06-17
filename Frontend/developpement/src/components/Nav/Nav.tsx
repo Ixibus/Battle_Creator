@@ -14,6 +14,7 @@ export default function Nav() {
   function navHandler(nav : string) {
     nav==="homePage" && navigate("/homePage");
     nav==="projectList" && navigate("/projectList");
+    nav==="connexionPage" && navigate("/connexionPage");
   }
 
   return (
@@ -37,7 +38,7 @@ export default function Nav() {
           <p className="navText">Missions</p>
         </div>
       </div>
-      <div className="logoutContainer">
+      <div className="logoutContainer" onClick={() => navHandler("connexionPage")}>
         <p className="logoutText">Déconnexion</p>
           <Icone SrcIcone={Logout} styleType={StyleType.style3} />
       </div>
