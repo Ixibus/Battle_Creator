@@ -50,7 +50,8 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedHeader("*");
         config.addAllowedMethod("POST");
-        source.registerCorsConfiguration("/**", config);
+        config.addAllowedMethod("OPTIONS");
+        source.registerCorsConfiguration("/auth/**", config);
     return source;
 }
 
