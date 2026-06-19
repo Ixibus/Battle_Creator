@@ -19,6 +19,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.Customizer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -51,7 +54,12 @@ public class SecurityConfig {
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
-        source.registerCorsConfiguration("/auth/**", config);
+
+        Map<String,CorsConfiguration> allCorsConfig = new HashMap<>();
+        allCorsConfig.put("/auth/**", config);        
+        allCorsConfig.put("/missions/**", config);        
+
+        source.setCorsConfigurations(allCorsConfig);
     return source;
 }
 
