@@ -21,7 +21,25 @@ export default function AddingMissionPage() {
   async function handlesubmit(e: any) {
     e.preventDefault();
 
-    navigate("/missionPage");
+    const res = fetch("http://localhost:8080/missions",
+      {
+        method :"POST",
+        credentials : "include",
+        body : "json/text",
+      }
+    )
+
+    if (((await res).status) !== 201) {
+      console.log("insertion de mission échoué");
+    } 
+
+    if ((await res).status === 201) {
+      console.log("la missions a bien été créer en base de donnée !");
+      // navigate("/missionPage");
+    }
+
+
+
   }
   return (
     <div className="addingMissionPageStyle">
