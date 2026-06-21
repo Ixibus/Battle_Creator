@@ -7,8 +7,26 @@ import PlusButton from "../../components/Button/PlusButton/PlusButton";
 import TaskTag from "../../components/TaskTag/TaskTag";
 import MemberAssignmentTag from "../../components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 export default function MissionPage() {
+
+  const url = window.location.href;
+
+  console.log(url);
+  
+  // useEffect(
+  //   const res = await fetch("h")
+  //   ,[]);
+
+
+  // console.log(res)
+
+
   return (
     <div className="missionPageContainerStyle">
       <div className="missionPageContainerLeftContainerStyle">
