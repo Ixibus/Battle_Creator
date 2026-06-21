@@ -36,6 +36,8 @@ public class MissionService {
         validateMissionDto(missionDto);
 
         Mission mission = new Mission();
+        mission.setType(missionDto.getType());
+        mission.setIsDefault(missionDto.getIsDefault());
         mission.setName(cleanText(missionDto.getName()));
         mission.setGoal(cleanText(missionDto.getGoal()));
 
