@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.Customizer;
+import org.springframework.http.HttpMethod;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,9 +41,25 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
+    //     return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/missions/**", "/users", "/test").permitAll().anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)).deleteCookies("token")).build();
+    // }
+
+    // @Bean
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
+    //     return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
+    // .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+    // .requestMatchers("/error").permitAll()
+    // .requestMatchers("/auth/**", "/missions/**", "/users", "/test").permitAll()
+    // .anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)).deleteCookies("token")).build();
+    // }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
-        return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**", "/users", "/test").permitAll().anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)).deleteCookies("token")).build();
+        return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/error").permitAll()
+    .requestMatchers("/auth/**", "/missions/**", "/users", "/test").permitAll()
+    .anyRequest().authenticated()).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).logout(logout -> logout.logoutUrl("/auth/logout").logoutSuccessHandler((request, response, authentication) -> response.setStatus(200)).deleteCookies("token")).build();
     }
 
     @Bean
@@ -54,6 +71,7 @@ public class SecurityConfig {
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
+        config.addAllowedMethod("OPTIONS");
 
         Map<String,CorsConfiguration> allCorsConfig = new HashMap<>();
         allCorsConfig.put("/auth/**", config);        
