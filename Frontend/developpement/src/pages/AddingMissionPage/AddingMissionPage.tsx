@@ -18,23 +18,35 @@ import { useNavigate } from "react-router-dom";
 
 export default function AddingMissionPage() {
   const navigate = useNavigate();
-  async function handlesubmit(e: any) {
+
+
+  async function handlesubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const res = fetch("http://localhost:8080/missions", {
+    const inputDatas : FormData = new FormData(e.currentTarget);
+
+    const formDatas = Object.fromEntries(inputDatas.entries());
+
+    const finalDatas = Object.assign({"type":"option", "isDefault":"false"}, formDatas);
+
+    console.log(finalDatas);
+
+    const res = await fetch("http://localhost:8080/missions", {
       method: "POST",
+      // credentials : "include",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataObj),
+      body: JSON.stringify(finalDatas),
     });
 
     if ((await res).status !== 201) {
       console.log("insertion de mission échoué");
     }
 
+    console.log (res.status, await res.text());
     if ((await res).status === 201) {
-      console.log("la missions a bien été créer en base de donnée !");
+      console.log("la mission a bien été créée en base de donnée !");
       // navigate("/missionPage");
     }
   }
@@ -47,7 +59,7 @@ export default function AddingMissionPage() {
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la mission"
             inputItemStyle={InputItemStyle.style3}
-            htmlFor="misionName"
+            htmlFor="missionName"
             type="text"
           />
           <AreaTextContainer
