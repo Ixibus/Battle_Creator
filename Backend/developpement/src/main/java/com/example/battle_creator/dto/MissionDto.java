@@ -4,6 +4,8 @@ import com.example.battle_creator.model.Mission;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 public class MissionDto {
 
@@ -17,12 +19,15 @@ public class MissionDto {
 
     @NotBlank(message = "merci de renseigner un nom")
     @Size(max = 100, message = "le nom ne doit pas dépasser 100 caractères")
+    @JsonProperty("missionName")
     private String name;
 
     @NotBlank(message = "merci de renseigner un but")
     @Size(max = 255, message = "le but ne doit pas dépasser 255 caractères")
+    @JsonProperty("missionGoal")
     private String goal;
 
+    @JsonProperty("missionDescription")
     private String description;
 
     public MissionDto(){};
