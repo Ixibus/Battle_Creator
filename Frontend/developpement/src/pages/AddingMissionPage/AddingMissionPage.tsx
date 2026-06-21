@@ -12,7 +12,6 @@ import AreaTextContainer, {
   AreaTextStyle,
 } from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
-import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 
 import { useNavigate } from "react-router-dom";
 
@@ -40,14 +39,19 @@ export default function AddingMissionPage() {
       body: JSON.stringify(finalDatas),
     });
 
-    if ((await res).status !== 201) {
+    if (res.status !== 201) {
       console.log("insertion de mission échoué");
     }
 
-    console.log (res.status, await res.text());
-    if ((await res).status === 201) {
+    console.log (res.status);
+
+
+    if (res.status === 201) {
       console.log("la mission a bien été créée en base de donnée !");
-      // navigate("/missionPage");
+
+      const createdMissionId : number = (await res.json()).id;
+      
+      navigate(`/missionPage/${createdMissionId}`);
     }
   }
   return (
