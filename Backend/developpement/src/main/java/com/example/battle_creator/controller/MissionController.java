@@ -34,6 +34,8 @@ public class MissionController {
 
     @PostMapping
     public ResponseEntity<Mission> createMission(@Valid @RequestBody MissionDto missionDto) {
+        System.out.println("méthode du controller : createMission");
+
         Mission createdMission = missionService.create(missionDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMission);
     }
