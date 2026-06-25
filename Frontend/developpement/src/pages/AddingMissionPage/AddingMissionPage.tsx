@@ -13,7 +13,7 @@ import AreaTextContainer, {
 } from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AddingMissionPage() {
   const navigate = useNavigate();
