@@ -7,11 +7,13 @@ import PlusButton from "../../components/Button/PlusButton/PlusButton";
 import TaskTag from "../../components/TaskTag/TaskTag";
 import MemberAssignmentTag from "../../components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function MissionPage() {
   const { id } = useParams();
+
+  const [objResponse, setObjResponse] = useState<any>();
 
   useEffect(() => { async function loadMission () {
     const res = await fetch(`http://localhost:8080/missions/${id}`, {
@@ -23,24 +25,29 @@ export default function MissionPage() {
     });
     console.log(res.status);
 
-    if (res.status !== 200) console.log("un autre code que 200 est apparu : " + (await res).status);
+    if (res.status !== 200) console.log("un autre code que 200 est apparu : " + res.status);
     if (res.status === 200) {
-      const response = res.json();
-      console.log(JSON.stringify(await response));
+      const jsonResponse = res.json();
+      console.log(JSON.stringify(await jsonResponse));
+
+      const response = await jsonResponse;
+      console.log(response);
+
+      setObjResponse(response);
     }
-  }; loadMission()}, [id]);
+  }; loadMission(); }, [id]);
 
 
   return (
     <div className="missionPageContainerStyle">
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
-          <h2 className="missionPageMissionTitleStyle">MissionName</h2>
-          <p className="missionPageObjectifStyle">MissionGoal</p>
+          <h2 className="missionPageMissionTitleStyle">{objResponse?.name}</h2>
+          <p className="missionPageObjectifStyle">{objResponse?.goal}</p>
         </div>
         <div className="missionPageDescriptionContainer">
           <h3 className="missionPageDescriptionTitleStyle">DESCRIPTION</h3>
-          <p className="missionPageDescriptionStyle">MissionDescription</p>
+          <p className="missionPageDescriptionStyle">{objResponse?.description}</p>
         </div>
         <div className="missionPageMaterialsContainerStyle">
           <h3 className="missionPageMaterialsTitle">MATERIELS</h3>
