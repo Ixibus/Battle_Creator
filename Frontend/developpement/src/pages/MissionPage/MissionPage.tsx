@@ -8,43 +8,39 @@ import TaskTag from "../../components/TaskTag/TaskTag";
 import MemberAssignmentTag from "../../components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-
-
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function MissionPage() {
+  const { id } = useParams();
 
-  const url = window.location.href;
+  useEffect(() => { async function loadMission () {
+    const res = fetch(`http://localhost:8080/missions/${id}`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log((await res).status);
 
-  console.log(url);
-  
-  // useEffect(
-  //   const res = await fetch("h")
-  //   ,[]);
-
-
-  // console.log(res)
+    if ((await res).status !== 200) console.log("un autre code que 200 est apparu : " + (await res).status);
+    if ((await res).status === 200) {
+      const response = (await res).json();
+      console.log(JSON.stringify(await response));
+    }
+  }; loadMission()}, [id]);
 
 
   return (
     <div className="missionPageContainerStyle">
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
-          <h2 className="missionPageMissionTitleStyle">Vestiaires</h2>
-          <p className="missionPageObjectifStyle">
-            assurer que les participants puissent avoir un endroit pour poser leur affaires en sécurité
-          </p>
+          <h2 className="missionPageMissionTitleStyle">MissionName</h2>
+          <p className="missionPageObjectifStyle">MissionGoal</p>
         </div>
         <div className="missionPageDescriptionContainer">
           <h3 className="missionPageDescriptionTitleStyle">DESCRIPTION</h3>
-          <p className="missionPageDescriptionStyle">
-            A faire absolument :
-            - Désigner un chef d'équipe
-            - Chercher un fournisseur pour les portants, les tables, les numéros, les cintres, etc.
-            - Voir si des proches peuvent pas nous dépanner
-            - Négocier les prix
-          </p>
+          <p className="missionPageDescriptionStyle">MissionDescription</p>
         </div>
         <div className="missionPageMaterialsContainerStyle">
           <h3 className="missionPageMaterialsTitle">MATERIELS</h3>
@@ -101,7 +97,7 @@ export default function MissionPage() {
           </div>
           <TaskAndAssignmentContainer taskName="envoyer un mail au fournisseur" />
           <PlusButton
-          nav="/addingTaskPage"
+            nav="/addingTaskPage"
             topMarginButton="20px"
             btnStyle="btnStyle14"
             mainClassName="missionPageMaterialAddingButton"
