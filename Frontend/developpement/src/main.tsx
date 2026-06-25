@@ -97,7 +97,7 @@ const router = createBrowserRouter([
                 element: <AddingMissionPage />,
               },
               {
-                path:"/missionPage",
+                path:"/missionPage/:id",
                 element: <MissionPage />,
               },
               {
