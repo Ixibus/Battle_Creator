@@ -14,18 +14,18 @@ export default function MissionPage() {
   const { id } = useParams();
 
   useEffect(() => { async function loadMission () {
-    const res = fetch(`http://localhost:8080/missions/${id}`, {
+    const res = await fetch(`http://localhost:8080/missions/${id}`, {
       credentials: "include",
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log((await res).status);
+    console.log(res.status);
 
-    if ((await res).status !== 200) console.log("un autre code que 200 est apparu : " + (await res).status);
-    if ((await res).status === 200) {
-      const response = (await res).json();
+    if (res.status !== 200) console.log("un autre code que 200 est apparu : " + (await res).status);
+    if (res.status === 200) {
+      const response = res.json();
       console.log(JSON.stringify(await response));
     }
   }; loadMission()}, [id]);
