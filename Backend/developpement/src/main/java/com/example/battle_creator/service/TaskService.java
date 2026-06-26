@@ -32,9 +32,10 @@ public class TaskService {
         validateTask(taskDto);
 
         Task taskCreated = new Task();
-        taskCreated.setName(cleanText(taskDto.getName()));
-        taskCreated.setLeader(taskDto.getIsLeader());
-        taskCreated.setDone(taskDto.getIsDone());
+        taskCreated.setTaskName(cleanText(taskDto.getTaskName()));
+        taskCreated.setTaskDescription(cleanText(taskDto.getTaskDescription()));
+        taskCreated.setLeader(taskDto.isLeader());
+        taskCreated.setDone(taskDto.isDone());
         taskCreated.setNumberTaskPosition(taskDto.getNumberTaskPosition());
 
         return taskRepository.save(taskCreated);
@@ -46,9 +47,10 @@ public class TaskService {
         validateTask(taskDto);
 
         Task taskUpdated = taskRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cette id est introuvable"));
-        taskUpdated.setName(cleanText(taskDto.getName()));
-        taskUpdated.setLeader(taskDto.getIsLeader());
-        taskUpdated.setDone(taskDto.getIsDone());
+        taskUpdated.setTaskName(cleanText(taskDto.getTaskName()));
+        taskUpdated.setTaskDescription(cleanText(taskDto.getTaskDescription()));
+        taskUpdated.setLeader(taskDto.isLeader());
+        taskUpdated.setDone(taskDto.isDone());
         taskUpdated.setNumberTaskPosition(taskDto.getNumberTaskPosition());
 
         return taskRepository.save(taskUpdated);
@@ -75,7 +77,7 @@ public class TaskService {
         if (taskDto == null) {
             throw new IllegalArgumentException("il faut renseigner une tache");
         }
-        if (taskDto.getName() == null || taskDto.getName().trim().isEmpty() ) {
+        if (taskDto.getTaskName() == null || taskDto.getTaskName().trim().isEmpty() ) {
             throw  new IllegalArgumentException("il faut renseigner un nom");
         }
     }

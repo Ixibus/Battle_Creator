@@ -3,6 +3,7 @@ package com.example.battle_creator.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TaskDto {
 
@@ -10,9 +11,13 @@ public class TaskDto {
 
     @NotBlank(message = "Le nom est obligatoire")
     @Size(max = 255, message = "Le nom ne doit pas dépasser 255 caractères")
-    private String name;
+    private String taskName;
+
+    @Size(max = 255, message = "Le nom ne doit pas dépasser 255 caractères")
+    private String taskDescription;
 
     @NotNull(message = "Le statut leader est obligatoire")
+    @JsonProperty("IsLeaderTaskCheckbox")
     private Boolean isLeader;
 
     @NotNull(message = "Le statut done est obligatoire")
@@ -22,8 +27,9 @@ public class TaskDto {
 
     public TaskDto(){};
 
-    public TaskDto(String name, Boolean isLeader, Boolean isDone, Integer numberTaskPosition) {
-        this.name = name;
+    public TaskDto(String taskName, String taskDescription, Boolean isLeader, Boolean isDone, Integer numberTaskPosition) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
         this.isLeader = isLeader;
         this.isDone = isDone;
         this.numberTaskPosition = numberTaskPosition;
@@ -37,28 +43,36 @@ public class TaskDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public boolean getIsLeader() {
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public Boolean isLeader() {
         return isLeader;
     }
 
-    public void setLeader(Boolean leader) {
-        isLeader = leader;
+    public void setLeader(Boolean isLeader) {
+        this.isLeader = isLeader;
     }
 
-    public boolean getIsDone() {
+    public Boolean isDone() {
         return isDone;
     }
 
-    public void setDone(Boolean done) {
-        isDone = done;
+    public void setDone(Boolean isDone) {
+        this.isDone = isDone;
     }
 
     public Integer getNumberTaskPosition() {

@@ -10,22 +10,25 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 255, nullable = false)
-    private String name;
+    @Column(name = "task_name", length = 255, nullable = false)
+    private String taskName;
+
+    @Column(name= "task_description", length = 255, nullable = true)
+    private String taskDescription;
 
     @Column(name = "is_leader", nullable = false)
-    private boolean isLeader;
+    private Boolean isLeader;
 
     @Column(name = "is_done", nullable = false)
-    private boolean isDone;
+    private Boolean isDone;
 
-    @Column(name = "number_tasks_position", nullable = true)
+    @Column(name = "number_task_position", nullable = true)
     private Integer numberTaskPosition;
 
     public Task() {};
 
 //    // 7. Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
-//    public Task(String name, boolean isLeader, boolean isDone, Integer numberTaskPosition) {
+//    public Task(String name, Boolean isLeader, Boolean isDone, Integer numberTaskPosition) {
 //        this.name = name;
 //        this.isLeader = isLeader;
 //        this.isDone = isDone;
@@ -40,28 +43,36 @@ public class Task {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public boolean getIsLeader() {
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public Boolean isLeader() {
         return isLeader;
     }
 
-    public void setLeader(boolean leader) {
-        isLeader = leader;
+    public void setLeader(Boolean isLeader) {
+        this.isLeader = isLeader;
     }
 
-    public boolean getIsDone() {
+    public Boolean isDone() {
         return isDone;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setDone(Boolean isDone) {
+        this.isDone = isDone;
     }
 
     public Integer getNumberTaskPosition() {
