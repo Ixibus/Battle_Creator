@@ -20,7 +20,15 @@ export default function AddingTaskPage() {
   async function handlesubmit(e: any) {
     e.preventDefault();
 
-    navigate("/missionPage");
+
+    const form = new FormData(e.currentTarget);
+
+    const formEntries = Object.fromEntries(form.entries());
+
+    console.log(formEntries);
+
+    console.log('ok')
+    // navigate("/missionPage");
   }
   return (
     <div className="addingTaskPageStyle">
@@ -31,11 +39,11 @@ export default function AddingTaskPage() {
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la tâche"
             inputItemStyle={InputItemStyle.style3}
-            htmlFor="misionName"
+            htmlFor="taskName"
             type="text"
           />
           <AreaTextContainer
-            htmlFor="missionGoal"
+            htmlFor="taskDescription"
             areaLabelStyle={AreaLabelStyle.style3}
             labelName="Description de la tâche"
             areaTextStyle={AreaTextStyle.style3}
