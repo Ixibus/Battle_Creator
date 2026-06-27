@@ -17,7 +17,7 @@ public class TaskDto {
     private String taskDescription;
 
     @NotNull(message = "Le statut leader est obligatoire")
-    @JsonProperty("IsLeaderTaskCheckbox")
+    @JsonProperty("isLeaderTaskCheckbox")
     private Boolean isLeader;
 
     @NotNull(message = "Le statut done est obligatoire")
