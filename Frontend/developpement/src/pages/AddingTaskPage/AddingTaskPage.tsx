@@ -23,9 +23,32 @@ export default function AddingTaskPage() {
 
     const form = new FormData(e.currentTarget);
 
-    const formEntries = Object.fromEntries(form.entries());
+    const formEntries = {
+      taskName : form.get("taskName"),
+      taskDescription : form.get("taskDescription"),
+      isLeaderTaskCheckbox : form.get("isLeaderTaskCheckbox") === "on",
+      isDone : false,
+    }
 
     console.log(formEntries);
+
+    const res = await fetch("http://localhost:8080/tasks",
+      {
+        method: "POST",
+        // credentials: "include",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(formEntries),
+      }
+    );
+
+
+    const text = await res.text();
+
+    if (res.status !== 201) console.log("l'ajout de tâche a échoué " + res.status);
+
+    if (res.status === 201) console.log("ajout de tâche réussi 🥳");
 
     console.log('ok')
     // navigate("/missionPage");
@@ -52,19 +75,19 @@ export default function AddingTaskPage() {
           />
           <div className="addingTaskPageIsLeaderTaskContainer">
             <label
-              htmlFor="IsLeaderTaskCheckbox"
+              htmlFor="isLeaderTaskCheckbox"
               className="addingTaskPageIsLeaderTaskCheckboxLabel"
             >
               Statut "Leader" de la Tache
             </label>
             <input
               type="checkbox"
-              name="IsLeaderTaskCheckbox"
-              id="IsLeaderTaskCheckbox"
+              name="isLeaderTaskCheckbox"
+              id="isLeaderTaskCheckbox"
               className="addingTaskPageIsLeaderTaskCheckboxCheckbox"
             />
           </div>
-          <div className="addingTaskPageLinkingTasksContainer">
+          {/* <div className="addingTaskPageLinkingTasksContainer">
             <p className="addingTaskPageLinkingTasksTitle">Liaison de tâche</p>
             <div className="addingTaskPageLinkingTasksInnerContainer">
               <div className="addingTaskPageLinkingPreviousTaskContainer">
@@ -96,7 +119,7 @@ export default function AddingTaskPage() {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"
