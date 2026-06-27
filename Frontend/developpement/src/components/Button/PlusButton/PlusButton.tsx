@@ -12,6 +12,7 @@ interface interfaceProps {
   btnStyle: string;
   mainClassName: string;
   text?: string;
+  onClick?: () => void;
 }
 
 export default function PlusButton({
@@ -20,12 +21,17 @@ export default function PlusButton({
   btnStyle,
   mainClassName,
   text,
+  onClick
 }: interfaceProps) {
 
   const navigate = useNavigate();
   
     const handleClick = () => {
-    if (nav) navigate(nav);
+      if (onClick) {
+        onClick();
+        return;
+      }
+      if (nav) navigate(nav);
   };
 
   return (

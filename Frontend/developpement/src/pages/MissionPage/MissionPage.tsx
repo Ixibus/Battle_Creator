@@ -9,11 +9,14 @@ import MemberAssignmentTag from "../../components/MemberAssignmentTag/MemberAssi
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 
 export default function MissionPage() {
   const { id } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
+  
+  const [showAddTaskPage, setShowAddTaskPage] = useState(false);
 
   useEffect(() => { async function loadMission () {
     const res = await fetch(`http://localhost:8080/missions/${id}`, {
@@ -39,7 +42,7 @@ export default function MissionPage() {
 
 
   return (
-    <div className="missionPageContainerStyle">
+    <div className={showAddTaskPage ? "missionPageContainerStyle missionPageBackgroundDisplay" : "missionPageContainerStyle"}>
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
           <h2 className="missionPageMissionTitleStyle">{objResponse?.name}</h2>
@@ -104,12 +107,13 @@ export default function MissionPage() {
           </div>
           <TaskAndAssignmentContainer taskName="envoyer un mail au fournisseur" />
           <PlusButton
-            nav="/addingTaskPage"
             topMarginButton="20px"
             btnStyle="btnStyle14"
             mainClassName="missionPageMaterialAddingButton"
             text="Ajouter une tâche"
+            onClick={() => {setShowAddTaskPage(true)}}
           />
+          {showAddTaskPage && <AddingTaskPage onClose={() => setShowAddTaskPage(false)}/>}
         </div>
       </div>
     </div>

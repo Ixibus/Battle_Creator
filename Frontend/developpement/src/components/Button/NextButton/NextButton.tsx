@@ -8,14 +8,19 @@ interface interfaceProps {
     nav?: number,
     styleClassName: string,
     mainClassName: string,
-    text?: string
+    text?: string,
+    onClick?: () => void,
 }
 
 
-export default function NextButton({nav, type, styleClassName, mainClassName, text} : interfaceProps) {
+export default function NextButton({nav, type, styleClassName, mainClassName, text, onClick} : interfaceProps) {
   const navigate = useNavigate();
   
     const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
     if (nav) navigate(nav);
   };
 
