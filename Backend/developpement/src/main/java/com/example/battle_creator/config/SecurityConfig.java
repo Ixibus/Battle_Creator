@@ -72,6 +72,7 @@ public class SecurityConfig {
         Map<String,CorsConfiguration> allCorsConfig = new HashMap<>();
         allCorsConfig.put("/auth/**", config);        
         allCorsConfig.put("/missions/**", config);        
+        allCorsConfig.put("/tasks/**", config);
 
         source.setCorsConfigurations(allCorsConfig);
     return source;
