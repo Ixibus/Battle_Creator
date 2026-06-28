@@ -4,9 +4,14 @@ import com.example.battle_creator.model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
+
+    // "méthode" pour chercher toutes les tâches en fonction d'une mission (clé étrangère)
+        List<Task> findByMissionId(Long missionId);
 
 // // Exemple de méthode à rajouter dans un repository
 

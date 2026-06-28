@@ -30,6 +30,11 @@ public class TaskController {
         // avec cette méthode, ResponseEntity.of(Optional) renvoie directement 200 OK si l’objet existe, ou 404 Not Found s’il est absent
     }
 
+    @GetMapping("/mission/{missionId}")
+    public ResponseEntity<List<Task>> getTasksByMissionId(@PathVariable Long missionId) {
+        return ResponseEntity.ok(taskService.getByMissionId(missionId));
+    }
+
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody TaskDto taskDto) {
         Task createdTask = taskService.create(taskDto);

@@ -33,6 +33,11 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
+    public List<Task> getByMissionId(Long missionId) {
+        validateId(missionId);
+        return taskRepository.findByMissionId(missionId);
+    }
+
     @Transactional
     public Task create(TaskDto taskDto) {
         validateTask(taskDto);
