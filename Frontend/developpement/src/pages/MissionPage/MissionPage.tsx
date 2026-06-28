@@ -12,37 +12,75 @@ import { useNavigate, useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 
 export default function MissionPage() {
+
+  interface Task {
+    id : number,
+    taskName : string
+  }
+
   const { id } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
-  
+
   const [showAddTaskPage, setShowAddTaskPage] = useState(false);
 
-  useEffect(() => { async function loadMission () {
-    const res = await fetch(`http://localhost:8080/missions/${id}`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(res.status);
+  const [missionTasks, setMissionTasks] = useState<Task[]>([]);
+  // const [missionTasks, setMissionTasks] = useState([]);
 
-    if (res.status !== 200) console.log("un autre code que 200 est apparu : " + res.status);
-    if (res.status === 200) {
-      const jsonResponse = res.json();
-      console.log(JSON.stringify(await jsonResponse));
+  useEffect(() => {
+    async function loadMission() {
+      const res = await fetch(`http://localhost:8080/missions/${id}`, {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res.status);
 
-      const response = await jsonResponse;
-      console.log(response);
+      if (res.status !== 200)
+        console.log("un autre code que 200 est apparu : " + res.status);
+      if (res.status === 200) {
+        const jsonResponse = res.json();
+        console.log(JSON.stringify(await jsonResponse));
 
-      setObjResponse(response);
-    }
-  }; loadMission(); }, [id]);
+        const response = await jsonResponse;
+        console.log(response);
 
+        setObjResponse(response);
+      }
+    };
+    loadMission();
+    async function loadMissionTasks() {
+        const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
+          credentials: "include",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (res.status !== 200)
+          console.log("les données n'ont pas été chargées : " + res.status);
+        if (res.status === 200) {
+          const taskDatas = await res.json();
+
+          console.log(taskDatas)
+
+          setMissionTasks(taskDatas);
+        }
+      };
+      loadMissionTasks();
+  }, [id]);
 
   return (
-    <div className={showAddTaskPage ? "missionPageContainerStyle missionPageBackgroundDisplay" : "missionPageContainerStyle"}>
+    <div
+      className={
+        showAddTaskPage
+          ? "missionPageContainerStyle missionPageBackgroundDisplay"
+          : "missionPageContainerStyle"
+      }
+    >
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
           <h2 className="missionPageMissionTitleStyle">{objResponse?.name}</h2>
@@ -50,7 +88,9 @@ export default function MissionPage() {
         </div>
         <div className="missionPageDescriptionContainer">
           <h3 className="missionPageDescriptionTitleStyle">DESCRIPTION</h3>
-          <p className="missionPageDescriptionStyle">{objResponse?.description}</p>
+          <p className="missionPageDescriptionStyle">
+            {objResponse?.description}
+          </p>
         </div>
         <div className="missionPageMaterialsContainerStyle">
           <h3 className="missionPageMaterialsTitle">MATERIELS</h3>
@@ -105,15 +145,23 @@ export default function MissionPage() {
             <h3 className="missionPageTasksTitle">TACHES</h3>
             <span className="missionPageTasksnumber">2 tâche(s)</span>
           </div>
-          <TaskAndAssignmentContainer taskName="envoyer un mail au fournisseur" />
+          {/* <div>{missionTasks}</div> */}
+          {missionTasks.map( (el : any) => <TaskAndAssignmentContainer key={el.id} taskName={el.taskName} />)}
           <PlusButton
             topMarginButton="20px"
             btnStyle="btnStyle14"
             mainClassName="missionPageMaterialAddingButton"
             text="Ajouter une tâche"
-            onClick={() => {setShowAddTaskPage(true)}}
+            onClick={() => {
+              setShowAddTaskPage(true);
+            }}
           />
-          {showAddTaskPage && <AddingTaskPage onClose={() => setShowAddTaskPage(false)} missionId={id}/>}
+          {showAddTaskPage && (
+            <AddingTaskPage
+              onClose={() => setShowAddTaskPage(false)}
+              missionId={id}
+            />
+          )}
         </div>
       </div>
     </div>
