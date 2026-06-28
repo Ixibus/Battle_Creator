@@ -25,14 +25,18 @@ public class TaskDto {
 
     private Integer numberTaskPosition;
 
+    @NotNull(message = "La mission est obligatoire")
+    private Long idMission;
+
     public TaskDto(){};
 
-    public TaskDto(String taskName, String taskDescription, Boolean isLeader, Boolean isDone, Integer numberTaskPosition) {
+    public TaskDto(String taskName, String taskDescription, Boolean isLeader, Boolean isDone, Integer numberTaskPosition, Long idMission) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.isLeader = isLeader;
         this.isDone = isDone;
         this.numberTaskPosition = numberTaskPosition;
+        this.idMission = idMission;
     };
 
     public Long getId() {
@@ -83,4 +87,11 @@ public class TaskDto {
         this.numberTaskPosition = numberTaskPosition;
     }
 
+    public Long getIdMission() {
+        return idMission;
+    }
+
+    public void setIdMission(Long idMission) {
+        this.idMission = idMission;
+    }
 }

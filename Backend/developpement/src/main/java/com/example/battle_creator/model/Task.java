@@ -25,6 +25,10 @@ public class Task {
     @Column(name = "number_task_position", nullable = true)
     private Integer numberTaskPosition;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_mission", nullable = false)
+    private Mission mission;
+
     public Task() {};
 
 //    // 7. Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
@@ -81,5 +85,13 @@ public class Task {
 
     public void setNumberTaskPosition(Integer numberTaskPosition) {
         this.numberTaskPosition = numberTaskPosition;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
     }
 }

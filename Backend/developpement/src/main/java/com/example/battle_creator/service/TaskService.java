@@ -1,7 +1,9 @@
 package com.example.battle_creator.service;
 
 import com.example.battle_creator.dto.TaskDto;
+import com.example.battle_creator.model.Mission;
 import com.example.battle_creator.model.Task;
+import com.example.battle_creator.repository.MissionRepository;
 import com.example.battle_creator.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +16,13 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final MissionRepository missionRepository;
 
-    public TaskService( TaskRepository taskRepository) {
+    public TaskService( TaskRepository taskRepository, MissionRepository missionRepository) {
+
         this.taskRepository = taskRepository;
+        this.missionRepository = missionRepository;
+
     }
 
     public List<Task> getAll() { return taskRepository.findAll();}
@@ -31,12 +37,16 @@ public class TaskService {
     public Task create(TaskDto taskDto) {
         validateTask(taskDto);
 
+        Mission mission = missionRepository.findById(taskDto.getIdMission())
+                .orElseThrow(() -> new IllegalArgumentException("mission introuvable"));
+
         Task taskCreated = new Task();
         taskCreated.setTaskName(cleanText(taskDto.getTaskName()));
         taskCreated.setTaskDescription(cleanText(taskDto.getTaskDescription()));
         taskCreated.setLeader(taskDto.isLeader());
         taskCreated.setDone(taskDto.isDone());
         taskCreated.setNumberTaskPosition(taskDto.getNumberTaskPosition());
+        taskCreated.setMission(mission);
 
         return taskRepository.save(taskCreated);
     }
@@ -46,12 +56,17 @@ public class TaskService {
         validateId(id);
         validateTask(taskDto);
 
+        Mission mission = missionRepository.findById(taskDto.getIdMission())
+                .orElseThrow(() -> new IllegalArgumentException("mission introuvable"));
+
         Task taskUpdated = taskRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cette id est introuvable"));
+
         taskUpdated.setTaskName(cleanText(taskDto.getTaskName()));
         taskUpdated.setTaskDescription(cleanText(taskDto.getTaskDescription()));
         taskUpdated.setLeader(taskDto.isLeader());
         taskUpdated.setDone(taskDto.isDone());
         taskUpdated.setNumberTaskPosition(taskDto.getNumberTaskPosition());
+        taskUpdated.setMission(mission);
 
         return taskRepository.save(taskUpdated);
     }
