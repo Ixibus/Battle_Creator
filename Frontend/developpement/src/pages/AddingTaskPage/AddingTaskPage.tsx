@@ -15,7 +15,7 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import { useNavigate } from "react-router-dom";
 
-export default function AddingTaskPage({onClose} : any) {
+export default function AddingTaskPage({onClose, missionId} : any) {
   const navigate = useNavigate();
   async function handlesubmit(e: any) {
     e.preventDefault();
@@ -28,6 +28,7 @@ export default function AddingTaskPage({onClose} : any) {
       taskDescription : form.get("taskDescription"),
       isLeaderTaskCheckbox : form.get("isLeaderTaskCheckbox") === "on",
       isDone : false,
+      idMission : missionId
     }
 
     console.log(formEntries);

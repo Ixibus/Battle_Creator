@@ -113,7 +113,7 @@ export default function MissionPage() {
             text="Ajouter une tâche"
             onClick={() => {setShowAddTaskPage(true)}}
           />
-          {showAddTaskPage && <AddingTaskPage onClose={() => setShowAddTaskPage(false)}/>}
+          {showAddTaskPage && <AddingTaskPage onClose={() => setShowAddTaskPage(false)} missionId={id}/>}
         </div>
       </div>
     </div>
