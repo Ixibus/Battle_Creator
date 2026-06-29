@@ -161,7 +161,7 @@ export default function MissionPage() {
         <div className="missionPageContainerRightContainerStyle">
           <div className="missionPageTasksTitleContainerStyle">
             <h3 className="missionPageTasksTitle">TACHES</h3>
-            <span className="missionPageTasksnumber">{tasksCount} tâche(s)</span>
+            <span className="missionPageTasksnumber">{ (tasksCount === 0) ? "Aucune tâche" : (tasksCount === 1) ? `${tasksCount} tâche` : `${tasksCount} tâches`}</span>
           </div>
           {/* <div>{missionTasks}</div> */}
           {missionTasks.map( (el : any) => <TaskAndAssignmentContainer key={el.id} taskName={el.taskName} />)}
