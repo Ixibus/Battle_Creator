@@ -15,39 +15,36 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import { useNavigate } from "react-router-dom";
 
-export default function AddingTaskPage({onClose, missionId} : any) {
+export default function AddingTaskPage({ onClose, missionId }: any) {
   const navigate = useNavigate();
   async function handlesubmit(e: any) {
     e.preventDefault();
 
-
     const form = new FormData(e.currentTarget);
 
     const formEntries = {
-      taskName : form.get("taskName"),
-      taskDescription : form.get("taskDescription"),
-      isLeaderTaskCheckbox : form.get("isLeaderTaskCheckbox") === "on",
-      isDone : false,
-      idMission : missionId
-    }
+      taskName: form.get("taskName"),
+      taskDescription: form.get("taskDescription"),
+      isLeaderTaskCheckbox: form.get("isLeaderTaskCheckbox") === "on",
+      isDone: false,
+      idMission: missionId,
+    };
 
     console.log(formEntries);
 
-    const res = await fetch("http://localhost:8080/tasks",
-      {
-        method: "POST",
-        // credentials: "include",
-        headers: {
-          "Content-Type":"application/json",
-        },
-        body: JSON.stringify(formEntries),
-      }
-    );
-
+    const res = await fetch("http://localhost:8080/tasks", {
+      method: "POST",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formEntries),
+    });
 
     const text = await res.text();
 
-    if (res.status !== 201) console.log("l'ajout de tâche a échoué " + res.status);
+    if (res.status !== 201)
+      console.log("l'ajout de tâche a échoué " + res.status);
 
     if (res.status === 201) {
       onClose();
@@ -55,7 +52,7 @@ export default function AddingTaskPage({onClose, missionId} : any) {
       console.log("ajout de tâche réussi 🥳");
     }
 
-    console.log('ok')
+    console.log("ok");
     // navigate("/missionPage");
   }
   return (

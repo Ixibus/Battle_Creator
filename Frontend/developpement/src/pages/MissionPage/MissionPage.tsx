@@ -25,7 +25,8 @@ export default function MissionPage() {
   const [showAddTaskPage, setShowAddTaskPage] = useState(false);
 
   const [missionTasks, setMissionTasks] = useState<Task[]>([]);
-  // const [missionTasks, setMissionTasks] = useState([]);
+
+  const [tasksCount, setTasksCount] = useState<number>(0);
 
   useEffect(() => {
     async function loadMission() {
@@ -66,12 +67,29 @@ export default function MissionPage() {
           const taskDatas = await res.json();
 
           console.log(taskDatas)
-
+          
           setMissionTasks(taskDatas);
         }
       };
       loadMissionTasks();
-  }, [id]);
+    }, [id]);
+    
+    useEffect(
+      () => {function tasksCounter(){
+        let idTasksLength : number[] = [];
+        
+        for (const el of missionTasks){
+          idTasksLength.push(el.id);
+        }
+        
+        console.log(idTasksLength.length);
+        console.log("ici !")
+        
+        setTasksCount(idTasksLength.length);
+      }; tasksCounter()}
+    
+    ,[missionTasks]
+  );
 
   return (
     <div
@@ -143,7 +161,7 @@ export default function MissionPage() {
         <div className="missionPageContainerRightContainerStyle">
           <div className="missionPageTasksTitleContainerStyle">
             <h3 className="missionPageTasksTitle">TACHES</h3>
-            <span className="missionPageTasksnumber">2 tâche(s)</span>
+            <span className="missionPageTasksnumber">{tasksCount} tâche(s)</span>
           </div>
           {/* <div>{missionTasks}</div> */}
           {missionTasks.map( (el : any) => <TaskAndAssignmentContainer key={el.id} taskName={el.taskName} />)}
