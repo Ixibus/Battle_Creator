@@ -2,8 +2,10 @@
     display: flex;
     align-items: center;
     padding: 7px 15px;
+    flex-grow: 1;
 }
 
 .taskTagTitle{
     margin-right: 10px;
+    flex-grow: 1;
 }
