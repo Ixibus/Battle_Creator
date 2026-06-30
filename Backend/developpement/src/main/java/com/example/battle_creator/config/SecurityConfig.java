@@ -67,6 +67,7 @@ public class SecurityConfig {
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
+        config.addAllowedMethod("DELETE");
         // config.addAllowedMethod("OPTIONS");
 
         Map<String,CorsConfiguration> allCorsConfig = new HashMap<>();
