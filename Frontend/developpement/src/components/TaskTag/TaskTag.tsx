@@ -7,17 +7,20 @@ import "./taskTagStyle.css";
 interface interfaceProps {
   mainClassName: string;
   text: string;
+  onClick : () => void
 }
+
 
 export default function TaskTag({
   mainClassName,
   text,
+  onClick
 }: interfaceProps) {
   return (
     <span className={`taskTagStyleContainer btnStyle15 ${mainClassName}`}>
       <p className="taskTagTitle">{text}</p>
       <Icone SrcIcone={Checked} styleType={StyleType.style6} />
-      <Icone SrcIcone={Bin} styleType={StyleType.style7} />
+      <Icone SrcIcone={Bin} styleType={StyleType.style7} onClick={onClick}/>
     </span>
   );
 }

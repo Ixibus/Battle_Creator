@@ -15,7 +15,7 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import { useNavigate } from "react-router-dom";
 
-export default function AddingTaskPage({ onClose, missionId }: any) {
+export default function AddingTaskPage({ onClose, missionId, onTaskCreated}: any) {
   const navigate = useNavigate();
   async function handlesubmit(e: any) {
     e.preventDefault();
@@ -47,8 +47,8 @@ export default function AddingTaskPage({ onClose, missionId }: any) {
       console.log("l'ajout de tâche a échoué " + res.status);
 
     if (res.status === 201) {
+      await onTaskCreated();
       onClose();
-      window.location.reload();
       console.log("ajout de tâche réussi 🥳");
     }
 

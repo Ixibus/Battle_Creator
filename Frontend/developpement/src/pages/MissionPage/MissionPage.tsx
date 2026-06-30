@@ -12,23 +12,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 
 export default function MissionPage() {
-
   interface Task {
-    id : number,
-    taskName : string
+    id: number;
+    taskName: string;
   }
 
   const { id } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
 
-  const [showAddTaskPage, setShowAddTaskPage] = useState(false);
+  const [showAddTaskPage, setShowAddTaskPage] = useState<Boolean>(false);
 
   const [missionTasks, setMissionTasks] = useState<Task[]>([]);
 
   const [tasksCount, setTasksCount] = useState<number>(0);
 
+  const [toggleChecker, setToggleChecker] = useState<Boolean>(false);
+
   useEffect(() => {
+    loadMission();
+    loadMissionTasks();
+  }, [id]);
+
     async function loadMission() {
       const res = await fetch(`http://localhost:8080/missions/${id}`, {
         credentials: "include",
@@ -51,45 +56,57 @@ export default function MissionPage() {
         setObjResponse(response);
       }
     };
-    loadMission();
+
     async function loadMissionTasks() {
-        const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
-          credentials: "include",
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+      const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (res.status !== 200)
-          console.log("les données n'ont pas été chargées : " + res.status);
-        if (res.status === 200) {
-          const taskDatas = await res.json();
+      if (res.status !== 200)
+        console.log("les données n'ont pas été chargées : " + res.status);
+      if (res.status === 200) {
+        const taskDatas = await res.json();
 
-          console.log(taskDatas)
-          
-          setMissionTasks(taskDatas);
-        }
-      };
-      loadMissionTasks();
-    }, [id]);
-    
-    useEffect(
-      () => {function tasksCounter(){
-        let idTasksLength : number[] = [];
-        
-        for (const el of missionTasks){
-          idTasksLength.push(el.id);
-        }
-        
-        console.log(idTasksLength.length);
-        console.log("ici !")
-        
-        setTasksCount(idTasksLength.length);
-      }; tasksCounter()}
-    
-    ,[missionTasks]
-  );
+        console.log(taskDatas);
+
+        setMissionTasks(taskDatas);
+      }
+    };
+
+  useEffect(() => {
+    function tasksCounter() {
+      let idTasksLength: number[] = [];
+
+      for (const el of missionTasks) {
+        idTasksLength.push(el.id);
+      }
+
+      console.log(idTasksLength.length);
+      console.log("ici !");
+
+      setTasksCount(idTasksLength.length);
+    }
+    tasksCounter();
+  }, [missionTasks]);
+
+  async function deleteTaskHandler(taskId: number) {
+    const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 204) {
+      setMissionTasks((state) =>
+        state.filter((missionTasks) => missionTasks.id !== taskId),
+      );
+    }
+  }
 
   return (
     <div
@@ -161,9 +178,23 @@ export default function MissionPage() {
         <div className="missionPageContainerRightContainerStyle">
           <div className="missionPageTasksTitleContainerStyle">
             <h3 className="missionPageTasksTitle">TACHES</h3>
-            <span className="missionPageTasksnumber">{ (tasksCount === 0) ? "Aucune tâche" : (tasksCount === 1) ? `${tasksCount} tâche` : `${tasksCount} tâches`}</span>
+            <span className="missionPageTasksnumber">
+              {tasksCount === 0
+                ? "Aucune tâche"
+                : tasksCount === 1
+                  ? `${tasksCount} tâche`
+                  : `${tasksCount} tâches`}
+            </span>
           </div>
-          {missionTasks.map( (el : any) => <TaskAndAssignmentContainer key={el.id} taskName={el.taskName} />)}
+          {missionTasks.map((el: any) => (
+            <TaskAndAssignmentContainer
+              key={el.id}
+              taskName={el.taskName}
+              onClick={() => {
+                deleteTaskHandler(el.id);
+              }}
+            />
+          ))}
           <PlusButton
             topMarginButton="20px"
             btnStyle="btnStyle14"
@@ -177,6 +208,7 @@ export default function MissionPage() {
             <AddingTaskPage
               onClose={() => setShowAddTaskPage(false)}
               missionId={id}
+              onTaskCreated={loadMissionTasks}
             />
           )}
         </div>

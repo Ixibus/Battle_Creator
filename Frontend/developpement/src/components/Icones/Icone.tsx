@@ -14,8 +14,10 @@ export enum StyleType {
 interface PropType {
   SrcIcone: React.FC<React.SVGProps<SVGSVGElement>>;
   styleType?: StyleType;
+  onClick?: () => void;
 }
 
-export default function Icone({ SrcIcone, styleType }: PropType) {
-  return <SrcIcone className={styleType}/>;
+
+export default function Icone({ SrcIcone, styleType, onClick }: PropType) {
+  return <SrcIcone className={styleType} onClick={onClick}/>;
 }
