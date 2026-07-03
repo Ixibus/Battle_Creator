@@ -3,3 +3,9 @@
     display: flex;
     gap: 10px;
 }
+
+.buttonsContainerStyle2 {
+    margin-top: 2vh;
+    display: flex;
+    gap: 10px;
+}

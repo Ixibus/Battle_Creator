@@ -155,6 +155,28 @@
     text-transform: uppercase;
 }
 
+.btnStyle16 {
+    color: var(--fontColor1);
+    background-color: var(--btnColor5);
+    margin: var(--margin-top);
+    padding: var(--padding4);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size1);
+    letter-spacing: var(--letter-spacing1);
+    width: max-content;
+}
+
+.btnStyle17 {
+    color: var(--fontColor2);
+    background-color: var(--btnColor4);
+    margin: var(--margin-top);
+    padding: var(--padding4);
+    border: var(--border1);
+    border-radius: var(--border-radius2);
+    font-size: var(--font-size1);
+    letter-spacing: var(--letter-spacing1);
+}
+
 
 .plusBtnStyle1 {
     font-size: 1.5rem;

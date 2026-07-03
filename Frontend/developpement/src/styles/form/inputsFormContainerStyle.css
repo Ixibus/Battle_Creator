@@ -17,3 +17,13 @@
     background-color: var(--backgroundColor5);
     border-radius: var(--border-radius2);
 }
+
+.inputsFormContainerStyle3 {
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: fit-content;
+    border-radius: var(--border-radius2);
+}
