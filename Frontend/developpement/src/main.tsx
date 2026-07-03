@@ -89,42 +89,42 @@ const router = createBrowserRouter([
           {
             element: <Layout />,
             children: [
-              // {
-              //   path: "/homePage",
-              //   element: <HomePage />,
-              // },
-              // {
-              //   path: "/addingMissionPage",
-              //   element: <AddingMissionPage />,
-              // },
-              // {
-              //   path:"/missionPage/:id",
-              //   element: <MissionPage />,
-              // },
-              // {
-              //   path:"/addingTaskPage",
-              //   element: <AddingTaskPage />,
-              // },
-              // {
-              //   path:"/taskAssignmentPage",
-              //   element: <TaskAssignmentPage />,
-              // },
-              // {
-              //   path: "/projectCreation",
-              //   element: <ProjectCreation />,
-              // },
-              // {
-              //   path: "/projectList",
-              //   element: <ProjectList />,
-              // },
-              // {
-              //   path: "/mandatoryMissions",
-              //   element: <OnboardingMandatoryMissions />,
-              // },
-              // {
-              //   path: "/optionnalMissions",
-              //   element: <OnboardingOptionalMissions />,
-              // },
+              {
+                path: "/homePage",
+                element: <HomePage />,
+              },
+              {
+                path: "/addingMissionPage",
+                element: <AddingMissionPage />,
+              },
+              {
+                path:"/missionPage/:id",
+                element: <MissionPage />,
+              },
+              {
+                path:"/addingTaskPage",
+                element: <AddingTaskPage />,
+              },
+              {
+                path:"/taskAssignmentPage",
+                element: <TaskAssignmentPage />,
+              },
+              {
+                path: "/projectCreation",
+                element: <ProjectCreation />,
+              },
+              {
+                path: "/projectList",
+                element: <ProjectList />,
+              },
+              {
+                path: "/mandatoryMissions",
+                element: <OnboardingMandatoryMissions />,
+              },
+              {
+                path: "/optionnalMissions",
+                element: <OnboardingOptionalMissions />,
+              },
               {
                 path: "/overlayedWarning",
                 element: <OverlayedWarning />,

@@ -4,12 +4,11 @@ import Checked from "../../assets/icones/checked.svg?react";
 import "./missionPage.css";
 import MaterialTag from "../../components/MaterialTag/MaterialTag";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
-import TaskTag from "../../components/TaskTag/TaskTag";
-import MemberAssignmentTag from "../../components/MemberAssignmentTag/MemberAssignmentTag";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
+import OverlayedWarning from "../../components/OverlayedWarning/OverlayedWarning";
 
 export default function MissionPage() {
   interface Task {
@@ -17,17 +16,20 @@ export default function MissionPage() {
     taskName: string;
   }
 
+
   const { id } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
 
   const [showAddTaskPage, setShowAddTaskPage] = useState<Boolean>(false);
 
+  const [showDisplayOverlayedWarningComponentPage, setShowDisplayOverlayedWarningComponent] = useState<Boolean>(false);
+
   const [missionTasks, setMissionTasks] = useState<Task[]>([]);
 
   const [tasksCount, setTasksCount] = useState<number>(0);
 
-  const [toggleChecker, setToggleChecker] = useState<Boolean>(false);
+  const [taskToBeDeletedObject, setTaskToBeDeletedObject] = useState<Task>();
 
   useEffect(() => {
     loadMission();
@@ -85,15 +87,13 @@ export default function MissionPage() {
         idTasksLength.push(el.id);
       }
 
-      console.log(idTasksLength.length);
-      console.log("ici !");
 
       setTasksCount(idTasksLength.length);
     }
     tasksCounter();
   }, [missionTasks]);
 
-  async function deleteTaskHandler(taskId: number) {
+  async function deleteTaskHandler(taskId: number | undefined) {
     const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
       method: "DELETE",
       headers: {
@@ -105,13 +105,16 @@ export default function MissionPage() {
       setMissionTasks((state) =>
         state.filter((missionTasks) => missionTasks.id !== taskId),
       );
+      setTaskToBeDeletedObject(() => {});
     }
   }
+
+  console.log(taskToBeDeletedObject);
 
   return (
     <div
       className={
-        showAddTaskPage
+        showAddTaskPage || showDisplayOverlayedWarningComponentPage
           ? "missionPageContainerStyle missionPageBackgroundDisplay"
           : "missionPageContainerStyle"
       }
@@ -191,8 +194,9 @@ export default function MissionPage() {
               key={el.id}
               taskName={el.taskName}
               onClick={() => {
-                deleteTaskHandler(el.id);
-              }}
+                setTaskToBeDeletedObject({id: el.id, taskName: el.taskName})
+                setShowDisplayOverlayedWarningComponent(true);
+                }}
             />
           ))}
           <PlusButton
@@ -209,6 +213,19 @@ export default function MissionPage() {
               onClose={() => setShowAddTaskPage(false)}
               missionId={id}
               onTaskCreated={loadMissionTasks}
+            />
+          )}
+          {showDisplayOverlayedWarningComponentPage && (
+            <OverlayedWarning
+              taskToBeDeleted={taskToBeDeletedObject}
+              onDeleteTask={()=> {
+                deleteTaskHandler(taskToBeDeletedObject?.id);
+                setShowDisplayOverlayedWarningComponent(false);
+              }}
+              onClose={()=> {
+                setShowDisplayOverlayedWarningComponent(false);
+                setTaskToBeDeletedObject(() => {});
+              }}
             />
           )}
         </div>

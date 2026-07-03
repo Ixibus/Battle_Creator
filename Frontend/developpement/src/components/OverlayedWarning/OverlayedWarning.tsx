@@ -6,24 +6,20 @@ import "../../styles/form/titleFormStyle.css";
 import "../Button/NextButton/buttonsContainerStyle.css";
 
 import NextButton from "../Button/NextButton/NextButton";
-import { useNavigate } from "react-router-dom";
 
-export default function OverlayedWarning({ taskToBeDeleted, onClose }: any) {
-  const navigate = useNavigate();
-  async function handlesubmit(e: any) {
-    e.preventDefault();
-  }
+export default function OverlayedWarning({ taskToBeDeleted, onDeleteTask, onClose }: any) {
   return (
     <div className="overlayedWarningOverlayStyle">
       <div className="overlayedWarningContainerStyle">
         <div className="inputsFormContainerStyle3">
-          <p className="overlayedWarningMessage">{`Voulez-vous effacer définitivement la tâche "${taskToBeDeleted}"`}</p>
+          <p className="overlayedWarningMessage">{`Voulez-vous effacer définitivement la tâche "${taskToBeDeleted.taskName}"`}</p>
           <div className="buttonsContainerStyle2">
             <NextButton
               type="button"
               styleClassName="btnStyle16"
               mainClassName="SubmitBtn_AddingTaskPage"
               text="Effacer la tâche"
+              onClick={onDeleteTask}
             />
             <NextButton
               nav={-1}
