@@ -193,7 +193,10 @@ export default function MissionPage() {
             <TaskAndAssignmentContainer
               key={el.id}
               taskName={el.taskName}
-              onClick={() => {
+              onClickFirstButton ={() => {
+                
+              }}
+              onClickSecondButton={() => {
                 setTaskToBeDeletedObject({id: el.id, taskName: el.taskName})
                 setShowDisplayOverlayedWarningComponent(true);
                 }}
