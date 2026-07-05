@@ -31,6 +31,8 @@ export default function MissionPage() {
 
   const [taskToBeDeletedObject, setTaskToBeDeletedObject] = useState<Task>();
 
+  const [checkedTask, setCheckedTask] = useState(false);
+
   useEffect(() => {
     loadMission();
     loadMissionTasks();
@@ -193,9 +195,6 @@ export default function MissionPage() {
             <TaskAndAssignmentContainer
               key={el.id}
               taskName={el.taskName}
-              onClickFirstButton ={() => {
-                
-              }}
               onClickSecondButton={() => {
                 setTaskToBeDeletedObject({id: el.id, taskName: el.taskName})
                 setShowDisplayOverlayedWarningComponent(true);

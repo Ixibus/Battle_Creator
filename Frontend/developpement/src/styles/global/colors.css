@@ -27,7 +27,7 @@
     --backgroundColor15: #ffffff;
 
     /* #F8EDFF */
-
+    
     /* Item */
     --itemColor1: #f5d8ff;
 
@@ -36,14 +36,14 @@
 
     /* Input */
     --inputColor1: #e8def8;
-
+    
     /* Button */
     --btnColor1: #6750a4;
     --btnColor2: #ad9ed7;
     --btnColor3: #957bdd;
     --btnColor4: whitesmoke;
     --btnColor5: crimson;
-
+    
     /* Font color */
     --fontColor1: whitesmoke;
     --fontColor2: black;
@@ -52,6 +52,7 @@
     --fontColor5: #afa2c2;
     --fontColor6: #526770;
     --fontColor7: rgb(61, 61, 61);
+    --fontColor8: #c2bfce;
 
     /* Font Size */
     --font-size1: 0.6rem;
