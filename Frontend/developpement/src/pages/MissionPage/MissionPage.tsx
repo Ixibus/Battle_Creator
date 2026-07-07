@@ -17,22 +17,27 @@ export default function MissionPage() {
     taskName: string;
   }
 
-
   const { id } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
 
   const [showAddTaskPage, setShowAddTaskPage] = useState<Boolean>(false);
 
-  const [showDisplayOverlayedWarningComponentPage, setShowDisplayOverlayedWarningComponent] = useState<Boolean>(false);
+  const [
+    showDisplayOverlayedWarningComponentPage,
+    setShowDisplayOverlayedWarningComponent,
+  ] = useState<Boolean>(false);
 
-  const [showTaskAssignmentPage, setShowTaskAssignmentPage] = useState<Boolean>(false)
+  const [showTaskAssignmentPage, setShowTaskAssignmentPage] =
+    useState<Boolean>(false);
 
   const [missionTasks, setMissionTasks] = useState<Task[]>([]);
 
   const [tasksCount, setTasksCount] = useState<number>(0);
 
   const [taskToBeDeletedObject, setTaskToBeDeletedObject] = useState<Task>();
+
+  const [taskToBeAssignedObject, setTaskToBeAssignedObject] = useState<Task>();
 
   const [checkedTask, setCheckedTask] = useState(false);
 
@@ -41,48 +46,48 @@ export default function MissionPage() {
     loadMissionTasks();
   }, [id]);
 
-    async function loadMission() {
-      const res = await fetch(`http://localhost:8080/missions/${id}`, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(res.status);
+  async function loadMission() {
+    const res = await fetch(`http://localhost:8080/missions/${id}`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.status);
 
-      if (res.status !== 200)
-        console.log("un autre code que 200 est apparu : " + res.status);
-      if (res.status === 200) {
-        const jsonResponse = res.json();
-        console.log(JSON.stringify(await jsonResponse));
+    if (res.status !== 200)
+      console.log("un autre code que 200 est apparu : " + res.status);
+    if (res.status === 200) {
+      const jsonResponse = res.json();
+      console.log(JSON.stringify(await jsonResponse));
 
-        const response = await jsonResponse;
-        console.log(response);
+      const response = await jsonResponse;
+      console.log(response);
 
-        setObjResponse(response);
-      }
-    };
+      setObjResponse(response);
+    }
+  }
 
-    async function loadMissionTasks() {
-      const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  async function loadMissionTasks() {
+    const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (res.status !== 200)
-        console.log("les données n'ont pas été chargées : " + res.status);
-      if (res.status === 200) {
-        const taskDatas = await res.json();
+    if (res.status !== 200)
+      console.log("les données n'ont pas été chargées : " + res.status);
+    if (res.status === 200) {
+      const taskDatas = await res.json();
 
-        console.log(taskDatas);
+      console.log(taskDatas);
 
-        setMissionTasks(taskDatas);
-      }
-    };
+      setMissionTasks(taskDatas);
+    }
+  }
 
   useEffect(() => {
     function tasksCounter() {
@@ -91,7 +96,6 @@ export default function MissionPage() {
       for (const el of missionTasks) {
         idTasksLength.push(el.id);
       }
-
 
       setTasksCount(idTasksLength.length);
     }
@@ -119,7 +123,9 @@ export default function MissionPage() {
   return (
     <div
       className={
-        showAddTaskPage || showDisplayOverlayedWarningComponentPage || showTaskAssignmentPage
+        showAddTaskPage ||
+        showDisplayOverlayedWarningComponentPage ||
+        showTaskAssignmentPage
           ? "missionPageContainerStyle missionPageBackgroundDisplay"
           : "missionPageContainerStyle"
       }
@@ -199,14 +205,13 @@ export default function MissionPage() {
               key={el.id}
               taskName={el.taskName}
               onClickSecondButton={() => {
-                setTaskToBeDeletedObject({id: el.id, taskName: el.taskName})
+                setTaskToBeDeletedObject({ id: el.id, taskName: el.taskName });
                 setShowDisplayOverlayedWarningComponent(true);
-                }}
-              onClickAssignTag={ () => {
+              }}
+              onClickAssignTag={() => {
                 setShowTaskAssignmentPage(true);
-              }
-
-              }
+                setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName });
+              }}
             />
           ))}
           <PlusButton
@@ -228,17 +233,24 @@ export default function MissionPage() {
           {showDisplayOverlayedWarningComponentPage && (
             <OverlayedWarning
               taskToBeDeleted={taskToBeDeletedObject}
-              onDeleteTask={()=> {
+              onDeleteTask={() => {
                 deleteTaskHandler(taskToBeDeletedObject?.id);
                 setShowDisplayOverlayedWarningComponent(false);
               }}
-              onClose={()=> {
+              onClose={() => {
                 setShowDisplayOverlayedWarningComponent(false);
                 setTaskToBeDeletedObject(() => {});
               }}
             />
           )}
-          {showTaskAssignmentPage && <TaskAssignmentPage onClose={ () => {setShowTaskAssignmentPage(false)}}/>}
+          {showTaskAssignmentPage && (
+            <TaskAssignmentPage
+              taskToBeAssigned={taskToBeAssignedObject}
+              onClose={() => {
+                setShowTaskAssignmentPage(false);
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

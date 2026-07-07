@@ -1,7 +1,7 @@
 import MemberAssignmentTag from "../MemberAssignmentTag/MemberAssignmentTag";
 import TaskTag from "../TaskTag/TaskTag";
 
-import './taskAndAssignmentContainerStyle.css'
+import './taskAndAssignmentContainerStyle.css';
 
 interface propInterface {
     taskName : string,

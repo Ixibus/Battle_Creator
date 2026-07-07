@@ -14,57 +14,89 @@ import AreaTextContainer, {
 import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 
-async function handlesubmit(e: any) {
-  e.preventDefault();
+interface propInterface {
+  taskToBeAssigned : {id: number, taskName: string} | undefined;
+  onClose : () => void;
 }
 
 
+export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInterface) {
+  async function handlesubmit(e: any) {
+    e.preventDefault();
 
-export default function TaskAssignmentPage( {onClose} : { onClose: () => void }) {
-  
-  
+    const form = new FormData(e.currentTarget);
+
+    const formEntries = Object.fromEntries(form.entries());
+
+    console.log(formEntries);
+
+    // console.log(formEntries);
+
+    // const res = await fetch("http://localhost:8080/tasks", {
+    //   method: "POST",
+    //   // credentials: "include",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formEntries),
+    // });
+
+    // const text = await res.text();
+
+    // if (res.status !== 201)
+    //   console.log("l'ajout de tâche a échoué " + res.status);
+
+    // if (res.status === 201) {
+    //   await onTaskCreated();
+    //   onClose();
+    //   console.log("ajout de tâche réussi 🥳");
+    // }
+
+    // console.log("ok");
+    // // navigate("/missionPage");
+  }
+
   return (
     <div className="taskAssignmentPageOverlayStyle">
       <div className="taskAssignmentPageStyle">
-        <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
-          <h1 className="titleFormStyle4">ASSIGNER LA TACHE : </h1>
-          <div className="taskAssignmentPageInnerInputsFormStyle">
-            <div className="taskAssignmentPageExistingMemberTasksContainer">
-              <p className="taskAssignmentPageExistingMemberTasksTitle">
-                ASSIGNER UN BENEVOLE EXISTANT
-              </p>
-              <div className="taskAssignmentPageExistingMemberInnerContainer">
-                <div className="taskAssignmentPageExistingMemberInputsContainer">
-                  <label
-                    htmlFor="taskAssignmentPageExistingMemberInputsLabel"
-                    className="taskAssignmentPageExistingMemberInputsLabelStyle"
-                  >
-                    Mes bénévoles
-                  </label>
-                  <select
-                    name="taskAssignmentPageExistingMemberInputsSelect"
-                    className="taskAssignmentPageExistingMemberInputsSelectStyle"
-                    id=""
-                  >
-                    <option value="">--Bénévole(s) existant(s)--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                  </select>
-                </div>
-                <NextButton
-                  nav={-1}
-                  type="submit"
-                  styleClassName="btnStyle10"
-                  mainClassName="SubmitBtn_MemberAssignedToTask"
-                  text="Choisir"
-                />
+        <h1 className="titleFormStyle5">{`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`} </h1>
+        <div className="taskAssignmentPageInnerInputsFormStyle">
+          <div className="taskAssignmentPageExistingMemberTasksContainer">
+            <p className="taskAssignmentPageExistingMemberTasksTitle">
+              ASSIGNER UN BENEVOLE EXISTANT
+            </p>
+            <div className="taskAssignmentPageExistingMemberInnerContainer">
+              <div className="taskAssignmentPageExistingMemberInputsContainer">
+                <label
+                  htmlFor="taskAssignmentPageExistingMemberInputsLabel"
+                  className="taskAssignmentPageExistingMemberInputsLabelStyle"
+                >
+                  Mes bénévoles
+                </label>
+                <select
+                  name="taskAssignmentPageExistingMemberInputsSelect"
+                  className="taskAssignmentPageExistingMemberInputsSelectStyle"
+                  id=""
+                >
+                  <option value="">--Bénévole(s) existant(s)--</option>
+                  <option value=""></option>
+                  <option value=""></option>
+                </select>
               </div>
+              <NextButton
+                type="button"
+                styleClassName="btnStyle10"
+                mainClassName="SubmitBtn_MemberAssignedToTask"
+                text="Choisir"
+              />
             </div>
-            <p className="taskAssignmentPageOrTextStyle"> ou </p>
-            <div className="taskAssignmentPageCreateAssignTasksContainer">
-              <p className="taskAssignmentPageCreateAssignTasksTitle">
-                CREER ET ASSIGNER UN NOUVEAU BENEVOLE
-              </p>
+          </div>
+          <p className="taskAssignmentPageOrTextStyle"> ou </p>
+          <div className="taskAssignmentPageCreateAssignTasksContainer">
+            <p className="taskAssignmentPageCreateAssignTasksTitle">
+              CREER ET ASSIGNER UN NOUVEAU BENEVOLE
+            </p>
+            <form className="formClassName" onSubmit={(e) => handlesubmit(e)}>
               <div className="taskAssignmentPageCreateAssignInnerContainer">
                 <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                   <InputContainer
@@ -82,7 +114,6 @@ export default function TaskAssignmentPage( {onClose} : { onClose: () => void })
                     type={"text"}
                   />
                   <NextButton
-                    nav={-1}
                     type="submit"
                     styleClassName="btnStyle10"
                     mainClassName="SubmitBtn_CreatedMemberAssignedToTask"
@@ -90,18 +121,18 @@ export default function TaskAssignmentPage( {onClose} : { onClose: () => void })
                   />
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-          <div className="buttonsContainerStyle">
-            <NextButton
-              type="button"
-              styleClassName="btnStyle11"
-              mainClassName="SubmitBtn_LeaveTaskAssignmentPage"
-              text="Quitter"
-              onClick={onClose}
-            />
-          </div>
-        </form>
+        </div>
+        <div className="buttonsContainerStyle">
+          <NextButton
+            type="button"
+            styleClassName="btnStyle11"
+            mainClassName="SubmitBtn_LeaveTaskAssignmentPage"
+            text="Quitter"
+            onClick={onClose}
+          />
+        </div>
       </div>
     </div>
   );
