@@ -21,7 +21,7 @@ export default function NextButton({nav, type, styleClassName, mainClassName, te
       onClick();
       return;
     }
-    if (nav) navigate(nav);
+    if (nav !== undefined) navigate(nav);
   };
 
   return (

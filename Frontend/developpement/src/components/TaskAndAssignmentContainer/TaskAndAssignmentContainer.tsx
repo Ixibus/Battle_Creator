@@ -6,9 +6,10 @@ import './taskAndAssignmentContainerStyle.css'
 interface propInterface {
     taskName : string,
     onClickSecondButton: () => void,
+    onClickAssignTag: () => void
 }
 
-export default function TaskAndAssignmentContainer({taskName, onClickSecondButton} : propInterface) {
+export default function TaskAndAssignmentContainer({taskName, onClickSecondButton, onClickAssignTag} : propInterface) {
   return (
     <div className="taskAndAssignmentTasksContainer">
       <TaskTag
@@ -16,7 +17,7 @@ export default function TaskAndAssignmentContainer({taskName, onClickSecondButto
         text={taskName}
         onClickSecondButton={onClickSecondButton}
       />
-      <MemberAssignmentTag mainClassName="assigner" memberName="assigner" />
+      <MemberAssignmentTag memberName="assigner" mainClassName="assigner" onClick={onClickAssignTag}/>
     </div>
   );
 }

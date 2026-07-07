@@ -1,8 +1,20 @@
+.taskAssignmentPageOverlayStyle {
+    position: fixed;
+    padding: 15px 20px;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .taskAssignmentPageStyle {
     padding: 15px 20px;
     border: var(--border1);
     border-radius: var(--border-radius1);
     width: fit-content;
+    background: var(--backgroundColor15);
 }
 
 .taskAssignmentPageInnerInputsFormStyle {

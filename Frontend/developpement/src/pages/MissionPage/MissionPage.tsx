@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 import OverlayedWarning from "../../components/OverlayedWarning/OverlayedWarning";
+import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
 
 export default function MissionPage() {
   interface Task {
@@ -24,6 +25,8 @@ export default function MissionPage() {
   const [showAddTaskPage, setShowAddTaskPage] = useState<Boolean>(false);
 
   const [showDisplayOverlayedWarningComponentPage, setShowDisplayOverlayedWarningComponent] = useState<Boolean>(false);
+
+  const [showTaskAssignmentPage, setShowTaskAssignmentPage] = useState<Boolean>(false)
 
   const [missionTasks, setMissionTasks] = useState<Task[]>([]);
 
@@ -116,7 +119,7 @@ export default function MissionPage() {
   return (
     <div
       className={
-        showAddTaskPage || showDisplayOverlayedWarningComponentPage
+        showAddTaskPage || showDisplayOverlayedWarningComponentPage || showTaskAssignmentPage
           ? "missionPageContainerStyle missionPageBackgroundDisplay"
           : "missionPageContainerStyle"
       }
@@ -199,6 +202,11 @@ export default function MissionPage() {
                 setTaskToBeDeletedObject({id: el.id, taskName: el.taskName})
                 setShowDisplayOverlayedWarningComponent(true);
                 }}
+              onClickAssignTag={ () => {
+                setShowTaskAssignmentPage(true);
+              }
+
+              }
             />
           ))}
           <PlusButton
@@ -230,6 +238,7 @@ export default function MissionPage() {
               }}
             />
           )}
+          {showTaskAssignmentPage && <TaskAssignmentPage onClose={ () => {setShowTaskAssignmentPage(false)}}/>}
         </div>
       </div>
     </div>
