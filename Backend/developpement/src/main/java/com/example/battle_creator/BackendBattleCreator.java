@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackendBattleCreator {
 
     public static void main(String[] args) {
-		System.out.println("oh mon dieu ça marche 😍");
+		// System.out.println("oh mon dieu ça marche 😍");
         SpringApplication.run(BackendBattleCreator.class, args);
 
         //        var context = SpringApplication.run(BackendBattleCreator.class, args);

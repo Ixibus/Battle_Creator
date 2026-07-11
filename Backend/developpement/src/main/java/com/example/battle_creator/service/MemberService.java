@@ -21,7 +21,7 @@ public class MemberService {
 
     @Transactional
     public Member create(MemberCreateDto memberDto) {
-        validateMemberDto(memberDto);
+        validateMemberCreateDto(memberDto);
 
         Member member = new Member();
         member.setFirstName(cleanText(memberDto.getFirstName()));
@@ -33,7 +33,7 @@ public class MemberService {
     @Transactional
     public Member update(Long id, MemberUpdateDto memberDto) {
         validateId(id);
-        validateMemberDto(memberDto);
+        validateMemberUpdateDto(memberDto);
 
         Member existingMember = memberRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("membre introuvable avec l'id : " + id));
@@ -64,7 +64,19 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    private void validateMemberDto(MemberDto memberDto) {
+    private void validateMemberCreateDto(MemberCreateDto memberDto) {
+        if (memberDto == null) {
+            throw new IllegalArgumentException("Le membre ne peut pas être nul.");
+        }
+        if (memberDto.getFirstName() == null || memberDto.getFirstName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Le prénom du membre est obligatoire.");
+        }
+        if (memberDto.getLastName() == null || memberDto.getLastName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Le nom du membre est obligatoire.");
+        }
+    }
+
+    private void validateMemberUpdateDto(MemberUpdateDto memberDto) {
         if (memberDto == null) {
             throw new IllegalArgumentException("Le membre ne peut pas être nul.");
         }
