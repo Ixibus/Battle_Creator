@@ -16,6 +16,12 @@ export default function MissionPage() {
     id: number;
     taskName: string;
   }
+  
+  interface Member {
+  id : number,
+  firstName : string,
+  lastName : string
+  }
 
   const { id } = useParams();
 
@@ -38,6 +44,12 @@ export default function MissionPage() {
   const [taskToBeDeletedObject, setTaskToBeDeletedObject] = useState<Task>();
 
   const [taskToBeAssignedObject, setTaskToBeAssignedObject] = useState<Task>();
+
+
+  const [memberAssigned, setMemberAssigned] = useState<Member>();
+
+  useEffect( () => console.log(memberAssigned), [memberAssigned])
+
 
   const [checkedTask, setCheckedTask] = useState(false);
 
@@ -246,9 +258,11 @@ export default function MissionPage() {
           {showTaskAssignmentPage && (
             <TaskAssignmentPage
               taskToBeAssigned={taskToBeAssignedObject}
+              onMemberObject={(member) => setMemberAssigned(member)}
               onClose={() => {
                 setShowTaskAssignmentPage(false);
               }}
+              
             />
           )}
         </div>

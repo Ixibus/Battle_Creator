@@ -24,13 +24,13 @@ interface Member {
 interface propInterface {
   taskToBeAssigned: { id: number; taskName: string } | undefined;
   onClose: () => void;
-  memberObject: Member;
+  onMemberObject: (member : Member) => void;
 }
 
 export default function TaskAssignmentPage({
   taskToBeAssigned,
   onClose,
-  memberObject
+  onMemberObject
 }: propInterface) {
   const [existingMembers, setExistingMembers] = useState<any>([]);
   const [existingMemberObject, setExistingMemberObject] = useState<any>();
@@ -83,9 +83,7 @@ export default function TaskAssignmentPage({
     if (res.status === 201) {
       const CreatedMemberjsonResponse = await res.json();
       
-      memberObject = CreatedMemberjsonResponse;
-
-      console.log(`Membre créé et rajouté 🥳 : ${memberObject.id} ${memberObject.firstName} ${memberObject.lastName}`);
+      onMemberObject(CreatedMemberjsonResponse);
 
       onClose();
     }
@@ -138,8 +136,7 @@ export default function TaskAssignmentPage({
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
                 onClick={() => {
-                  memberObject = existingMemberObject;
-                  console.log(`Membre assigné 🥳 : ${memberObject.id} ${memberObject.firstName}  ${memberObject.lastName}`);
+                  onMemberObject(existingMemberObject);
                   onClose();
                 }}
               />
