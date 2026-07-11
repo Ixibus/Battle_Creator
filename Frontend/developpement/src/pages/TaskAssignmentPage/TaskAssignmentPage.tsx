@@ -27,11 +27,6 @@ export default function TaskAssignmentPage({
   const [existingMembers, setExistingMembers] = useState<any>([]);
   const [existingMemberSelected, setExistingMemberSelected] = useState<any>();
 
-  // useEffect(
-  //   () => console.log(existingMemberSelected),
-  //   [existingMemberSelected],
-  // );
-
   useEffect(() => {
     loadExistingMembers();
   }, []);
