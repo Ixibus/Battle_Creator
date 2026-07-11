@@ -11,10 +11,12 @@ public class MemberCreateDto {
 
     @NotBlank
     @Size(max = 50)
+    @JsonProperty("taskAssignmentFirstNameMemberInput")
     private String firstName;
 
     @NotBlank
     @Size(max = 50)
+    @JsonProperty("taskAssignmentLastNameMemberInput")
     private String lastName;
 
     public MemberCreateDto() {
