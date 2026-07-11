@@ -20,10 +20,11 @@ export default function MissionPage() {
   interface Member {
   id : number,
   firstName : string,
-  lastName : string
+  lastName : string,
+  taskIdAssigned : number
   }
 
-  const { id } = useParams();
+  const { id, memberId } = useParams();
 
   const [objResponse, setObjResponse] = useState<any>();
 
@@ -215,6 +216,7 @@ export default function MissionPage() {
           {missionTasks.map((el: any) => (
             <TaskAndAssignmentContainer
               key={el.id}
+              id={el.id}
               taskName={el.taskName}
               onClickSecondButton={() => {
                 setTaskToBeDeletedObject({ id: el.id, taskName: el.taskName });
@@ -224,6 +226,7 @@ export default function MissionPage() {
                 setShowTaskAssignmentPage(true);
                 setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName });
               }}
+              assignedMemberObject={memberAssigned}
             />
           ))}
           <PlusButton

@@ -18,7 +18,8 @@ import { useEffect, useState } from "react";
 interface Member {
   id : number,
   firstName : string,
-  lastName : string
+  lastName : string,
+  taskIdAssigned : number
 }
 
 interface propInterface {
@@ -82,8 +83,12 @@ export default function TaskAssignmentPage({
 
     if (res.status === 201) {
       const CreatedMemberjsonResponse = await res.json();
+
+      const memberCreatedAndAssigned = Object.assign(CreatedMemberjsonResponse, {taskIdAssigned : taskToBeAssigned?.id})
+
+      console.log(memberCreatedAndAssigned);
       
-      onMemberObject(CreatedMemberjsonResponse);
+      onMemberObject(memberCreatedAndAssigned);
 
       onClose();
     }
@@ -136,7 +141,12 @@ export default function TaskAssignmentPage({
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
                 onClick={() => {
-                  onMemberObject(existingMemberObject);
+
+                  const existingMemberAndAssigned = Object.assign(existingMemberObject, {taskIdAssigned : taskToBeAssigned?.id});
+
+                  console.log(existingMemberAndAssigned);
+
+                  onMemberObject(existingMemberAndAssigned);
                   onClose();
                 }}
               />

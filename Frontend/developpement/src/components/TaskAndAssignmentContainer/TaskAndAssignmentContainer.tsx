@@ -1,17 +1,32 @@
 import MemberAssignmentTag from "../MemberAssignmentTag/MemberAssignmentTag";
 import TaskTag from "../TaskTag/TaskTag";
 
-import './taskAndAssignmentContainerStyle.css';
+import "./taskAndAssignmentContainerStyle.css";
 
-interface propInterface {
-    taskName : string,
-    onClickSecondButton: () => void,
-    onClickAssignTag: () => void
+interface Member {
+  id: number;
+  firstName: string;
+  lastName: string;
+  taskIdAssigned: number;
 }
 
-const isTaskAssigned = true
+interface propInterface {
+  id: number;
+  taskName: string;
+  onClickSecondButton: () => void;
+  onClickAssignTag: () => void;
+  assignedMemberObject: Member | undefined;
+}
 
-export default function TaskAndAssignmentContainer({taskName, onClickSecondButton, onClickAssignTag} : propInterface) {
+export default function TaskAndAssignmentContainer({
+  id,
+  taskName,
+  onClickSecondButton,
+  onClickAssignTag,
+  assignedMemberObject,
+}: propInterface) {
+  console.log(assignedMemberObject);
+
   return (
     <div className="taskAndAssignmentTasksContainer">
       <TaskTag
@@ -19,10 +34,19 @@ export default function TaskAndAssignmentContainer({taskName, onClickSecondButto
         text={taskName}
         onClickSecondButton={onClickSecondButton}
       />
-      {
-       isTaskAssigned ? <MemberAssignmentTag memberName="lenom" mainClassName="assigner" onClick={onClickAssignTag}/> : <MemberAssignmentTag memberName="assigner" mainClassName="assigner" onClick={onClickAssignTag}/>
-      }
-      
+      {assignedMemberObject!== undefined && assignedMemberObject?.taskIdAssigned === id ? (
+        <MemberAssignmentTag
+          memberName={`${assignedMemberObject!.firstName} ${assignedMemberObject!.lastName}`}
+          mainClassName="assigner"
+          onClick={onClickAssignTag}
+        />
+      ) : (
+        <MemberAssignmentTag
+          memberName="assigner"
+          mainClassName="assigner"
+          onClick={onClickAssignTag}
+        />
+      )}
     </div>
   );
 }
