@@ -13,15 +13,53 @@ import AreaTextContainer, {
 } from "../../components/InputContainer/AreaTextContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
+import { useEffect, useState } from "react";
 
 interface propInterface {
-  taskToBeAssigned : {id: number, taskName: string} | undefined;
-  onClose : () => void;
+  taskToBeAssigned: { id: number; taskName: string } | undefined;
+  onClose: () => void;
 }
 
+export default function TaskAssignmentPage({
+  taskToBeAssigned,
+  onClose,
+}: propInterface) {
+  const [existingMembers, setExistingMembers] = useState<any>([]);
+  const [existingMemberSelected, setExistingMemberSelected] = useState<any>();
 
-export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInterface) {
-  async function handlesubmit(e: any) {
+  // useEffect(
+  //   () => console.log(existingMemberSelected),
+  //   [existingMemberSelected],
+  // );
+
+  useEffect(() => {
+    loadExistingMembers();
+  }, []);
+
+  async function loadExistingMembers() {
+    const res = await fetch(`http://localhost:8080/members`, {
+      credentials: "include",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(res.status);
+
+    if (res.status !== 200)
+      console.log("un autre code que 200 est apparu : " + res.status);
+    if (res.status === 200) {
+      const jsonResponse = res.json();
+      console.log(JSON.stringify(await jsonResponse));
+
+      const response = await jsonResponse;
+      console.log(response);
+
+      setExistingMembers(response);
+    }
+  }
+
+  async function memberCreatedAndAssignedHandlesubmit(e: any) {
     e.preventDefault();
 
     const form = new FormData(e.currentTarget);
@@ -41,8 +79,7 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
 
     const text = await res.text();
 
-    if (res.status !== 201)
-      console.log("ajout membre échoué " + res.status);
+    if (res.status !== 201) console.log("ajout membre échoué " + res.status);
 
     if (res.status === 201) {
       console.log("Membre rajouté 🥳");
@@ -56,7 +93,9 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
   return (
     <div className="taskAssignmentPageOverlayStyle">
       <div className="taskAssignmentPageStyle">
-        <h1 className="titleFormStyle5">{`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`} </h1>
+        <h1 className="titleFormStyle5">
+          {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}{" "}
+        </h1>
         <div className="taskAssignmentPageInnerInputsFormStyle">
           <div className="taskAssignmentPageExistingMemberTasksContainer">
             <p className="taskAssignmentPageExistingMemberTasksTitle">
@@ -73,11 +112,20 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
                 <select
                   name="taskAssignmentPageExistingMemberInputsSelect"
                   className="taskAssignmentPageExistingMemberInputsSelectStyle"
-                  id=""
+                  onChange={(e) => {
+                    const selectedId = Number(e.target.value);
+                    const selectedMember = existingMembers.find(
+                      (m: any) => m.id === selectedId,
+                    );
+                    setExistingMemberSelected(selectedMember);
+                  }}
                 >
                   <option value="">--Bénévole(s) existant(s)--</option>
-                  <option value=""></option>
-                  <option value=""></option>
+                  {existingMembers.map((el: any) => (
+                    <option key={el.id} value={el.id}>
+                      {el.firstName} {el.lastName}
+                    </option>
+                  ))}
                 </select>
               </div>
               <NextButton
@@ -85,6 +133,9 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
                 styleClassName="btnStyle10"
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
+                onClick={() => {
+                  console.log(existingMemberSelected);
+                }}
               />
             </div>
           </div>
@@ -93,7 +144,10 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
             <p className="taskAssignmentPageCreateAssignTasksTitle">
               CREER ET ASSIGNER UN NOUVEAU BENEVOLE
             </p>
-            <form className="formClassName" onSubmit={(e) => handlesubmit(e)}>
+            <form
+              className="formClassName"
+              onSubmit={(e) => memberCreatedAndAssignedHandlesubmit(e)}
+            >
               <div className="taskAssignmentPageCreateAssignInnerContainer">
                 <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                   <InputContainer
