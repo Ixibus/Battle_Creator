@@ -9,6 +9,8 @@ interface propInterface {
     onClickAssignTag: () => void
 }
 
+const isTaskAssigned = true
+
 export default function TaskAndAssignmentContainer({taskName, onClickSecondButton, onClickAssignTag} : propInterface) {
   return (
     <div className="taskAndAssignmentTasksContainer">
@@ -17,7 +19,10 @@ export default function TaskAndAssignmentContainer({taskName, onClickSecondButto
         text={taskName}
         onClickSecondButton={onClickSecondButton}
       />
-      <MemberAssignmentTag memberName="assigner" mainClassName="assigner" onClick={onClickAssignTag}/>
+      {
+       isTaskAssigned ? <MemberAssignmentTag memberName="lenom" mainClassName="assigner" onClick={onClickAssignTag}/> : <MemberAssignmentTag memberName="assigner" mainClassName="assigner" onClick={onClickAssignTag}/>
+      }
+      
     </div>
   );
 }

@@ -15,17 +15,25 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import { useEffect, useState } from "react";
 
+interface Member {
+  id : number,
+  firstName : string,
+  lastName : string
+}
+
 interface propInterface {
   taskToBeAssigned: { id: number; taskName: string } | undefined;
   onClose: () => void;
+  memberObject: Member;
 }
 
 export default function TaskAssignmentPage({
   taskToBeAssigned,
   onClose,
+  memberObject
 }: propInterface) {
   const [existingMembers, setExistingMembers] = useState<any>([]);
-  const [existingMemberSelected, setExistingMemberSelected] = useState<any>();
+  const [existingMemberObject, setExistingMemberObject] = useState<any>();
 
   useEffect(() => {
     loadExistingMembers();
@@ -61,8 +69,6 @@ export default function TaskAssignmentPage({
 
     const formEntries = Object.fromEntries(form.entries());
 
-    console.log(formEntries);
-
     const res = await fetch("http://localhost:8080/members", {
       method: "POST",
       // credentials: "include",
@@ -72,12 +78,15 @@ export default function TaskAssignmentPage({
       body: JSON.stringify(formEntries),
     });
 
-    const text = await res.text();
-
     if (res.status !== 201) console.log("ajout membre échoué " + res.status);
 
     if (res.status === 201) {
-      console.log("Membre rajouté 🥳");
+      const CreatedMemberjsonResponse = await res.json();
+      
+      memberObject = CreatedMemberjsonResponse;
+
+      console.log(`Membre créé et rajouté 🥳 : ${memberObject.id} ${memberObject.firstName} ${memberObject.lastName}`);
+
       onClose();
     }
 
@@ -112,7 +121,7 @@ export default function TaskAssignmentPage({
                     const selectedMember = existingMembers.find(
                       (m: any) => m.id === selectedId,
                     );
-                    setExistingMemberSelected(selectedMember);
+                    setExistingMemberObject(selectedMember);
                   }}
                 >
                   <option value="">--Bénévole(s) existant(s)--</option>
@@ -129,7 +138,9 @@ export default function TaskAssignmentPage({
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
                 onClick={() => {
-                  console.log(existingMemberSelected);
+                  memberObject = existingMemberObject;
+                  console.log(`Membre assigné 🥳 : ${memberObject.id} ${memberObject.firstName}  ${memberObject.lastName}`);
+                  onClose();
                 }}
               />
             </div>
