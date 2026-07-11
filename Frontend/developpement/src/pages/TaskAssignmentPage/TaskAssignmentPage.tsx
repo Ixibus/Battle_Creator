@@ -30,30 +30,27 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
 
     console.log(formEntries);
 
-    // console.log(formEntries);
+    const res = await fetch("http://localhost:8080/members", {
+      method: "POST",
+      // credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formEntries),
+    });
 
-    // const res = await fetch("http://localhost:8080/tasks", {
-    //   method: "POST",
-    //   // credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formEntries),
-    // });
+    const text = await res.text();
 
-    // const text = await res.text();
+    if (res.status !== 201)
+      console.log("ajout membre échoué " + res.status);
 
-    // if (res.status !== 201)
-    //   console.log("l'ajout de tâche a échoué " + res.status);
+    if (res.status === 201) {
+      console.log("Membre rajouté 🥳");
+      onClose();
+    }
 
-    // if (res.status === 201) {
-    //   await onTaskCreated();
-    //   onClose();
-    //   console.log("ajout de tâche réussi 🥳");
-    // }
-
-    // console.log("ok");
-    // // navigate("/missionPage");
+    console.log("ok");
+    // navigate("/missionPage");
   }
 
   return (
@@ -103,14 +100,14 @@ export default function TaskAssignmentPage({taskToBeAssigned, onClose}: propInte
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName={"Prénom"}
                     inputItemStyle={InputItemStyle.style3}
-                    htmlFor={"TaskAssignmentFirstNameMemberInput"}
+                    htmlFor={"taskAssignmentFirstNameMemberInput"}
                     type={"text"}
                   />
                   <InputContainer
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName={"Nom"}
                     inputItemStyle={InputItemStyle.style3}
-                    htmlFor={"TaskAssignmentLastNameMemberInput"}
+                    htmlFor={"taskAssignmentLastNameMemberInput"}
                     type={"text"}
                   />
                   <NextButton
