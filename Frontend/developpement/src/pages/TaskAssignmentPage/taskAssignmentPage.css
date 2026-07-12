@@ -98,3 +98,13 @@
 .taskAssignmentPageCreateAssignInputsContainerStyle>div:last-child {
     margin-top: 50px;
 }
+
+.taskAssignmentTitleContainerStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.taskAssignmentMemberInnerContainerStyle{
+    padding: 7px 15px;
+}

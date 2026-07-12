@@ -258,7 +258,7 @@ export default function MissionPage() {
               }}
               onClickAssignTag={() => {
                 setShowTaskAssignmentPage(true);
-                setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName });
+                setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName, memberId: el.memberId, memberFirstName: el.memberFirstName, memberLastName: el.memberLastName});
               }}
             />
           ))}

@@ -15,23 +15,31 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import { useEffect, useState } from "react";
 
+interface Task {
+  id: number;
+  taskName: string;
+  memberId?: number | null;
+  memberFirstName?: string | null;
+  memberLastName?: string | null;
+}
+
 interface Member {
-  id : number,
-  firstName : string,
-  lastName : string,
-  taskIdAssigned : number
+  id: number;
+  firstName: string;
+  lastName: string;
+  taskIdAssigned: number;
 }
 
 interface propInterface {
-  taskToBeAssigned: { id: number; taskName: string } | undefined;
+  taskToBeAssigned: Task | undefined;
   onClose: () => void;
-  onMemberObject: (member : Member) => void;
+  onMemberObject: (member: Member) => void;
 }
 
 export default function TaskAssignmentPage({
   taskToBeAssigned,
   onClose,
-  onMemberObject
+  onMemberObject,
 }: propInterface) {
   const [existingMembers, setExistingMembers] = useState<any>([]);
   const [existingMemberObject, setExistingMemberObject] = useState<any>();
@@ -84,10 +92,13 @@ export default function TaskAssignmentPage({
     if (res.status === 201) {
       const CreatedMemberjsonResponse = await res.json();
 
-      const memberCreatedAndAssigned = Object.assign(CreatedMemberjsonResponse, {taskIdAssigned : taskToBeAssigned?.id})
+      const memberCreatedAndAssigned = Object.assign(
+        CreatedMemberjsonResponse,
+        { taskIdAssigned: taskToBeAssigned?.id },
+      );
 
       console.log(memberCreatedAndAssigned);
-      
+
       onMemberObject(memberCreatedAndAssigned);
 
       onClose();
@@ -100,14 +111,32 @@ export default function TaskAssignmentPage({
   return (
     <div className="taskAssignmentPageOverlayStyle">
       <div className="taskAssignmentPageStyle">
-        <h1 className="titleFormStyle5">
-          {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}{" "}
-        </h1>
+        {taskToBeAssigned?.memberId === null ? (
+          <h1 className="titleFormStyle5">
+            {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}
+          </h1>
+        ) : (
+          <div className="taskAssignmentTitleContainerStyle">
+            <h1 className="titleFormStyle4">
+              {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}
+            </h1>
+            <div className="taskAssignmentMemberContainerStyle">
+              <div className="btnStyle19 taskAssignmentMemberInnerContainerStyle">{`${taskToBeAssigned?.memberFirstName} ${taskToBeAssigned?.memberLastName}`}</div>                
+            </div>
+          </div>
+        )}
+
         <div className="taskAssignmentPageInnerInputsFormStyle">
           <div className="taskAssignmentPageExistingMemberTasksContainer">
-            <p className="taskAssignmentPageExistingMemberTasksTitle">
+            {
+              taskToBeAssigned?.memberId === null ? <p className="taskAssignmentPageExistingMemberTasksTitle">
               ASSIGNER UN BENEVOLE EXISTANT
+            </p> :
+            <p className="taskAssignmentPageExistingMemberTasksTitle">
+              ASSIGNER UN AUTRE BENEVOLE
             </p>
+            }
+            
             <div className="taskAssignmentPageExistingMemberInnerContainer">
               <div className="taskAssignmentPageExistingMemberInputsContainer">
                 <label
@@ -141,8 +170,10 @@ export default function TaskAssignmentPage({
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
                 onClick={() => {
-
-                  const existingMemberAndAssigned = Object.assign(existingMemberObject, {taskIdAssigned : taskToBeAssigned?.id});
+                  const existingMemberAndAssigned = Object.assign(
+                    existingMemberObject,
+                    { taskIdAssigned: taskToBeAssigned?.id },
+                  );
 
                   console.log(existingMemberAndAssigned);
 
@@ -154,9 +185,16 @@ export default function TaskAssignmentPage({
           </div>
           <p className="taskAssignmentPageOrTextStyle"> ou </p>
           <div className="taskAssignmentPageCreateAssignTasksContainer">
+            {
+              taskToBeAssigned?.memberId === null ?
             <p className="taskAssignmentPageCreateAssignTasksTitle">
               CREER ET ASSIGNER UN NOUVEAU BENEVOLE
+            </p> :
+            <p className="taskAssignmentPageCreateAssignTasksTitle">
+              CREER UN BENEVOLE ET L'ASSIGNER
             </p>
+            }
+            
             <form
               className="formClassName"
               onSubmit={(e) => memberCreatedAndAssignedHandlesubmit(e)}
