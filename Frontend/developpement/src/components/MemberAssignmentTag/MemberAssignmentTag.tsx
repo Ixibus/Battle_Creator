@@ -7,18 +7,24 @@ interface interfaceProps {
   mainClassName: string;
   memberName: string;
   onClick: () => void;
+  assignStyleTag: boolean
 }
 
 export default function MemberAssignmentTag({
   mainClassName,
   memberName,
-  onClick
+  onClick,
+  assignStyleTag
 }: interfaceProps) {
 
   return (
-    <span className={`assignmentTagStyleContainer btnStyle15 ${mainClassName}`} onClick={onClick}>
+    <>{assignStyleTag ? (<span className={`assignmentTagStyleContainer btnStyle19 ${mainClassName}`} onClick={onClick}>
+      <p className="assignedTaskTagText">{memberName}</p>
+    </span>) : (<span className={`assignmentTagStyleContainer btnStyle18 ${mainClassName}`} onClick={onClick}>
       <p className="assignmentTagText">{memberName}</p>
       <Icone SrcIcone={Assign} styleType={StyleType.style8}/>
-    </span>
+    </span>)
+    }
+    </>
   );
 }

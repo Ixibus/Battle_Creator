@@ -35,11 +35,11 @@
 
 .taskTagCheckedZindexCheckedIcone{
     position: absolute;
-right: 49px;
+    right: 49px;
     z-index: 1000;
 }
 .taskTagCheckedZindexBinIcone{
     position: absolute;
-right: 15px;
+    right: 15px;
     z-index: 1000;
 }

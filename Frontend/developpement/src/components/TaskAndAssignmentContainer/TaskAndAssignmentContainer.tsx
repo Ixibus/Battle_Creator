@@ -35,12 +35,14 @@ export default function TaskAndAssignmentContainer({
       {assignedMember?.id ? (
         <MemberAssignmentTag
           memberName={`${assignedMember.firstName} ${assignedMember.lastName}`}
+          assignStyleTag={true}
           mainClassName="assigner"
           onClick={onClickAssignTag}
         />
       ) : (
         <MemberAssignmentTag
           memberName="assigner"
+          assignStyleTag={false}
           mainClassName="assigner"
           onClick={onClickAssignTag}
         />

@@ -178,6 +178,29 @@
     letter-spacing: var(--letter-spacing1);
 }
 
+.btnStyle18 {
+    width: fit-content;
+    color: var(--fontColor4);
+    background-color: var(--backgroundColor5);
+    border: var(--border3);
+    border-radius: var(--border-radius1);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight2);
+    letter-spacing: var(--letter-spacing1);
+    text-transform: uppercase;
+}
+
+.btnStyle19 {
+    width: fit-content;
+    color: var(--fontColor4);
+    background-color: var(--backgroundColor17);
+    border: var(--border2);
+    border-radius: var(--border-radius1);
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+    text-transform: uppercase;
+}
 
 .plusBtnStyle1 {
     font-size: 1.5rem;

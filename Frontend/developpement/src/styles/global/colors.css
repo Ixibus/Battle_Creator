@@ -25,6 +25,8 @@
     --backgroundColor13: #EDDCFF;
     --backgroundColor14: #fcf7ff;
     --backgroundColor15: #ffffff;
+    --backgroundColor16: #fcfaff;
+    --backgroundColor17: #dcbaff;
 
     /* #F8EDFF */
     
@@ -52,7 +54,6 @@
     --fontColor5: #afa2c2;
     --fontColor6: #526770;
     --fontColor7: rgb(61, 61, 61);
-    --fontColor8: #c2bfce;
 
     /* Font Size */
     --font-size1: 0.6rem;
@@ -73,10 +74,12 @@
     /* Border color */
     --border-color1: #513C71;
     --border-color2: #D5BBF9;
+    --border-color3: rgb(223, 223, 223);
 
     /* Border */
     --border1: 1px solid var(--border-color1);
     --border2: 1px solid var(--border-color2);
+    --border3: 1px solid var(--border-color3);
     --border-radius1: 10px;
     --border-radius2: 50px;
     --border-radius3: 5px;

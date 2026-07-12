@@ -5,6 +5,10 @@
     padding: 7px 15px;
 }
 
+.assignedTaskTagText{
+    text-align: center;
+}
+
 .assignmentTagText{
     margin-right: 10px;
 }
