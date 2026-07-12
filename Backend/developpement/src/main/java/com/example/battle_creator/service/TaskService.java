@@ -1,10 +1,13 @@
 package com.example.battle_creator.service;
 
 import com.example.battle_creator.dto.TaskDto;
+import com.example.battle_creator.dto.TaskResponseDto;
 import com.example.battle_creator.model.Mission;
+import com.example.battle_creator.model.Member;
 import com.example.battle_creator.model.Task;
 import com.example.battle_creator.repository.MissionRepository;
 import com.example.battle_creator.repository.TaskRepository;
+import com.example.battle_creator.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +20,13 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final MissionRepository missionRepository;
+    private final MemberRepository memberRepository;
 
-    public TaskService( TaskRepository taskRepository, MissionRepository missionRepository) {
+    public TaskService(TaskRepository taskRepository, MissionRepository missionRepository, MemberRepository memberRepository) {
 
         this.taskRepository = taskRepository;
         this.missionRepository = missionRepository;
+        this.memberRepository = memberRepository;
 
     }
 
@@ -37,6 +42,25 @@ public class TaskService {
         validateId(missionId);
         return taskRepository.findByMissionId(missionId);
     }
+
+    public List<TaskResponseDto> getByMissionIdWithMember(Long missionId) {
+    validateId(missionId);
+    List<Task> tasks = taskRepository.findByMissionIdOrderByIdAsc(missionId);
+
+    return tasks.stream().map(task -> {
+        TaskResponseDto dto = new TaskResponseDto();
+        dto.setId(task.getId());
+        dto.setTaskName(task.getTaskName());
+
+        if (task.getMember() != null) {
+            dto.setMemberId(task.getMember().getId());
+            dto.setMemberFirstName(task.getMember().getFirstName());
+            dto.setMemberLastName(task.getMember().getLastName());
+        }
+
+        return dto;
+    }).toList();
+}
 
     @Transactional
     public Task create(TaskDto taskDto) {
@@ -85,6 +109,26 @@ public class TaskService {
         }
 
         taskRepository.deleteById(id);
+    }
+
+        @Transactional
+    public void assignMemberToTask(Long taskId, Long memberId) {
+        validateId(taskId);
+
+        Task task = taskRepository.findById(taskId)
+            .orElseThrow(() -> new IllegalArgumentException("cette tâche est introuvable"));
+
+        if (memberId == null) {
+            // désassigner le membre (id_member = null)
+            task.setMember(null);
+        } else {
+            validateId(memberId);
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(() -> new IllegalArgumentException("ce membre est introuvable"));
+            task.setMember(member);
+        }
+
+        taskRepository.save(task);
     }
 
     private void validateId(Long id) {

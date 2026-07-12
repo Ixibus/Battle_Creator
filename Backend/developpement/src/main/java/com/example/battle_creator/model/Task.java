@@ -29,6 +29,10 @@ public class Task {
     @JoinColumn(name = "id_mission", nullable = false)
     private Mission mission;
 
+    @ManyToOne(optional = true) // relation facultative
+    @JoinColumn(name = "id_member", nullable = true)
+    private Member member;
+
     public Task() {};
 
 //    // 7. Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
@@ -93,5 +97,13 @@ public class Task {
 
     public void setMission(Mission mission) {
         this.mission = mission;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }

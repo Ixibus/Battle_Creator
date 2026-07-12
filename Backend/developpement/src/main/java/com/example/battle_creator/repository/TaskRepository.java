@@ -10,7 +10,11 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    // "méthode" pour chercher toutes les tâches en fonction d'une mission (clé étrangère)
+    // "méthode" pour chercher toutes les tâches en fonction d'une mission (clé étrangère). Renvoi dans l'ordre croissant des id de task
+        List<Task> findByMissionIdOrderByIdAsc(Long missionId);
+
+
+    // chercher toutes les tâches en fonction d'une mission tel que, sans se préoccuper de l'ordre renvoyé
         List<Task> findByMissionId(Long missionId);
 
 // // Exemple de méthode à rajouter dans un repository

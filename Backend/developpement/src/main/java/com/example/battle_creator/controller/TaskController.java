@@ -1,6 +1,8 @@
 package com.example.battle_creator.controller;
 
 import com.example.battle_creator.dto.TaskDto;
+import com.example.battle_creator.dto.TaskResponseDto;
+import com.example.battle_creator.dto.TaskMemberAssignmentDto;
 import com.example.battle_creator.model.Task;
 import com.example.battle_creator.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -30,10 +32,15 @@ public class TaskController {
         // avec cette méthode, ResponseEntity.of(Optional) renvoie directement 200 OK si l’objet existe, ou 404 Not Found s’il est absent
     }
 
+    // @GetMapping("/mission/{missionId}")
+    // public ResponseEntity<List<Task>> getTasksByMissionId(@PathVariable Long missionId) {
+    //     return ResponseEntity.ok(taskService.getByMissionId(missionId));
+    // }
+
     @GetMapping("/mission/{missionId}")
-    public ResponseEntity<List<Task>> getTasksByMissionId(@PathVariable Long missionId) {
-        return ResponseEntity.ok(taskService.getByMissionId(missionId));
-    }
+    public List<TaskResponseDto> getTasksByMission(@PathVariable Long missionId) {
+    return taskService.getByMissionIdWithMember(missionId);
+}
 
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody TaskDto taskDto) {
@@ -41,10 +48,10 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@RequestBody TaskDto taskDto, @PathVariable Long id) {
-        Task updatedTask = taskService.update(taskDto, id);
-        return ResponseEntity.ok(updatedTask);
+    @PutMapping("/{taskId}")
+    public ResponseEntity<Void> assignMemberToTask(@PathVariable Long taskId, @RequestBody TaskMemberAssignmentDto taskMemberAssignmentDto) {
+        taskService.assignMemberToTask(taskId, taskMemberAssignmentDto.getMemberId());
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
