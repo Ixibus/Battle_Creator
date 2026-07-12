@@ -3,29 +3,27 @@ import TaskTag from "../TaskTag/TaskTag";
 
 import "./taskAndAssignmentContainerStyle.css";
 
-interface Member {
-  id: number;
+interface AssignedMemberObject {
+  id?: number;
   firstName: string;
   lastName: string;
-  taskIdAssigned: number;
 }
 
 interface propInterface {
   id: number;
   taskName: string;
+  assignedMember?: AssignedMemberObject;
   onClickSecondButton: () => void;
   onClickAssignTag: () => void;
-  assignedMemberObject: Member | undefined;
 }
 
 export default function TaskAndAssignmentContainer({
-  id,
   taskName,
   onClickSecondButton,
   onClickAssignTag,
-  assignedMemberObject,
+  assignedMember,
 }: propInterface) {
-  console.log(assignedMemberObject);
+  console.log(assignedMember);
 
   return (
     <div className="taskAndAssignmentTasksContainer">
@@ -34,9 +32,9 @@ export default function TaskAndAssignmentContainer({
         text={taskName}
         onClickSecondButton={onClickSecondButton}
       />
-      {assignedMemberObject!== undefined && assignedMemberObject?.taskIdAssigned === id ? (
+      {assignedMember?.id ? (
         <MemberAssignmentTag
-          memberName={`${assignedMemberObject!.firstName} ${assignedMemberObject!.lastName}`}
+          memberName={`${assignedMember.firstName} ${assignedMember.lastName}`}
           mainClassName="assigner"
           onClick={onClickAssignTag}
         />

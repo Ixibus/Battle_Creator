@@ -15,13 +15,16 @@ export default function MissionPage() {
   interface Task {
     id: number;
     taskName: string;
+    memberId?: number | null;
+    memberFirstName?: string | null;
+    memberLastName?: string | null;
   }
-  
+
   interface Member {
-  id : number,
-  firstName : string,
-  lastName : string,
-  taskIdAssigned : number
+    id: number;
+    firstName: string;
+    lastName: string;
+    taskIdAssigned: number;
   }
 
   const { id, memberId } = useParams();
@@ -46,11 +49,9 @@ export default function MissionPage() {
 
   const [taskToBeAssignedObject, setTaskToBeAssignedObject] = useState<Task>();
 
-
   const [memberAssigned, setMemberAssigned] = useState<Member>();
 
-  useEffect( () => console.log(memberAssigned), [memberAssigned])
-
+  useEffect(() => console.log(memberAssigned), [memberAssigned]);
 
   const [checkedTask, setCheckedTask] = useState(false);
 
@@ -130,6 +131,34 @@ export default function MissionPage() {
       setTaskToBeDeletedObject(() => {});
     }
   }
+
+  useEffect(() => {
+    async function taskMemberIdAssignement() {
+      if (!memberAssigned || !taskToBeAssignedObject?.id) return;
+
+      const res = await fetch(
+        `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            memberId: memberAssigned.id,
+          }),
+        },
+      );
+
+      if (!res.ok) {
+        console.log("ajout de l'id membre n'a pas marché");
+      }
+      if (res.ok) {
+        console.log("ajout de l'id membre à la tâche ok 😊");
+        loadMissionTasks();
+      }
+    }
+    taskMemberIdAssignement();
+  }, [memberAssigned]);
 
   console.log(taskToBeDeletedObject);
 
@@ -213,11 +242,16 @@ export default function MissionPage() {
                   : `${tasksCount} tâches`}
             </span>
           </div>
-          {missionTasks.map((el: any) => (
+          {missionTasks.map((el: Task) => (
             <TaskAndAssignmentContainer
               key={el.id}
               id={el.id}
               taskName={el.taskName}
+              assignedMember={{
+                id: el.memberId ?? undefined,
+                firstName: el.memberFirstName ?? "",
+                lastName: el.memberLastName ?? "",
+              }}
               onClickSecondButton={() => {
                 setTaskToBeDeletedObject({ id: el.id, taskName: el.taskName });
                 setShowDisplayOverlayedWarningComponent(true);
@@ -226,7 +260,6 @@ export default function MissionPage() {
                 setShowTaskAssignmentPage(true);
                 setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName });
               }}
-              assignedMemberObject={memberAssigned}
             />
           ))}
           <PlusButton
@@ -265,7 +298,6 @@ export default function MissionPage() {
               onClose={() => {
                 setShowTaskAssignmentPage(false);
               }}
-              
             />
           )}
         </div>
