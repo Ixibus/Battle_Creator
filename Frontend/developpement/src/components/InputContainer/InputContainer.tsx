@@ -1,7 +1,7 @@
 import '../../styles/global/inputContainerStyle.css'
 import '../../styles/global/inputLabelStyle.css'
 import '../../styles/global/inputItemStyle.css'
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, FocusEvent } from 'react';
 
 type InputType = "text" | "password" | "email";
 
@@ -26,6 +26,7 @@ interface InputContainerProps {
   value?: string,
   type: InputType;
   onChange?: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void; 
 }
 
 export default function InputContainer({
@@ -36,12 +37,13 @@ export default function InputContainer({
   htmlFor,
   value,
   type,
-  onChange
+  onChange,
+  onBlur
 }: InputContainerProps) {
   return (
     <div className={className}>
       <label className={inputLabelStyle} htmlFor={htmlFor}>{labelName}</label>
-      <input className={inputItemStyle} value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} />
+      <input className={inputItemStyle} value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} onBlur={onBlur} />
     </div>
   );
 }

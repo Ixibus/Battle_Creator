@@ -1,21 +1,34 @@
-import InputContainer, { InputLabelStyle, InputItemStyle } from "../../components/InputContainer/InputContainer";
+import InputContainer, {
+  InputLabelStyle,
+  InputItemStyle,
+} from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton/NextButton";
+
+import "../../styles/form/formError.css";
 
 export default function ConnexionPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [touched, setTouched] = useState<{ login: boolean; password: boolean }>(
+    { login: false, password: false },
+  );
 
   const navigate = useNavigate();
+
+  const isLoginEmpty = login.trim() === "";
+  const isPasswordEmpty = password.trim() === "";
+
+  const hasError = isLoginEmpty || isPasswordEmpty;
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
+    setTouched({ login: true, password: true });
 
-    if (!login.trim() || !password.trim()) {
-      setErrorMessage("Veuillez remplir tous les champs.");
+    if (hasError) {
       return;
     }
 
@@ -39,13 +52,13 @@ export default function ConnexionPage() {
       }
 
       if (res.status === 401 || res.status === 403) {
-        setErrorMessage("Login ou mot de passe incorrect.");
+        setErrorMessage("Login ou mot de passe incorrect");
         return;
       }
 
-      setErrorMessage("Une erreur est survenue lors de la connexion.");
+      setErrorMessage("Une erreur est survenue lors de la connexion");
     } catch (error) {
-      setErrorMessage("Impossible de contacter le serveur.");
+      setErrorMessage("Impossible de contacter le serveur");
     }
   }
 
@@ -54,6 +67,15 @@ export default function ConnexionPage() {
     setPassword("");
     setErrorMessage("");
   }
+
+  const loginBorder =
+    touched.login && isLoginEmpty
+      ? "1px solid #e63946"
+      : "1px solid transparent";
+  const passwordBorder =
+    touched.password && isPasswordEmpty
+      ? "1px solid #e63946"
+      : "1px solid transparent";
 
   return (
     <form className="formStyle3" onSubmit={handleSubmit}>
@@ -67,7 +89,14 @@ export default function ConnexionPage() {
           htmlFor="login"
           type="text"
           onChange={(e) => setLogin(e.target.value)}
+          onBlur={() => setTouched((s) => ({ ...s, login: true }))}
         />
+
+        <div className="errorSlot">
+          {touched.login && isLoginEmpty && (
+            <p className="formErrorMessageStyle">Merci de renseigner votre login</p>
+          )}
+        </div>
 
         <InputContainer
           inputLabelStyle={InputLabelStyle.style1}
@@ -76,9 +105,18 @@ export default function ConnexionPage() {
           htmlFor="password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          onBlur={() => setTouched((s) => ({ ...s, password: true }))}
         />
 
-        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+        <div className="errorSlot">
+          {touched.password && isPasswordEmpty && (
+            <p className="formErrorMessageStyle">Merci de renseigner votre mot de passe</p>
+          )}
+        </div>
+
+        {errorMessage && (
+          <p className="formErrorMessageStyle">{errorMessage}</p>
+        )}
 
         <div className="buttonsContainerStyle">
           <NextButton
