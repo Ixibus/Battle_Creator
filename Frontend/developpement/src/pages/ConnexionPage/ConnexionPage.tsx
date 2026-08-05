@@ -1,86 +1,101 @@
-import InputContainer, {InputLabelStyle, InputItemStyle} from "../../components/InputContainer/InputContainer";
-import { useState, type SubmitEvent } from "react";
-import { useMutation } from "@tanstack/react-query";
+import InputContainer, { InputLabelStyle, InputItemStyle } from "../../components/InputContainer/InputContainer";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton/NextButton";
-// import LoginButton from "./LoginButton";
 
 export default function ConnexionPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const form = document.querySelector("form");
-
-  async function handlesubmitTester(e: SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage("");
 
-    const inputDatas: FormData = new FormData(form!);
-
-    const dataObj = Object.fromEntries(inputDatas.entries());
-    Object.assign(dataObj, { isActive: false });
-
-    const res = fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataObj),
-    });
-    console.log(dataObj);
-
-    if ((await res).status === 200) {
-      console.log("la connexion a marché");
-      navigate("/homePage");
+    if (!login.trim() || !password.trim()) {
+      setErrorMessage("Veuillez remplir tous les champs.");
+      return;
     }
 
-    if (!(await res).ok) {
-      console.log("la connexion non authorisée");
-    }
+    try {
+      const res = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login,
+          password,
+          isActive: false,
+        }),
+      });
 
-    const response = await res;
-    console.log(response);
+      if (res.ok) {
+        navigate("/homePage");
+        return;
+      }
+
+      if (res.status === 401 || res.status === 403) {
+        setErrorMessage("Login ou mot de passe incorrect.");
+        return;
+      }
+
+      setErrorMessage("Une erreur est survenue lors de la connexion.");
+    } catch (error) {
+      setErrorMessage("Impossible de contacter le serveur.");
+    }
+  }
+
+  function handleClear() {
+    setLogin("");
+    setPassword("");
+    setErrorMessage("");
   }
 
   return (
-    <>
-      <form className="formStyle3" onSubmit={(e) => handlesubmitTester(e)}>
-        <h1 className="titleFormStyle">Connexion</h1>
-        <div className="inputsFormContainerStyle">
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Votre login"
-            htmlFor="login"
-            type="text"
-            onChange={(e) => setLogin(e.target.value)}
+    <form className="formStyle3" onSubmit={handleSubmit}>
+      <h1 className="titleFormStyle">Connexion</h1>
+
+      <div className="inputsFormContainerStyle">
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Votre login"
+          htmlFor="login"
+          type="text"
+          onChange={(e) => setLogin(e.target.value)}
+        />
+
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Votre mot de passe"
+          htmlFor="password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+
+        <div className="buttonsContainerStyle">
+          <NextButton
+            type="submit"
+            styleClassName="btnStyle10"
+            mainClassName="SubmitBtn_AccountCreation"
+            text="Valider"
           />
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Votre mot de passe"
-            htmlFor="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
+          <NextButton
+            type="button"
+            styleClassName="btnStyle11"
+            mainClassName="SubmitBtn_AccountCreation"
+            text="Effacer"
+            onClick={handleClear}
           />
-          <div className="buttonsContainerStyle">
-            <NextButton
-              type="submit"
-              styleClassName="btnStyle10"
-              mainClassName="SubmitBtn_AccountCreation"
-              text="Valider"
-            />
-            <NextButton
-              type="button"
-              styleClassName="btnStyle11"
-              mainClassName="SubmitBtn_AccountCreation"
-              text="Effacer"
-            />
-          </div>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 }
