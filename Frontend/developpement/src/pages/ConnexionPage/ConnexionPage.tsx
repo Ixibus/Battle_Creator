@@ -114,9 +114,11 @@ export default function ConnexionPage() {
           )}
         </div>
 
-        {errorMessage && (
-          <p className="formErrorMessageStyle">{errorMessage}</p>
-        )}
+        <div className="errorSlot">
+          {errorMessage && (
+            <p className="formErrorMessageStyle">{errorMessage}</p>
+          )}
+        </div>
 
         <div className="buttonsContainerStyle">
           <NextButton
