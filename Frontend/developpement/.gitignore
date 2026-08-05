@@ -79,3 +79,6 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+## Vite ##
+.vite/
