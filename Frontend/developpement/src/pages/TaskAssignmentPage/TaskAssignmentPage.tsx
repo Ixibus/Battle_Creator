@@ -1,19 +1,18 @@
 import "./taskAssignmentPage.css";
-
 import "../../styles/form/formStyle.css";
 import "../../styles/global/btnStyle.css";
 import "../../styles/form/titleFormStyle.css";
+import "../../styles/form/formError.css";
+
+import { useEffect, useState } from "react";
+import { useToastStore } from "../../store/toastStore";
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
-import AreaTextContainer, {
-  AreaLabelStyle,
-  AreaTextStyle,
-} from "../../components/InputContainer/AreaTextContainer";
+
 import NextButton from "../../components/Button/NextButton/NextButton";
-import DateInputContainer from "../../components/InputContainer/DateInputContainer";
-import { useEffect, useState } from "react";
 
 interface Task {
   id: number;
@@ -41,12 +40,41 @@ export default function TaskAssignmentPage({
   onClose,
   onMemberObject,
 }: propInterface) {
-  const [existingMembers, setExistingMembers] = useState<any>([]);
-  const [existingMemberObject, setExistingMemberObject] = useState<any>();
+  const [existingMembers, setExistingMembers] = useState<any[]>([]);
+  const [existingMemberObject, setExistingMemberObject] = useState<
+    any | undefined
+  >();
+
+  const [mode, setMode] = useState<"existing" | "new" | null>(null);
 
   useEffect(() => {
     loadExistingMembers();
   }, []);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [touched, setTouched] = useState<{
+    firstName: boolean;
+    lastName: boolean;
+    existingMember: boolean;
+  }>({
+    firstName: false,
+    lastName: false,
+    existingMember: false,
+  });
+
+  const showToast = useToastStore((state) => state.showToast);
+
+  const isFirstNameEmpty = firstName.trim() === "";
+  const isLastNameEmpty = lastName.trim() === "";
+  const isExistingMemberEmpty =
+    !existingMemberObject || existingMemberObject.id == null;
+
+  const hasErrorNewMember = isFirstNameEmpty || isLastNameEmpty;
+  const hasErrorExistingMember = isExistingMemberEmpty;
+
+  const [serverError, setServerError] = useState(false);
 
   async function loadExistingMembers() {
     const res = await fetch(`http://localhost:8080/members`, {
@@ -56,56 +84,119 @@ export default function TaskAssignmentPage({
         "Content-Type": "application/json",
       },
     });
-    console.log(res.status);
 
-    if (res.status !== 200)
-      console.log("un autre code que 200 est apparu : " + res.status);
     if (res.status === 200) {
-      const jsonResponse = res.json();
-      console.log(JSON.stringify(await jsonResponse));
-
-      const response = await jsonResponse;
-      console.log(response);
-
+      const response = await res.json();
       setExistingMembers(response);
     }
   }
 
-  async function memberCreatedAndAssignedHandlesubmit(e: any) {
+  async function memberCreatedAndAssignedHandleSubmit(
+    e: React.SubmitEvent<HTMLFormElement>,
+  ) {
     e.preventDefault();
 
-    const form = new FormData(e.currentTarget);
+    setTouched((state) => ({
+      ...state,
+      firstName: true,
+      lastName: true,
+    }));
 
-    const formEntries = Object.fromEntries(form.entries());
-
-    const res = await fetch("http://localhost:8080/members", {
-      method: "POST",
-      // credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formEntries),
-    });
-
-    if (res.status !== 201) console.log("ajout membre échoué " + res.status);
-
-    if (res.status === 201) {
-      const CreatedMemberjsonResponse = await res.json();
-
-      const memberCreatedAndAssigned = Object.assign(
-        CreatedMemberjsonResponse,
-        { taskIdAssigned: taskToBeAssigned?.id },
-      );
-
-      console.log(memberCreatedAndAssigned);
-
-      onMemberObject(memberCreatedAndAssigned);
-
-      onClose();
+    if (hasErrorNewMember) {
+      showToast("Merci de renseigner le prénom et le nom du bénévole", "error");
+      return;
     }
 
-    console.log("ok");
-    // navigate("/missionPage");
+    if (!taskToBeAssigned) {
+      showToast("Aucune tâche n'a été sélectionnée", "error");
+      return;
+    }
+
+    const memberData = {
+      firstName,
+      lastName,
+    };
+
+    setServerError(false);
+
+    try {
+      const res = await fetch("http://localhost:8080/members", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(memberData),
+      });
+
+      if (!res.ok) {
+        setServerError(true);
+        let message = "Une erreur est survenue lors de la création du bénévole";
+
+        try {
+          const errorBody = await res.json();
+          if (errorBody?.message) message = errorBody.message;
+        } catch {
+          const errorText = await res.text();
+          if (errorText) message = errorText;
+        }
+
+        showToast(message, "error");
+        return;
+      }
+
+      const createdMember = await res.json();
+
+      const memberCreatedAndAssigned = {
+        ...createdMember,
+        taskIdAssigned: taskToBeAssigned.id,
+      };
+
+      showToast(`Bénévole "${createdMember.firstName + " " + createdMember.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `, "success");
+      onMemberObject(memberCreatedAndAssigned);
+      onClose();
+    } catch {
+      showToast("Impossible de contacter le serveur", "error");
+    }
+  }
+
+  function handleChooseExistingMember() {
+    setTouched((state) => ({
+      ...state,
+      existingMember: true,
+    }));
+
+    if (hasErrorExistingMember) {
+      showToast("Merci de choisir un bénévole parmi ceux existants", "error");
+      return;
+    }
+
+    if (!taskToBeAssigned) {
+      showToast("Aucune tâche n'a été sélectionnée", "error");
+      return;
+    }
+
+    const existingMemberAndAssigned = {
+      ...existingMemberObject,
+      taskIdAssigned: taskToBeAssigned.id,
+    };
+
+    onMemberObject(existingMemberAndAssigned);
+    onClose();
+  }
+
+  function handleClose() {
+    setFirstName("");
+    setLastName("");
+    setExistingMemberObject(undefined);
+    setMode(null);
+
+    setTouched({
+      firstName: false,
+      lastName: false,
+      existingMember: false,
+    });
+
+    onClose();
   }
 
   return (
@@ -121,22 +212,31 @@ export default function TaskAssignmentPage({
               {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}
             </h1>
             <div className="taskAssignmentMemberContainerStyle">
-              <div className="btnStyle19 taskAssignmentMemberInnerContainerStyle">{`${taskToBeAssigned?.memberFirstName} ${taskToBeAssigned?.memberLastName}`}</div>                
+              <div className="btnStyle19 taskAssignmentMemberInnerContainerStyle">
+                {`${taskToBeAssigned?.memberFirstName} ${taskToBeAssigned?.memberLastName}`}
+              </div>
             </div>
           </div>
         )}
 
         <div className="taskAssignmentPageInnerInputsFormStyle">
-          <div className="taskAssignmentPageExistingMemberTasksContainer">
-            {
-              taskToBeAssigned?.memberId === null ? <p className="taskAssignmentPageExistingMemberTasksTitle">
-              ASSIGNER UN BENEVOLE EXISTANT
-            </p> :
-            <p className="taskAssignmentPageExistingMemberTasksTitle">
-              ASSIGNER UN AUTRE BENEVOLE
-            </p>
-            }
-            
+          <div
+            className="taskAssignmentPageExistingMemberTasksContainer"
+            onClick={() => setMode("existing")}
+            style={{
+              opacity: mode === "new" ? 0.25 : 1,
+            }}
+          >
+            {taskToBeAssigned?.memberId === null ? (
+              <p className="taskAssignmentPageExistingMemberTasksTitle">
+                ASSIGNER UN BENEVOLE EXISTANT
+              </p>
+            ) : (
+              <p className="taskAssignmentPageExistingMemberTasksTitle">
+                ASSIGNER UN AUTRE BENEVOLE
+              </p>
+            )}
+
             <div className="taskAssignmentPageExistingMemberInnerContainer">
               <div className="taskAssignmentPageExistingMemberInputsContainer">
                 <label
@@ -145,9 +245,15 @@ export default function TaskAssignmentPage({
                 >
                   Mes bénévoles
                 </label>
+
                 <select
                   name="taskAssignmentPageExistingMemberInputsSelect"
-                  className="taskAssignmentPageExistingMemberInputsSelectStyle"
+                  id="taskAssignmentPageExistingMemberInputsSelect"
+                  className={`taskAssignmentPageExistingMemberInputsSelectStyle ${
+                    touched.existingMember && hasErrorExistingMember
+                      ? "inputError"
+                      : ""
+                  }`}
                   onChange={(e) => {
                     const selectedId = Number(e.target.value);
                     const selectedMember = existingMembers.find(
@@ -155,6 +261,12 @@ export default function TaskAssignmentPage({
                     );
                     setExistingMemberObject(selectedMember);
                   }}
+                  onBlur={() =>
+                    setTouched((state) => ({
+                      ...state,
+                      existingMember: true,
+                    }))
+                  }
                 >
                   <option value="">--Bénévole(s) existant(s)--</option>
                   {existingMembers.map((el: any) => (
@@ -164,57 +276,86 @@ export default function TaskAssignmentPage({
                   ))}
                 </select>
               </div>
+
               <NextButton
                 type="button"
                 styleClassName="btnStyle10"
                 mainClassName="SubmitBtn_MemberAssignedToTask"
                 text="Choisir"
-                onClick={() => {
-                  const existingMemberAndAssigned = Object.assign(
-                    existingMemberObject,
-                    { taskIdAssigned: taskToBeAssigned?.id },
-                  );
-
-                  console.log(existingMemberAndAssigned);
-
-                  onMemberObject(existingMemberAndAssigned);
-                  onClose();
-                }}
+                onClick={handleChooseExistingMember}
               />
             </div>
           </div>
+
           <p className="taskAssignmentPageOrTextStyle"> ou </p>
-          <div className="taskAssignmentPageCreateAssignTasksContainer">
-            {
-              taskToBeAssigned?.memberId === null ?
-            <p className="taskAssignmentPageCreateAssignTasksTitle">
-              CREER ET ASSIGNER UN NOUVEAU BENEVOLE
-            </p> :
-            <p className="taskAssignmentPageCreateAssignTasksTitle">
-              CREER UN BENEVOLE ET L'ASSIGNER
-            </p>
-            }
-            
+
+          <div
+            className="taskAssignmentPageCreateAssignTasksContainer"
+            onClick={() => setMode("new")}
+            style={{
+              opacity: mode === "existing" ? 0.25 : 1,
+            }}
+          >
+            {taskToBeAssigned?.memberId === null ? (
+              <p className="taskAssignmentPageCreateAssignTasksTitle">
+                CREER ET ASSIGNER UN NOUVEAU BENEVOLE
+              </p>
+            ) : (
+              <p className="taskAssignmentPageCreateAssignTasksTitle">
+                CREER UN BENEVOLE ET L'ASSIGNER
+              </p>
+            )}
+
             <form
               className="formClassName"
-              onSubmit={(e) => memberCreatedAndAssignedHandlesubmit(e)}
+              onSubmit={memberCreatedAndAssignedHandleSubmit}
             >
               <div className="taskAssignmentPageCreateAssignInnerContainer">
                 <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                   <InputContainer
                     inputLabelStyle={InputLabelStyle.style1}
-                    labelName={"Prénom"}
+                    labelName="Prénom"
                     inputItemStyle={InputItemStyle.style3}
-                    htmlFor={"taskAssignmentFirstNameMemberInput"}
-                    type={"text"}
+                    htmlFor="firstName"
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                      setServerError(false);
+                    }}
+                    onBlur={() =>
+                      setTouched((state) => ({
+                        ...state,
+                        firstName: true,
+                      }))
+                    }
+                    hasError={
+                      serverError || (touched.firstName && isFirstNameEmpty)
+                    }
                   />
+
                   <InputContainer
                     inputLabelStyle={InputLabelStyle.style1}
-                    labelName={"Nom"}
+                    labelName="Nom"
                     inputItemStyle={InputItemStyle.style3}
-                    htmlFor={"taskAssignmentLastNameMemberInput"}
-                    type={"text"}
+                    htmlFor="lastName"
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                      setServerError(false);
+                    }}
+                    onBlur={() =>
+                      setTouched((state) => ({
+                        ...state,
+                        lastName: true,
+                      }))
+                    }
+                    hasError={
+                      serverError || (touched.lastName && isLastNameEmpty)
+                    }
                   />
+
                   <NextButton
                     type="submit"
                     styleClassName="btnStyle10"
@@ -226,13 +367,14 @@ export default function TaskAssignmentPage({
             </form>
           </div>
         </div>
+
         <div className="buttonsContainerStyle">
           <NextButton
             type="button"
             styleClassName="btnStyle11"
             mainClassName="SubmitBtn_LeaveTaskAssignmentPage"
             text="Quitter"
-            onClick={onClose}
+            onClick={handleClose}
           />
         </div>
       </div>
