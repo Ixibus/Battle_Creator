@@ -23,6 +23,12 @@ export default function ConnexionPage() {
 
   const hasError = isLoginEmpty || isPasswordEmpty;
 
+   const clearErrorIfTyping = () => {
+    if (errorMessage) {
+      setErrorMessage("");
+    }
+  };
+
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
@@ -79,7 +85,8 @@ export default function ConnexionPage() {
           labelName="Votre login"
           htmlFor="login"
           type="text"
-          onChange={(e) => setLogin(e.target.value)}
+          onChange={(e) => {setLogin(e.target.value);
+            clearErrorIfTyping();}}
           onBlur={() => setTouched((s) => ({ ...s, login: true }))}
           hasError={touched.login && isLoginEmpty}
         />
@@ -98,7 +105,7 @@ export default function ConnexionPage() {
           labelName="Votre mot de passe"
           htmlFor="password"
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {setPassword(e.target.value); clearErrorIfTyping();}}
           onBlur={() => setTouched((s) => ({ ...s, password: true }))}
           hasError={touched.password && isPasswordEmpty}
         />
