@@ -3,63 +3,139 @@ import "./addingTaskPage.css";
 import "../../styles/form/formStyle.css";
 import "../../styles/global/btnStyle.css";
 import "../../styles/form/titleFormStyle.css";
+import "../../styles/form/formError.css";
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
+
 import AreaTextContainer, {
   AreaLabelStyle,
   AreaTextStyle,
 } from "../../components/InputContainer/AreaTextContainer";
-import NextButton from "../../components/Button/NextButton/NextButton";
-import DateInputContainer from "../../components/InputContainer/DateInputContainer";
-import { useNavigate } from "react-router-dom";
 
-export default function AddingTaskPage({ onClose, missionId, onTaskCreated}: any) {
+import NextButton from "../../components/Button/NextButton/NextButton";
+
+import { useToastStore } from "../../store/toastStore";
+
+interface AddingTaskPageProps {
+  onClose: () => void;
+  missionId: number;
+  onTaskCreated: () => void | Promise<void>;
+}
+
+export default function AddingTaskPage({
+  onClose,
+  missionId,
+  onTaskCreated,
+}: AddingTaskPageProps) {
   const navigate = useNavigate();
-  async function handlesubmit(e: any) {
+
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [isLeaderTask, setIsLeaderTask] = useState(false);
+
+  const [touched, setTouched] = useState<{
+    taskName: boolean;
+    taskDescription: boolean;
+  }>({
+    taskName: false,
+    taskDescription: false,
+  });
+
+  const showToast = useToastStore((state) => state.showToast);
+
+  const isTaskNameEmpty = taskName.trim() === "";
+  const isTaskDescriptionEmpty = taskDescription.trim() === "";
+
+  const hasError = isTaskNameEmpty || isTaskDescriptionEmpty;
+
+  async function handleSubmit(
+    e: React.SubmitEvent<HTMLFormElement>,
+  ) {
     e.preventDefault();
 
-    const form = new FormData(e.currentTarget);
+    setTouched({
+      taskName: true,
+      taskDescription: true,
+    });
 
-    const formEntries = {
-      taskName: form.get("taskName"),
-      taskDescription: form.get("taskDescription"),
-      isLeaderTaskCheckbox: form.get("isLeaderTaskCheckbox") === "on",
+    if (hasError) {
+      showToast(
+        "Merci de remplir tous les champs obligatoires",
+        "error",
+      );
+      return;
+    }
+
+    const taskData = {
+      taskName,
+      taskDescription,
+      isLeaderTaskCheckbox: isLeaderTask,
       isDone: false,
       idMission: missionId,
     };
 
-    console.log(formEntries);
+    try {
+      const res = await fetch("http://localhost:8080/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(taskData),
+      });
 
-    const res = await fetch("http://localhost:8080/tasks", {
-      method: "POST",
-      // credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formEntries),
-    });
+      if (!res.ok) {
+        showToast(
+          "Une erreur est survenue lors de l'ajout de la tâche",
+          "error",
+        );
+        return;
+      }
 
-    const text = await res.text();
+      showToast(
+        "La tâche a été ajoutée avec succès",
+        "success",
+      );
 
-    if (res.status !== 201)
-      console.log("l'ajout de tâche a échoué " + res.status);
-
-    if (res.status === 201) {
       await onTaskCreated();
       onClose();
-      console.log("ajout de tâche réussi 🥳");
+    } catch (error) {
+      showToast(
+        "Impossible de contacter le serveur",
+        "error",
+      );
     }
-
-    console.log("ok");
-    // navigate("/missionPage");
   }
+
+  function handleClose() {
+    setTaskName("");
+    setTaskDescription("");
+    setIsLeaderTask(false);
+
+    setTouched({
+      taskName: false,
+      taskDescription: false,
+    });
+
+    onClose();
+  }
+
   return (
     <div className="addingTaskPageOverlayStyle">
       <div className="addingTaskPageStyle">
-        <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
-          <h1 className="titleFormStyle4">AJOUTER UNE TACHE</h1>
+        <form
+          className="formStyle2"
+          onSubmit={handleSubmit}
+        >
+          <h1 className="titleFormStyle4">
+            AJOUTER UNE TACHE
+          </h1>
+
           <div className="inputsFormContainerStyle">
             <InputContainer
               inputLabelStyle={InputLabelStyle.style3}
@@ -67,7 +143,19 @@ export default function AddingTaskPage({ onClose, missionId, onTaskCreated}: any
               inputItemStyle={InputItemStyle.style3}
               htmlFor="taskName"
               type="text"
+              value={taskName}
+              onChange={(e) => setTaskName(e.target.value)}
+              onBlur={() =>
+                setTouched((state) => ({
+                  ...state,
+                  taskName: true,
+                }))
+              }
+              hasError={
+                touched.taskName && isTaskNameEmpty
+              }
             />
+
             <AreaTextContainer
               htmlFor="taskDescription"
               areaLabelStyle={AreaLabelStyle.style3}
@@ -75,54 +163,42 @@ export default function AddingTaskPage({ onClose, missionId, onTaskCreated}: any
               areaTextStyle={AreaTextStyle.style3}
               cols={35}
               rows={2}
+              value={taskDescription}
+              onChange={(e) =>
+                setTaskDescription(e.target.value)
+              }
+              onBlur={() =>
+                setTouched((state) => ({
+                  ...state,
+                  taskDescription: true,
+                }))
+              }
+              hasError={
+                touched.taskDescription &&
+                isTaskDescriptionEmpty
+              }
             />
+
             <div className="addingTaskPageIsLeaderTaskContainer">
               <label
                 htmlFor="isLeaderTaskCheckbox"
                 className="addingTaskPageIsLeaderTaskCheckboxLabel"
               >
-                Statut "Leader" de la Tache
+                Statut "Leader" de la tâche
               </label>
+
               <input
                 type="checkbox"
                 name="isLeaderTaskCheckbox"
                 id="isLeaderTaskCheckbox"
                 className="addingTaskPageIsLeaderTaskCheckboxCheckbox"
+                checked={isLeaderTask}
+                onChange={(e) =>
+                  setIsLeaderTask(e.target.checked)
+                }
               />
             </div>
-            {/* <div className="addingTaskPageLinkingTasksContainer">
-              <p className="addingTaskPageLinkingTasksTitle">Liaison de tâche</p>
-              <div className="addingTaskPageLinkingTasksInnerContainer">
-                <div className="addingTaskPageLinkingPreviousTaskContainer">
-                  <label htmlFor="addingTaskPageLinkingPreviousTaskLabel">
-                    Selection tâche précédente :
-                  </label>
-                  <select
-                    name="addingTaskPageLinkingPreviousTaskLabel"
-                    className="addingTaskPageLinkingPreviousTaskSelect"
-                    id=""
-                  >
-                    <option value="">--Tâche(s) disponible(s)--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                  </select>
-                </div>
-                <div className="addingTaskPageLinkingNextTaskContainer">
-                  <label htmlFor="addingTaskPageLinkingNextTaskLabel">
-                    Selection tâche suivante :
-                  </label>
-                  <select
-                    name="addingTaskPageLinkingNextTaskLabel"
-                    className="addingTaskPageLinkingNextTaskSelect"
-                    id=""
-                  >
-                    <option value="">--Tâche(s) disponible(s)--</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                  </select>
-                </div>
-              </div>
-            </div> */}
+
             <div className="buttonsContainerStyle">
               <NextButton
                 type="submit"
@@ -130,13 +206,13 @@ export default function AddingTaskPage({ onClose, missionId, onTaskCreated}: any
                 mainClassName="SubmitBtn_AddingTaskPage"
                 text="Valider"
               />
+
               <NextButton
-                nav={-1}
                 type="button"
                 styleClassName="btnStyle11"
                 mainClassName="LeaveBtn_AddingTaskPage"
                 text="Quitter"
-                onClick={onClose}
+                onClick={handleClose}
               />
             </div>
           </div>
