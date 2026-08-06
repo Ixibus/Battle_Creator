@@ -7,6 +7,8 @@ import com.example.battle_creator.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.battle_creator.exception.DuplicateMemberException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +25,24 @@ public class MemberService {
     public Member create(MemberCreateDto memberDto) {
         validateMemberCreateDto(memberDto);
 
+        String firstName = cleanText(memberDto.getFirstName());
+        String lastName = cleanText(memberDto.getLastName());
+
+        boolean memberAlreadyExists =
+                memberRepository.existsByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                        firstName,
+                        lastName
+                );
+
+        if (memberAlreadyExists) {
+            throw new DuplicateMemberException(
+                    "\"" + firstName + " " + lastName + "\"" + " existe déjà en tant que bénévole."
+            );
+        }
+
         Member member = new Member();
-        member.setFirstName(cleanText(memberDto.getFirstName()));
-        member.setLastName(cleanText(memberDto.getLastName()));
+        member.setFirstName(firstName);
+        member.setLastName(lastName);
 
         return memberRepository.save(member);
     }
