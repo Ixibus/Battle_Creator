@@ -17,7 +17,7 @@
     white-space: nowrap;
 }
 
-.inputError{
-border: 2px solid var(--fontColor8);
-outline: none;
+.inputError {
+    border: 2px solid var(--fontColor8);
+    outline: none;
 }

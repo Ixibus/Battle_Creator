@@ -1,11 +1,10 @@
 // import '../../styles/global/colors.css'
-import '../../styles/global/inputContainerStyle.css'
-import '../../styles/global/textAreaStyle.css'
+import "../../styles/global/inputContainerStyle.css";
+import "../../styles/global/textAreaStyle.css";
 
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, FocusEventHandler } from "react";
 
 type InputType = "text" | "password" | "email";
-
 
 export enum AreaLabelStyle {
   style1 = "inputLabelStyle",
@@ -20,15 +19,17 @@ export enum AreaTextStyle {
 }
 
 interface AreaContainerProps {
-  className?: string,
-  areaLabelStyle: AreaLabelStyle,
-  value?: string,
-  areaTextStyle: AreaTextStyle,
-  htmlFor: string,
-  labelName: string,
+  className?: string;
+  htmlFor: string;
+  areaLabelStyle: AreaLabelStyle;
+  labelName: string;
+  areaTextStyle: AreaTextStyle;
   cols: number;
   rows: number;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement, HTMLTextAreaElement>;
+  value?: string;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement>;
+  hasError?: boolean;
 }
 
 export default function AreaTextContainer({
@@ -40,12 +41,25 @@ export default function AreaTextContainer({
   labelName,
   cols,
   rows,
-  onChange
+  onChange,
+  onBlur,
+  hasError
 }: AreaContainerProps) {
   return (
     <div className={className}>
-      <label className={areaLabelStyle} htmlFor={htmlFor}>{labelName}</label>
-      <textarea name={htmlFor} id={htmlFor} className={areaTextStyle} cols={cols} rows={rows} onChange={onChange} />
+      <label className={areaLabelStyle} htmlFor={htmlFor}>
+        {labelName}
+      </label>
+      <textarea
+        className={`${areaTextStyle} ${hasError ? "inputError" : ""}`}
+        name={htmlFor}
+        id={htmlFor}
+        cols={cols}
+        rows={rows}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     </div>
   );
 }

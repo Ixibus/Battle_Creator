@@ -1,63 +1,131 @@
 import "./addingMissionPage.css";
 
 import "../../styles/form/formStyle.css";
-import "../../styles/global/btnStyle.css";
 import "../../styles/form/titleFormStyle.css";
+import "../../styles/form/formError.css";
+import "../../styles/global/btnStyle.css";
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
+
 import AreaTextContainer, {
   AreaLabelStyle,
   AreaTextStyle,
 } from "../../components/InputContainer/AreaTextContainer";
-import NextButton from "../../components/Button/NextButton/NextButton";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import NextButton from "../../components/Button/NextButton/NextButton";
 
 export default function AddingMissionPage() {
   const navigate = useNavigate();
 
+  const [missionName, setMissionName] = useState("");
+  const [goal, setGoal] = useState("");
+  const [description, setDescription] = useState("");
 
-  async function handlesubmit(e: React.SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const [errorMessage, setErrorMessage] = useState("");
 
-    const inputDatas : FormData = new FormData(e.currentTarget);
+  const [touched, setTouched] = useState<{
+    missionName: boolean;
+    goal: boolean;
+    description: boolean;
+  }>({
+    missionName: false,
+    goal: false,
+    description: false,
+  });
 
-    const formDatas = Object.fromEntries(inputDatas.entries());
+  const isMissionNameEmpty = missionName.trim() === "";
+  const isGoalEmpty = goal.trim() === "";
+  const isDescriptionEmpty = description.trim() === "";
 
-    const finalDatas = Object.assign({"type":"option", "isDefault":"false"}, formDatas);
+  const hasError =
+    isMissionNameEmpty || isGoalEmpty || isDescriptionEmpty;
 
-    console.log(finalDatas);
-
-    const res = await fetch("http://localhost:8080/missions", {
-      method: "POST",
-      // credentials : "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(finalDatas),
-    });
-
-    if (res.status !== 201) {
-      console.log("insertion de mission échoué");
-    }
-
-    console.log (res.status);
-
-
-    if (res.status === 201) {
-      console.log("la mission a bien été créée en base de donnée !");
-
-      const createdMissionId : number = (await res.json()).id;
-      
-      navigate(`/missionPage/${createdMissionId}`);
+  function clearErrorIfTyping() {
+    if (errorMessage) {
+      setErrorMessage("");
     }
   }
+
+  async function handleSubmit(
+    e: React.SubmitEvent<HTMLFormElement>,
+  ) {
+    e.preventDefault();
+
+    setErrorMessage("");
+
+    setTouched({
+      missionName: true,
+      goal: true,
+      description: true,
+    });
+
+    if (hasError) {
+      return;
+    }
+
+    const finalDatas = {
+      type: "option",
+      isDefault: "false",
+      missionName,
+      missionGoal: goal,
+      missionDescription: description,
+    };
+
+    try {
+      const res = await fetch("http://localhost:8080/missions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalDatas),
+      });
+
+      if (!res.ok) {
+        setErrorMessage(
+          "Une erreur est survenue lors de la création de la mission",
+        );
+        return;
+      }
+
+      const createdMission = await res.json();
+
+      if (!createdMission.id) {
+        setErrorMessage(
+          "La mission a été créée, mais son identifiant est introuvable",
+        );
+        return;
+      }
+
+      navigate(`/missionPage/${createdMission.id}`);
+    } catch (error) {
+      setErrorMessage("Impossible de contacter le serveur");
+    }
+  }
+
+  function handleClear() {
+    setMissionName("");
+    setGoal("");
+    setDescription("");
+    setErrorMessage("");
+
+    setTouched({
+      missionName: false,
+      goal: false,
+      description: false,
+    });
+  }
+
   return (
     <div className="addingMissionPageStyle">
-      <form className="formStyle2" onSubmit={(e) => handlesubmit(e)}>
+      <form className="formStyle2" onSubmit={handleSubmit}>
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
+
         <div className="inputsFormContainerStyle">
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
@@ -65,7 +133,20 @@ export default function AddingMissionPage() {
             inputItemStyle={InputItemStyle.style3}
             htmlFor="missionName"
             type="text"
+            value={missionName}
+            onChange={(e) => {
+              setMissionName(e.target.value);
+              clearErrorIfTyping();
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                missionName: true,
+              }))
+            }
+            hasError={touched.missionName && isMissionNameEmpty}
           />
+
           <AreaTextContainer
             htmlFor="missionGoal"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -73,7 +154,20 @@ export default function AddingMissionPage() {
             areaTextStyle={AreaTextStyle.style3}
             cols={35}
             rows={2}
+            value={goal}
+            onChange={(e) => {
+              setGoal(e.target.value);
+              clearErrorIfTyping();
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                goal: true,
+              }))
+            }
+            hasError={touched.goal && isGoalEmpty}
           />
+
           <AreaTextContainer
             htmlFor="missionDescription"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -81,7 +175,30 @@ export default function AddingMissionPage() {
             areaTextStyle={AreaTextStyle.style2}
             cols={35}
             rows={10}
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              clearErrorIfTyping();
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                description: true,
+              }))
+            }
+            hasError={
+              touched.description && isDescriptionEmpty
+            }
           />
+
+          <div className="errorSlot">
+            {errorMessage && (
+              <p className="formErrorMessageStyle">
+                {errorMessage}
+              </p>
+            )}
+          </div>
+
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"
@@ -89,12 +206,14 @@ export default function AddingMissionPage() {
               mainClassName="SubmitBtn_AccountCreation"
               text="Valider"
             />
+
             <NextButton
               nav={-1}
               type="button"
               styleClassName="btnStyle11"
               mainClassName="SubmitBtn_AccountCreation"
               text="Quitter"
+              onClick={handleClear}
             />
           </div>
         </div>
