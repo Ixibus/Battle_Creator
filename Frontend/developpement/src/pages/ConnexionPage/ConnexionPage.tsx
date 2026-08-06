@@ -68,15 +68,6 @@ export default function ConnexionPage() {
     setErrorMessage("");
   }
 
-  const loginBorder =
-    touched.login && isLoginEmpty
-      ? "1px solid #e63946"
-      : "1px solid transparent";
-  const passwordBorder =
-    touched.password && isPasswordEmpty
-      ? "1px solid #e63946"
-      : "1px solid transparent";
-
   return (
     <form className="formStyle3" onSubmit={handleSubmit}>
       <h1 className="titleFormStyle">Connexion</h1>
@@ -90,11 +81,14 @@ export default function ConnexionPage() {
           type="text"
           onChange={(e) => setLogin(e.target.value)}
           onBlur={() => setTouched((s) => ({ ...s, login: true }))}
+          hasError={touched.login && isLoginEmpty}
         />
 
         <div className="errorSlot">
           {touched.login && isLoginEmpty && (
-            <p className="formErrorMessageStyle">Merci de renseigner votre login</p>
+            <p className="formErrorMessageStyle">
+              Merci de renseigner votre login
+            </p>
           )}
         </div>
 
@@ -106,11 +100,14 @@ export default function ConnexionPage() {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           onBlur={() => setTouched((s) => ({ ...s, password: true }))}
+          hasError={touched.password && isPasswordEmpty}
         />
 
         <div className="errorSlot">
           {touched.password && isPasswordEmpty && (
-            <p className="formErrorMessageStyle">Merci de renseigner votre mot de passe</p>
+            <p className="formErrorMessageStyle">
+              Merci de renseigner votre mot de passe
+            </p>
           )}
         </div>
 

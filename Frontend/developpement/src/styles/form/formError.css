@@ -13,6 +13,11 @@
     bottom: 0;
     color: var(--fontColor8);
     font-weight: var(--font-weight1);
-    font-size: var(--font-size3);
+    font-size: var(--font-size1);
     white-space: nowrap;
+}
+
+.inputError{
+border: 2px solid var(--fontColor8);
+outline: none;
 }

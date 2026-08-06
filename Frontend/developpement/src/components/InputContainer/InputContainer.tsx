@@ -23,10 +23,11 @@ interface InputContainerProps {
   inputItemStyle: InputItemStyle;
   htmlFor: string;
   className?: string;
-  value?: string,
+  value?: string;
   type: InputType;
-  onChange?: ChangeEventHandler<HTMLInputElement, HTMLInputElement>;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void; 
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  hasError?: boolean;
 }
 
 export default function InputContainer({
@@ -38,12 +39,21 @@ export default function InputContainer({
   value,
   type,
   onChange,
-  onBlur
+  onBlur,
+  hasError = false
 }: InputContainerProps) {
   return (
     <div className={className}>
       <label className={inputLabelStyle} htmlFor={htmlFor}>{labelName}</label>
-      <input className={inputItemStyle} value={value} type={type} name={htmlFor} id={htmlFor} onChange={onChange} onBlur={onBlur} />
+      <input
+        className={`${inputItemStyle} ${hasError ? "inputError" : ""}`}
+        value={value}
+        type={type}
+        name={htmlFor}
+        id={htmlFor}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
     </div>
   );
 }
