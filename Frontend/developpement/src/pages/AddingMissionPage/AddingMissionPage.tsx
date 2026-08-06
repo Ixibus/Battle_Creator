@@ -19,6 +19,7 @@ import AreaTextContainer, {
 } from "../../components/InputContainer/AreaTextContainer";
 
 import NextButton from "../../components/Button/NextButton/NextButton";
+import { useToastStore } from "../../store/toastStore";
 
 export default function AddingMissionPage() {
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ export default function AddingMissionPage() {
   const [description, setDescription] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const showToast = useToastStore((state) => state.showToast);
 
   const [touched, setTouched] = useState<{
     missionName: boolean;
@@ -43,8 +46,7 @@ export default function AddingMissionPage() {
   const isGoalEmpty = goal.trim() === "";
   const isDescriptionEmpty = description.trim() === "";
 
-  const hasError =
-    isMissionNameEmpty || isGoalEmpty || isDescriptionEmpty;
+  const hasError = isMissionNameEmpty || isGoalEmpty || isDescriptionEmpty;
 
   function clearErrorIfTyping() {
     if (errorMessage) {
@@ -52,9 +54,7 @@ export default function AddingMissionPage() {
     }
   }
 
-  async function handleSubmit(
-    e: React.SubmitEvent<HTMLFormElement>,
-  ) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setErrorMessage("");
@@ -66,8 +66,12 @@ export default function AddingMissionPage() {
     });
 
     if (hasError) {
-      return;
-    }
+  showToast(
+    "Merci de remplir tous les champs obligatoires",
+    "error",
+  );
+  return;
+}
 
     const finalDatas = {
       type: "option",
@@ -87,24 +91,23 @@ export default function AddingMissionPage() {
       });
 
       if (!res.ok) {
-        setErrorMessage(
-          "Une erreur est survenue lors de la création de la mission",
-        );
+      showToast("Une erreur est survenue lors de la création de la mission", "error");
         return;
       }
 
       const createdMission = await res.json();
 
       if (!createdMission.id) {
-        setErrorMessage(
-          "La mission a été créée, mais son identifiant est introuvable",
+        showToast(
+          "La mission a été créée, mais son identifiant est introuvable", "error"
         );
         return;
       }
 
+      showToast("la mission a été créée avec succès", "success");
       navigate(`/missionPage/${createdMission.id}`);
     } catch (error) {
-      setErrorMessage("Impossible de contacter le serveur");
+      showToast("Impossible de contacter le serveur", "error");
     }
   }
 
@@ -186,16 +189,12 @@ export default function AddingMissionPage() {
                 description: true,
               }))
             }
-            hasError={
-              touched.description && isDescriptionEmpty
-            }
+            hasError={touched.description && isDescriptionEmpty}
           />
 
           <div className="errorSlot">
             {errorMessage && (
-              <p className="formErrorMessageStyle">
-                {errorMessage}
-              </p>
+              <p className="formErrorMessageStyle">{errorMessage}</p>
             )}
           </div>
 

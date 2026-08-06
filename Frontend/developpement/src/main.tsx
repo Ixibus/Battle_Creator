@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
+  Outlet,
   Routes,
   Route,
 } from "react-router-dom";
@@ -44,9 +45,20 @@ import TaskAndAssignmentContainer from "./components/TaskAndAssignmentContainer/
 import AddingTaskPage from "./pages/AddingTaskPage/AddingTaskPage";
 import TaskAssignmentPage from "./pages/TaskAssignmentPage/TaskAssignmentPage";
 import OverlayedWarning from "./components/OverlayedWarning/OverlayedWarning";
+import { ToastContainer } from "./components/toast/Toast";
+
+function RootLayout() {
+  return (
+    <>
+      <Outlet />
+      <ToastContainer />
+    </>
+  );
+}
 
 const router = createBrowserRouter([
   {
+    element: <RootLayout />,
     children: [
       {
         element: <FirstLayout />,
