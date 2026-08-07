@@ -158,29 +158,30 @@ export default function TaskAssignmentPage({
       showToast("Impossible de contacter le serveur", "error");
     }
   }
-
+  
   function handleChooseExistingMember() {
     setTouched((state) => ({
       ...state,
       existingMember: true,
     }));
-
+    
     if (hasErrorExistingMember) {
       showToast("Merci de choisir un bénévole parmi ceux existants", "error");
       return;
     }
-
+    
     if (!taskToBeAssigned) {
       showToast("Aucune tâche n'a été sélectionnée", "error");
       return;
     }
-
+    
     const existingMemberAndAssigned = {
       ...existingMemberObject,
       taskIdAssigned: taskToBeAssigned.id,
     };
-
+    
     onMemberObject(existingMemberAndAssigned);
+    showToast(`Bénévole "${existingMemberObject.firstName + " " + existingMemberObject.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `, "success");
     onClose();
   }
 
