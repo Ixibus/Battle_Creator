@@ -6,10 +6,12 @@ import MaterialTag from "../../components/MaterialTag/MaterialTag";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 import OverlayedWarning from "../../components/OverlayedWarning/OverlayedWarning";
 import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
+
+import { useToastStore } from "../../store/toastStore";
 
 export default function MissionPage() {
   interface Task {
@@ -51,72 +53,108 @@ export default function MissionPage() {
 
   const [memberAssigned, setMemberAssigned] = useState<Member>();
 
-  useEffect(() => console.log(memberAssigned), [memberAssigned]);
 
   const [checkedTask, setCheckedTask] = useState(false);
+
+  const showToast = useToastStore((state) => state.showToast);
 
   useEffect(() => {
     loadMission();
     loadMissionTasks();
   }, [id]);
 
+  async function getErrorMessage(
+    res: Response,
+    defaultMessage: string,
+  ): Promise<string> {
+    try {
+      const contentType = res.headers.get("content-type") || "";
+
+      if (contentType.includes("application/json")) {
+        const errorBody = await res.json();
+        return errorBody?.message || defaultMessage;
+      }
+
+      const errorText = await res.text();
+      return errorText || defaultMessage;
+    } catch {
+      return defaultMessage;
+    }
+  }
+
   async function loadMission() {
-    const res = await fetch(`http://localhost:8080/missions/${id}`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(res.status);
+    try {
+      const res = await fetch(`http://localhost:8080/missions/${id}`, {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (res.status !== 200)
-      console.log("un autre code que 200 est apparu : " + res.status);
-    if (res.status === 200) {
-      const jsonResponse = res.json();
-      console.log(JSON.stringify(await jsonResponse));
+      if (!res.ok) {
+        showToast(
+          await getErrorMessage(
+            res,
+            "Impossible de charger les informations de la mission.",
+          ),
+          "error",
+        );
+        return;
+      }
 
-      const response = await jsonResponse;
-      console.log(response);
-
+      const response = await res.json();
       setObjResponse(response);
+    } catch {
+      showToast(
+        "Impossible de contacter le serveur pour charger la mission.",
+        "error",
+      );
     }
   }
 
   async function loadMissionTasks() {
-    const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
-      credentials: "include",
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
+        credentials: "include",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (res.status !== 200)
-      console.log("les données n'ont pas été chargées : " + res.status);
-    if (res.status === 200) {
+      if (!res.ok) {
+        showToast(
+          await getErrorMessage(
+            res,
+            "Impossible de charger les tâches de la mission.",
+          ),
+          "error",
+        );
+        return;
+      }
+
       const taskDatas = await res.json();
-
-      console.log(taskDatas);
-
       setMissionTasks(taskDatas);
+    } catch {
+      showToast(
+        "Impossible de contacter le serveur pour charger les tâches.",
+        "error",
+      );
     }
   }
 
   useEffect(() => {
-    function tasksCounter() {
-      let idTasksLength: number[] = [];
-
-      for (const el of missionTasks) {
-        idTasksLength.push(el.id);
-      }
-
-      setTasksCount(idTasksLength.length);
-    }
-    tasksCounter();
+    setTasksCount(missionTasks.length);
   }, [missionTasks]);
 
   async function deleteTaskHandler(taskId: number | undefined) {
+  if (!taskId) {
+    showToast("La tâche à supprimer est introuvable.", "error");
+    return;
+  }
+
+  try {
     const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
       method: "DELETE",
       headers: {
@@ -124,18 +162,39 @@ export default function MissionPage() {
       },
     });
 
-    if (res.status === 204) {
-      setMissionTasks((state) =>
-        state.filter((missionTasks) => missionTasks.id !== taskId),
+    if (!res.ok) {
+      showToast(
+        await getErrorMessage(
+          res,
+          "La suppression de la tâche a échoué.",
+        ),
+        "error",
       );
-      setTaskToBeDeletedObject(() => {});
+      return;
     }
+
+    setMissionTasks((state) =>
+      state.filter((task) => task.id !== taskId),
+    );
+
+    showToast(`La tâche "${taskToBeDeletedObject?.taskName}" a bien été supprimée`, "success");
+    
+    setTaskToBeDeletedObject(undefined);
+  } catch {
+    showToast(
+      "Impossible de contacter le serveur pour supprimer la tâche.",
+      "error",
+    );
   }
+}
 
-  useEffect(() => {
-    async function taskMemberIdAssignement() {
-      if (!memberAssigned || !taskToBeAssignedObject?.id) return;
+useEffect(() => {
+  async function taskMemberIdAssignment() {
+    if (!memberAssigned || !taskToBeAssignedObject?.id) {
+      return;
+    }
 
+    try {
       const res = await fetch(
         `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
         {
@@ -150,17 +209,28 @@ export default function MissionPage() {
       );
 
       if (!res.ok) {
-        console.log("ajout de l'id membre n'a pas marché");
+        showToast(
+          await getErrorMessage(
+            res,
+            "L'assignation du bénévole à la tâche a échoué.",
+          ),
+          "error",
+        );
+        return;
       }
-      if (res.ok) {
-        console.log("ajout de l'id membre à la tâche ok 😊");
-        loadMissionTasks();
-      }
-    }
-    taskMemberIdAssignement();
-  }, [memberAssigned]);
 
-  console.log(taskToBeDeletedObject);
+      await loadMissionTasks();
+    } catch {
+      showToast(
+        "Impossible de contacter le serveur pour assigner le bénévole.",
+        "error",
+      );
+    }
+  }
+
+  taskMemberIdAssignment();
+}, [memberAssigned, taskToBeAssignedObject?.id]);
+
 
   return (
     <div
@@ -258,7 +328,13 @@ export default function MissionPage() {
               }}
               onClickAssignTag={() => {
                 setShowTaskAssignmentPage(true);
-                setTaskToBeAssignedObject({ id: el.id, taskName: el.taskName, memberId: el.memberId, memberFirstName: el.memberFirstName, memberLastName: el.memberLastName});
+                setTaskToBeAssignedObject({
+                  id: el.id,
+                  taskName: el.taskName,
+                  memberId: el.memberId,
+                  memberFirstName: el.memberFirstName,
+                  memberLastName: el.memberLastName,
+                });
               }}
             />
           ))}
