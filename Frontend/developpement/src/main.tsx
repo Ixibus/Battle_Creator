@@ -51,7 +51,9 @@ function RootLayout() {
   return (
     <>
       <Outlet />
-      <ToastContainer />
+      <div className="toastMessage" style={{whiteSpace: "pre-line"}}>
+        <ToastContainer />
+      </div>
     </>
   );
 }
