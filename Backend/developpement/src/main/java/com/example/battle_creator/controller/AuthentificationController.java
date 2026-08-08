@@ -49,13 +49,23 @@ public class AuthentificationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserCreateDto requestUserCreateDto) {
-        if (userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent()) {
-            return ResponseEntity.badRequest().body("Le login est déjà utilisé");
+
+        boolean isExistingLogin = userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent();
+
+        boolean isExistingEmail = userRepository.findByEmail(requestUserCreateDto.getEmail()).isPresent();
+
+        if (isExistingLogin && isExistingEmail) {
+            return ResponseEntity.badRequest().body("Le login et l'email sont dèjà utilisés");
         }
 
-        if (userRepository.findByLogin(requestUserCreateDto.getEmail()).isPresent()) {
+        if (isExistingLogin) {
+            return ResponseEntity.badRequest().body("Login déjà utilisé");
+        }
+
+        if (isExistingEmail) {
             return ResponseEntity.badRequest().body("Email dèjà utilisé");
         }
+
 
         User userCreated = authentificationService.create(requestUserCreateDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
