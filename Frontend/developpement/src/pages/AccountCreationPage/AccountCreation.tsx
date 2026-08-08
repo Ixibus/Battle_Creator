@@ -52,9 +52,13 @@ export default function AccountCreation() {
   const isPasswordConfirmationEmpty = passwordConfirmation.trim() === "";
   const passwordsMatch = password === passwordConfirmation;
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const isEmailInvalid = !isEmailEmpty && !emailRegex.test(email.trim());
+
   const hasClientError =
     isLoginEmpty ||
     isEmailEmpty ||
+    isEmailInvalid ||
     isPasswordEmpty ||
     isPasswordConfirmationEmpty ||
     !passwordsMatch;
@@ -176,7 +180,7 @@ export default function AccountCreation() {
   return (
     <>
       {!isAuthenticated && (
-        <form className="formStyle3" onSubmit={handleSubmit}>
+        <form noValidate className="formStyle3" onSubmit={handleSubmit}>
           <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
 
           <div className="inputsFormContainerStyle">
@@ -224,7 +228,7 @@ export default function AccountCreation() {
               }}
               onBlur={() => setTouched((s) => ({ ...s, email: true }))}
               hasError={
-                (touched.email && isEmailEmpty) ||
+                (touched.email && (isEmailEmpty || isEmailInvalid)) ||
                 serverFieldErrors.email !== ""
               }
             />
@@ -235,6 +239,13 @@ export default function AccountCreation() {
                   Merci de renseigner votre email
                 </p>
               )}
+
+              {touched.email && !isEmailEmpty && isEmailInvalid && (
+                <p className="formErrorMessageStyle">
+                  Merci de renseigner une adresse email valide
+                </p>
+              )}
+
               {serverFieldErrors.email && (
                 <p className="formErrorMessageStyle">
                   {serverFieldErrors.email}
