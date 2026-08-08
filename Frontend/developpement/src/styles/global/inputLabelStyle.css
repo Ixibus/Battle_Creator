@@ -1,5 +1,6 @@
 .inputLabelStyle {
     color: var(--fontColor3);
+    font-size: var(--font-size3);
 }
 
 .inputLabelStyle2 {

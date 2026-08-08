@@ -1,8 +1,8 @@
 .titleFormStyle{
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
     color: var(--fontColor3);
     font-weight: var(--font-weight1);
-    font-size: 1.5rem;
+    font-size: var(--font-size5);
     letter-spacing: var(--letter-spacing1);
 }
 
