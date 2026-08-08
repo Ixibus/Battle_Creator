@@ -44,6 +44,8 @@ export default function AccountCreation() {
     email: "",
   });
 
+  const [serverPasswordError, setServerPasswordError] = useState("");
+
   const showToast = useToastStore((state) => state.showToast);
 
   const isLoginEmpty = login.trim() === "";
@@ -54,6 +56,15 @@ export default function AccountCreation() {
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const isEmailInvalid = !isEmailEmpty && !emailRegex.test(email.trim());
+
+  const passwordErrorMessages: Record<string, string> = {
+    PASSWORD_TOO_SHORT: "- doit contenir au moins 8 caractères.",
+    PASSWORD_MISSING_UPPERCASE: "- doit avoir une majuscule.",
+    PASSWORD_MISSING_LOWERCASE: "- doit avoir une minuscule.",
+    PASSWORD_MISSING_DIGIT: "- doit avoir un chiffre.",
+    PASSWORD_MISSING_SPECIAL_CHARACTER: "- doit avoir un caractère spécial.",
+    PASSWORD_CONTAINS_SPACE: "- ne doit pas contenir d'espace.",
+  };
 
   const hasClientError =
     isLoginEmpty ||
@@ -78,6 +89,8 @@ export default function AccountCreation() {
   }
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    setServerPasswordError("");
 
     setServerFieldErrors({
       login: "",
@@ -140,6 +153,30 @@ export default function AccountCreation() {
           return;
         }
 
+        if (responseData.code === "INVALID_PASSWORD") {
+          setServerPasswordError(responseData.message);
+
+          setTouched((previousTouched) => ({
+            ...previousTouched,
+            password: true,
+          }));
+
+          const details = "Votre mot de passe : \n"+ responseData.errors
+            .map(
+              (errorCode: string) =>
+                passwordErrorMessages[errorCode] || errorCode,
+            )
+            .join("\n")
+
+          showToast(details, "error");
+          console.log(responseData.errors.map(
+              (errorCode: string) =>
+                passwordErrorMessages[errorCode] || errorCode,
+            ))
+
+          return;
+        }
+
         showToast(
           responseData.message ||
             "Une erreur est survenue lors de la création du compte.",
@@ -163,6 +200,7 @@ export default function AccountCreation() {
     setEmail("");
     setPassword("");
     setPasswordConfirmation("");
+    setServerPasswordError("");
 
     setServerFieldErrors({
       login: "",
@@ -262,9 +300,13 @@ export default function AccountCreation() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
+                setServerPasswordError("");
               }}
               onBlur={() => setTouched((s) => ({ ...s, password: true }))}
-              hasError={touched.password && isPasswordEmpty}
+              hasError={
+                (touched.password && isPasswordEmpty) ||
+                serverPasswordError !== ""
+              }
             />
 
             <div className="errorSlot">
@@ -272,6 +314,10 @@ export default function AccountCreation() {
                 <p className="formErrorMessageStyle">
                   Merci de renseigner votre mot de passe
                 </p>
+              )}
+
+              {serverPasswordError && (
+                <p className="formErrorMessageStyle">{serverPasswordError}</p>
               )}
             </div>
 
