@@ -4,6 +4,7 @@ import InputContainer, {
 } from "../../components/InputContainer/InputContainer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useToastStore } from "../../store/toastStore";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
 import "../../styles/form/formError.css";
@@ -15,6 +16,9 @@ export default function ConnexionPage() {
   const [touched, setTouched] = useState<{ login: boolean; password: boolean }>(
     { login: false, password: false },
   );
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const showToast = useToastStore((state) => state.showToast);
 
   const navigate = useNavigate();
 
@@ -23,15 +27,20 @@ export default function ConnexionPage() {
 
   const hasError = isLoginEmpty || isPasswordEmpty;
 
-   const clearErrorIfTyping = () => {
+  const clearErrorIfTyping = () => {
     if (errorMessage) {
       setErrorMessage("");
+    }
+
+    if (invalidCredentials) {
+      setInvalidCredentials(false);
     }
   };
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
+    setInvalidCredentials(false);
     setTouched({ login: true, password: true });
 
     if (hasError) {
@@ -58,7 +67,8 @@ export default function ConnexionPage() {
       }
 
       if (res.status === 401 || res.status === 403) {
-        setErrorMessage("Login ou mot de passe incorrect");
+        setInvalidCredentials(true);
+        showToast("Login ou mot de passe incorrect.", "error");
         return;
       }
 
@@ -72,6 +82,8 @@ export default function ConnexionPage() {
     setLogin("");
     setPassword("");
     setErrorMessage("");
+    setInvalidCredentials(false);
+    setTouched({ login: false, password: false });
   }
 
   return (
@@ -85,10 +97,12 @@ export default function ConnexionPage() {
           labelName="Votre login"
           htmlFor="login"
           type="text"
-          onChange={(e) => {setLogin(e.target.value);
-            clearErrorIfTyping();}}
+          onChange={(e) => {
+            setLogin(e.target.value);
+            clearErrorIfTyping();
+          }}
           onBlur={() => setTouched((s) => ({ ...s, login: true }))}
-          hasError={touched.login && isLoginEmpty}
+          hasError={invalidCredentials || (touched.login && isLoginEmpty)}
         />
 
         <div className="errorSlot">
@@ -105,9 +119,12 @@ export default function ConnexionPage() {
           labelName="Votre mot de passe"
           htmlFor="password"
           type="password"
-          onChange={(e) => {setPassword(e.target.value); clearErrorIfTyping();}}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            clearErrorIfTyping();
+          }}
           onBlur={() => setTouched((s) => ({ ...s, password: true }))}
-          hasError={touched.password && isPasswordEmpty}
+          hasError={invalidCredentials || (touched.password && isPasswordEmpty)}
         />
 
         <div className="errorSlot">
