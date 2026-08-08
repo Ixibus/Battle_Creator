@@ -147,7 +147,7 @@ export default function AccountCreation() {
 
       if (res.status === 201) {
         showToast("Création de compte réussie !", "success");
-        navigate("/onboardingMandatoryMissions");
+        navigate("/projectCreation");
       }
     } catch {
       showToast("Impossible de contacter le serveur.", "error");
