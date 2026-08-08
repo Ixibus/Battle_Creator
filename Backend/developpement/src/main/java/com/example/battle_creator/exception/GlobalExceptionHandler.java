@@ -4,8 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.example.battle_creator.exception.InvalidPasswordException;
+import org.springframework.http.MediaType;
 
 import java.util.Map;
+import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,4 +31,20 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.CONFLICT)
             .body(Map.of("message", ex.getMessage()));
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidPassword(
+        InvalidPasswordException ex
+    ) {
+    Map<String, Object> response = Map.of(
+        "code", "INVALID_PASSWORD",
+        "message", "Le mot de passe ne respecte pas les règles de sécurité.",
+        "errors", ex.getErrors()
+    );
+
+    return ResponseEntity
+        .status(HttpStatus.BAD_REQUEST)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(response);
+}
 }

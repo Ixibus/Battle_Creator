@@ -6,6 +6,8 @@ import com.example.battle_creator.model.User;
 import com.example.battle_creator.model.UserCredentials;
 import com.example.battle_creator.repository.UserCredentialsRepository;
 import com.example.battle_creator.repository.UserRepository;
+import com.example.battle_creator.exception.InvalidPasswordException;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AuthentificationService implements UserDetailsService {
@@ -23,8 +27,7 @@ public class AuthentificationService implements UserDetailsService {
     private final UserCredentialsRepository userCredentialsRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthentificationService(UserRepository userRepository,
-                                   UserCredentialsRepository userCredentialsRepository, PasswordEncoder passwordEncoder) {
+    public AuthentificationService(UserRepository userRepository, UserCredentialsRepository userCredentialsRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userCredentialsRepository = userCredentialsRepository;
         this.passwordEncoder = passwordEncoder;
@@ -94,7 +97,44 @@ public class AuthentificationService implements UserDetailsService {
         if (dto.getLogin() == null || dto.getLogin().trim().isEmpty()) {
             throw new IllegalArgumentException("Le login est obligatoire.");
         }
+
+        validatePassword(dto.getRawPassword());
     }
+
+    private void validatePassword(String password) {
+    List<String> errors = new ArrayList<>();
+
+        if (password.length() < 8) {
+            errors.add("PASSWORD_TOO_SHORT");
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            errors.add("PASSWORD_MISSING_UPPERCASE");
+        }
+
+        if (!password.matches(".*[a-z].*")) {
+            errors.add("PASSWORD_MISSING_LOWERCASE");
+        }
+
+        if (!password.matches(".*[0-9].*")) {
+            errors.add("PASSWORD_MISSING_DIGIT");
+        }
+
+        if (!password.matches(".*[^a-zA-Z0-9\\s].*")) {
+            errors.add("PASSWORD_MISSING_SPECIAL_CHARACTER");
+        }
+
+        if (password.matches(".*\\s.*")) {
+            errors.add("PASSWORD_CONTAINS_SPACE");
+        }
+
+        if (!errors.isEmpty()) {
+        throw new InvalidPasswordException(errors);
+        }
+}
+}
+
+
 
 // // Config authentification simple (sans encoder, sans token)
 //    @Transactional(readOnly = true)
@@ -118,5 +158,3 @@ public class AuthentificationService implements UserDetailsService {
 //
 //        return rawPassword.equals(credentials.getPasswordHash());
 //    }
-
-}
