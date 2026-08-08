@@ -81,17 +81,16 @@ const router = createBrowserRouter([
             element: <AccountCreation />,
           },
           {
+            path: "/projectCreation",
+            element: <ProjectCreation/>,
+          },
+          {
             path: "/onboardingMandatoryMissions",
             element: <OnboardingMandatoryMissions/>,
           },
           {
             path: "/onboardingOptionalMissions",
             element: <OnboardingOptionalMissions/>,
-          },
-          {
-            // index: true,
-            // element: <ProjectCreation/>,
-            // element: <OnboardingMandatoryMissions/>,
           },
         ],
       },
