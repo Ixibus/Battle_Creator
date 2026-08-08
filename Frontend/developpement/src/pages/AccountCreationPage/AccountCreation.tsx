@@ -15,7 +15,6 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useToastStore } from "../../store/toastStore";
 
-
 export default function AccountCreation() {
   const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
@@ -37,10 +36,15 @@ export default function AccountCreation() {
     passwordConfirmation: false,
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [serverFieldErrors, setServerFieldErrors] = useState<{
+    login: string;
+    email: string;
+  }>({
+    login: "",
+    email: "",
+  });
 
   const showToast = useToastStore((state) => state.showToast);
-
 
   const isLoginEmpty = login.trim() === "";
   const isEmailEmpty = email.trim() === "";
@@ -49,17 +53,33 @@ export default function AccountCreation() {
   const passwordsMatch = password === passwordConfirmation;
 
   const hasClientError =
-    isLoginEmpty || isEmailEmpty || isPasswordEmpty || isPasswordConfirmationEmpty || !passwordsMatch;
+    isLoginEmpty ||
+    isEmailEmpty ||
+    isPasswordEmpty ||
+    isPasswordConfirmationEmpty ||
+    !passwordsMatch;
 
-  const clearErrorIfTyping = () => {
-    if (errorMessage) {
-      setErrorMessage("");
-    }
-  };
+  function clearLoginError() {
+    setServerFieldErrors((previousErrors) => ({
+      ...previousErrors,
+      login: "",
+    }));
+  }
 
+  function clearEmailError() {
+    setServerFieldErrors((previousErrors) => ({
+      ...previousErrors,
+      email: "",
+    }));
+  }
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    setErrorMessage("");
+
+    setServerFieldErrors({
+      login: "",
+      email: "",
+    });
+
     setTouched({
       login: true,
       email: true,
@@ -84,23 +104,51 @@ export default function AccountCreation() {
           isActive: false,
         }),
       });
-      console.log("REPONSE ----> " + res.status)
 
-      const message = await res.text();
-      
-      if (res.status !== 201) {
-        setErrorMessage(message);
+      const responseData = await res.json();
+
+      if (!res.ok) {
+        if (responseData.error === "LOGIN_ALREADY_USED") {
+          setServerFieldErrors({
+            login: responseData.message,
+            email: "",
+          });
+
+          setTouched((previousTouched) => ({
+            ...previousTouched,
+            login: true,
+          }));
+
+          return;
+        }
+
+        if (responseData.error === "EMAIL_ALREADY_USED") {
+          setServerFieldErrors({
+            login: "",
+            email: responseData.message,
+          });
+
+          setTouched((previousTouched) => ({
+            ...previousTouched,
+            email: true,
+          }));
+
+          return;
+        }
+
+        showToast(
+          responseData.message ||
+            "Une erreur est survenue lors de la création du compte.",
+          "error",
+        );
+
         return;
       }
 
-      if (res.ok || res.status === 201) {
-        showToast("Création de compte réussie !", "success")
+      if (res.status === 201) {
+        showToast("Création de compte réussie !", "success");
         navigate("/onboardingMandatoryMissions");
-        return;
       }
-
-
-      showToast("Une erreur est survenue lors de la création du compte.", "error");
     } catch {
       showToast("Impossible de contacter le serveur.", "error");
     }
@@ -111,7 +159,12 @@ export default function AccountCreation() {
     setEmail("");
     setPassword("");
     setPasswordConfirmation("");
-    setErrorMessage("");
+
+    setServerFieldErrors({
+      login: "",
+      email: "",
+    });
+
     setTouched({
       login: false,
       email: false,
@@ -136,16 +189,24 @@ export default function AccountCreation() {
               value={login}
               onChange={(e) => {
                 setLogin(e.target.value);
-                clearErrorIfTyping();
+                clearLoginError();
               }}
               onBlur={() => setTouched((s) => ({ ...s, login: true }))}
-              hasError={touched.login && isLoginEmpty}
+              hasError={
+                (touched.login && isLoginEmpty) ||
+                serverFieldErrors.login !== ""
+              }
             />
 
             <div className="errorSlot">
               {touched.login && isLoginEmpty && (
                 <p className="formErrorMessageStyle">
                   Merci de renseigner votre login
+                </p>
+              )}
+              {serverFieldErrors.login && (
+                <p className="formErrorMessageStyle">
+                  {serverFieldErrors.login}
                 </p>
               )}
             </div>
@@ -159,16 +220,24 @@ export default function AccountCreation() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                clearErrorIfTyping();
+                clearEmailError();
               }}
               onBlur={() => setTouched((s) => ({ ...s, email: true }))}
-              hasError={touched.email && isEmailEmpty}
+              hasError={
+                (touched.email && isEmailEmpty) ||
+                serverFieldErrors.email !== ""
+              }
             />
 
             <div className="errorSlot">
               {touched.email && isEmailEmpty && (
                 <p className="formErrorMessageStyle">
                   Merci de renseigner votre email
+                </p>
+              )}
+              {serverFieldErrors.email && (
+                <p className="formErrorMessageStyle">
+                  {serverFieldErrors.email}
                 </p>
               )}
             </div>
@@ -182,7 +251,6 @@ export default function AccountCreation() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                clearErrorIfTyping();
               }}
               onBlur={() => setTouched((s) => ({ ...s, password: true }))}
               hasError={touched.password && isPasswordEmpty}
@@ -205,7 +273,6 @@ export default function AccountCreation() {
               value={passwordConfirmation}
               onChange={(e) => {
                 setPasswordConfirmation(e.target.value);
-                clearErrorIfTyping();
               }}
               onBlur={() =>
                 setTouched((s) => ({ ...s, passwordConfirmation: true }))
@@ -230,7 +297,7 @@ export default function AccountCreation() {
                   </p>
                 )}
             </div>
-            
+
             <div className="buttonsContainerStyle">
               <NextButton
                 type="submit"

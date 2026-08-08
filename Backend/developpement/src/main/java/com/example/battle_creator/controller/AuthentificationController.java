@@ -54,16 +54,24 @@ public class AuthentificationController {
 
         boolean isExistingEmail = userRepository.findByEmail(requestUserCreateDto.getEmail()).isPresent();
 
-        if (isExistingLogin && isExistingEmail) {
-            return ResponseEntity.badRequest().body("Le login et l'email sont dèjà utilisés");
-        }
-
         if (isExistingLogin) {
-            return ResponseEntity.badRequest().body("Login déjà utilisé");
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "LOGIN_ALREADY_USED");
+            response.put("message", "Login déjà utilisé");
+
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(response);
         }
 
         if (isExistingEmail) {
-            return ResponseEntity.badRequest().body("Email dèjà utilisé");
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "EMAIL_ALREADY_USED");
+            response.put("message", "Un compte est déjà associé à ce mail");
+
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(response);
         }
 
 
