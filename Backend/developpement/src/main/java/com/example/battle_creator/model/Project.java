@@ -7,44 +7,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-// // test de création de tablea : permet de vérifier que la connexion avce la BDD est ok
-// @Entity // <--- INDISPENSABLE
-// public class Geocache {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-
-//     private String name;
-    
-//     // Ajoute un constructeur vide (obligatoire pour JPA)
-//     public Geocache() {}
-// }
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "projects")
 public class Project {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 100, nullable = false)
+    @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "project_date", nullable = false)
+    private LocalDate projectDate;
+
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    public Project() {};
-
-//    // Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
-//    public Project(Long id, String name, String description) {
-//        this.id = id;
-//        this.name = name;
-//        this.description = description;
-//    }
+    public Project() {
+    }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -52,15 +38,23 @@ public class Project {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public LocalDate getProjectDate() {
+        return projectDate;
+    }
+
+    public void setProjectDate(LocalDate projectDate) {
+        this.projectDate = projectDate;
+    }
+
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {

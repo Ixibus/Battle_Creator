@@ -12,11 +12,9 @@ import InputContainer, {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton/NextButton";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useToastStore } from "../../store/toastStore";
 
 export default function AccountCreation() {
-  const { isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
   const [login, setLogin] = useState("");
@@ -59,10 +57,10 @@ export default function AccountCreation() {
 
   const passwordErrorMessages: Record<string, string> = {
     PASSWORD_TOO_SHORT: "- doit contenir au moins 8 caractères.",
-    PASSWORD_MISSING_UPPERCASE: "- doit avoir une majuscule.",
-    PASSWORD_MISSING_LOWERCASE: "- doit avoir une minuscule.",
-    PASSWORD_MISSING_DIGIT: "- doit avoir un chiffre.",
-    PASSWORD_MISSING_SPECIAL_CHARACTER: "- doit avoir un caractère spécial.",
+    PASSWORD_MISSING_UPPERCASE: "- doit avoir au moins une majuscule.",
+    PASSWORD_MISSING_LOWERCASE: "- doit avoir au moins une minuscule.",
+    PASSWORD_MISSING_DIGIT: "- doit avoir au moins un chiffre.",
+    PASSWORD_MISSING_SPECIAL_CHARACTER: "- doit avoir au moins un caractère spécial.",
     PASSWORD_CONTAINS_SPACE: "- ne doit pas contenir d'espace.",
   };
 
@@ -161,18 +159,22 @@ export default function AccountCreation() {
             password: true,
           }));
 
-          const details = "Votre mot de passe : \n"+ responseData.errors
-            .map(
-              (errorCode: string) =>
-                passwordErrorMessages[errorCode] || errorCode,
-            )
-            .join("\n")
+          const details =
+            "Votre mot de passe : \n" +
+            responseData.errors
+              .map(
+                (errorCode: string) =>
+                  passwordErrorMessages[errorCode] || errorCode,
+              )
+              .join("\n");
 
           showToast(details, "error");
-          console.log(responseData.errors.map(
+          console.log(
+            responseData.errors.map(
               (errorCode: string) =>
                 passwordErrorMessages[errorCode] || errorCode,
-            ))
+            ),
+          );
 
           return;
         }
@@ -189,6 +191,7 @@ export default function AccountCreation() {
       if (res.status === 201) {
         showToast("Création de compte réussie !", "success");
         navigate("/projectCreation");
+        handleClear();
       }
     } catch {
       showToast("Impossible de contacter le serveur.", "error");
@@ -217,162 +220,155 @@ export default function AccountCreation() {
 
   return (
     <>
-      {!isAuthenticated && (
-        <form noValidate className="formStyle3" onSubmit={handleSubmit}>
-          <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
+      <form noValidate className="formStyle3" onSubmit={handleSubmit}>
+        <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
 
-          <div className="inputsFormContainerStyle">
-            <InputContainer
-              inputLabelStyle={InputLabelStyle.style1}
-              inputItemStyle={InputItemStyle.style1}
-              labelName="Votre login de connexion"
-              htmlFor="login"
-              type="text"
-              value={login}
-              onChange={(e) => {
-                setLogin(e.target.value);
-                clearLoginError();
-              }}
-              onBlur={() => setTouched((s) => ({ ...s, login: true }))}
-              hasError={
-                (touched.login && isLoginEmpty) ||
-                serverFieldErrors.login !== ""
-              }
-            />
+        <div className="inputsFormContainerStyle">
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Votre login de connexion"
+            htmlFor="login"
+            type="text"
+            value={login}
+            onChange={(e) => {
+              setLogin(e.target.value);
+              clearLoginError();
+            }}
+            onBlur={() => setTouched((s) => ({ ...s, login: true }))}
+            hasError={
+              (touched.login && isLoginEmpty) || serverFieldErrors.login !== ""
+            }
+          />
 
-            <div className="errorSlot">
-              {touched.login && isLoginEmpty && (
-                <p className="formErrorMessageStyle">
-                  Merci de renseigner votre login
-                </p>
-              )}
-              {serverFieldErrors.login && (
-                <p className="formErrorMessageStyle">
-                  {serverFieldErrors.login}
-                </p>
-              )}
-            </div>
-
-            <InputContainer
-              inputLabelStyle={InputLabelStyle.style1}
-              inputItemStyle={InputItemStyle.style1}
-              labelName="Votre email"
-              htmlFor="email"
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                clearEmailError();
-              }}
-              onBlur={() => setTouched((s) => ({ ...s, email: true }))}
-              hasError={
-                (touched.email && (isEmailEmpty || isEmailInvalid)) ||
-                serverFieldErrors.email !== ""
-              }
-            />
-
-            <div className="errorSlot">
-              {touched.email && isEmailEmpty && (
-                <p className="formErrorMessageStyle">
-                  Merci de renseigner votre email
-                </p>
-              )}
-
-              {touched.email && !isEmailEmpty && isEmailInvalid && (
-                <p className="formErrorMessageStyle">
-                  Merci de renseigner une adresse email valide
-                </p>
-              )}
-
-              {serverFieldErrors.email && (
-                <p className="formErrorMessageStyle">
-                  {serverFieldErrors.email}
-                </p>
-              )}
-            </div>
-
-            <InputContainer
-              inputLabelStyle={InputLabelStyle.style1}
-              inputItemStyle={InputItemStyle.style1}
-              labelName="Veuillez rentrer votre mot de passe"
-              htmlFor="password"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setServerPasswordError("");
-              }}
-              onBlur={() => setTouched((s) => ({ ...s, password: true }))}
-              hasError={
-                (touched.password && isPasswordEmpty) ||
-                serverPasswordError !== ""
-              }
-            />
-
-            <div className="errorSlot">
-              {touched.password && isPasswordEmpty && (
-                <p className="formErrorMessageStyle">
-                  Merci de renseigner votre mot de passe
-                </p>
-              )}
-
-              {serverPasswordError && (
-                <p className="formErrorMessageStyle">{serverPasswordError}</p>
-              )}
-            </div>
-
-            <InputContainer
-              inputLabelStyle={InputLabelStyle.style1}
-              inputItemStyle={InputItemStyle.style1}
-              labelName="Confirmer votre mot de passe"
-              htmlFor="passwordConfirmation"
-              type="password"
-              value={passwordConfirmation}
-              onChange={(e) => {
-                setPasswordConfirmation(e.target.value);
-              }}
-              onBlur={() =>
-                setTouched((s) => ({ ...s, passwordConfirmation: true }))
-              }
-              hasError={
-                touched.passwordConfirmation &&
-                (isPasswordConfirmationEmpty || !passwordsMatch)
-              }
-            />
-
-            <div className="errorSlot">
-              {touched.passwordConfirmation && isPasswordConfirmationEmpty && (
-                <p className="formErrorMessageStyle">
-                  Merci de confirmer votre mot de passe
-                </p>
-              )}
-              {touched.passwordConfirmation &&
-                !isPasswordConfirmationEmpty &&
-                !passwordsMatch && (
-                  <p className="formErrorMessageStyle">
-                    Les mots de passe ne correspondent pas
-                  </p>
-                )}
-            </div>
-
-            <div className="buttonsContainerStyle">
-              <NextButton
-                type="submit"
-                styleClassName="btnStyle10"
-                mainClassName="SubmitBtn_AccountCreation"
-                text="Valider"
-              />
-              <NextButton
-                type="button"
-                styleClassName="btnStyle11"
-                mainClassName="SubmitBtn_AccountCreation"
-                text="Effacer"
-                onClick={handleClear}
-              />
-            </div>
+          <div className="errorSlot">
+            {touched.login && isLoginEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner votre login
+              </p>
+            )}
+            {serverFieldErrors.login && (
+              <p className="formErrorMessageStyle">{serverFieldErrors.login}</p>
+            )}
           </div>
-        </form>
-      )}
+
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Votre email"
+            htmlFor="email"
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              clearEmailError();
+            }}
+            onBlur={() => setTouched((s) => ({ ...s, email: true }))}
+            hasError={
+              (touched.email && (isEmailEmpty || isEmailInvalid)) ||
+              serverFieldErrors.email !== ""
+            }
+          />
+
+          <div className="errorSlot">
+            {touched.email && isEmailEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner votre email
+              </p>
+            )}
+
+            {touched.email && !isEmailEmpty && isEmailInvalid && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner une adresse email valide
+              </p>
+            )}
+
+            {serverFieldErrors.email && (
+              <p className="formErrorMessageStyle">{serverFieldErrors.email}</p>
+            )}
+          </div>
+
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Veuillez rentrer votre mot de passe"
+            htmlFor="password"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setServerPasswordError("");
+            }}
+            onBlur={() => setTouched((s) => ({ ...s, password: true }))}
+            hasError={
+              (touched.password && isPasswordEmpty) ||
+              serverPasswordError !== ""
+            }
+          />
+
+          <div className="errorSlot">
+            {touched.password && isPasswordEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner votre mot de passe
+              </p>
+            )}
+
+            {serverPasswordError && (
+              <p className="formErrorMessageStyle">{serverPasswordError}</p>
+            )}
+          </div>
+
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Confirmer votre mot de passe"
+            htmlFor="passwordConfirmation"
+            type="password"
+            value={passwordConfirmation}
+            onChange={(e) => {
+              setPasswordConfirmation(e.target.value);
+            }}
+            onBlur={() =>
+              setTouched((s) => ({ ...s, passwordConfirmation: true }))
+            }
+            hasError={
+              touched.passwordConfirmation &&
+              (isPasswordConfirmationEmpty || !passwordsMatch)
+            }
+          />
+
+          <div className="errorSlot">
+            {touched.passwordConfirmation && isPasswordConfirmationEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de confirmer votre mot de passe
+              </p>
+            )}
+            {touched.passwordConfirmation &&
+              !isPasswordConfirmationEmpty &&
+              !passwordsMatch && (
+                <p className="formErrorMessageStyle">
+                  Les mots de passe ne correspondent pas
+                </p>
+              )}
+          </div>
+
+          <div className="buttonsContainerStyle">
+            <NextButton
+              type="submit"
+              styleClassName="btnStyle10"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Valider"
+            />
+            <NextButton
+              type="button"
+              styleClassName="btnStyle11"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Effacer"
+              onClick={handleClear}
+            />
+          </div>
+        </div>
+      </form>
     </>
   );
 }
