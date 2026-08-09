@@ -2,6 +2,7 @@ package com.example.battle_creator.service;
 
 import com.example.battle_creator.dto.ProjectDto;
 import com.example.battle_creator.model.Project;
+import com.example.battle_creator.model.User;
 import com.example.battle_creator.repository.ProjectRepository;
 
 import org.springframework.stereotype.Service;
@@ -20,16 +21,33 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project create(ProjectDto projectDto) {
+    public Project create(
+        ProjectDto projectDto,
+        User owner
+    ) {
         validateProjectDto(projectDto);
+
+        if (owner == null) {
+            throw new IllegalArgumentException(
+                "Le propriétaire du projet est obligatoire."
+            );
+        }
 
         Project project = new Project();
 
-        project.setName(cleanText(projectDto.getProjectName()));
-        project.setProjectDate(projectDto.getProjectDate());
+        project.setName(
+            cleanText(projectDto.getProjectName())
+        );
+
+        project.setProjectDate(
+            projectDto.getProjectDate()
+        );
+
         project.setDescription(
             cleanText(projectDto.getProjectDescription())
         );
+
+        project.setOwner(owner);
 
         return projectRepository.save(project);
     }
@@ -111,6 +129,12 @@ public class ProjectService {
         ) {
             throw new IllegalArgumentException(
                 "La description du projet est obligatoire."
+            );
+        }
+
+        if (projectDto.getOwnerId() == null) {
+            throw new IllegalArgumentException(
+            "Le compte propriétaire est obligatoire."
             );
         }
     }

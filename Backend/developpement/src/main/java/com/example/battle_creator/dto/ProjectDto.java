@@ -23,6 +23,8 @@ public class ProjectDto {
     @NotBlank(message = "La description du projet est obligatoire.")
     private String projectDescription;
 
+    private Long ownerId;
+
     public ProjectDto() {
     }
 
@@ -59,4 +61,13 @@ public class ProjectDto {
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
     }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
 }

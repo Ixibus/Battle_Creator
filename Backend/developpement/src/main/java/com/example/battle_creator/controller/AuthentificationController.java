@@ -74,9 +74,17 @@ public class AuthentificationController {
                 .body(response);
         }
 
+        User userCreated =
+            authentificationService.create(requestUserCreateDto);
 
-        User userCreated = authentificationService.create(requestUserCreateDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("id", userCreated.getId());
+        response.put("message", "Compte créé avec succès.");
+
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(response);
 
     }
 

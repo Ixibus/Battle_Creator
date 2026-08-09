@@ -2,7 +2,9 @@ package com.example.battle_creator.controller;
 
 import com.example.battle_creator.dto.ProjectDto;
 import com.example.battle_creator.model.Project;
+import com.example.battle_creator.model.User;
 import com.example.battle_creator.repository.ProjectRepository;
+import com.example.battle_creator.repository.UserRepository;
 import com.example.battle_creator.service.ProjectService;
 
 import jakarta.validation.Valid;
@@ -26,13 +28,16 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     public ProjectController(
         ProjectService projectService,
-        ProjectRepository projectRepository
+        ProjectRepository projectRepository,
+        UserRepository userRepository
     ) {
         this.projectService = projectService;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -53,52 +58,51 @@ public class ProjectController {
     public ResponseEntity<?> createProject(
         @Valid @RequestBody ProjectDto projectDto
     ) {
-        String projectName = cleanText(projectDto.getProjectName());
+        User owner = userRepository.findById(
+            projectDto.getOwnerId()
+        ).orElse(null);
 
-        boolean isExistingProjectName =
-            projectRepository.existsByName(projectName);
+        if (projectDto.getOwnerId() == null) {
+            return errorResponse(
+                HttpStatus.BAD_REQUEST,
+                "OWNER_ID_REQUIRED",
+                "L'identifiant du compte est obligatoire."
+            );
+        }
+
+        if (owner == null) {
+            return errorResponse(
+                HttpStatus.BAD_REQUEST,
+                "USER_NOT_FOUND",
+                "Le compte propriétaire est introuvable."
+            );
+        }
 
         if (
             projectDto.getProjectDate() == null ||
             projectDto.getProjectDate().isBefore(LocalDate.now())
         ) {
-            Map<String, String> response = new HashMap<>();
-
-            response.put(
-                "error",
-                "PROJECT_DATE_IN_PAST"
-            );
-
-            response.put(
-                "message",
+            return errorResponse(
+                HttpStatus.BAD_REQUEST,
+                "PROJECT_DATE_IN_PAST",
                 "La date du projet ne peut pas être antérieure à aujourd'hui."
             );
-
-            return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
         }
 
+        String projectName = cleanText(
+            projectDto.getProjectName()
+        );
 
-        if (isExistingProjectName) {
-            Map<String, String> response = new HashMap<>();
-
-            response.put(
-                "error",
-                "PROJECT_NAME_ALREADY_USED"
-            );
-
-            response.put(
-                "message",
+        if (projectRepository.existsByName(projectName)) {
+            return errorResponse(
+                HttpStatus.BAD_REQUEST,
+                "PROJECT_NAME_ALREADY_USED",
                 "Un projet possède déjà ce nom."
             );
-
-            return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
         }
 
-        Project createdProject = projectService.create(projectDto);
+        Project createdProject =
+            projectService.create(projectDto, owner);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -167,6 +171,21 @@ public class ProjectController {
         projectService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    private ResponseEntity<Map<String, String>> errorResponse(
+        HttpStatus status,
+        String error,
+        String message
+    ) {
+        Map<String, String> response = new HashMap<>();
+
+        response.put("error", error);
+        response.put("message", message);
+
+        return ResponseEntity
+            .status(status)
+            .body(response);
     }
 
     private String cleanText(String text) {

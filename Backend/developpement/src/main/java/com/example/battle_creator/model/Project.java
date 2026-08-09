@@ -1,11 +1,8 @@
 package com.example.battle_creator.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -17,14 +14,31 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 100, nullable = false, unique = true)
+    @Column(
+        name = "name",
+        length = 100,
+        nullable = false,
+        unique = true
+    )
     private String name;
 
     @Column(name = "project_date", nullable = false)
     private LocalDate projectDate;
 
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Column(
+        name = "description",
+        nullable = false,
+        columnDefinition = "TEXT"
+    )
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+        name = "id_users",
+        nullable = false
+    )
+    @JsonIgnore
+    private User owner;
 
     public Project() {
     }
@@ -59,5 +73,13 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
