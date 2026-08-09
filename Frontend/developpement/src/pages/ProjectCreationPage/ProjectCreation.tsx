@@ -21,7 +21,6 @@ import { useToastStore } from "../../store/toastStore";
 
 import { useNavigate } from "react-router-dom";
 
-
 type TouchedFields = {
   projectName: boolean;
   projectDate: boolean;
@@ -29,7 +28,6 @@ type TouchedFields = {
 };
 
 export default function ProjectCreation() {
-
   const navigate = useNavigate();
 
   const [projectName, setProjectName] = useState("");
@@ -48,6 +46,10 @@ export default function ProjectCreation() {
   const [serverProjectDateError, setServerProjectDateError] = useState("");
 
   const showToast = useToastStore((state) => state.showToast);
+
+  const newAccountId = sessionStorage.getItem("newAccountId");
+
+  console.log("newAccountId :", newAccountId);
 
   const isProjectNameEmpty = projectName.trim() === "";
   const isProjectDateEmpty = projectDate.trim() === "";
@@ -100,6 +102,13 @@ export default function ProjectCreation() {
     }
 
     try {
+      if (!newAccountId) {
+        showToast("Veuillez d'abord créer un compte", "error");
+
+        navigate("/accountCreation");
+        return;
+      }
+
       const response = await fetch("http://localhost:8080/projects", {
         method: "POST",
         credentials: "include",
@@ -110,6 +119,7 @@ export default function ProjectCreation() {
           projectName: projectName.trim(),
           projectDate,
           projectDescription: projectDescription.trim(),
+          ownerId: Number(newAccountId),
         }),
       });
 
@@ -148,10 +158,16 @@ export default function ProjectCreation() {
       }
 
       if (response.status === 201) {
-        showToast(`La création du projet \"${responseData.name}\" a réussi !`, "success");
-        navigate("/onboardingMandatoryMissions");
+        showToast(
+          `La création du projet \"${responseData.name}\" a réussi !`,
+          "success",
+        );
+
+        sessionStorage.removeItem("newAccountId");
 
         handleClear();
+        navigate("/onboardingMandatoryMissions");
+
       }
     } catch {
       showToast("Impossible de contacter le serveur.", "error");

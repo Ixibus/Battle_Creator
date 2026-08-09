@@ -60,7 +60,8 @@ export default function AccountCreation() {
     PASSWORD_MISSING_UPPERCASE: "- doit avoir au moins une majuscule.",
     PASSWORD_MISSING_LOWERCASE: "- doit avoir au moins une minuscule.",
     PASSWORD_MISSING_DIGIT: "- doit avoir au moins un chiffre.",
-    PASSWORD_MISSING_SPECIAL_CHARACTER: "- doit avoir au moins un caractère spécial.",
+    PASSWORD_MISSING_SPECIAL_CHARACTER:
+      "- doit avoir au moins un caractère spécial.",
     PASSWORD_CONTAINS_SPACE: "- ne doit pas contenir d'espace.",
   };
 
@@ -189,11 +190,24 @@ export default function AccountCreation() {
       }
 
       if (res.status === 201) {
+        if (!responseData.id) {
+          showToast(
+            "Le compte a été créé, mais son identifiant est introuvable.",
+            "error",
+          );
+
+          return;
+        }
+
+        sessionStorage.setItem("newAccountId", String(responseData.id));
+
         showToast("Création de compte réussie !", "success");
-        navigate("/projectCreation");
+
         handleClear();
+        navigate("/projectCreation");
       }
-    } catch {
+    } catch(error) {
+      console.error("Erreur création projet :", error);
       showToast("Impossible de contacter le serveur.", "error");
     }
   }
