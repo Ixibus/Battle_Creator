@@ -5,6 +5,7 @@ import InputContainer, {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToastStore } from "../../store/toastStore";
+import { useProjectStore } from "../../store/useProjectStore";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
 import "../../styles/form/formError.css";
@@ -14,55 +15,57 @@ export default function ConnexionPage() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [touched, setTouched] = useState<{ login: boolean; password: boolean }>(
-    { login: false, password: false },
+    {
+      login: false,
+      password: false,
+    },
   );
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   const showToast = useToastStore((state) => state.showToast);
+  const setUser = useProjectStore((state) => state.setUser);
 
   const navigate = useNavigate();
 
   const isLoginEmpty = login.trim() === "";
   const isPasswordEmpty = password.trim() === "";
-
   const hasError = isLoginEmpty || isPasswordEmpty;
 
   const clearErrorIfTyping = () => {
-    if (errorMessage) {
-      setErrorMessage("");
-    }
-
-    if (invalidCredentials) {
-      setInvalidCredentials(false);
-    }
+    if (errorMessage) setErrorMessage("");
+    if (invalidCredentials) setInvalidCredentials(false);
   };
 
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
     setInvalidCredentials(false);
     setTouched({ login: true, password: true });
 
-    if (hasError) {
-      return;
-    }
+    if (hasError) return;
 
     try {
       const res = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          login,
-          password,
-          isActive: false,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ login, password, isActive: false }),
       });
 
       if (res.ok) {
-        navigate("/homePage");
+        const userData = await res.json().catch(() => null);
+
+        // Accepte 'id' OU 'userId' selon la réponse JSON de votre backend
+        const loggedUserId = userData?.id || userData?.userId;
+
+        console.log(loggedUserId);
+
+        setUser({
+          id: loggedUserId,
+          login: userData?.login || login,
+        });
+
+        navigate("/projectListAuthed");
         return;
       }
 
@@ -73,7 +76,7 @@ export default function ConnexionPage() {
       }
 
       setErrorMessage("Une erreur est survenue lors de la connexion");
-    } catch (error) {
+    } catch {
       setErrorMessage("Impossible de contacter le serveur");
     }
   }
@@ -97,6 +100,7 @@ export default function ConnexionPage() {
           labelName="Votre login"
           htmlFor="login"
           type="text"
+          value={login}
           onChange={(e) => {
             setLogin(e.target.value);
             clearErrorIfTyping();
@@ -119,6 +123,7 @@ export default function ConnexionPage() {
           labelName="Votre mot de passe"
           htmlFor="password"
           type="password"
+          value={password}
           onChange={(e) => {
             setPassword(e.target.value);
             clearErrorIfTyping();

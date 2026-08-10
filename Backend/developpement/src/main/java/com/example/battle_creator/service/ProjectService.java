@@ -79,6 +79,11 @@ public class ProjectService {
         return projectRepository.save(existingProject);
     }
 
+    public List<Project> getByOwnerId(Long ownerId) {
+    validateId(ownerId);
+    return projectRepository.findByOwnerId(ownerId);
+    }
+
     public List<Project> getAll() {
         return projectRepository.findAll();
     }
