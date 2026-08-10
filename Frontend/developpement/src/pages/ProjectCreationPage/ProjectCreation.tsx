@@ -47,9 +47,11 @@ export default function ProjectCreation() {
 
   const showToast = useToastStore((state) => state.showToast);
 
+
+
   const newAccountId = sessionStorage.getItem("newAccountId");
 
-  console.log("newAccountId :", newAccountId);
+  // console.log("newAccountId :", newAccountId);
 
   const isProjectNameEmpty = projectName.trim() === "";
   const isProjectDateEmpty = projectDate.trim() === "";
@@ -167,7 +169,6 @@ export default function ProjectCreation() {
 
         handleClear();
         navigate("/onboardingMandatoryMissions");
-
       }
     } catch {
       showToast("Impossible de contacter le serveur.", "error");
@@ -191,6 +192,7 @@ export default function ProjectCreation() {
   }
 
   return (
+    <>
     <form className="formStyle3" onSubmit={handleSubmit}>
       <h1 className="titleFormStyle">CREATION DE PROJET</h1>
 
@@ -322,5 +324,6 @@ export default function ProjectCreation() {
         </div>
       </div>
     </form>
+    </>
   );
 }

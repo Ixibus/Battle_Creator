@@ -206,7 +206,7 @@ export default function AccountCreation() {
         handleClear();
         navigate("/projectCreation");
       }
-    } catch(error) {
+    } catch (error) {
       console.error("Erreur création projet :", error);
       showToast("Impossible de contacter le serveur.", "error");
     }
@@ -380,6 +380,7 @@ export default function AccountCreation() {
               text="Effacer"
               onClick={handleClear}
             />
+
           </div>
         </div>
       </form>

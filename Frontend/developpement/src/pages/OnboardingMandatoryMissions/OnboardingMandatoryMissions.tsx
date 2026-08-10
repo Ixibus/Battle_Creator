@@ -5,16 +5,16 @@ import "../../styles/onboarding/onboardingMissionsContainerStyle.css";
 import "../../styles/onboarding/onboardingMissionsStyle.css";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
-
-
 export default function OnboardingMandatoryMissions() {
+
+
   return (
     <>
       <div className="formStyle">
         <h1 className="titleFormStyle">Missions Obligatoires</h1>
         <p className="onboardingMandatoryMissionsDescriptionContainer onboardingMissionsDescriptionStyle">
-          Vos missions indispensables pour réaliser le projet d'évènement de danse
-          Hiphop
+          Vos missions indispensables pour réaliser le projet d'évènement de
+          danse Hiphop
         </p>
         <div className="onboardingMandatoryMissionContainer onboardingMissionsContainerStyle">
           <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">ESPACE</p>
@@ -26,7 +26,12 @@ export default function OnboardingMandatoryMissions() {
           <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">SYSTEME SON</p>
           <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PHASE DE BATTLE</p>
         </div>
-        <NextButton nav="/onboardingOptionalMissions" styleClassName="btnStyle10" mainClassName="onboardingMandatoryMissionsNextBtn" text="Suivant"/>
+        <NextButton
+          nav="/onboardingOptionalMissions"
+          styleClassName="btnStyle10"
+          mainClassName="onboardingMandatoryMissionsNextBtn"
+          text="Suivant"
+        />
       </div>
     </>
   );

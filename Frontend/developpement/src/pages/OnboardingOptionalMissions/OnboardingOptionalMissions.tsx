@@ -6,6 +6,8 @@ import "../../styles/onboarding/onboardingMissionsStyle.css";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
 export default function OnboardingOptionalMissions() {
+
+
   return (
     <>
       <div className="formStyle">
