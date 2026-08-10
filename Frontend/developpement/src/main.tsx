@@ -46,6 +46,7 @@ import AddingTaskPage from "./pages/AddingTaskPage/AddingTaskPage";
 import TaskAssignmentPage from "./pages/TaskAssignmentPage/TaskAssignmentPage";
 import OverlayedWarning from "./components/OverlayedWarning/OverlayedWarning";
 import { ToastContainer } from "./components/toast/Toast";
+import MissionList from "./pages/MissionList/MissionList";
 
 function RootLayout() {
   return (
@@ -141,6 +142,10 @@ const router = createBrowserRouter([
               {
                 path: "/overlayedWarning",
                 element: <OverlayedWarning />,
+              },
+              {
+                path: "/missionList",
+                element: <MissionList />,
               },
             ],
           },

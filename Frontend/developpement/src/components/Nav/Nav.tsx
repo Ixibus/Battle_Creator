@@ -14,6 +14,7 @@ export default function Nav() {
   function navHandler(nav : string) {
     nav==="homePage" && navigate("/homePage");
     nav==="projectList" && navigate("/projectList");
+    nav==="missionList" && navigate("/missionList");
   }
 
   async function logoutHandler(navLinkLogout : string) {
@@ -51,7 +52,7 @@ export default function Nav() {
           <Icone SrcIcone={Project} styleType={StyleType.style2} />
           <p className="navText">Projects</p>
         </div>
-        <div className="missionsNavContainer iconeNavContainerStyle">
+        <div className="missionsNavContainer iconeNavContainerStyle" onClick={() => navHandler("missionList")}>
           <Icone SrcIcone={Mission} styleType={StyleType.style2} />
           <p className="navText">Missions</p>
         </div>

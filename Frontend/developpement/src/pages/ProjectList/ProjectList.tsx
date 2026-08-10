@@ -3,7 +3,7 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import Project from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
-import "./ProjectList.css";
+import "./projectList.css";
 
 export default function ProjectList() {
   return (
