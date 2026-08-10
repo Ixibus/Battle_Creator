@@ -1,35 +1,61 @@
+.onboardingProgressionBarWrapper{
+  display: flex;
+  justify-content: center;
+}
+
 .onboardingProgressionBarStyle {
-    display: flex;
-    width: 40vw;
-    margin: 5vh auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  width: 500px;
 }
 
-.segment {
-    margin: auto;
-    background: var(--backgroundColor9);
-    width: 100%;
-    height: 3px;
-}
-
-.stepContainer {
-    margin: auto;
-}
-
+/* Cercles des étapes */
 .stepNumberContainer {
-    position: relative;
-    background: var(--backgroundColor9);
-    border-radius: var(--border-radius2);
-    height: 30px;
-    width: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--fontColor3);
+  background-color: transparent;
+  color: var(--fontColor3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  /* Animation du fond et de la couleur avec un léger délai après la barre */
+  transition: background-color 0.3s ease 0.3s, color 0.3s ease 0.3s, border-color 0.3s ease;
 }
 
-.stepNumberContainer::after {
-    position: absolute;
-    top: 40px;
-    transform: translateX(-40%);
-    content: attr(data-stepTitle);
-    display: block;
-    font-size: var(--font-size7);
-    width: max-content;
-    color: var(--fontColor6);
+/* État actif : Le fond devient --fontColor3 et le chiffre devient --fontColor1 */
+.stepContainer.is-active .stepNumberContainer {
+  background-color: var(--fontColor3);
+  color: var(--fontColor1);
+}
+
+/* Barre de liaison (Segment) */
+.segment {
+  flex: 1;
+  height: 4px;
+  background-color: #ccc; /* Couleur de fond incalculée */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de remplissage de gauche à droite */
+.segment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: var(--fontColor3);
+  transition: width 0.4s ease-in-out;
+}
+
+.segment.filled::before {
+  width: 100%;
 }

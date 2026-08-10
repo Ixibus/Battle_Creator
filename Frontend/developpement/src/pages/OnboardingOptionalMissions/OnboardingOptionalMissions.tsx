@@ -4,9 +4,16 @@ import "../../styles/onboarding/onboardingMissionsDescriptionStyle.css";
 import "../../styles/onboarding/onboardingMissionsContainerStyle.css";
 import "../../styles/onboarding/onboardingMissionsStyle.css";
 import NextButton from "../../components/Button/NextButton/NextButton";
+import { useEffect } from "react";
+import { useStepStore } from "../../store/useStepStore";
 
 export default function OnboardingOptionalMissions() {
 
+  const setActiveStep = useStepStore((state) => state.setActiveStep);
+
+  useEffect(() => {
+    setActiveStep(4);
+  }, [setActiveStep]);
 
   return (
     <>
@@ -40,7 +47,7 @@ export default function OnboardingOptionalMissions() {
           </p>
         </div>
         <NextButton
-          nav="/connexionPage"
+          nav={"/connexionPage"}
           styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
           text="Se connecter"

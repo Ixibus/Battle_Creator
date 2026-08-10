@@ -13,9 +13,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
+import { useEffect } from "react";
+import { useStepStore } from "../../store/useStepStore";
 
 export default function AccountCreation() {
   const navigate = useNavigate();
+
+  const setActiveStep = useStepStore((state) => state.setActiveStep);
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
@@ -72,6 +76,10 @@ export default function AccountCreation() {
     isPasswordEmpty ||
     isPasswordConfirmationEmpty ||
     !passwordsMatch;
+
+  useEffect(() => {
+    setActiveStep(1);
+  }, [setActiveStep]);
 
   function clearLoginError() {
     setServerFieldErrors((previousErrors) => ({

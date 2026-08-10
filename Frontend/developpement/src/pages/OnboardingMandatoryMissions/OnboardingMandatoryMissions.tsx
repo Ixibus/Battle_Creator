@@ -4,9 +4,17 @@ import "../../styles/onboarding/onboardingMissionsDescriptionStyle.css";
 import "../../styles/onboarding/onboardingMissionsContainerStyle.css";
 import "../../styles/onboarding/onboardingMissionsStyle.css";
 import NextButton from "../../components/Button/NextButton/NextButton";
+import { useEffect } from "react";
+import { useStepStore } from "../../store/useStepStore";
+
 
 export default function OnboardingMandatoryMissions() {
 
+  const setActiveStep = useStepStore((state) => state.setActiveStep);
+
+  useEffect(() => {
+    setActiveStep(3);
+  }, [setActiveStep]);
 
   return (
     <>
@@ -27,7 +35,7 @@ export default function OnboardingMandatoryMissions() {
           <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PHASE DE BATTLE</p>
         </div>
         <NextButton
-          nav="/onboardingOptionalMissions"
+          nav={"/onboardingOptionalMissions"}
           styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
           text="Suivant"

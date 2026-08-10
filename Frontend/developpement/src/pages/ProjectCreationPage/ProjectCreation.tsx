@@ -21,6 +21,9 @@ import { useToastStore } from "../../store/toastStore";
 
 import { useNavigate } from "react-router-dom";
 
+import { useEffect } from "react";
+import { useStepStore } from "../../store/useStepStore";
+
 type TouchedFields = {
   projectName: boolean;
   projectDate: boolean;
@@ -29,6 +32,7 @@ type TouchedFields = {
 
 export default function ProjectCreation() {
   const navigate = useNavigate();
+
 
   const [projectName, setProjectName] = useState("");
   const [projectDate, setProjectDate] = useState("");
@@ -47,7 +51,7 @@ export default function ProjectCreation() {
 
   const showToast = useToastStore((state) => state.showToast);
 
-
+  const setActiveStep = useStepStore((state) => state.setActiveStep);
 
   const newAccountId = sessionStorage.getItem("newAccountId");
 
@@ -65,6 +69,10 @@ export default function ProjectCreation() {
     isProjectDateEmpty ||
     isProjectDateInThePast ||
     isProjectDescriptionEmpty;
+
+  useEffect(() => {
+    setActiveStep(2);
+  }, [setActiveStep]);
 
   function getTodayDate() {
     const today = new Date();
