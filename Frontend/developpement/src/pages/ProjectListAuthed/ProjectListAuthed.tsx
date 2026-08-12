@@ -8,16 +8,27 @@ import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 import { useProjectStore } from "../../store/useProjectStore";
 import "./ProjectListAuthed.css";
 
-export default function ProjectListAuthed() {
 
+
+export default function ProjectListAuthed() {
+  
   const navigate = useNavigate();
   const { user, projects, isLoading, error, fetchUserProjects, logout } =
-    useProjectStore();
+  useProjectStore();
+  
+  const handleExit = () => {
+    logout(); // Efface Zustand + localStorage
+    navigate("/connexionPage");
+  };
 
   useEffect(() => {
     // Si l'utilisateur est bien chargé, on récupère ses projets
+    console.log("🔍 Composant monté. User actuel :", user);
     if (user?.id) {
+      console.log("🚀 Lancement de fetchUserProjects...");
       fetchUserProjects();
+    } else {
+      console.warn("⚠️ user.id est nul/undefined au montage !");
     }
   }, [user?.id, fetchUserProjects]);
 
@@ -74,7 +85,7 @@ export default function ProjectListAuthed() {
         styleClassName="btnStyle11"
         mainClassName="projectListAuthedExitButton"
         text="Se Déconnecter"
-        onClick={() => navigate("/connexionPage")}
+        onClick={handleExit}
       />
     </div>
   );

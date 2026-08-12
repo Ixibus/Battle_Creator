@@ -1,8 +1,9 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware"; // 👈 1. Importer persist
 
 export type Project = {
   id: number;
-  name: string; // Nom de la propriété retournée par l'entité Project Java
+  name: string;
   projectDate: string;
   description: string;
 };
@@ -22,53 +23,71 @@ type ProjectStore = {
   logout: () => void;
 };
 
-export const useProjectStore = create<ProjectStore>((set, get) => ({
-  user: null,
-  projects: [],
-  isLoading: false,
-  error: null,
+// 👈 2. Envelopper le store avec persist(...)
+export const useProjectStore = create<ProjectStore>()(
+  persist(
+    (set, get) => ({
+      user: null,
+      projects: [],
+      isLoading: false,
+      error: null,
 
-  setUser: (user) => set({ user }),
+      setUser: (user) => set({ user }),
 
-  fetchUserProjects: async () => {
-    const user = get().user;
-    console.log("Utilisateur connecté dans le store :", user);
+      fetchUserProjects: async () => {
+        const user = get().user;
 
-    if (!user || !user.id) {
-        console.log("Impossible de charger les projets : ID utilisateur manquant dans le store", user);
-      set({ error: "Aucun utilisateur connecté.", projects: [] });
-      return;
-    }
-
-    set({ isLoading: true, error: null });
-
-    try {
-      const response = await fetch(
-        `http://localhost:8080/projects/user/${user.id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        if (!user || !user.id) {
+          set({ error: "Aucun utilisateur connecté.", projects: [] });
+          return;
         }
-      );
 
-      console.log(user.id)
+        set({ isLoading: true, error: null });
 
-      if (!response.ok) {
-        throw new Error("Erreur lors de la récupération des projets.");
-      }
+        try {
+          const response = await fetch(
+            `http://localhost:8080/projects/user/${user.id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            },
+          );
 
-      const data = await response.json();
-      console.log("Projets reçus du backend :", data);
-      set({ projects: data, isLoading: false });
-    } catch (err: any) {
-      set({
-        error: err.message || "Erreur lors du chargement des projets.",
-        isLoading: false,
-      });
-    }
-  },
+          if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des projets.");
+          }
 
-  logout: () => set({ user: null, projects: [], error: null }),
-}));
+          const data = await response.json();
+          set({ projects: data, isLoading: false });
+        } catch (err: any) {
+          set({
+            error: err.message || "Erreur lors du chargement des projets.",
+            isLoading: false,
+          });
+        }
+      },
+
+      logout: async () => {
+        try {
+          await fetch("http://localhost:8080/auth/logout", {
+            method: "POST",
+            credentials: "include",
+          });
+        } catch (err) {
+          console.error("Erreur lors de la déconnexion serveur :", err);
+        }
+
+        set({ user: null, projects: [], error: null });
+
+        useProjectStore.persist.clearStorage();
+      },
+    }),
+    {
+      name: "project-auth-storage", // 👈 Nom de la clé dans le localStorage
+      // Optionnel : enregistrer seulement 'user' et 'projects' (pas les états temporaires comme 'isLoading')
+      partialize: (state) => ({ user: state.user, projects: state.projects }),
+    },
+  ),
+);

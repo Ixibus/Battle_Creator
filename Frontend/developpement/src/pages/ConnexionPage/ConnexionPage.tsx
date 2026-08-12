@@ -5,12 +5,15 @@ import InputContainer, {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToastStore } from "../../store/toastStore";
+import { useEffect } from "react";
 import { useProjectStore } from "../../store/useProjectStore";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
 import "../../styles/form/formError.css";
 
 export default function ConnexionPage() {
+  const { logout } = useProjectStore();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,6 +39,10 @@ export default function ConnexionPage() {
     if (invalidCredentials) setInvalidCredentials(false);
   };
 
+  useEffect(() => {
+    logout();
+  }, [logout]);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
@@ -56,9 +63,7 @@ export default function ConnexionPage() {
         const userData = await res.json().catch(() => null);
 
         // Accepte 'id' OU 'userId' selon la réponse JSON de votre backend
-        const loggedUserId = userData?.id || userData?.userId;
-
-        console.log(loggedUserId);
+        const loggedUserId = userData?.id
 
         setUser({
           id: loggedUserId,

@@ -98,7 +98,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        // element: <ProtectedRoute />,
+        element: <ProtectedRoute />,
         children: [
           {
             path: "/projectListAuthed",
