@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware"; // 👈 1. Importer persist
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type Project = {
   id: number;
@@ -16,23 +16,27 @@ export type User = {
 type ProjectStore = {
   user: User | null;
   projects: Project[];
+  selectedProject : Project | null;
   isLoading: boolean;
   error: string | null;
   setUser: (user: User | null) => void;
+  setSelectedProject : (project : Project | null) => void;
   fetchUserProjects: () => Promise<void>;
   logout: () => void;
 };
 
-// 👈 2. Envelopper le store avec persist(...)
+// Envelopper le store avec persist(...)
 export const useProjectStore = create<ProjectStore>()(
   persist(
     (set, get) => ({
       user: null,
       projects: [],
+      selectedProject: null,
       isLoading: false,
       error: null,
 
       setUser: (user) => set({ user }),
+      setSelectedProject: (project) => set({ selectedProject: project }),
 
       fetchUserProjects: async () => {
         const user = get().user;
@@ -79,7 +83,7 @@ export const useProjectStore = create<ProjectStore>()(
           console.error("Erreur lors de la déconnexion serveur :", err);
         }
 
-        set({ user: null, projects: [], error: null });
+        set({ user: null, projects: [], error: null, selectedProject: null });
 
         useProjectStore.persist.clearStorage();
       },
@@ -87,7 +91,7 @@ export const useProjectStore = create<ProjectStore>()(
     {
       name: "project-auth-storage", // 👈 Nom de la clé dans le localStorage
       // Optionnel : enregistrer seulement 'user' et 'projects' (pas les états temporaires comme 'isLoading')
-      partialize: (state) => ({ user: state.user, projects: state.projects }),
+      partialize: (state) => ({ user: state.user, projects: state.projects, selectedProject: state.selectedProject }),
     },
   ),
 );

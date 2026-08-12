@@ -5,15 +5,17 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import ProjectIcon from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
-import { useProjectStore } from "../../store/useProjectStore";
-import "./ProjectListAuthed.css";
+import {useProjectStore, type Project} from "../../store/useProjectStore";
 
+import {formatDateFr} from "../../utils/toFrenchDateFormat";
+
+import "./ProjectListAuthed.css";
 
 
 export default function ProjectListAuthed() {
   
   const navigate = useNavigate();
-  const { user, projects, isLoading, error, fetchUserProjects, logout } =
+  const { user, projects, isLoading, error, fetchUserProjects, logout, setSelectedProject } =
   useProjectStore();
   
   const handleExit = () => {
@@ -21,21 +23,23 @@ export default function ProjectListAuthed() {
     navigate("/connexionPage");
   };
 
+  const handleSelectProject = (project : Project) => {
+    setSelectedProject(project);
+    navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
+  };
+
   useEffect(() => {
-    // Si l'utilisateur est bien chargé, on récupère ses projets
-    console.log("🔍 Composant monté. User actuel :", user);
+
     if (user?.id) {
-      console.log("🚀 Lancement de fetchUserProjects...");
       fetchUserProjects();
     } else {
-      console.warn("⚠️ user.id est nul/undefined au montage !");
+      console.warn("user.id est nul/undefined au montage !");
     }
   }, [user?.id, fetchUserProjects]);
 
   console.log(isLoading);
   console.log(error);
   console.log(projects.length);
-  // ... reste du composant
 
   return (
     <div className="projectListAuthedContainer">
@@ -65,7 +69,7 @@ export default function ProjectListAuthed() {
           >
             <div className="projectListAuthedIconeAndSelectButtonContainer">
               <Icone SrcIcone={ProjectIcon} styleType={StyleType.style4} />
-              <button className="projectListAuthedProjectSelectButton">
+              <button className="projectListAuthedProjectSelectButton" onClick={() => handleSelectProject(project)}>
                 Sélectionner
               </button>
             </div>
@@ -74,7 +78,7 @@ export default function ProjectListAuthed() {
             </h3>
             <div className="projectListAuthedProjectInfoContainer">
               <Icone SrcIcone={FilledPoint} />
-              <p>{project.projectDate}</p>
+              <p>{formatDateFr(project.projectDate)}</p>
             </div>
           </div>
         ))}
@@ -84,7 +88,7 @@ export default function ProjectListAuthed() {
         type="button"
         styleClassName="btnStyle11"
         mainClassName="projectListAuthedExitButton"
-        text="Se Déconnecter"
+        text="Déconnexion"
         onClick={handleExit}
       />
     </div>

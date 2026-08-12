@@ -12,17 +12,24 @@ import OptionnalMission from "../../assets/icones/optionnalMission.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 import Icone from "../../components/Icones/Icone";
 
+import { useProjectStore } from "../../store/useProjectStore";
+import {formatDateFr} from "../../utils/toFrenchDateFormat";
+
+
 console.log(Checked);
 
 export default function HomePage() {
+
+  const { selectedProject } = useProjectStore();
+
   return (
     <div className="homePageContainer">
       <div className="homePageProjectTitleContainer">
-        <h1 className="homePageProjectTitle">Battle Infinity</h1>
+        <h1 className="homePageProjectTitle">{selectedProject?.name || "Aucun projet sélectionné"}</h1>
         <div className="homePageProjectInfoContainer">
-          <p>CCVA Villeurbanne</p>
+          <p>Lieu à déterminer</p>
           <Icone SrcIcone={FilledPoint}/>
-          <p>12 juin 2026</p>
+          <p>{formatDateFr(selectedProject?.projectDate) || "Aucun projet sélectionné"}</p>
         </div>
       </div>
       <div className="homePageFigureContainer">
