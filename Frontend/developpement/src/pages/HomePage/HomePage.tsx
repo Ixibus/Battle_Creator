@@ -13,10 +13,9 @@ import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 import Icone from "../../components/Icones/Icone";
 
 import { useProjectStore } from "../../store/useProjectStore";
-import {formatDateFr} from "../../utils/toFrenchDateFormat";
+import { formatDateFr } from "../../utils/toFrenchDateFormat";
 
 
-console.log(Checked);
 
 export default function HomePage() {
 

@@ -6,10 +6,13 @@ import Project from "../../assets/icones/project.svg?react";
 import Mission from "../../assets/icones/mandatoryMission.svg?react";
 import Logout from "../../assets/icones/logout.svg?react";
 import { useNavigate } from "react-router-dom";
+import { useProjectStore } from "../../store/useProjectStore";
+
 
 export default function Nav() {
 
   const navigate = useNavigate();
+  const {user} = useProjectStore();
 
   function navHandler(nav : string) {
     nav==="homePage" && navigate("/homePage");
@@ -38,7 +41,7 @@ export default function Nav() {
   return (
     <div className="navContainerStyle">
       <div className="greetingContainer">
-        <p className="greetingtext">Hello Nico</p>
+        <p className="greetingtext">{user?.login}</p>
         <div className="nicoPpStyle" />
       </div>
       <div className="navigationNavContainer">
