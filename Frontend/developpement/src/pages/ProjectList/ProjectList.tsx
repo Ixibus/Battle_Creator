@@ -3,73 +3,75 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import Project from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
+import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
+
+import {formatDateFr} from "../../utils/toFrenchDateFormat";
+
 import "./ProjectList.css";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+
 export default function ProjectList() {
+
+  const navigate = useNavigate();
+
+
+  const { user, projects, isLoading, error, fetchUserProjects, setSelectedProject } =
+  useProjectStore();
+
+  const handleSelectProject = (project : ProjectType) => {
+    console.log("hit")
+    setSelectedProject(project);
+    navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
+  };
+
+  useEffect(() => {
+
+    if (user?.id) {
+      fetchUserProjects();
+    } else {
+      console.warn("user.id est nul/undefined au montage !");
+    }
+  }, [user?.id, fetchUserProjects]);
+
   return (
     <div className="projectListContainer">
       <div className="projectListGreetingContainer">
         <div className="projectListNicoPpStyle" />
-        <p className="projectListGreetingtext">Nico</p>
+        <p className="projectListGreetingtext">{user?.login || "Utilisateur"}</p>
       </div>
       <h2 className="projectListTitle">Vos projets</h2>
+
+      {isLoading && <p>Chargement de vos projets...</p>}
+      {error && <p className="formErrorMessageStyle">{error}</p>}
+
+      {!isLoading && !error && projects.length === 0 && (
+        <p>Aucun projet trouvé.</p>
+      )}
+
       <div className="projectListProjectsContainer">
-        <div className="projectListProjectContainer projectListProject1Style">
+        {projects.map((project, index) => (
+
+        <div key={project.id || index}
+            className={`projectListAuthedProjectContainer projectListAuthedProject${
+              (index % 4) + 1
+            }Style`}>
           <div className="projectListIconeAndSelectButtonContainer">
             <Icone SrcIcone={Project} styleType={StyleType.style4} />
-            <button className="projectListProjectSelectButton">
+            <button className="projectListProjectSelectButton" onClick={() => handleSelectProject(project)}>
               Sélectionner
             </button>
           </div>
-          <h3 className="projectListTitleProject">Battle Infinity</h3>
-          <div className="projectListProjectInfoContainer">
-            <p>CCVA Villeurbanne</p>
+          <h3 className="projectListTitleProject">{project.name}</h3>
+          <div className="projectListProjectInfoContainer" >
+            <p>Lieu à définir</p>
             <Icone SrcIcone={FilledPoint} />
-            <p>12 juin 2026</p>
+            <p>{formatDateFr(project.projectDate)}</p>
           </div>
         </div>
-        <div className="projectListProjectContainer projectListProject2Style">
-          <div className="projectListIconeAndSelectButtonContainer">
-            <Icone SrcIcone={Project} styleType={StyleType.style4} />
-            <button className="projectListProjectSelectButton">
-              Sélectionner
-            </button>
-          </div>
-          <h3 className="projectListTitleProject">Flavorous</h3>
-          <div className="projectListProjectInfoContainer">
-            <p>Champ de Foire - Bordeaux</p>
-            <Icone SrcIcone={FilledPoint} />
-            <p>10 août 2025</p>
-          </div>
-        </div>
-        <div className="projectListProjectContainer projectListProject3Style">
-          <div className="projectListIconeAndSelectButtonContainer">
-            <Icone SrcIcone={Project} styleType={StyleType.style4} />
-            <button className="projectListProjectSelectButton">
-              Sélectionner
-            </button>
-          </div>
-          <h3 className="projectListTitleProject">Summer dance</h3>
-          <div className="projectListProjectInfoContainer">
-            <p>Paradiso - Amsterdam</p>
-            <Icone SrcIcone={FilledPoint} />
-            <p>4 février 2024</p>
-          </div>
-        </div>
-        <div className="projectListProjectContainer projectListProject4Style">
-          <div className="projectListIconeAndSelectButtonContainer">
-            <Icone SrcIcone={Project} styleType={StyleType.style4} />
-            <button className="projectListProjectSelectButton">
-              Sélectionner
-            </button>
-          </div>
-          <h3 className="projectListTitleProject">Whothebest</h3>
-          <div className="projectListProjectInfoContainer">
-            <p>Orion Arena - Rome</p>
-            <Icone SrcIcone={FilledPoint} />
-            <p>17 Décembre 2023</p>
-          </div>
-        </div>
+        ))}
       </div>
       <NextButton
         nav={-1}

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Project = {
+export type ProjectType = {
   id: number;
   name: string;
   projectDate: string;
@@ -15,12 +15,12 @@ export type User = {
 
 type ProjectStore = {
   user: User | null;
-  projects: Project[];
-  selectedProject : Project | null;
+  projects: ProjectType[];
+  selectedProject : ProjectType | null;
   isLoading: boolean;
   error: string | null;
   setUser: (user: User | null) => void;
-  setSelectedProject : (project : Project | null) => void;
+  setSelectedProject : (project : ProjectType | null) => void;
   fetchUserProjects: () => Promise<void>;
   logout: () => void;
 };

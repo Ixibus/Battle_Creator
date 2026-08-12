@@ -5,7 +5,7 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import ProjectIcon from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
-import {useProjectStore, type Project} from "../../store/useProjectStore";
+import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
 
 import {formatDateFr} from "../../utils/toFrenchDateFormat";
 
@@ -23,7 +23,7 @@ export default function ProjectListAuthed() {
     navigate("/connexionPage");
   };
 
-  const handleSelectProject = (project : Project) => {
+  const handleSelectProject = (project : ProjectType) => {
     setSelectedProject(project);
     navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
   };
@@ -77,6 +77,7 @@ export default function ProjectListAuthed() {
               {project.name}
             </h3>
             <div className="projectListAuthedProjectInfoContainer">
+              <p>lieu à définir</p>
               <Icone SrcIcone={FilledPoint} />
               <p>{formatDateFr(project.projectDate)}</p>
             </div>
