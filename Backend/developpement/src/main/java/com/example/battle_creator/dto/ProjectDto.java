@@ -16,6 +16,13 @@ public class ProjectDto {
     )
     private String projectName;
 
+    @NotBlank(message = "Le lieu est obligatoire")
+    @Size(
+        max = 100,
+        message = "Le nom du lieu ne doit pas dépasser 100 caractères."
+    )
+    private String location;
+
     @NotNull(message = "La date du projet est obligatoire.")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectDate;
@@ -44,6 +51,14 @@ public class ProjectDto {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getLocation() { 
+        return location; 
+    }
+
+    public void setLocation(String location) { 
+        this.location = location; 
     }
 
     public LocalDate getProjectDate() {

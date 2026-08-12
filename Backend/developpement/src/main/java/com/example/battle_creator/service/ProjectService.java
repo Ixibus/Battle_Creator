@@ -14,6 +14,8 @@ import java.util.Optional;
 @Service
 public class ProjectService {
 
+    private static final String DEFAULT_LOCATION = "Lieu à définir";
+
     private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {
@@ -38,6 +40,13 @@ public class ProjectService {
         project.setName(
             cleanText(projectDto.getProjectName())
         );
+
+        String locationInput = projectDto.getLocation();
+        if (locationInput != null && !locationInput.trim().isEmpty()) {
+            project.setLocation(cleanText(locationInput));
+        } else {
+            project.setLocation(DEFAULT_LOCATION);
+        }
 
         project.setProjectDate(
             projectDto.getProjectDate()
@@ -67,6 +76,13 @@ public class ProjectService {
         existingProject.setName(
             cleanText(projectDto.getProjectName())
         );
+
+        String locationInput = projectDto.getLocation();
+        if (locationInput != null && !locationInput.trim().isEmpty()) {
+            existingProject.setLocation(cleanText(locationInput));
+        } else {
+            existingProject.setLocation(DEFAULT_LOCATION);
+        }
 
         existingProject.setProjectDate(
             projectDto.getProjectDate()
