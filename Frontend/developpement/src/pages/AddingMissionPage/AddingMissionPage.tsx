@@ -1,9 +1,9 @@
+import "./addingMissionPage.css";
 
 import "../../styles/form/formStyle.css";
 import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/formError.css";
 import "../../styles/global/btnStyle.css";
-import "./addingMissionPage.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,8 @@ import AreaTextContainer, {
 
 import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
+import { useProjectStore } from "../../store/useProjectStore";
+import { useMissionStore, type MissionType } from "../../store/useMissionStore";
 
 type TouchedFields = {
   missionName: boolean;
@@ -35,6 +37,10 @@ export default function AddingMissionPage() {
   const [description, setDescription] = useState("");
 
   const showToast = useToastStore((state) => state.showToast);
+  
+  // Récupération du projet sélectionné et de l'action Zustand
+  const { selectedProject } = useProjectStore();
+  const { addMission } = useMissionStore();
 
   const [touched, setTouched] = useState<TouchedFields>({
     missionName: false,
@@ -61,12 +67,22 @@ export default function AddingMissionPage() {
       return;
     }
 
+    // Vérification qu'un projet est bien sélectionné avant de créer la mission
+    if (!selectedProject?.id) {
+      showToast(
+        "Aucun projet n'est actuellement sélectionné pour y rattacher la mission",
+        "error"
+      );
+      return;
+    }
+
     const finalDatas = {
       type: "option",
-      isDefault: "false",
+      isDefault: false,
       missionName: missionName.trim(),
       missionGoal: goal.trim(),
       missionDescription: description.trim(),
+      projectId: selectedProject.id,
     };
 
     try {
@@ -78,11 +94,13 @@ export default function AddingMissionPage() {
         body: JSON.stringify(finalDatas),
       });
 
-      const responseData = await res.json();
+      const responseData: MissionType = await res.json();
 
       if (!res.ok) {
+        console.log(res.json());
+        console.log(responseData.id);
         showToast(
-          responseData.message ||
+          (responseData as any).message ||
             "Une erreur est survenue lors de la création de la mission",
           "error"
         );
@@ -96,6 +114,9 @@ export default function AddingMissionPage() {
         );
         return;
       }
+
+      // Synchronisation directe avec le store Zustand
+      addMission(responseData);
 
       showToast("La mission a été créée avec succès", "success");
       handleClear();
@@ -208,7 +229,7 @@ export default function AddingMissionPage() {
             )}
           </div>
 
-          {/* Boutons de validation / effacement */}
+          {/* Boutons */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"

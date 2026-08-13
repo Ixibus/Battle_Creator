@@ -12,6 +12,7 @@ import OverlayedWarning from "../../components/OverlayedWarning/OverlayedWarning
 import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
 
 import { useToastStore } from "../../store/toastStore";
+import { useMissionStore } from "../../store/useMissionStore"; // 👈 Import du store Mission
 
 export default function MissionPage() {
   interface Task {
@@ -29,7 +30,11 @@ export default function MissionPage() {
     taskIdAssigned: number;
   }
 
-  const { id, memberId } = useParams();
+  const { id } = useParams();
+  const { selectedMission } = useMissionStore();
+
+  // Récupération dynamique de l'ID (depuis l'URL ou le store Zustand)
+  const activeMissionId = id || (selectedMission?.id ? String(selectedMission.id) : null);
 
   const [objResponse, setObjResponse] = useState<any>();
 
@@ -53,15 +58,15 @@ export default function MissionPage() {
 
   const [memberAssigned, setMemberAssigned] = useState<Member>();
 
-
-  const [checkedTask, setCheckedTask] = useState(false);
-
   const showToast = useToastStore((state) => state.showToast);
 
+  // Rechargement dès que l'ID actif change
   useEffect(() => {
-    loadMission();
-    loadMissionTasks();
-  }, [id]);
+    if (activeMissionId) {
+      loadMission(activeMissionId);
+      loadMissionTasks(activeMissionId);
+    }
+  }, [activeMissionId]);
 
   async function getErrorMessage(
     res: Response,
@@ -82,9 +87,9 @@ export default function MissionPage() {
     }
   }
 
-  async function loadMission() {
+  async function loadMission(missionId: string) {
     try {
-      const res = await fetch(`http://localhost:8080/missions/${id}`, {
+      const res = await fetch(`http://localhost:8080/missions/${missionId}`, {
         credentials: "include",
         method: "GET",
         headers: {
@@ -113,9 +118,9 @@ export default function MissionPage() {
     }
   }
 
-  async function loadMissionTasks() {
+  async function loadMissionTasks(missionId: string) {
     try {
-      const res = await fetch(`http://localhost:8080/tasks/mission/${id}`, {
+      const res = await fetch(`http://localhost:8080/tasks/mission/${missionId}`, {
         credentials: "include",
         method: "GET",
         headers: {
@@ -149,88 +154,87 @@ export default function MissionPage() {
   }, [missionTasks]);
 
   async function deleteTaskHandler(taskId: number | undefined) {
-  if (!taskId) {
-    showToast("La tâche à supprimer est introuvable.", "error");
-    return;
-  }
-
-  try {
-    const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      showToast(
-        await getErrorMessage(
-          res,
-          "La suppression de la tâche a échoué.",
-        ),
-        "error",
-      );
-      return;
-    }
-
-    setMissionTasks((state) =>
-      state.filter((task) => task.id !== taskId),
-    );
-
-    showToast(`La tâche "${taskToBeDeletedObject?.taskName}" a bien été supprimée`, "success");
-    
-    setTaskToBeDeletedObject(undefined);
-  } catch {
-    showToast(
-      "Impossible de contacter le serveur pour supprimer la tâche.",
-      "error",
-    );
-  }
-}
-
-useEffect(() => {
-  async function taskMemberIdAssignment() {
-    if (!memberAssigned || !taskToBeAssignedObject?.id) {
+    if (!taskId) {
+      showToast("La tâche à supprimer est introuvable.", "error");
       return;
     }
 
     try {
-      const res = await fetch(
-        `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            memberId: memberAssigned.id,
-          }),
+      const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+      });
 
       if (!res.ok) {
         showToast(
           await getErrorMessage(
             res,
-            "L'assignation du bénévole à la tâche a échoué.",
+            "La suppression de la tâche a échoué.",
           ),
           "error",
         );
         return;
       }
 
-      await loadMissionTasks();
+      setMissionTasks((state) =>
+        state.filter((task) => task.id !== taskId),
+      );
+
+      showToast(`La tâche "${taskToBeDeletedObject?.taskName}" a bien été supprimée`, "success");
+      
+      setTaskToBeDeletedObject(undefined);
     } catch {
       showToast(
-        "Impossible de contacter le serveur pour assigner le bénévole.",
+        "Impossible de contacter le serveur pour supprimer la tâche.",
         "error",
       );
     }
   }
 
-  taskMemberIdAssignment();
-}, [memberAssigned, taskToBeAssignedObject?.id]);
+  useEffect(() => {
+    async function taskMemberIdAssignment() {
+      if (!memberAssigned || !taskToBeAssignedObject?.id || !activeMissionId) {
+        return;
+      }
 
+      try {
+        const res = await fetch(
+          `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              memberId: memberAssigned.id,
+            }),
+          },
+        );
+
+        if (!res.ok) {
+          showToast(
+            await getErrorMessage(
+              res,
+              "L'assignation du bénévole à la tâche a échoué.",
+            ),
+            "error",
+          );
+          return;
+        }
+
+        await loadMissionTasks(activeMissionId);
+      } catch {
+        showToast(
+          "Impossible de contacter le serveur pour assigner le bénévole.",
+          "error",
+        );
+      }
+    }
+
+    taskMemberIdAssignment();
+  }, [memberAssigned, taskToBeAssignedObject?.id, activeMissionId]);
 
   return (
     <div
@@ -347,11 +351,11 @@ useEffect(() => {
               setShowAddTaskPage(true);
             }}
           />
-          {showAddTaskPage && (
+          {showAddTaskPage && activeMissionId && (
             <AddingTaskPage
               onClose={() => setShowAddTaskPage(false)}
-              missionId={id}
-              onTaskCreated={loadMissionTasks}
+              missionId={activeMissionId}
+              onTaskCreated={() => loadMissionTasks(activeMissionId)}
             />
           )}
           {showDisplayOverlayedWarningComponentPage && (
@@ -363,7 +367,7 @@ useEffect(() => {
               }}
               onClose={() => {
                 setShowDisplayOverlayedWarningComponent(false);
-                setTaskToBeDeletedObject(() => {});
+                setTaskToBeDeletedObject(undefined);
               }}
             />
           )}
