@@ -47,12 +47,13 @@ import TaskAssignmentPage from "./pages/TaskAssignmentPage/TaskAssignmentPage";
 import OverlayedWarning from "./components/OverlayedWarning/OverlayedWarning";
 import { ToastContainer } from "./components/toast/Toast";
 import MissionList from "./pages/MissionList/MissionList";
+import ProjectListAuthed from "./pages/ProjectListAuthed/ProjectListAuthed";
 
 function RootLayout() {
   return (
     <>
       <Outlet />
-      <div className="toastMessage" style={{whiteSpace: "pre-line"}}>
+      <div className="toastMessage" style={{ whiteSpace: "pre-line" }}>
         <ToastContainer />
       </div>
     </>
@@ -85,21 +86,25 @@ const router = createBrowserRouter([
           },
           {
             path: "/projectCreation",
-            element: <ProjectCreation/>,
+            element: <ProjectCreation />,
           },
           {
             path: "/onboardingMandatoryMissions",
-            element: <OnboardingMandatoryMissions/>,
+            element: <OnboardingMandatoryMissions />,
           },
           {
             path: "/onboardingOptionalMissions",
-            element: <OnboardingOptionalMissions/>,
+            element: <OnboardingOptionalMissions />,
           },
         ],
       },
       {
         // element: <ProtectedRoute />,
         children: [
+          {
+            path: "/projectListAuthed",
+            element: <ProjectListAuthed />,
+          },
           {
             element: <Layout />,
             children: [
@@ -112,15 +117,15 @@ const router = createBrowserRouter([
                 element: <AddingMissionPage />,
               },
               {
-                path:"/missionPage/:id",
+                path: "/missionPage/:id",
                 element: <MissionPage />,
               },
               {
-                path:"/addingTaskPage",
+                path: "/addingTaskPage",
                 element: <AddingTaskPage />,
               },
               {
-                path:"/taskAssignmentPage",
+                path: "/taskAssignmentPage",
                 element: <TaskAssignmentPage />,
               },
               {

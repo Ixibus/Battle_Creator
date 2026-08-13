@@ -26,6 +26,7 @@ import { useStepStore } from "../../store/useStepStore";
 
 type TouchedFields = {
   projectName: boolean;
+  projectLocation:boolean;
   projectDate: boolean;
   projectDescription: boolean;
 };
@@ -35,13 +36,15 @@ export default function ProjectCreation() {
 
 
   const [projectName, setProjectName] = useState("");
+  const [projectLocation, setProjectLocation] = useState("");
   const [projectDate, setProjectDate] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
+  // const [errorMessage, setErrorMessage] = useState("");
 
   const [touched, setTouched] = useState<TouchedFields>({
     projectName: false,
+    projectLocation: false,
     projectDate: false,
     projectDescription: false,
   });
@@ -58,6 +61,7 @@ export default function ProjectCreation() {
   // console.log("newAccountId :", newAccountId);
 
   const isProjectNameEmpty = projectName.trim() === "";
+  const isProjectLocationEmpty = projectLocation.trim() === "";
   const isProjectDateEmpty = projectDate.trim() === "";
   const isProjectDescriptionEmpty = projectDescription.trim() === "";
 
@@ -66,6 +70,7 @@ export default function ProjectCreation() {
 
   const hasError =
     isProjectNameEmpty ||
+    isProjectLocationEmpty ||
     isProjectDateEmpty ||
     isProjectDateInThePast ||
     isProjectDescriptionEmpty;
@@ -84,25 +89,26 @@ export default function ProjectCreation() {
     return `${year}-${month}-${day}`;
   }
 
-  function clearProjectNameError() {
+  function clearProjectNameErrorIfTyping() {
     setServerProjectNameError("");
   }
 
-  function clearErrorIfTyping() {
-    if (errorMessage) {
-      setErrorMessage("");
-    }
-  }
+  // function clearProjectDescriptionErrorIfTyping() {
+  //   if (errorMessage) {
+  //     setErrorMessage("");
+  //   }
+  // }
 
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setErrorMessage("");
+    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
     setTouched({
       projectName: true,
+      projectLocation: true,
       projectDate: true,
       projectDescription: true,
     });
@@ -127,6 +133,7 @@ export default function ProjectCreation() {
         },
         body: JSON.stringify({
           projectName: projectName.trim(),
+          projectLocation: projectLocation.trim(),
           projectDate,
           projectDescription: projectDescription.trim(),
           ownerId: Number(newAccountId),
@@ -134,6 +141,7 @@ export default function ProjectCreation() {
       });
 
       const responseData = await response.json();
+      
 
       if (!response.ok) {
         if (responseData.error === "PROJECT_NAME_ALREADY_USED") {
@@ -178,22 +186,24 @@ export default function ProjectCreation() {
         handleClear();
         navigate("/onboardingMandatoryMissions");
       }
-    } catch {
-      showToast("Impossible de contacter le serveur.", "error");
+    } catch (err: any) {
+      showToast(`Impossible de contacter le serveur${err.message}`, "error");
     }
   }
 
   function handleClear() {
     setProjectName("");
+    setProjectLocation("");
     setProjectDate("");
     setProjectDescription("");
 
-    setErrorMessage("");
+    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
     setTouched({
       projectName: false,
+      projectLocation: false,
       projectDate: false,
       projectDescription: false,
     });
@@ -214,7 +224,7 @@ export default function ProjectCreation() {
           value={projectName}
           onChange={(e) => {
             setProjectName(e.target.value);
-            clearProjectNameError();
+            clearProjectNameErrorIfTyping();
           }}
           onBlur={() =>
             setTouched((state) => ({
@@ -240,8 +250,36 @@ export default function ProjectCreation() {
           )}
         </div>
 
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="lieu du déroulement"
+          htmlFor="projectLocation"
+          type="text"
+          value={projectLocation}
+          onChange={(e) => {
+            setProjectLocation(e.target.value);
+          }}
+          onBlur={() =>
+            setTouched((state) => ({
+              ...state,
+              projectLocation: true,
+            }))
+          }
+          hasError={(touched.projectLocation && isProjectLocationEmpty)}
+        />
+
+        <div className="errorSlot">
+          {touched.projectLocation && isProjectLocationEmpty && (
+            <p className="formErrorMessageStyle">
+              Merci de renseigner le lieu du déroulement du projet
+            </p>
+          )}
+
+        </div>
+
         <DateInputContainer
-          labelName="Déroulement du projet"
+          labelName="Date du déroulement du projet"
           htmlFor="projectDate"
           value={projectDate}
           onChange={(e) => {
@@ -289,7 +327,7 @@ export default function ProjectCreation() {
           value={projectDescription}
           onChange={(e) => {
             setProjectDescription(e.target.value);
-            clearErrorIfTyping();
+            // clearProjectDescriptionErrorIfTyping();
           }}
           onBlur={() =>
             setTouched((state) => ({
@@ -308,11 +346,11 @@ export default function ProjectCreation() {
           )}
         </div>
 
-        <div className="errorSlot">
+        {/* <div className="errorSlot">
           {errorMessage && (
             <p className="formErrorMessageStyle">{errorMessage}</p>
           )}
-        </div>
+        </div> */}
 
         <div className="buttonsContainerStyle">
           <NextButton

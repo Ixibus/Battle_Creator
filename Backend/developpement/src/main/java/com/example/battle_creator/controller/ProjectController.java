@@ -54,6 +54,13 @@ public class ProjectController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+
+    @GetMapping("/user/{ownerId}")
+    public ResponseEntity<List<Project>> getProjectsByOwnerId(@PathVariable Long ownerId) {
+        List<Project> projects = projectService.getByOwnerId(ownerId);
+        return ResponseEntity.ok(projects);
+    }
+
     @PostMapping
     public ResponseEntity<?> createProject(
         @Valid @RequestBody ProjectDto projectDto

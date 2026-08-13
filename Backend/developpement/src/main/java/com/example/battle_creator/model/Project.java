@@ -22,6 +22,9 @@ public class Project {
     )
     private String name;
 
+    @Column(name = "location", nullable = false, length = 100, columnDefinition = "VARCHAR(100) DEFAULT 'Lieu à définir'")
+    private String location = "Lieu à définir";
+
     @Column(name = "project_date", nullable = false)
     private LocalDate projectDate;
 
@@ -57,6 +60,14 @@ public class Project {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLocation() { 
+        return location; 
+    }
+
+    public void setLocation(String location) { 
+        this.location = location; 
     }
 
     public LocalDate getProjectDate() {

@@ -94,9 +94,14 @@ public class AuthentificationController {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
 
+                User user = userRepository.findByLogin(authRequestDto.getLogin()).orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
                 Map<String, Object> authData = new HashMap<>();
                 String tokenGenerated = jwtUtils.generateToken(authRequestDto.getLogin());
 
+
+                authData.put("id", user.getId());
+                authData.put("login", user.getLogin());
                 authData.put("token", tokenGenerated);
                 authData.put("type", "Bearer");
 
@@ -126,6 +131,20 @@ public class AuthentificationController {
 
         System.out.println("authentication succeeded");
         return ResponseEntity.ok("connexion autorisée");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        ResponseCookie cookie = ResponseCookie.from("token", "")
+            .maxAge(0)
+            .httpOnly(true)
+            .secure(false)
+            .path("/")
+            .build();
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.SET_COOKIE, cookie.toString())
+            .body("Déconnexion réussie");
     }
 
 //    @GetMapping("/test")
