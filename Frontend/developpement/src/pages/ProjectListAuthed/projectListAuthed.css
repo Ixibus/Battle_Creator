@@ -54,6 +54,7 @@
     border-radius: var(--border-radius1);
     padding: var(--cel-padding);
     display: flex;
+    height: fit-content;
     flex-direction: column;
     justify-content: flex-end;
     font-size: 0.6em;
@@ -83,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: auto;
+    margin-bottom: 30px;
 }
 
 .projectListAuthedProjectSelectButton{

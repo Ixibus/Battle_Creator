@@ -9,7 +9,7 @@ import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
 
 import {formatDateFr} from "../../utils/toFrenchDateFormat";
 
-import "./ProjectListAuthed.css";
+import "./projectListAuthed.css";
 
 
 export default function ProjectListAuthed() {

@@ -7,7 +7,7 @@ import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
 
 import {formatDateFr} from "../../utils/toFrenchDateFormat";
 
-import "./ProjectList.css";
+import "./projectList.css";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
