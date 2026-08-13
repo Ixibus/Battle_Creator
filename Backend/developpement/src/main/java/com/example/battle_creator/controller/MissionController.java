@@ -32,6 +32,11 @@ public class MissionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<Mission>> getMissionsByProjectId(@PathVariable Long projectId) {
+        return ResponseEntity.ok(missionService.getByProjectId(projectId));
+    } 
+
     @PostMapping
     public ResponseEntity<Mission> createMission(@Valid @RequestBody MissionDto missionDto) {
         System.out.println("méthode du controller : createMission");

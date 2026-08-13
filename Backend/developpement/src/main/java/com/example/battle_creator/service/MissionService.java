@@ -1,8 +1,11 @@
 package com.example.battle_creator.service;
 
 import com.example.battle_creator.model.Mission;
+import com.example.battle_creator.model.Project;
 import com.example.battle_creator.dto.MissionDto;
+import com.example.battle_creator.mapper.MissionMapper;
 import com.example.battle_creator.repository.MissionRepository;
+import com.example.battle_creator.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +16,12 @@ import java.util.Optional;
 public class MissionService {
 
     private final MissionRepository missionRepository;
+    private final ProjectRepository projectRepository;
 
 
-    public MissionService(MissionRepository missionRepository) {
+    public MissionService(MissionRepository missionRepository, ProjectRepository projectRepository) {
         this.missionRepository = missionRepository;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -26,8 +31,12 @@ public class MissionService {
 
     public Optional<Mission> getById(Long id) {
         validateId(id);
-
         return missionRepository.findById(id);
+    }
+
+    public List<Mission> getByProjectId(Long projectId) {
+        validateId(projectId);
+        return missionRepository.findByProjectId(projectId);
     }
 
     @Transactional
@@ -36,16 +45,7 @@ public class MissionService {
         validateMissionDto(missionDto);
 
         Mission mission = new Mission();
-        mission.setType(missionDto.getType());
-        mission.setIsDefault(missionDto.getIsDefault());
-        mission.setName(cleanText(missionDto.getName()));
-        mission.setGoal(cleanText(missionDto.getGoal()));
-
-        if (missionDto.getDescription() != null && !missionDto.getDescription().isBlank()) {
-          mission.setDescription(cleanText(missionDto.getDescription()));
-        } else {
-            mission.setDescription(null);
-        };
+        MissionMapper.mapDtoToEntity(missionDto, mission, projectRepository);
 
         return missionRepository.save(mission);
     }
@@ -57,16 +57,7 @@ public class MissionService {
 
         Mission existingMission = missionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("L'id de la mission est introuvable"));
 
-        existingMission.setType(missionDto.getType());
-        existingMission.setIsDefault(missionDto.getIsDefault());
-        existingMission.setName(cleanText(missionDto.getName()));
-        existingMission.setGoal(cleanText(missionDto.getGoal()));
-
-        if (missionDto.getDescription() != null && !missionDto.getDescription().isBlank()) {
-            existingMission.setDescription(cleanText(missionDto.getDescription()));
-        } else {
-            existingMission.setDescription(null);
-        }
+        MissionMapper.mapDtoToEntity(missionDto, existingMission, projectRepository);
 
         return missionRepository.save(existingMission);
     }
@@ -101,10 +92,6 @@ public class MissionService {
         if (missionDto.getGoal() == null || missionDto.getGoal().isBlank()) {
             throw new IllegalArgumentException("le but de la mission n'est pas renseigné");
         }
-    }
-
-    private String cleanText(String text) {
-        return text.trim().replaceAll("\\s+", " ");
     }
 
 }

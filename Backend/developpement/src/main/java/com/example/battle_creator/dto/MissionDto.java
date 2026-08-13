@@ -1,6 +1,6 @@
 package com.example.battle_creator.dto;
 
-import com.example.battle_creator.model.Mission;
+import com.example.battle_creator.model.Mission.MissionType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MissionDto {
 
-    private Long id;
+    // private Long id;
 
     @NotNull(message = "merci de choisir un type")
-    private Mission.MissionType type;
+    private MissionType type;
 
     @NotNull(message = "merci de préciser si la mission est par défaut ou non")
     private Boolean isDefault;
@@ -30,10 +30,12 @@ public class MissionDto {
     @JsonProperty("missionDescription")
     private String description;
 
+    private Long projectId;
+
     public MissionDto(){};
 
-    public MissionDto(Long id, Mission.MissionType type, boolean isDefault, String name, String goal, String description) {
-        this.id = id;
+    public MissionDto(MissionType type, Boolean isDefault, String name, String goal, String description) {
+        // this.id = id;
         this.type = type;
         this.isDefault = isDefault;
         this.name = name;
@@ -41,30 +43,34 @@ public class MissionDto {
         this.description = description;
     }
 
-    public Long getId() {
-        return this.id;
-    }
-    public Mission.MissionType getType() {
-        return this.type;
+    // public Long getId() {
+    //     return this.id;
+    // }
+    public MissionType getType() {
+        return type;
     }
     public Boolean getIsDefault() {
-        return this.isDefault;
+        return isDefault;
     }
     public String getName() {
-        return this.name;
+        return name;
     }
     public String getGoal() {
-        return this.goal;
+        return goal;
     }
     public String getDescription() {
-        return this.description;
+        return description;
+    }
+    
+    public Long getProjectId() { 
+        return projectId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // public void setId(Long id) {
+    //     this.id = id;
+    // }
 
-    public void setType(Mission.MissionType type) {
+    public void setType(MissionType type) {
         this.type = type;
     }
 
@@ -82,6 +88,10 @@ public class MissionDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }
 

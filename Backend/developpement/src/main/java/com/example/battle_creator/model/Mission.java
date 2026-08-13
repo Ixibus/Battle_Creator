@@ -1,5 +1,6 @@
 package com.example.battle_creator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -31,47 +32,33 @@ public class Mission {
     @Column(name = "description")
     private String description;
 
-    public Mission(){};
+    // Clé étrangère vers Project
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_project", foreignKey = @ForeignKey(name = "fk_missions_projects_id"))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Évite les soucis de sérialisation JSON
+    private Project project;
 
-//    // Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
-//    public Mission(Long id, MissionType type, boolean isDefault, String name, String goal, String description){
-//        this.id = id;
-//        this.type = type;
-//        this.isDefault = isDefault;
-//        this.name = name;
-//        this.goal = goal;
-//        this.description = description;
-//    };
+    public Mission() {}
 
+    // Getters et Setters
+    public Long getId() { return this.id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId(){
-        return this.id;
-    }
+    public MissionType getType() { return this.type; }
+    public void setType(MissionType type) { this.type = type; }
 
-    public MissionType getType() {
-        return this.type;
-    }
+    public boolean getIsDefault() { return this.isDefault; }
+    public void setIsDefault(boolean isDefault) { this.isDefault = isDefault; }
 
-    public boolean getIsDefault() {
-        return this.isDefault;
-    }
+    public String getName() { return this.name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName(){
-        return this.name;
-    }
+    public String getGoal() { return this.goal; }
+    public void setGoal(String goal) { this.goal = goal; }
 
-    public String getGoal(){
-        return this.goal;
-    }
+    public String getDescription() { return this.description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public String getDescription(){
-        return this.description;
-    }
-
-    public void setId(Long id){ this.id = id;}
-    public void setType(MissionType type){ this.type = type;}
-    public void setIsDefault(boolean isDefault){ this.isDefault = isDefault;}
-    public void setName(String name){ this.name = name;}
-    public void setGoal(String goal){ this.goal = goal;}
-    public void setDescription(String description){ this.description = description;}
+    public Project getProject() { return this.project; }
+    public void setProject(Project project) { this.project = project; }
 }
