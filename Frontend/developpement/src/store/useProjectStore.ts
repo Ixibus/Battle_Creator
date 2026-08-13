@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export type ProjectType = {
   id: number;
   name: string;
+  location: string;
   projectDate: string;
   description: string;
 };

@@ -77,7 +77,7 @@ export default function ProjectListAuthed() {
               {project.name}
             </h3>
             <div className="projectListAuthedProjectInfoContainer">
-              <p>lieu à définir</p>
+              <p>{project.location}</p>
               <Icone SrcIcone={FilledPoint} />
               <p>{formatDateFr(project.projectDate)}</p>
             </div>

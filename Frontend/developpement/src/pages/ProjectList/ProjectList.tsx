@@ -66,7 +66,7 @@ export default function ProjectList() {
           </div>
           <h3 className="projectListTitleProject">{project.name}</h3>
           <div className="projectListProjectInfoContainer" >
-            <p>Lieu à définir</p>
+            <p>{project.location}</p>
             <Icone SrcIcone={FilledPoint} />
             <p>{formatDateFr(project.projectDate)}</p>
           </div>

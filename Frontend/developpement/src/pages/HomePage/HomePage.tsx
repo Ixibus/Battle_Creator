@@ -26,7 +26,7 @@ export default function HomePage() {
       <div className="homePageProjectTitleContainer">
         <h1 className="homePageProjectTitle">{selectedProject?.name || "Aucun projet sélectionné"}</h1>
         <div className="homePageProjectInfoContainer">
-          <p>Lieu à déterminer</p>
+          <p>{selectedProject?.location}</p>
           <Icone SrcIcone={FilledPoint}/>
           <p>{formatDateFr(selectedProject?.projectDate) || "Aucun projet sélectionné"}</p>
         </div>
