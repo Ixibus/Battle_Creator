@@ -1,9 +1,9 @@
-import "./addingMissionPage.css";
 
 import "../../styles/form/formStyle.css";
 import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/formError.css";
 import "../../styles/global/btnStyle.css";
+import "./addingMissionPage.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,12 @@ import AreaTextContainer, {
 import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
 
+type TouchedFields = {
+  missionName: boolean;
+  goal: boolean;
+  description: boolean;
+};
+
 export default function AddingMissionPage() {
   const navigate = useNavigate();
 
@@ -28,15 +34,9 @@ export default function AddingMissionPage() {
   const [goal, setGoal] = useState("");
   const [description, setDescription] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const showToast = useToastStore((state) => state.showToast);
 
-  const [touched, setTouched] = useState<{
-    missionName: boolean;
-    goal: boolean;
-    description: boolean;
-  }>({
+  const [touched, setTouched] = useState<TouchedFields>({
     missionName: false,
     goal: false,
     description: false,
@@ -48,16 +48,8 @@ export default function AddingMissionPage() {
 
   const hasError = isMissionNameEmpty || isGoalEmpty || isDescriptionEmpty;
 
-  function clearErrorIfTyping() {
-    if (errorMessage) {
-      setErrorMessage("");
-    }
-  }
-
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    setErrorMessage("");
 
     setTouched({
       missionName: true,
@@ -66,19 +58,15 @@ export default function AddingMissionPage() {
     });
 
     if (hasError) {
-  showToast(
-    "Merci de remplir tous les champs obligatoires",
-    "error",
-  );
-  return;
-}
+      return;
+    }
 
     const finalDatas = {
       type: "option",
       isDefault: "false",
-      missionName,
-      missionGoal: goal,
-      missionDescription: description,
+      missionName: missionName.trim(),
+      missionGoal: goal.trim(),
+      missionDescription: description.trim(),
     };
 
     try {
@@ -90,24 +78,35 @@ export default function AddingMissionPage() {
         body: JSON.stringify(finalDatas),
       });
 
+      const responseData = await res.json();
+
       if (!res.ok) {
-      showToast("Une erreur est survenue lors de la création de la mission", "error");
-        return;
-      }
-
-      const createdMission = await res.json();
-
-      if (!createdMission.id) {
         showToast(
-          "La mission a été créée, mais son identifiant est introuvable", "error"
+          responseData.message ||
+            "Une erreur est survenue lors de la création de la mission",
+          "error"
         );
         return;
       }
 
-      showToast("la mission a été créée avec succès", "success");
-      navigate(`/missionPage/${createdMission.id}`);
-    } catch (error) {
-      showToast("Impossible de contacter le serveur", "error");
+      if (!responseData.id) {
+        showToast(
+          "La mission a été créée, mais son identifiant est introuvable",
+          "error"
+        );
+        return;
+      }
+
+      showToast("La mission a été créée avec succès", "success");
+      handleClear();
+      navigate(`/missionPage/${responseData.id}`);
+    } catch (err: any) {
+      showToast(
+        `Impossible de contacter le serveur${
+          err?.message ? ` : ${err.message}` : ""
+        }`,
+        "error"
+      );
     }
   }
 
@@ -115,7 +114,6 @@ export default function AddingMissionPage() {
     setMissionName("");
     setGoal("");
     setDescription("");
-    setErrorMessage("");
 
     setTouched({
       missionName: false,
@@ -130,6 +128,7 @@ export default function AddingMissionPage() {
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
 
         <div className="inputsFormContainerStyle">
+          {/* Nom de la mission */}
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la mission"
@@ -137,10 +136,7 @@ export default function AddingMissionPage() {
             htmlFor="missionName"
             type="text"
             value={missionName}
-            onChange={(e) => {
-              setMissionName(e.target.value);
-              clearErrorIfTyping();
-            }}
+            onChange={(e) => setMissionName(e.target.value)}
             onBlur={() =>
               setTouched((state) => ({
                 ...state,
@@ -150,6 +146,15 @@ export default function AddingMissionPage() {
             hasError={touched.missionName && isMissionNameEmpty}
           />
 
+          <div className="errorSlot">
+            {touched.missionName && isMissionNameEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner le nom de la mission
+              </p>
+            )}
+          </div>
+
+          {/* Objectif de la mission */}
           <AreaTextContainer
             htmlFor="missionGoal"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -158,10 +163,7 @@ export default function AddingMissionPage() {
             cols={35}
             rows={2}
             value={goal}
-            onChange={(e) => {
-              setGoal(e.target.value);
-              clearErrorIfTyping();
-            }}
+            onChange={(e) => setGoal(e.target.value)}
             onBlur={() =>
               setTouched((state) => ({
                 ...state,
@@ -171,6 +173,15 @@ export default function AddingMissionPage() {
             hasError={touched.goal && isGoalEmpty}
           />
 
+          <div className="errorSlot">
+            {touched.goal && isGoalEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner l'objectif de la mission
+              </p>
+            )}
+          </div>
+
+          {/* Description de la mission */}
           <AreaTextContainer
             htmlFor="missionDescription"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -179,10 +190,7 @@ export default function AddingMissionPage() {
             cols={35}
             rows={10}
             value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-              clearErrorIfTyping();
-            }}
+            onChange={(e) => setDescription(e.target.value)}
             onBlur={() =>
               setTouched((state) => ({
                 ...state,
@@ -193,11 +201,14 @@ export default function AddingMissionPage() {
           />
 
           <div className="errorSlot">
-            {errorMessage && (
-              <p className="formErrorMessageStyle">{errorMessage}</p>
+            {touched.description && isDescriptionEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de décrire la mission
+              </p>
             )}
           </div>
 
+          {/* Boutons de validation / effacement */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"
@@ -207,11 +218,10 @@ export default function AddingMissionPage() {
             />
 
             <NextButton
-              nav={-1}
               type="button"
               styleClassName="btnStyle11"
               mainClassName="SubmitBtn_AccountCreation"
-              text="Quitter"
+              text="Effacer"
               onClick={handleClear}
             />
           </div>

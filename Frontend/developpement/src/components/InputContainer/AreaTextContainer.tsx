@@ -4,7 +4,6 @@ import "../../styles/global/textAreaStyle.css";
 
 import type { ChangeEventHandler, FocusEventHandler } from "react";
 
-type InputType = "text" | "password" | "email";
 
 export enum AreaLabelStyle {
   style1 = "inputLabelStyle",

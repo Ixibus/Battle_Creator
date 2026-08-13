@@ -1,5 +1,6 @@
 .inputItemStyle {
     background: var(--backgroundColor7);
+    border: var(--border1);
     border-radius: var(--border-radius2);
     height: 30px;
     width: 100%;
@@ -8,6 +9,7 @@
 
 .inputItemStyle2 {
     background: var(--backgroundColor7);
+    border: var(--border1);
     border-radius: var(--border-radius2);
     height: 40px;
     width: fit-content;
@@ -22,4 +24,8 @@
     width: 100%;
     padding: 5px 15px;
     text-align: center;
+}
+
+.inputItemStyle3:focus {
+    border-color: var(--border-color1);
 }
