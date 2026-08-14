@@ -40,7 +40,7 @@ export default function AddingMissionPage() {
   
   // Récupération du projet sélectionné et de l'action Zustand
   const { selectedProject } = useProjectStore();
-  const { addMission } = useMissionStore();
+  const { addMission, setSelectedMission } = useMissionStore();
 
   const [touched, setTouched] = useState<TouchedFields>({
     missionName: false,
@@ -117,6 +117,7 @@ export default function AddingMissionPage() {
 
       // Synchronisation directe avec le store Zustand
       addMission(responseData);
+      setSelectedMission(responseData); 
 
       showToast("La mission a été créée avec succès", "success");
       handleClear();

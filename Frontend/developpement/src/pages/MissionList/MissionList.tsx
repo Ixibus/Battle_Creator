@@ -19,24 +19,29 @@ export default function MissionList() {
     isLoading,
     error,
     fetchMissionsByProject,
-    setSelectedMission,
     selectedMission,
+    setSelectedMission,
   } = useMissionStore();
 
   const { selectedProject } = useProjectStore();
 
-  // 1. Sélectionner une mission et aller directement sur MissionPage
+  // 1. Sélection d'une NOUVELLE mission : on met à jour le store + navigation
   const handleSelectMission = (mission: MissionType) => {
     setSelectedMission(mission);
     navigate(`/missionPage/${mission.id}`);
   };
 
-  // 2. Gestion du bouton "Quitter" pour retourner sur la page de mission
+  // 2. Bouton "Quitter" : Retourne sur la MissionPage courante SI elle existe toujours, sinon sur HomePage
   const handleQuit = () => {
-    if (selectedMission?.id) {
+    const isMissionStillValid = missions.some(
+      (m) => m.id === selectedMission?.id,
+    );
+
+    if (selectedMission?.id && isMissionStillValid) {
       navigate(`/missionPage/${selectedMission.id}`);
     } else {
-      navigate(-1);
+      // Si aucune mission n'était sélectionnée ou si la mission a été supprimée en BDD
+      navigate("/homePage");
     }
   };
 
@@ -46,11 +51,23 @@ export default function MissionList() {
     }
   }, [selectedProject?.id, fetchMissionsByProject]);
 
+  useEffect(() => {
+    // On ne nettoie QUE si le chargement est terminé ET qu'il y a des missions chargées
+    if (!isLoading && missions.length > 0 && selectedMission) {
+      const exists = missions.some((m) => m.id === selectedMission.id);
+      if (!exists) {
+        setSelectedMission(null);
+      }
+    }
+  }, [missions, isLoading, selectedMission, setSelectedMission]);
+
   return (
     <div className="missionListContainer">
       <div className="missionListGreetingContainer">
         <div className="missionListNicoPpStyle" />
-        <p className="missionListGreetingtext">{user?.login || "Utilisateur"}</p>
+        <p className="missionListGreetingtext">
+          {user?.login || "Utilisateur"}
+        </p>
       </div>
 
       <h2 className="missionListTitle">

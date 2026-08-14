@@ -6,13 +6,13 @@ import MaterialTag from "../../components/MaterialTag/MaterialTag";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
 import TaskAndAssignmentContainer from "../../components/TaskAndAssignmentContainer/TaskAndAssignmentContainer";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AddingTaskPage from "../AddingTaskPage/AddingTaskPage";
 import OverlayedWarning from "../../components/OverlayedWarning/OverlayedWarning";
 import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
 
 import { useToastStore } from "../../store/toastStore";
-import { useMissionStore } from "../../store/useMissionStore"; // 👈 Import du store Mission
+import { useMissionStore } from "../../store/useMissionStore";
 
 export default function MissionPage() {
   interface Task {
@@ -31,10 +31,12 @@ export default function MissionPage() {
   }
 
   const { id } = useParams();
-  const { selectedMission } = useMissionStore();
+  const { selectedMission, setSelectedMission } = useMissionStore();
+  const navigate = useNavigate();
 
   // Récupération dynamique de l'ID (depuis l'URL ou le store Zustand)
   const activeMissionId = id || (selectedMission?.id ? String(selectedMission.id) : null);
+  
 
   const [objResponse, setObjResponse] = useState<any>();
 
@@ -98,18 +100,15 @@ export default function MissionPage() {
       });
 
       if (!res.ok) {
-        showToast(
-          await getErrorMessage(
-            res,
-            "Impossible de charger les informations de la mission.",
-          ),
-          "error",
-        );
+        showToast("Cette mission n'existe plus", "error");
+        setSelectedMission(null);
+        navigate("/homePage");
         return;
       }
 
       const response = await res.json();
       setObjResponse(response);
+      setSelectedMission(response);
     } catch {
       showToast(
         "Impossible de contacter le serveur pour charger la mission.",
