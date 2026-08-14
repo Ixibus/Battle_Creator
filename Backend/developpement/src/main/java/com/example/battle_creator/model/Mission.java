@@ -1,6 +1,6 @@
 package com.example.battle_creator.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -35,7 +35,7 @@ public class Mission {
     // Clé étrangère vers Project
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_project", foreignKey = @ForeignKey(name = "fk_missions_projects_id"))
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Évite les soucis de sérialisation JSON
+    @JsonIgnore
     private Project project;
 
     public Mission() {}
