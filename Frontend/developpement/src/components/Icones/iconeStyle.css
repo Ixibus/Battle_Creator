@@ -56,3 +56,15 @@
     fill: var(--fontColor5);
 }
 
+
+.iconeStyle9 {
+    margin-left: auto;
+    fill: var(--fontColor4);
+    padding: 10px;
+    height: 25px;
+    border-radius: var(--border-radius2);
+    width: fit-content;
+    padding: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}

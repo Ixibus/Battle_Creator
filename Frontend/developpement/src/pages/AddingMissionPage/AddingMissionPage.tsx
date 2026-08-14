@@ -8,6 +8,9 @@ import "../../styles/global/btnStyle.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Cross from "../../assets/icones/crossCancelor.svg?react";
+
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
@@ -22,6 +25,7 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
 import { useProjectStore } from "../../store/useProjectStore";
 import { useMissionStore, type MissionType } from "../../store/useMissionStore";
+import Icone, {StyleType} from "../../components/Icones/Icone";
 
 type TouchedFields = {
   missionName: boolean;
@@ -146,6 +150,9 @@ export default function AddingMissionPage() {
 
   return (
     <div className="addingMissionPageStyle">
+      <Icone SrcIcone={Cross} styleType={StyleType.style9} onClick={() => {
+        handleClear;
+        navigate(-1)}} />
       <form className="formStyle2" onSubmit={handleSubmit}>
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
 

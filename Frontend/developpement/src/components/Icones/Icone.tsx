@@ -9,6 +9,7 @@ export enum StyleType {
   style6 = "iconeStyle6",
   style7 = "iconeStyle7",
   style8 = "iconeStyle8",
+  style9 = "iconeStyle9",
 }
 
 

@@ -1,6 +1,7 @@
 import NextButton from "../../components/Button/NextButton/NextButton";
 import Icone, { StyleType } from "../../components/Icones/Icone";
 import Mission from "../../assets/icones/optionnalMission.svg?react";
+import Arrow from "../../assets/icones/forwardArrow.svg?react";
 
 import { useMissionStore, type MissionType } from "../../store/useMissionStore";
 import { useProjectStore } from "../../store/useProjectStore";
@@ -9,6 +10,7 @@ import "./missionList.css";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import PlusButton from "../../components/Button/PlusButton/PlusButton";
 
 export default function MissionList() {
   const navigate = useNavigate();
@@ -63,16 +65,14 @@ export default function MissionList() {
 
   return (
     <div className="missionListContainer">
-      <div className="missionListGreetingContainer">
-        <div className="missionListNicoPpStyle" />
-        <p className="missionListGreetingtext">
-          {user?.login || "Utilisateur"}
-        </p>
+      <div className="missionListTitleContainer">
+        <h2 className="missionListTitle">Missions personnalisées</h2>
+        <div className="missionListGoalContainerStyle">
+          <div className="btnStyle19 missionListGoalInnerContainerStyle">
+            {selectedProject?.name}
+          </div>
+        </div>
       </div>
-
-      <h2 className="missionListTitle">
-        Missions du projet : {selectedProject?.name || "Projet en cours"}
-      </h2>
 
       {!selectedProject && (
         <p className="formErrorMessageStyle">
@@ -92,22 +92,30 @@ export default function MissionList() {
         {missions.map((mission, index) => (
           <div
             key={mission.id || index}
-            className={`missionListAuthedMissionContainer missionListAuthedMission${
-              (index % 4) + 1
-            }Style`}
+            className="missionListMissionContainer"
+            onClick={() => handleSelectMission(mission)}
           >
-            <div className="missionListIconeAndSelectButtonContainer">
-              <Icone SrcIcone={Mission} styleType={StyleType.style4} />
-              <button
-                className="missionListMissionSelectButton"
-                onClick={() => handleSelectMission(mission)}
-              >
-                Sélectionner
-              </button>
+            <div className="missionListIconeTitleAndGoalContainer">
+              <div className="missionIconeMissionListContainer">
+                <Icone SrcIcone={Mission} styleType={StyleType.style1} />
+              </div>
+              <div className="titleAndGoalMissionContainer">
+                <h3 className="missionListTitleMission">{mission.name}</h3>
+                <p className="missionListGoalMission">{mission.goal}</p>
+              </div>
             </div>
-            <h3 className="missionListTitleMission">{mission.name}</h3>
+            <button className="misionSelectButtonListMissionContainer">
+              <Icone SrcIcone={Arrow} styleType={StyleType.style1} />
+            </button>
           </div>
         ))}
+          <PlusButton
+            topMarginButton="20px"
+            btnStyle="btnStyle14"
+            mainClassName="missionListAddingButton"
+            text="Ajouter une mission personalisée"
+            nav="/addingMissionPage"
+          />
       </div>
 
       <NextButton
