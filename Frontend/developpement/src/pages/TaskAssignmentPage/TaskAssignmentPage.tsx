@@ -7,6 +7,9 @@ import "../../styles/form/formError.css";
 import { useEffect, useState } from "react";
 import { useToastStore } from "../../store/toastStore";
 
+import Icone, { StyleType } from "../../components/Icones/Icone";
+import Cross from "../../assets/icones/crossCancelor.svg?react";
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
@@ -103,7 +106,10 @@ export default function TaskAssignmentPage({
     }));
 
     if (hasErrorNewMember) {
-      showToast("Merci de renseigner le prénom et le nom du bénévole", "error");
+      showToast(
+        "Merci de renseigner les informations du bénévole à créer",
+        "error",
+      );
       return;
     }
 
@@ -151,37 +157,43 @@ export default function TaskAssignmentPage({
         taskIdAssigned: taskToBeAssigned.id,
       };
 
-      showToast(`Bénévole "${createdMember.firstName + " " + createdMember.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `, "success");
+      showToast(
+        `Bénévole "${createdMember.firstName + " " + createdMember.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `,
+        "success",
+      );
       onMemberObject(memberCreatedAndAssigned);
       onClose();
     } catch {
       showToast("Impossible de contacter le serveur", "error");
     }
   }
-  
+
   function handleChooseExistingMember() {
     setTouched((state) => ({
       ...state,
       existingMember: true,
     }));
-    
+
     if (hasErrorExistingMember) {
       showToast("Merci de choisir un bénévole parmi ceux existants", "error");
       return;
     }
-    
+
     if (!taskToBeAssigned) {
       showToast("Aucune tâche n'a été sélectionnée", "error");
       return;
     }
-    
+
     const existingMemberAndAssigned = {
       ...existingMemberObject,
       taskIdAssigned: taskToBeAssigned.id,
     };
-    
+
     onMemberObject(existingMemberAndAssigned);
-    showToast(`Bénévole "${existingMemberObject.firstName + " " + existingMemberObject.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `, "success");
+    showToast(
+      `Bénévole "${existingMemberObject.firstName + " " + existingMemberObject.lastName}" a été créé et assigné à la tâche "${taskToBeAssigned.taskName}" `,
+      "success",
+    );
     onClose();
   }
 
@@ -201,8 +213,16 @@ export default function TaskAssignmentPage({
   }
 
   return (
-    <div className="taskAssignmentPageOverlayStyle">
-      <div className="taskAssignmentPageStyle">
+    <div className="taskAssignmentPageOverlayStyle" onClick={handleClose}>
+      <div
+        className="taskAssignmentPageStyle"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Icone
+          SrcIcone={Cross}
+          styleType={StyleType.style9}
+          onClick={handleClose}
+        />
         {taskToBeAssigned?.memberId === null ? (
           <h1 className="titleFormStyle5">
             {`ASSIGNER LA TACHE : ${taskToBeAssigned?.taskName}`}
@@ -278,6 +298,14 @@ export default function TaskAssignmentPage({
                 </select>
               </div>
 
+              <div className="errorSlot">
+                {touched.existingMember && hasErrorExistingMember && (
+                  <p className="formErrorMessageStyle">
+                    Choisissez un membre bénévole
+                  </p>
+                )}
+              </div>
+
               <NextButton
                 type="button"
                 styleClassName="btnStyle10"
@@ -335,6 +363,14 @@ export default function TaskAssignmentPage({
                     }
                   />
 
+                  <div className="errorSlot">
+                    {touched.firstName && isFirstNameEmpty && (
+                      <p className="formErrorMessageStyle">
+                        Merci de renseigner le prénom
+                      </p>
+                    )}
+                  </div>
+
                   <InputContainer
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName="Nom"
@@ -357,6 +393,14 @@ export default function TaskAssignmentPage({
                     }
                   />
 
+                  <div className="errorSlot">
+                    {touched.lastName && isLastNameEmpty && (
+                      <p className="formErrorMessageStyle">
+                        Merci de renseigner le nom
+                      </p>
+                    )}
+                  </div>
+
                   <NextButton
                     type="submit"
                     styleClassName="btnStyle10"
@@ -369,7 +413,7 @@ export default function TaskAssignmentPage({
           </div>
         </div>
 
-        <div className="buttonsContainerStyle">
+        {/* <div className="buttonsContainerStyle">
           <NextButton
             type="button"
             styleClassName="btnStyle11"
@@ -377,7 +421,7 @@ export default function TaskAssignmentPage({
             text="Quitter"
             onClick={handleClose}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

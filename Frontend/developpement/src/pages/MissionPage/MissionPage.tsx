@@ -1,6 +1,7 @@
 import Icone, { StyleType } from "../../components/Icones/Icone";
 import Item from "../../assets/icones/tools.svg?react";
 import Checked from "../../assets/icones/checked.svg?react";
+import Cross from "../../assets/icones/crossCancelor.svg?react";
 import "./missionPage.css";
 import MaterialTag from "../../components/MaterialTag/MaterialTag";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
@@ -35,8 +36,8 @@ export default function MissionPage() {
   const navigate = useNavigate();
 
   // Récupération dynamique de l'ID (depuis l'URL ou le store Zustand)
-  const activeMissionId = id || (selectedMission?.id ? String(selectedMission.id) : null);
-  
+  const activeMissionId =
+    id || (selectedMission?.id ? String(selectedMission.id) : null);
 
   const [objResponse, setObjResponse] = useState<any>();
 
@@ -119,13 +120,16 @@ export default function MissionPage() {
 
   async function loadMissionTasks(missionId: string) {
     try {
-      const res = await fetch(`http://localhost:8080/tasks/mission/${missionId}`, {
-        credentials: "include",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `http://localhost:8080/tasks/mission/${missionId}`,
+        {
+          credentials: "include",
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (!res.ok) {
         showToast(
@@ -168,21 +172,19 @@ export default function MissionPage() {
 
       if (!res.ok) {
         showToast(
-          await getErrorMessage(
-            res,
-            "La suppression de la tâche a échoué.",
-          ),
+          await getErrorMessage(res, "La suppression de la tâche a échoué."),
           "error",
         );
         return;
       }
 
-      setMissionTasks((state) =>
-        state.filter((task) => task.id !== taskId),
+      setMissionTasks((state) => state.filter((task) => task.id !== taskId));
+
+      showToast(
+        `La tâche "${taskToBeDeletedObject?.taskName}" a bien été supprimée`,
+        "success",
       );
 
-      showToast(`La tâche "${taskToBeDeletedObject?.taskName}" a bien été supprimée`, "success");
-      
       setTaskToBeDeletedObject(undefined);
     } catch {
       showToast(
@@ -245,6 +247,15 @@ export default function MissionPage() {
           : "missionPageContainerStyle"
       }
     >
+      <div style={{ gridColumn: "1 / -1", justifySelf: "end" }}>
+      <Icone
+        SrcIcone={Cross}
+        styleType={StyleType.style9}
+        onClick={() => {
+          navigate(-1);
+        }}
+      />
+      </div>
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
           <h2 className="missionPageMissionTitleStyle">{objResponse?.name}</h2>

@@ -3,32 +3,35 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import Project from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
-import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
+import { useProjectStore, type ProjectType } from "../../store/useProjectStore";
 
-import {formatDateFr} from "../../utils/toFrenchDateFormat";
+import { formatDateFr } from "../../utils/toFrenchDateFormat";
 
 import "./projectList.css";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import PlusButton from "../../components/Button/PlusButton/PlusButton";
 
 export default function ProjectList() {
-
   const navigate = useNavigate();
 
+  const {
+    user,
+    projects,
+    isLoading,
+    error,
+    fetchUserProjects,
+    setSelectedProject,
+  } = useProjectStore();
 
-  const { user, projects, isLoading, error, fetchUserProjects, setSelectedProject } =
-  useProjectStore();
-
-  const handleSelectProject = (project : ProjectType) => {
-    console.log("hit")
+  const handleSelectProject = (project: ProjectType) => {
+    console.log("hit");
     setSelectedProject(project);
     navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
   };
 
   useEffect(() => {
-
     if (user?.id) {
       fetchUserProjects();
     } else {
@@ -40,7 +43,9 @@ export default function ProjectList() {
     <div className="projectListContainer">
       <div className="projectListGreetingContainer">
         <div className="projectListNicoPpStyle" />
-        <p className="projectListGreetingtext">{user?.login || "Utilisateur"}</p>
+        <p className="projectListGreetingtext">
+          {user?.login || "Utilisateur"}
+        </p>
       </div>
       <h2 className="projectListTitle">Vos projets</h2>
 
@@ -53,26 +58,38 @@ export default function ProjectList() {
 
       <div className="projectListProjectsContainer">
         {projects.map((project, index) => (
-
-        <div key={project.id || index}
+          <div
+            key={project.id || index}
             className={`projectListAuthedProjectContainer projectListAuthedProject${
               (index % 4) + 1
-            }Style`}>
-          <div className="projectListIconeAndSelectButtonContainer">
-            <Icone SrcIcone={Project} styleType={StyleType.style4} />
-            <button className="projectListProjectSelectButton" onClick={() => handleSelectProject(project)}>
-              Sélectionner
-            </button>
+            }Style`}
+          >
+            <div className="projectListIconeAndSelectButtonContainer">
+              <Icone SrcIcone={Project} styleType={StyleType.style4} />
+              <button
+                className="projectListProjectSelectButton"
+                onClick={() => handleSelectProject(project)}
+              >
+                Sélectionner
+              </button>
+            </div>
+            <h3 className="projectListTitleProject">{project.name}</h3>
+            <div className="projectListProjectInfoContainer">
+              <p>{project.location}</p>
+              <Icone SrcIcone={FilledPoint} />
+              <p>{formatDateFr(project.projectDate)}</p>
+            </div>
           </div>
-          <h3 className="projectListTitleProject">{project.name}</h3>
-          <div className="projectListProjectInfoContainer" >
-            <p>{project.location}</p>
-            <Icone SrcIcone={FilledPoint} />
-            <p>{formatDateFr(project.projectDate)}</p>
-          </div>
-        </div>
         ))}
       </div>
+
+      <PlusButton
+        topMarginButton="20px"
+        btnStyle="btnStyle14"
+        mainClassName="missionListAddingButton"
+        text="Créer un nouveau projet"
+        nav="/addingNewProject"
+      />
       <NextButton
         nav={-1}
         type="button"

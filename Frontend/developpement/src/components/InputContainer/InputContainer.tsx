@@ -28,6 +28,7 @@ interface InputContainerProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   hasError?: boolean;
+  hasAutoComplete?: boolean;
 }
 
 export default function InputContainer({
@@ -40,7 +41,8 @@ export default function InputContainer({
   type,
   onChange,
   onBlur,
-  hasError = false
+  hasError = false,
+  hasAutoComplete = true
 }: InputContainerProps) {
   return (
     <div className={className}>
@@ -53,6 +55,7 @@ export default function InputContainer({
         id={htmlFor}
         onChange={onChange}
         onBlur={onBlur}
+        autoComplete={hasAutoComplete ? "new-password" : undefined}
       />
     </div>
   );

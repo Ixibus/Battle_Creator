@@ -46,7 +46,7 @@ export default function ProjectListAuthed() {
       <div className="projectListAuthedGreetingContainer">
         <div className="projectListAuthedNicoPpStyle" />
         <p className="projectListAuthedGreetingtext">
-          {user?.login || "Utilisateur"}
+          Bienvenue {user?.login || "Utilisateur"}
         </p>
       </div>
 
@@ -84,7 +84,6 @@ export default function ProjectListAuthed() {
           </div>
         ))}
       </div>
-
       <NextButton
         type="button"
         styleClassName="btnStyle11"

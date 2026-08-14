@@ -68,6 +68,7 @@ export default function AddingMissionPage() {
     });
 
     if (hasError) {
+      showToast("Merci de remplir tous les champs obligatoires", "error");
       return;
     }
 

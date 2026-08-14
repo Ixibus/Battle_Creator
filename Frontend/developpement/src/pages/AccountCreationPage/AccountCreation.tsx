@@ -261,7 +261,8 @@ export default function AccountCreation() {
             hasError={
               (touched.login && isLoginEmpty) || serverFieldErrors.login !== ""
             }
-          />
+            hasAutoComplete={true}
+            />
 
           <div className="errorSlot">
             {touched.login && isLoginEmpty && (
@@ -290,6 +291,7 @@ export default function AccountCreation() {
               (touched.email && (isEmailEmpty || isEmailInvalid)) ||
               serverFieldErrors.email !== ""
             }
+            hasAutoComplete={true}
           />
 
           <div className="errorSlot">

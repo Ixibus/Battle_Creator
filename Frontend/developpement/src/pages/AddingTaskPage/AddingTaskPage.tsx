@@ -54,9 +54,7 @@ export default function AddingTaskPage({
 
   const hasError = isTaskNameEmpty || isTaskDescriptionEmpty;
 
-  async function handleSubmit(
-    e: React.SubmitEvent<HTMLFormElement>,
-  ) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setTouched({
@@ -65,10 +63,7 @@ export default function AddingTaskPage({
     });
 
     if (hasError) {
-      showToast(
-        "Merci de remplir tous les champs obligatoires",
-        "error",
-      );
+      showToast("Merci de remplir tous les champs obligatoires", "error");
       return;
     }
 
@@ -97,18 +92,12 @@ export default function AddingTaskPage({
         return;
       }
 
-      showToast(
-        "La tâche a été ajoutée avec succès",
-        "success",
-      );
+      showToast("La tâche a été ajoutée avec succès", "success");
 
       await onTaskCreated();
       onClose();
     } catch (error) {
-      showToast(
-        "Impossible de contacter le serveur",
-        "error",
-      );
+      showToast("Impossible de contacter le serveur", "error");
     }
   }
 
@@ -126,15 +115,10 @@ export default function AddingTaskPage({
   }
 
   return (
-    <div className="addingTaskPageOverlayStyle">
-      <div className="addingTaskPageStyle">
-        <form
-          className="formStyle2"
-          onSubmit={handleSubmit}
-        >
-          <h1 className="titleFormStyle4">
-            AJOUTER UNE TACHE
-          </h1>
+    <div className="addingTaskPageOverlayStyle" onClick={handleClose}>
+      <div className="addingTaskPageStyle" onClick={(e) => e.stopPropagation()}>
+        <form className="formStyle2" onSubmit={handleSubmit}>
+          <h1 className="titleFormStyle4">AJOUTER UNE TACHE</h1>
 
           <div className="inputsFormContainerStyle">
             <InputContainer
@@ -151,10 +135,15 @@ export default function AddingTaskPage({
                   taskName: true,
                 }))
               }
-              hasError={
-                touched.taskName && isTaskNameEmpty
-              }
+              hasError={touched.taskName && isTaskNameEmpty}
             />
+            <div className="errorSlot">
+              {touched.taskName && isTaskNameEmpty && (
+                <p className="formErrorMessageStyle">
+                  Merci de renseigner le nom de la tâche
+                </p>
+              )}
+            </div>
 
             <AreaTextContainer
               htmlFor="taskDescription"
@@ -164,20 +153,23 @@ export default function AddingTaskPage({
               cols={35}
               rows={2}
               value={taskDescription}
-              onChange={(e) =>
-                setTaskDescription(e.target.value)
-              }
+              onChange={(e) => setTaskDescription(e.target.value)}
               onBlur={() =>
                 setTouched((state) => ({
                   ...state,
                   taskDescription: true,
                 }))
               }
-              hasError={
-                touched.taskDescription &&
-                isTaskDescriptionEmpty
-              }
+              hasError={touched.taskDescription && isTaskDescriptionEmpty}
             />
+
+            <div className="errorSlot">
+              {touched.taskDescription && isTaskDescriptionEmpty && (
+                <p className="formErrorMessageStyle">
+                  Merci de renseigner une description de tâche
+                </p>
+              )}
+            </div>
 
             <div className="addingTaskPageIsLeaderTaskContainer">
               <label
@@ -193,9 +185,7 @@ export default function AddingTaskPage({
                 id="isLeaderTaskCheckbox"
                 className="addingTaskPageIsLeaderTaskCheckboxCheckbox"
                 checked={isLeaderTask}
-                onChange={(e) =>
-                  setIsLeaderTask(e.target.checked)
-                }
+                onChange={(e) => setIsLeaderTask(e.target.checked)}
               />
             </div>
 

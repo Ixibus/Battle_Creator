@@ -1,6 +1,6 @@
 .projectListAuthedContainer{
     /* border: 1px solid red; */
-    height: 750px;
+    height: 100vh;
     width: 40vw;
     margin: auto;
     display: flex;
@@ -14,6 +14,7 @@
 .projectListAuthedGreetingContainer {
     margin: 20px 20px 0;
     display: flex;
+    justify-content: center;
     gap: 10px;
     align-items: center;
 }
@@ -40,7 +41,7 @@
 }
 
 .projectListAuthedProjectsContainer {
-    height: 100%;
+    height: fit-content;
     /* border: 1px solid red; */
     display: grid;
     grid-template-columns: 1fr 1fr ;

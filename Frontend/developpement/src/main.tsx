@@ -31,7 +31,8 @@ import SecondaryThumbnail from "./components/SecondaryThumbnail/SecondaryThumbna
 import Figure2 from "./components/Figure/Figure2";
 import OnboardingLayout from "./layouts/OnboardingLayout";
 import ConnexionPage from "./pages/ConnexionPage/ConnexionPage";
-import FirstLayout from "./layouts/FirstLayout";
+import LandingPageLayout from "./layouts/LandingPageLayout";
+import ConnexionPageLayout from "./layouts/ConnexionPageLayout";
 import ProjectList from "./pages/ProjectList/ProjectList";
 
 import OptionalMission from "./assets/icones/optionnalMission.svg?react";
@@ -48,6 +49,7 @@ import OverlayedWarning from "./components/OverlayedWarning/OverlayedWarning";
 import { ToastContainer } from "./components/toast/Toast";
 import MissionList from "./pages/MissionList/MissionList";
 import ProjectListAuthed from "./pages/ProjectListAuthed/ProjectListAuthed";
+import AddingNewProject from "./pages/AddingNewProject/AddingNewProject";
 
 function RootLayout() {
   return (
@@ -65,12 +67,17 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        element: <FirstLayout />,
+        element: <LandingPageLayout />,
         children: [
           {
             index: true,
             element: <LandingPage />,
           },
+        ],
+      },
+      {
+        element: <ConnexionPageLayout />,
+        children: [
           {
             path: "/connexionPage",
             element: <ConnexionPage />,
@@ -151,6 +158,10 @@ const router = createBrowserRouter([
               {
                 path: "/missionList",
                 element: <MissionList />,
+              },
+              {
+                path: "/addingNewProject",
+                element: <AddingNewProject />,
               },
             ],
           },

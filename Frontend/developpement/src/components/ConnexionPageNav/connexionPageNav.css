@@ -1,0 +1,21 @@
+.connexionPageNavContainerStyle {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.connexionPageNavLogoutContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    background-color: var(--backgroundColor18);
+    border-radius: var(--border-radius2);
+    padding: var(--cel-padding2);
+    cursor: pointer;
+}
+
+.connexionPageNavLogoutText {
+    font-size: var(--font-size3);
+    font-weight: var(--font-weight2);
+    color: var(--fontColor4);
+}
