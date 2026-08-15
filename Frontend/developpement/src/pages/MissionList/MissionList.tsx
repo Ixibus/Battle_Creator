@@ -9,11 +9,15 @@ import { useProjectStore } from "../../store/useProjectStore";
 import "./missionList.css";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
+import AddingMissionPage from "../AddingMissionPage/AddingMissionPage";
 
 export default function MissionList() {
   const navigate = useNavigate();
+
+    const [showAddingMissionPage, setShowAddingMissionPage] =
+      useState<Boolean>(false);
 
   const {
     user,
@@ -64,7 +68,7 @@ export default function MissionList() {
   }, [missions, isLoading, selectedMission, setSelectedMission]);
 
   return (
-    <div className="missionListContainer">
+    <div className={showAddingMissionPage ? "missionListContainer missionListContainerForOverlay" : "missionListContainer"}>
       <div className="missionListTitleContainer">
         <h2 className="missionListTitle">Missions personnalisées</h2>
         <div className="missionListGoalContainerStyle">
@@ -114,7 +118,8 @@ export default function MissionList() {
             btnStyle="btnStyle14"
             mainClassName="missionListAddingButton"
             text="Ajouter une mission personalisée"
-            nav="/addingMissionPage"
+            onClick={() => {
+          setShowAddingMissionPage(true);}}
           />
       </div>
 
@@ -125,6 +130,11 @@ export default function MissionList() {
         mainClassName="missionListExitButton"
         text="Quitter"
       />
+      {
+        showAddingMissionPage && (
+          <AddingMissionPage onClose={() => {setShowAddingMissionPage(false)} }/>
+        )
+      }
     </div>
   );
 }

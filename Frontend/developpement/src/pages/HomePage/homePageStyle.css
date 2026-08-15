@@ -1,4 +1,5 @@
 .homePageContainer {
+    /* border: 1px solid red; */
     width: 1080px;
     display: grid;
     grid-template:
@@ -60,4 +61,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.homePageBackgroundForOverlay{
+    position: relative;
 }

@@ -6,10 +6,9 @@ import "../../styles/form/formError.css";
 import "../../styles/global/btnStyle.css";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Cross from "../../assets/icones/crossCancelor.svg?react";
-
 
 import InputContainer, {
   InputLabelStyle,
@@ -25,7 +24,11 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
 import { useProjectStore } from "../../store/useProjectStore";
 import { useMissionStore, type MissionType } from "../../store/useMissionStore";
-import Icone, {StyleType} from "../../components/Icones/Icone";
+import Icone, { StyleType } from "../../components/Icones/Icone";
+
+interface propsInterface {
+  onClose: () => void;
+}
 
 type TouchedFields = {
   missionName: boolean;
@@ -33,15 +36,16 @@ type TouchedFields = {
   description: boolean;
 };
 
-export default function AddingMissionPage() {
+export default function AddingMissionPage({ onClose }: propsInterface) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [missionName, setMissionName] = useState("");
   const [goal, setGoal] = useState("");
   const [description, setDescription] = useState("");
 
   const showToast = useToastStore((state) => state.showToast);
-  
+
   // Récupération du projet sélectionné et de l'action Zustand
   const { selectedProject } = useProjectStore();
   const { addMission, setSelectedMission } = useMissionStore();
@@ -76,7 +80,7 @@ export default function AddingMissionPage() {
     if (!selectedProject?.id) {
       showToast(
         "Aucun projet n'est actuellement sélectionné pour y rattacher la mission",
-        "error"
+        "error",
       );
       return;
     }
@@ -107,7 +111,7 @@ export default function AddingMissionPage() {
         showToast(
           (responseData as any).message ||
             "Une erreur est survenue lors de la création de la mission",
-          "error"
+          "error",
         );
         return;
       }
@@ -115,24 +119,30 @@ export default function AddingMissionPage() {
       if (!responseData.id) {
         showToast(
           "La mission a été créée, mais son identifiant est introuvable",
-          "error"
+          "error",
         );
         return;
       }
 
       // Synchronisation directe avec le store Zustand
       addMission(responseData);
-      setSelectedMission(responseData); 
+      setSelectedMission(responseData);
 
       showToast("La mission a été créée avec succès", "success");
       handleClear();
-      navigate(`/missionPage/${responseData.id}`);
+      if (location.pathname.endsWith("/homePage") || location.pathname.endsWith("homePage")) {
+        navigate(`/missionPage/${responseData.id}`);
+      } else if (location.pathname.endsWith("missionList")) {
+        onClose();
+      } else {
+        onClose();
+      }
     } catch (err: any) {
       showToast(
         `Impossible de contacter le serveur${
           err?.message ? ` : ${err.message}` : ""
         }`,
-        "error"
+        "error",
       );
     }
   }
@@ -150,11 +160,16 @@ export default function AddingMissionPage() {
   }
 
   return (
-    <div className="addingMissionPageStyle">
-      <Icone SrcIcone={Cross} styleType={StyleType.style9} onClick={() => {
-        handleClear;
-        navigate(-1)}} />
-      <form className="formStyle2" onSubmit={handleSubmit}>
+    <div className="addingMissionPageStyleContainerForOverlay">
+      <form className="formStyle3 addingMissionPageStyle" onSubmit={handleSubmit}>
+      <Icone
+        SrcIcone={Cross}
+        styleType={StyleType.style9}
+        onClick={() => {
+          handleClear();
+          onClose();
+        }}
+      />
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
 
         <div className="inputsFormContainerStyle">

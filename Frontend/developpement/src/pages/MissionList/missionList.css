@@ -95,3 +95,7 @@
 .missionListAddingButton{
     border-radius: var(--border-radius1);
 }
+
+.missionListContainerForOverlay {
+    position: relative;
+}

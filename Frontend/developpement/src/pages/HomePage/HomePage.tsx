@@ -14,21 +14,33 @@ import Icone from "../../components/Icones/Icone";
 
 import { useProjectStore } from "../../store/useProjectStore";
 import { formatDateFr } from "../../utils/toFrenchDateFormat";
-
-
+import { useState } from "react";
+import AddingMissionPage from "../AddingMissionPage/AddingMissionPage";
 
 export default function HomePage() {
-
   const { selectedProject } = useProjectStore();
+  const [showAddingMissionPage, setShowAddingMissionPage] =
+    useState<Boolean>(false);
 
   return (
-    <div className="homePageContainer">
+    <div
+      className={
+        showAddingMissionPage
+          ? "homePageContainer homePageBackgroundForOverlay"
+          : "homePageContainer"
+      }
+    >
       <div className="homePageProjectTitleContainer">
-        <h1 className="homePageProjectTitle">{selectedProject?.name || "Aucun projet sélectionné"}</h1>
+        <h1 className="homePageProjectTitle">
+          {selectedProject?.name || "Aucun projet sélectionné"}
+        </h1>
         <div className="homePageProjectInfoContainer">
           <p>{selectedProject?.location}</p>
-          <Icone SrcIcone={FilledPoint}/>
-          <p>{formatDateFr(selectedProject?.projectDate) || "Aucun projet sélectionné"}</p>
+          <Icone SrcIcone={FilledPoint} />
+          <p>
+            {formatDateFr(selectedProject?.projectDate) ||
+              "Aucun projet sélectionné"}
+          </p>
         </div>
       </div>
       <div className="homePageFigureContainer">
@@ -45,6 +57,9 @@ export default function HomePage() {
           title="MISSIONS OPTIONNELLES"
           isOptional={true}
           icone={OptionnalMission}
+          onClick={() => {
+          setShowAddingMissionPage(true);
+        }}
         />
       </main>
       <div className="secondaryThumbnailsContainer">
@@ -69,6 +84,13 @@ export default function HomePage() {
           buttonText="VOIR LA LISTE"
         />
       </div>
+      {showAddingMissionPage && (
+        <AddingMissionPage
+          onClose={() => {
+            setShowAddingMissionPage(false);
+          }}
+        />
+      )}
     </div>
   );
 }

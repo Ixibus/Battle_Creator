@@ -122,8 +122,6 @@ export default function ProjectList() {
       />
       {showAddingNewProject && (
         <AddingNewProject
-          // taskToBeAssigned={taskToBeAssignedObject}
-          // onMemberObject={(member) => setMemberAssigned(member)}
           onClose={() => {
             setShowAddingNewProject(false);
           }}

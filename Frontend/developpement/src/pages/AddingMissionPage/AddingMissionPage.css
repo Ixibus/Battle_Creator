@@ -1,5 +1,18 @@
-.addingMissionPageStyle{
+.addingMissionPageStyleContainerForOverlay {
+    position: fixed;
+    padding: 15px 20px;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    display: flex;
+    overflow-y: auto;
+}
+
+
+.addingMissionPageStyle {
     padding: 15px 20px;
     border: var(--border1);
     border-radius: var(--border-radius1);
+    
+
 }

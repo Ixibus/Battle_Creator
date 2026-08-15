@@ -13,6 +13,7 @@ interface propsInterface {
   title: string;
   isOptional: boolean;
   icone: React.FC<React.SVGProps<SVGSVGElement>>,
+  onClick?: () => void
 }
 
 const defaultMissionArray = [
@@ -38,7 +39,8 @@ let optionalMissionsArray = [
 export default function MissionTagsThumbnail({
   title,
   isOptional,
-  icone
+  icone,
+  onClick
 }: propsInterface) {
   return (
     <div className="missionThumbnailContainerStyle">
@@ -56,7 +58,7 @@ export default function MissionTagsThumbnail({
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle2"/>
           ))
           }
-          <PlusButton nav="/addingMissionPage" btnStyle="btnStyle12" mainClassName="optionnalMissionNextButton" text="AJOUTER MISSION" topMarginButton="auto"/>
+          <PlusButton onClick={onClick} btnStyle="btnStyle12" mainClassName="optionnalMissionNextButton" text="AJOUTER MISSION" topMarginButton="auto"/>
           </div>
           }
     </div>
