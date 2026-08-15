@@ -5,6 +5,8 @@ import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/formError.css";
 import "../../styles/global/btnStyle.css";
 
+import "./addingNewProject.css";
+
 import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
@@ -17,23 +19,32 @@ import AreaTextContainer, {
 
 import DateInputContainer from "../../components/InputContainer/DateInputContainer";
 import NextButton from "../../components/Button/NextButton/NextButton";
+import Cross from "../../assets/icones/crossCancelor.svg?react";
+
 import { useToastStore } from "../../store/toastStore";
+import Icone, { StyleType } from "../../components/Icones/Icone";
 
 import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
+import { useProjectStore } from "../../store/useProjectStore";
+
+interface propsInterface {
+  onClose: () => void;
+}
 
 type TouchedFields = {
   projectName: boolean;
-  projectLocation:boolean;
+  projectLocation: boolean;
   projectDate: boolean;
   projectDescription: boolean;
 };
 
-export default function AddingNewProject() {
-  const navigate = useNavigate();
+export default function AddingNewProject({ onClose }: propsInterface) {
+  console.log("Props reçues par AddingNewProject:", onClose);
 
+  const navigate = useNavigate();
 
   const [projectName, setProjectName] = useState("");
   const [projectLocation, setProjectLocation] = useState("");
@@ -56,9 +67,7 @@ export default function AddingNewProject() {
 
   const setActiveStep = useStepStore((state) => state.setActiveStep);
 
-  const newAccountId = sessionStorage.getItem("newAccountId");
-
-  // console.log("newAccountId :", newAccountId);
+  const { user } = useProjectStore();
 
   const isProjectNameEmpty = projectName.trim() === "";
   const isProjectLocationEmpty = projectLocation.trim() === "";
@@ -114,14 +123,15 @@ export default function AddingNewProject() {
     });
 
     if (hasError) {
+      showToast("Merci de remplir tous les champs", "error");
       return;
     }
 
     try {
-      if (!newAccountId) {
-        showToast("Veuillez d'abord créer un compte", "error");
+      if (!user?.id) {
+        showToast("Veuillez vous connecter", "error");
 
-        navigate("/accountCreation");
+        navigate("/connexionPage");
         return;
       }
 
@@ -136,12 +146,11 @@ export default function AddingNewProject() {
           projectLocation: projectLocation.trim(),
           projectDate,
           projectDescription: projectDescription.trim(),
-          ownerId: Number(newAccountId),
+          ownerId: Number(user?.id),
         }),
       });
 
       const responseData = await response.json();
-      
 
       if (!response.ok) {
         if (responseData.error === "PROJECT_NAME_ALREADY_USED") {
@@ -181,13 +190,11 @@ export default function AddingNewProject() {
           "success",
         );
 
-        sessionStorage.removeItem("newAccountId");
-
         handleClear();
-        navigate("/onboardingMandatoryMissions");
+        onClose();
       }
     } catch (err: any) {
-      showToast(`Impossible de contacter le serveur${err.message}`, "error");
+      showToast(`Impossible de contacter le serveur ${err.message}`, "error");
     }
   }
 
@@ -210,166 +217,183 @@ export default function AddingNewProject() {
   }
 
   return (
-    <>
-    <form className="formStyle3" onSubmit={handleSubmit}>
-      <h1 className="titleFormStyle">CREATION DE PROJET</h1>
-
-      <div className="inputsFormContainerStyle">
-        <InputContainer
-          inputLabelStyle={InputLabelStyle.style1}
-          inputItemStyle={InputItemStyle.style1}
-          labelName="Veuillez entrer le nom du projet"
-          htmlFor="projectName"
-          type="text"
-          value={projectName}
-          onChange={(e) => {
-            setProjectName(e.target.value);
-            clearProjectNameErrorIfTyping();
-          }}
-          onBlur={() =>
-            setTouched((state) => ({
-              ...state,
-              projectName: true,
-            }))
-          }
-          hasError={
-            (touched.projectName && isProjectNameEmpty) ||
-            serverProjectNameError !== ""
-          }
-        />
-
-        <div className="errorSlot">
-          {touched.projectName && isProjectNameEmpty && (
-            <p className="formErrorMessageStyle">
-              Merci de renseigner le nom du projet
-            </p>
-          )}
-
-          {serverProjectNameError && (
-            <p className="formErrorMessageStyle">{serverProjectNameError}</p>
-          )}
+    <div className="addingNewProjectContainerForOverlay" onClick={onClose}>
+      <form
+        className="formStyle3 addingNewProjectFormContainer"
+        onSubmit={handleSubmit}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="addingNewProjectIconeCrossContainer">
+          <Icone
+            SrcIcone={Cross}
+            styleType={StyleType.style9}
+            onClick={() => {
+              handleClear();
+              onClose();
+            }}
+          />
         </div>
+        <h1 className="titleFormStyle">CREATION DE PROJET</h1>
 
-        <InputContainer
-          inputLabelStyle={InputLabelStyle.style1}
-          inputItemStyle={InputItemStyle.style1}
-          labelName="lieu du déroulement"
-          htmlFor="projectLocation"
-          type="text"
-          value={projectLocation}
-          onChange={(e) => {
-            setProjectLocation(e.target.value);
-          }}
-          onBlur={() =>
-            setTouched((state) => ({
-              ...state,
-              projectLocation: true,
-            }))
-          }
-          hasError={(touched.projectLocation && isProjectLocationEmpty)}
-        />
+        <div className="inputsFormContainerStyle3">
+          <InputContainer
+            className="inputContainerStyle2"
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Veuillez entrer le nom du projet"
+            htmlFor="projectName"
+            type="text"
+            value={projectName}
+            onChange={(e) => {
+              setProjectName(e.target.value);
+              clearProjectNameErrorIfTyping();
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                projectName: true,
+              }))
+            }
+            hasError={
+              (touched.projectName && isProjectNameEmpty) ||
+              serverProjectNameError !== ""
+            }
+          />
 
-        <div className="errorSlot">
-          {touched.projectLocation && isProjectLocationEmpty && (
-            <p className="formErrorMessageStyle">
-              Merci de renseigner le lieu du déroulement du projet
-            </p>
-          )}
+          <div className="errorSlot">
+            {touched.projectName && isProjectNameEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner le nom du projet
+              </p>
+            )}
 
-        </div>
+            {serverProjectNameError && (
+              <p className="formErrorMessageStyle">{serverProjectNameError}</p>
+            )}
+          </div>
 
-        <DateInputContainer
-          labelName="Date du déroulement du projet"
-          htmlFor="projectDate"
-          value={projectDate}
-          onChange={(e) => {
-            setProjectDate(e.target.value);
-            setServerProjectDateError("");
-          }}
-          onBlur={() =>
-            setTouched((state) => ({
-              ...state,
-              projectDate: true,
-            }))
-          }
-          hasError={
-            (touched.projectDate &&
-              (isProjectDateEmpty || isProjectDateInThePast)) ||
-            serverProjectDateError !== ""
-          }
-        />
+          <InputContainer
+            className="inputContainerStyle2"
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="lieu du déroulement"
+            htmlFor="projectLocation"
+            type="text"
+            value={projectLocation}
+            onChange={(e) => {
+              setProjectLocation(e.target.value);
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                projectLocation: true,
+              }))
+            }
+            hasError={touched.projectLocation && isProjectLocationEmpty}
+          />
 
-        <div className="errorSlot">
-          {touched.projectDate && isProjectDateEmpty && (
-            <p className="formErrorMessageStyle">
-              Merci de renseigner la date du projet
-            </p>
-          )}
+          <div className="errorSlot">
+            {touched.projectLocation && isProjectLocationEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner le lieu du déroulement du projet
+              </p>
+            )}
+          </div>
 
-          {touched.projectDate && isProjectDateInThePast && (
-            <p className="formErrorMessageStyle">
-              La date du projet ne peut pas être antérieure à aujourd'hui
-            </p>
-          )}
+          <DateInputContainer
+            className="inputContainerStyle2"
+            labelName="Date du déroulement du projet"
+            htmlFor="projectDate"
+            value={projectDate}
+            onChange={(e) => {
+              setProjectDate(e.target.value);
+              setServerProjectDateError("");
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                projectDate: true,
+              }))
+            }
+            hasError={
+              (touched.projectDate &&
+                (isProjectDateEmpty || isProjectDateInThePast)) ||
+              serverProjectDateError !== ""
+            }
+          />
 
-          {serverProjectDateError && (
-            <p className="formErrorMessageStyle">{serverProjectDateError}</p>
-          )}
-        </div>
+          <div className="errorSlot">
+            {touched.projectDate && isProjectDateEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner la date du projet
+              </p>
+            )}
 
-        <AreaTextContainer
-          areaLabelStyle={AreaLabelStyle.style1}
-          areaTextStyle={AreaTextStyle.style1}
-          htmlFor="projectDescription"
-          labelName="Décrivez votre projet"
-          cols={35}
-          rows={10}
-          value={projectDescription}
-          onChange={(e) => {
-            setProjectDescription(e.target.value);
-            // clearProjectDescriptionErrorIfTyping();
-          }}
-          onBlur={() =>
-            setTouched((state) => ({
-              ...state,
-              projectDescription: true,
-            }))
-          }
-          hasError={touched.projectDescription && isProjectDescriptionEmpty}
-        />
+            {touched.projectDate && isProjectDateInThePast && (
+              <p className="formErrorMessageStyle">
+                La date du projet ne peut pas être antérieure à aujourd'hui
+              </p>
+            )}
 
-        <div className="errorSlot">
-          {touched.projectDescription && isProjectDescriptionEmpty && (
-            <p className="formErrorMessageStyle">
-              Merci de décrire votre projet
-            </p>
-          )}
-        </div>
+            {serverProjectDateError && (
+              <p className="formErrorMessageStyle">{serverProjectDateError}</p>
+            )}
+          </div>
 
-        {/* <div className="errorSlot">
+          <AreaTextContainer
+            className="inputContainerStyle2"
+            areaLabelStyle={AreaLabelStyle.style1}
+            areaTextStyle={AreaTextStyle.style1}
+            htmlFor="projectDescription"
+            labelName="Décrivez votre projet"
+            cols={35}
+            rows={10}
+            value={projectDescription}
+            onChange={(e) => {
+              setProjectDescription(e.target.value);
+              // clearProjectDescriptionErrorIfTyping();
+            }}
+            onBlur={() =>
+              setTouched((state) => ({
+                ...state,
+                projectDescription: true,
+              }))
+            }
+            hasError={touched.projectDescription && isProjectDescriptionEmpty}
+          />
+
+          <div className="errorSlot">
+            {touched.projectDescription && isProjectDescriptionEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de décrire votre projet
+              </p>
+            )}
+          </div>
+
+          {/* <div className="errorSlot">
           {errorMessage && (
             <p className="formErrorMessageStyle">{errorMessage}</p>
           )}
         </div> */}
 
-        <div className="buttonsContainerStyle">
-          <NextButton
-            type="submit"
-            styleClassName="btnStyle10"
-            mainClassName="SubmitBtn_AccountCreation"
-            text="Valider"
-          />
+          <div className="buttonsContainerStyle3">
+            <NextButton
+              type="submit"
+              styleClassName="btnStyle10"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Valider"
+            />
 
-          <NextButton
-            type="button"
-            styleClassName="btnStyle11"
-            mainClassName="SubmitBtn_AccountCreation"
-            text="Effacer"
-            onClick={handleClear}
-          />
+            <NextButton
+              type="button"
+              styleClassName="btnStyle11"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Effacer"
+              onClick={handleClear}
+            />
+          </div>
         </div>
-      </div>
-    </form>
-    </>
+      </form>
+    </div>
   );
 }

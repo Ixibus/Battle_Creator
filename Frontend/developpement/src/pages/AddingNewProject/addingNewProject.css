@@ -1,0 +1,20 @@
+.addingNewProjectContainerForOverlay {
+    position: fixed;
+    padding: 15px 20px;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    display: flex;
+    overflow-y: auto;
+}
+
+.addingNewProjectFormContainer {
+    height: fit-content;
+    border: var(--border1);
+    margin: auto;
+}
+
+.addingNewProjectIconeCrossContainer{
+    margin: auto 20px auto auto ;
+    /* border: 1px solid red; */
+}

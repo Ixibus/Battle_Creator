@@ -10,11 +10,15 @@ import { formatDateFr } from "../../utils/toFrenchDateFormat";
 import "./projectList.css";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PlusButton from "../../components/Button/PlusButton/PlusButton";
+import AddingNewProject from "../AddingNewProject/AddingNewProject";
 
 export default function ProjectList() {
   const navigate = useNavigate();
+
+  const [showAddingNewProject, setShowAddingNewProject] =
+    useState<Boolean>(false);
 
   const {
     user,
@@ -32,15 +36,32 @@ export default function ProjectList() {
   };
 
   useEffect(() => {
+    if (showAddingNewProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showAddingNewProject]);
+
+  useEffect(() => {
     if (user?.id) {
       fetchUserProjects();
     } else {
       console.warn("user.id est nul/undefined au montage !");
     }
-  }, [user?.id, fetchUserProjects]);
+  }, [user?.id, fetchUserProjects, showAddingNewProject]);
 
   return (
-    <div className="projectListContainer">
+    <div
+      className={
+        showAddingNewProject
+          ? "projectListContainer projectListBackgroundForOverlay"
+          : "projectListContainer"
+      }
+    >
       <div className="projectListGreetingContainer">
         <div className="projectListNicoPpStyle" />
         <p className="projectListGreetingtext">
@@ -88,7 +109,9 @@ export default function ProjectList() {
         btnStyle="btnStyle14"
         mainClassName="missionListAddingButton"
         text="Créer un nouveau projet"
-        nav="/addingNewProject"
+        onClick={() => {
+          setShowAddingNewProject(true);
+        }}
       />
       <NextButton
         nav={-1}
@@ -97,6 +120,15 @@ export default function ProjectList() {
         mainClassName="projectListExitButton"
         text="Quitter"
       />
+      {showAddingNewProject && (
+        <AddingNewProject
+          // taskToBeAssigned={taskToBeAssignedObject}
+          // onMemberObject={(member) => setMemberAssigned(member)}
+          onClose={() => {
+            setShowAddingNewProject(false);
+          }}
+        />
+      )}
     </div>
   );
 }
