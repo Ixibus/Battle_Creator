@@ -51,6 +51,18 @@ export default function MissionList() {
     }
   };
 
+  
+  useEffect(() => {
+    if (showAddingMissionPage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showAddingMissionPage]);
+
   useEffect(() => {
     if (selectedProject?.id) {
       fetchMissionsByProject(selectedProject.id);

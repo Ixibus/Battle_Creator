@@ -10,6 +10,8 @@
 
 
 .addingMissionPageStyle {
+    height: fit-content;
+    margin: auto;
     padding: 15px 20px;
     border: var(--border1);
     border-radius: var(--border-radius1);

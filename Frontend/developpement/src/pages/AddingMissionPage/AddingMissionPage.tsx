@@ -160,8 +160,8 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
   }
 
   return (
-    <div className="addingMissionPageStyleContainerForOverlay">
-      <form className="formStyle3 addingMissionPageStyle" onSubmit={handleSubmit}>
+    <div className="addingMissionPageStyleContainerForOverlay" onClick={onClose}>
+      <form className="formStyle3 addingMissionPageStyle" onSubmit={handleSubmit} onClick={(e)=> e.stopPropagation()}>
       <Icone
         SrcIcone={Cross}
         styleType={StyleType.style9}
