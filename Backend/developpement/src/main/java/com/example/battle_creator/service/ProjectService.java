@@ -41,7 +41,7 @@ public class ProjectService {
             cleanText(projectDto.getProjectName())
         );
 
-        String locationInput = projectDto.getLocation();
+        String locationInput = projectDto.getProjectLocation();
         if (locationInput != null && !locationInput.trim().isEmpty()) {
             project.setLocation(cleanText(locationInput));
         } else {
@@ -77,7 +77,7 @@ public class ProjectService {
             cleanText(projectDto.getProjectName())
         );
 
-        String locationInput = projectDto.getLocation();
+        String locationInput = projectDto.getProjectLocation();
         if (locationInput != null && !locationInput.trim().isEmpty()) {
             existingProject.setLocation(cleanText(locationInput));
         } else {
@@ -96,8 +96,8 @@ public class ProjectService {
     }
 
     public List<Project> getByOwnerId(Long ownerId) {
-    validateId(ownerId);
-    return projectRepository.findByOwnerId(ownerId);
+        validateId(ownerId);
+        return projectRepository.findByOwner_Id(ownerId);
     }
 
     public List<Project> getAll() {
@@ -155,7 +155,7 @@ public class ProjectService {
 
         if (projectDto.getOwnerId() == null) {
             throw new IllegalArgumentException(
-            "Le compte propriétaire est obligatoire."
+                "Le compte propriétaire est obligatoire."
             );
         }
     }

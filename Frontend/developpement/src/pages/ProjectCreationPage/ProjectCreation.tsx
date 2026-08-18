@@ -114,6 +114,7 @@ export default function ProjectCreation() {
     });
 
     if (hasError) {
+      showToast("Merci de remplir tous les champs", "error");
       return;
     }
 
@@ -127,7 +128,7 @@ export default function ProjectCreation() {
 
       const response = await fetch("http://localhost:8080/projects", {
         method: "POST",
-        credentials: "include",
+        credentials: "omit",
         headers: {
           "Content-Type": "application/json",
         },
@@ -172,12 +173,14 @@ export default function ProjectCreation() {
           "error",
         );
 
+        console.log(responseData)
+
         return;
       }
 
       if (response.status === 201) {
         showToast(
-          `La création du projet \"${responseData.name}\" a réussi !`,
+          `La création du projet \"${responseData.projectName}\" a réussi !`,
           "success",
         );
 

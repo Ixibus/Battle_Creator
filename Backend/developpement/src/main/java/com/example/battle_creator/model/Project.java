@@ -35,11 +35,8 @@ public class Project {
     )
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(
-        name = "id_users",
-        nullable = false
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_users")
     @JsonIgnore
     private User owner;
 
