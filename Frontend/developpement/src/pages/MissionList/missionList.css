@@ -1,0 +1,101 @@
+.missionListContainer {
+    /* border: 1px solid red; */
+    height: 750px;
+    width: 40vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background: rgba(245, 245, 245, 0.753);
+    border-radius: var(--border-radius2);
+    /* border: 1px solid red; */
+
+}
+
+.missionListTitle {
+    margin-top: 20px;
+    text-align: center;
+    /* border: 1px solid red; */
+    font-size: var(--font-size2);
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+    color: var(--fontColor4);
+}
+
+.missionListGoalContainerStyle{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+}
+
+.missionListGoalInnerContainerStyle{
+    padding: var(--cel-padding2);
+}
+
+.missionListMissionsContainer {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid rgb(0, 255, 13); */
+}
+
+.missionListMissionContainer{
+    margin: var(--cel-margin);
+    padding: var(--cel-padding2);
+    background-color: var(--backgroundColor9);
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+    border-radius: var(--border-radius1);
+    cursor: pointer;
+    
+    /* margin: ; */
+}
+
+.missionListIconeTitleAndGoalContainer {
+    display: flex;
+    gap: 15px;
+    /* border: 1px solid blue; */
+}
+
+.missionListTitleMission{
+    font-size: var(--font-size5);
+    font-weight: var(--font-weight1);
+    color: var(--fontColor4);
+    /* border: 1px solid red; */
+}
+
+.missionListGoalMission{
+    font-size: var(--font-size3);
+    color: var(--fontColor4);
+    /* border: 1px solid red; */
+}
+
+
+.missionIconeMissionListContainer {
+    margin: auto 0;
+    height: fit-content;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.misionSelectButtonListMissionContainer {
+    margin: auto 0;
+    width: 30px;
+    height: 30px;
+    background-color: var(--backgroundColor5);
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+    padding: 5px;
+    border-radius: var(--border-radius2);
+}
+
+.missionListAddingButton{
+    border-radius: var(--border-radius1);
+}
+
+.missionListContainerForOverlay {
+    position: relative;
+}

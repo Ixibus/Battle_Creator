@@ -1,0 +1,106 @@
+.projectListContainer{
+    /* border: 1px solid red; */
+    height: 750px;
+    width: 40vw;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background: rgba(245, 245, 245, 0.753);
+    border-radius: var(--border-radius2);
+}
+
+
+.projectListGreetingContainer {
+    margin: 20px 20px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.projectListGreetingtext {
+    font-weight: var(--font-weight1);
+    font-size: var(--font-size9);
+    color: var(--fontColor4);
+}
+
+.projectListNicoPpStyle {
+    width: 30px;
+    height: 30px;
+    background: url('../../assets/img/Nico.jpg') 1px 0% /cover;
+    border: var(--border1);
+    border-radius: 50%;
+}
+
+.projectListTitle{
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: var(--font-weight1);
+    letter-spacing: var(--letter-spacing1);
+}
+
+.projectListProjectsContainer {
+    /* height: 100%; */
+    /* border: 1px solid red; */
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-auto-rows: 1fr ;
+}
+
+
+.projectListProjectContainer {
+    margin: var(--cel-margin);
+    /* border: var(--border1); */
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 0.6em;
+    font-size: var(--font-size4);
+    font-weight: var(--font-weight1);
+}
+
+.projectListProject1Style{
+    background: var(--backgroundColor7);
+    border-radius: var(--border-radius1);
+    
+}
+.projectListProject2Style{
+    background: var(--backgroundColor4);
+    border-radius: var(--border-radius1);
+}
+.projectListProject3Style{
+    background: var(--backgroundColor11);
+    border-radius: var(--border-radius1);
+}
+.projectListProject4Style{
+    background: var(--backgroundColor12);
+    border-radius: var(--border-radius1);
+}
+
+.projectListIconeAndSelectButtonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.projectListProjectSelectButton{
+    width: fit-content;
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+    padding: 5px 10px;
+    border-radius: var(--border-radius2);
+}
+
+.projectListProjectInfoContainer {
+    /* border: 1px solid red; */
+    font-size: 0.496em;
+    display: flex;
+    align-items: baseline;
+}
+
+.projectListBackgroundForOverlay{
+    position: relative;
+}

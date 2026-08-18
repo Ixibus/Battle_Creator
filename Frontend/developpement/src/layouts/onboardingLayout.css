@@ -1,0 +1,8 @@
+.onboardingLayoutContainer {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    gap: 50px;
+    text-align: center;
+    background: var(--backgroundColor6);
+}

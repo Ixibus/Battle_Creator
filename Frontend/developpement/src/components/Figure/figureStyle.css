@@ -1,0 +1,7 @@
+.figureStyle {
+    padding: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: var(--font-size5);
+    color: var(--fontColor4);
+}

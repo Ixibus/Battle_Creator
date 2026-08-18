@@ -1,0 +1,78 @@
+.addingTaskPageOverlayStyle {
+    position: fixed;
+    padding: 15px 20px;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addingTaskPageStyle {
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    background: var(--backgroundColor15);
+}
+
+
+.addingTaskPageIsLeaderTaskContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 45px 0 30px;
+}
+
+.addingTaskPageIsLeaderTaskCheckboxLabel {
+    color: var(--fontColor4);
+    font-size: var(--font-size7);
+    font-weight: var(--font-weight1);
+    text-align: left;
+}
+
+.addingTaskPageIsLeaderTaskCheckboxCheckbox {
+    width: 15px;
+    height: 15px;
+}
+
+.addingTaskPageLinkingTasksContainer{
+    min-width: max-content;
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.addingTaskPageLinkingTasksTitle {
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--fontColor4);
+    font-size: var(--font-size7);
+    font-weight: var(--font-weight1);
+}
+
+.addingTaskPageLinkingTasksInnerContainer {
+    /* height: 300px; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    /* justify-content: space-around; */
+    width: 100%;
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--inner-input-padding1);
+    font-size: var(--font-size7);
+}
+
+.addingTaskPageLinkingPreviousTaskContainer,
+.addingTaskPageLinkingNextTaskContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.addingTaskPageLinkingPreviousTaskSelect, .addingTaskPageLinkingNextTaskSelect{
+    background: var(--backgroundColor13);
+    border-radius: var(--border-radius3);
+}

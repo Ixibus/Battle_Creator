@@ -1,0 +1,21 @@
+.secondaryThumbnail {
+    --fontColor1: whitesmoke;
+}
+
+.secondaryThumbnailStyle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    height: 125px;
+    padding: var(--cel-padding);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    color: var(--fontColor2);
+    font-size: var(--font-size3);
+}
+
+.secondaryThumbnailTitleStyle{
+    font-weight: var(--font-weight1);
+    color: var(--fontColor4);
+}

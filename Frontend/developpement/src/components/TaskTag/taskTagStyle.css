@@ -1,0 +1,45 @@
+.taskTagStyleContainer {
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+    flex-grow: 1;
+}
+
+.taskTagTitle {
+    margin-right: 10px;
+    flex-grow: 1;
+}
+
+.taskTagCheckedTitle {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+}
+
+.taskTagCheckedTaskBackground {
+    position: relative;
+    z-index: 1;
+    border: 1px solid transparent;
+    background: var(--backgroundColor1);
+}
+
+.taskTagCheckedTaskBackground::before {
+    z-index: 2;
+    position: absolute;
+    content: "";
+    background: rgba(255, 255, 255, 0.5);
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    pointer-events: none;
+}
+
+.taskTagCheckedZindexCheckedIcone{
+    position: absolute;
+    right: 49px;
+    z-index: 1000;
+}
+.taskTagCheckedZindexBinIcone{
+    position: absolute;
+    right: 15px;
+    z-index: 1000;
+}

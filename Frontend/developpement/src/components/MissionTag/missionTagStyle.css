@@ -1,0 +1,20 @@
+.missionTagStyle {
+    padding: 10px;
+    height: 100%;
+    background: var(--backgroundColor10);
+    border-radius: var(--border-radius1);
+    color: var(--fontColor2);
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size1);
+}
+
+.missionTagStyle2 {
+    padding: 6px;
+    background: var(--backgroundColor4);
+    border-radius: var(--border-radius1);
+    color: var(--fontColor2);
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size1);
+}

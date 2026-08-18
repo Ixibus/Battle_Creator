@@ -1,0 +1,27 @@
+.textAreaStyle {
+    padding: 15px;
+    background: var(--backgroundColor7);
+    border: var(--border1);
+    border-radius: var(--border-radius2);
+    width: 100%;
+}
+
+.textAreaStyle2 {
+    padding: 15px;
+    background: var(--backgroundColor5);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    width: 100%;
+}
+
+.textAreaStyle3 {
+    padding: 15px;
+    background: var(--backgroundColor9);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    width: 100%;
+}
+
+.textAreaStyle, .textAreaStyle2, .textAreaStyle3 {
+    resize: vertical;
+}

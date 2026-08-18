@@ -1,0 +1,14 @@
+.assignmentTagStyleContainer{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 7px 15px;
+}
+
+.assignedTaskTagText{
+    text-align: center;
+}
+
+.assignmentTagText{
+    margin-right: 10px;
+}

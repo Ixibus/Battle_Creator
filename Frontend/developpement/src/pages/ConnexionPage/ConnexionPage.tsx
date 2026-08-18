@@ -1,0 +1,171 @@
+import InputContainer, {
+  InputLabelStyle,
+  InputItemStyle,
+} from "../../components/InputContainer/InputContainer";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToastStore } from "../../store/toastStore";
+import { useEffect } from "react";
+import { useProjectStore } from "../../store/useProjectStore";
+import NextButton from "../../components/Button/NextButton/NextButton";
+
+import './connexionPage.css';
+import "../../styles/form/formError.css";
+
+export default function ConnexionPage() {
+  const { logout } = useProjectStore();
+
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [touched, setTouched] = useState<{ login: boolean; password: boolean }>(
+    {
+      login: false,
+      password: false,
+    },
+  );
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const showToast = useToastStore((state) => state.showToast);
+  const setUser = useProjectStore((state) => state.setUser);
+
+  const navigate = useNavigate();
+
+  const isLoginEmpty = login.trim() === "";
+  const isPasswordEmpty = password.trim() === "";
+  const hasError = isLoginEmpty || isPasswordEmpty;
+
+  const clearErrorIfTyping = () => {
+    if (errorMessage) setErrorMessage("");
+    if (invalidCredentials) setInvalidCredentials(false);
+  };
+
+  useEffect(() => {
+    logout();
+  }, [logout]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setErrorMessage("");
+    setInvalidCredentials(false);
+    setTouched({ login: true, password: true });
+
+    if (hasError) return;
+
+    try {
+      const res = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ login, password, isActive: false }),
+      });
+
+      if (res.ok) {
+        const userData = await res.json().catch(() => null);
+
+        // Accepte 'id' OU 'userId' selon la réponse JSON de votre backend
+        const loggedUserId = userData?.id
+
+        setUser({
+          id: loggedUserId,
+          login: userData?.login || login,
+        });
+
+        navigate("/projectListAuthed");
+        return;
+      }
+
+      if (res.status === 401 || res.status === 403) {
+        setInvalidCredentials(true);
+        showToast("Login ou mot de passe incorrect.", "error");
+        return;
+      }
+
+      setErrorMessage("Une erreur est survenue lors de la connexion");
+    } catch {
+      setErrorMessage("Impossible de contacter le serveur");
+    }
+  }
+
+  function handleClear() {
+    setLogin("");
+    setPassword("");
+    setErrorMessage("");
+    setInvalidCredentials(false);
+    setTouched({ login: false, password: false });
+  }
+
+  return (
+    <div className="connexionPageContainer">
+      <form className="formStyle3" onSubmit={handleSubmit} autoComplete="new-password">
+        <h1 className="titleFormStyle">Connexion</h1>
+        <div className="inputsFormContainerStyle">
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Votre login"
+            htmlFor="login"
+            type="text"
+            value={login}
+            onChange={(e) => {
+              setLogin(e.target.value);
+              clearErrorIfTyping();
+            }}
+            onBlur={() => setTouched((s) => ({ ...s, login: true }))}
+            hasError={invalidCredentials || (touched.login && isLoginEmpty)}
+            hasAutoComplete={true}
+            />
+          <div className="errorSlot">
+            {touched.login && isLoginEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner votre login
+              </p>
+            )}
+          </div>
+          <InputContainer
+            inputLabelStyle={InputLabelStyle.style1}
+            inputItemStyle={InputItemStyle.style1}
+            labelName="Votre mot de passe"
+            htmlFor="password"
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              clearErrorIfTyping();
+            }}
+            onBlur={() => setTouched((s) => ({ ...s, password: true }))}
+            hasError={invalidCredentials || (touched.password && isPasswordEmpty)}
+            hasAutoComplete={true}
+          />
+          <div className="errorSlot">
+            {touched.password && isPasswordEmpty && (
+              <p className="formErrorMessageStyle">
+                Merci de renseigner votre mot de passe
+              </p>
+            )}
+          </div>
+          <div className="errorSlot">
+            {errorMessage && (
+              <p className="formErrorMessageStyle">{errorMessage}</p>
+            )}
+          </div>
+          <div className="buttonsContainerStyle">
+            <NextButton
+              type="submit"
+              styleClassName="btnStyle10"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Valider"
+            />
+            <NextButton
+              type="button"
+              styleClassName="btnStyle11"
+              mainClassName="SubmitBtn_AccountCreation"
+              text="Effacer"
+              onClick={handleClear}
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}

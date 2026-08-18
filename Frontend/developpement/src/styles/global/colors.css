@@ -1,0 +1,108 @@
+:root {
+    /* Light theme */
+    --background-light-01: #e8dede;
+    --background-light-02: #e6bcbc;
+    --color-dark-01: #3c3838;
+
+    /* Dark theme */
+    --background-dark-01: #3c3838;
+    --background-dark-02: #8e8484;
+    --color-dark-01: #e8dede;
+
+    /* Background */
+    --backgroundColor1: #e1dbf0;
+    --backgroundColor2: #fdd2d8;
+    --backgroundColor3: #fca4aebe;
+    --backgroundColor4: #D4E4FC;
+    --backgroundColor5: whitesmoke;
+    --backgroundColor6: linear-gradient(90deg, #D4E4FC, #EDDCFF);
+    --backgroundColor7: #e6dcff;
+    --backgroundColor8: #513C71;
+    --backgroundColor9: #cfddf1;
+    --backgroundColor10: #dfd2ff;
+    --backgroundColor11: #EFE680;
+    --backgroundColor12: #BEEECD;
+    --backgroundColor13: #EDDCFF;
+    --backgroundColor14: #fcf7ff;
+    --backgroundColor15: #ffffff;
+    --backgroundColor16: #fcfaff;
+    --backgroundColor17: #dcbaff;
+    --backgroundColor18: rgb(201, 201, 201);
+
+    /* #F8EDFF */
+    
+    /* Item */
+    --itemColor1: #f5d8ff;
+
+    /* Container */
+    --containerColor1: #e7e0ec;
+
+    /* Input */
+    --inputColor1: #e8def8;
+    
+    /* Button */
+    --btnColor1: #6750a4;
+    --btnColor2: #ad9ed7;
+    --btnColor3: #957bdd;
+    --btnColor4: whitesmoke;
+    --btnColor5: crimson;
+    
+    /* Font color */
+    --fontColor1: whitesmoke;
+    --fontColor2: black;
+    --fontColor3: #6A548A;
+    --fontColor4: #513C71;
+    --fontColor5: #afa2c2;
+    --fontColor6: #526770;
+    --fontColor7: rgb(61, 61, 61);
+    --fontColor8: crimson;
+    --fontColor9: #08a600;
+
+    /* Font Size */
+    --font-size1: 0.6rem;
+    --font-size2: 1.5rem;
+    --font-size3: 0.8rem;
+    --font-size4: 1.3rem;
+    --font-size5: 1.1rem;
+    --font-size6: 2.7rem;
+    --font-size7: 0.7rem;
+    --font-size8: 3rem;
+    --font-size9: 1rem;
+
+    /* Font weight */
+    --font-weight1: bolder;
+    --font-weight2: 400;
+    --font-weight3: 300;
+
+    /* Border color */
+    --border-color1: #513C71;
+    --border-color2: #D5BBF9;
+    --border-color3: rgb(223, 223, 223);
+
+    /* Border */
+    --border1: 1px solid var(--border-color1);
+    --border2: 1px solid var(--border-color2);
+    --border3: 1px solid var(--border-color3);
+    --border-radius1: 10px;
+    --border-radius2: 50px;
+    --border-radius3: 5px;
+    
+    /* Margin */
+    --cel-margin: 10px;
+
+    /* Padding */
+    --cel-padding: 15px 20px;
+    --cel-padding2: 5px 10px;
+    --inner-input-padding1: 20px 10px;
+
+    /* Letter-Spacing */
+    --letter-spacing1: 1px;
+}
+
+.backgroundColor9 {
+    background: var(--backgroundColor9);
+}
+
+.backgroundColor10 {
+    background: var(--backgroundColor10);
+}

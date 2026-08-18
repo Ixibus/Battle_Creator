@@ -1,0 +1,68 @@
+.homePageContainer {
+    /* border: 1px solid red; */
+    width: 1080px;
+    display: grid;
+    grid-template:
+    "A A A B" 40% 
+    /* "C C D D" 1fr / 2fr 3fr 1fr 2fr */
+    "C C D D" 1fr / 3fr 3fr 1fr 3fr
+    ;
+    height: 600px;
+}
+
+.homePageProjectTitleContainer {
+    margin: var(--cel-margin);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
+    grid-area: A;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: var(--font-size4);
+    font-weight: var(--font-weight1);
+}
+
+
+.homePageProjectInfoContainer {
+    display: flex;
+    align-items: baseline;
+    font-size: var(--font-size3);
+}
+
+.homePageFigureContainer {
+    margin: var(--cel-margin);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    padding: var(--cel-padding);
+    grid-area: B;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size1);
+    font-weight: var(--font-weight1);
+}
+
+.homePageFigureProgressionText {
+    color: var(--fontColor5);
+    letter-spacing: 1px;
+}
+
+.homePageMainContainer {
+    margin: var(--cel-margin);
+    gap: var(--cel-margin);
+    grid-area: C;
+    display: flex;
+}
+
+.secondaryThumbnailsContainer {
+    margin: var(--cel-margin);
+    gap: var(--cel-margin);
+    grid-area: D;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.homePageBackgroundForOverlay{
+    position: relative;
+}

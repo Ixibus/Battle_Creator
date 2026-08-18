@@ -1,0 +1,121 @@
+.missionPageContainerStyle {
+    width: 80vw;
+    height: 80vh;
+    min-height: fit-content;
+    padding: 15px;
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.missionPageContainerLeftContainerStyle,
+.missionPageContainerRightContainerStyle {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 15px;
+    /* justify-content: space-between; */
+    /* border: 1px red solid; */
+}
+
+.missionPageMissionTitleStyle {
+    letter-spacing: var(--letter-spacing1);
+    color: var(--fontColor4);
+    font-weight: var(--font-weight1);
+    font-size: var(--font-size2);
+}
+
+.missionPageObjectifStyle {
+    font-weight: var(--font-weight2);
+    font-size: var(--font-size3);
+    color: var(--fontColor3);
+}
+
+.missionPageDescriptionContainer {
+    margin-top: 50px;
+}
+
+.missionPageDescriptionTitleStyle {
+    margin-bottom: 10px;
+    letter-spacing: var(--letter-spacing1);
+    color: var(--fontColor4);
+    font-weight: var(--font-weight1);
+    font-size: var(--font-size9);
+}
+
+.missionPageDescriptionStyle {
+    letter-spacing: var(--letter-spacing1);
+    color: var(--fontColor3);
+    font-weight: var(--font-weight3);
+    font-size: var(--font-size9);
+}
+
+.missionPageMaterialsContainerStyle {
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.missionPageMaterialsTitle {
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: var(--letter-spacing1);
+    color: var(--fontColor4);
+    font-weight: var(--font-weight1);
+    font-size: var(--font-size9);
+}
+
+.missionPageMaterialItemsContainerStyle {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 20px;
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+}
+
+.missionPageContainerRightBackgroundStyle{
+    margin: 50px 0;
+    background: var(--backgroundColor14);
+}
+
+.missionPageContainerRightContainerStyle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: fit-content;
+    margin: auto;
+    gap: 10px;
+}
+
+
+/* style du conteneur des tâches (ref: ProjectList.css) */
+
+/* style du conteneur entier */
+.missionPageTasksTitleContainerStyle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    color: var(--fontColor4);
+    font-weight: var(--font-weight1);
+}
+
+/* style de l'infographie du nb de tâches */
+.missionPageTasksnumber {
+    background: var(--backgroundColor13);
+    width: fit-content;
+    font-size: var(--font-size3);
+    letter-spacing: var(--letter-spacing1);
+    padding: 5px 10px;
+    border-radius: var(--border-radius2);
+}
+
+
+/* Affichage ajout d'une tache */
+.missionPageBackgroundDisplay{
+    position: relative;
+}

@@ -1,0 +1,70 @@
+.iconeStyle {
+    height: 20px;
+    margin-left: auto;
+    fill: var(--fontColor5);
+}
+
+.iconeStyle2 {
+    height: 20px;
+    margin: auto;
+    fill: var(--fontColor5);
+}
+
+.iconeStyle3 {
+    height: 20px;
+    margin-left: 10px;
+    fill: var(--fontColor5);
+}
+
+.iconeStyle4 {
+    background: rgba(0, 0, 0, 0.233);
+    padding: 10px;
+    height: 45px;
+    border-radius: var(--border-radius2);
+    width: fit-content;
+    fill: var(--fontColor7);
+}
+
+.iconeStyle5 {
+    height: 20px;
+    margin: auto;
+    fill: var(--fontColor4);
+}
+
+
+.iconeStyle6 {
+    height: 20px;
+    border-radius: 5px;
+    background-color: rgba(97, 184, 97, 0.5);
+    margin-left: 10px;
+    fill: var(--fontColor1);
+    cursor: pointer;
+}
+
+.iconeStyle7 {
+    height: 20px;
+    padding: 1px;
+    border-radius: 5px;
+    background-color: rgba(184, 97, 97, 0.5);
+    margin-left: 10px;
+    fill: var(--fontColor7);
+    cursor: pointer;
+}
+
+.iconeStyle8 {
+    height: 20px;
+    fill: var(--fontColor5);
+}
+
+
+.iconeStyle9 {
+    margin-left: auto;
+    fill: var(--fontColor4);
+    padding: 10px;
+    height: 25px;
+    border-radius: var(--border-radius2);
+    width: fit-content;
+    padding: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}
