@@ -16,6 +16,7 @@ import { useProjectStore } from "../../store/useProjectStore";
 import { formatDateFr } from "../../utils/toFrenchDateFormat";
 import { useState } from "react";
 import AddingMissionPage from "../AddingMissionPage/AddingMissionPage";
+import NextButton from "../../components/Button/NextButton/NextButton";
 
 export default function HomePage() {
   const { selectedProject } = useProjectStore();
@@ -30,17 +31,25 @@ export default function HomePage() {
           : "homePageContainer"
       }
     >
-      <div className="homePageProjectTitleContainer">
-        <h1 className="homePageProjectTitle">
-          {selectedProject?.name || "Aucun projet sélectionné"}
-        </h1>
-        <div className="homePageProjectInfoContainer">
-          <p>{selectedProject?.location}</p>
-          <Icone SrcIcone={FilledPoint} />
-          <p>
-            {formatDateFr(selectedProject?.projectDate) ||
-              "Aucun projet sélectionné"}
-          </p>
+      <div className="homePageProjectContainer">
+        <div className="homePageProjectTitleAndInfoContainer">
+          <h1 className="homePageProjectTitle">
+            {selectedProject?.name || "Aucun projet sélectionné"}
+          </h1>
+          <div className="homePageProjectInfoContainer">
+            <p>{selectedProject?.location}</p>
+            <Icone SrcIcone={FilledPoint} />
+            <p>
+              {formatDateFr(selectedProject?.projectDate) ||
+                "Aucun projet sélectionné"}
+            </p>
+          </div>
+        </div>
+        <div className="homePageProjectTitleProjectDetailsContainer">
+          <NextButton type="button" styleClassName="btnStyle21" mainClassName="homePageProjectContainerDetailsButton" text="Détails"/>
+        </div>
+        <div className="homePageProjectTitleProjectDeletionContainer">
+          <NextButton type="button" styleClassName="btnStyle22" mainClassName="homePageProjectContainerDetailsButton" text="Supprimer"/>
         </div>
       </div>
       <div className="homePageFigureContainer">

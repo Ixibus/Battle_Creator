@@ -112,6 +112,7 @@ export default function AccountCreation() {
     });
 
     if (hasClientError) {
+      showToast("Merci de remplir tous les champs", "error");
       return;
     }
 
