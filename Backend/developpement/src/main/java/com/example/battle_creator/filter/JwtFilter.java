@@ -2,6 +2,7 @@ package com.example.battle_creator.filter;
 
 import com.example.battle_creator.config.JwtUtils;
 import com.example.battle_creator.service.AuthentificationService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -25,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
-    // le filtre de cookie n'est pas éxécuté sur ces routes
+    // Le filtre de cookie n'est pas exécuté sur ces routes
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
@@ -39,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-            for (Cookie cookie : request.getCookies()) {
+            for (Cookie cookie : cookies) {
                 if ("token".equals(cookie.getName())) {
                     jwt = cookie.getValue();
                     break;
@@ -48,16 +49,24 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (jwt != null) {
-            username = jwtUtils.extractUsername(jwt);
-        }
+            try {
+                username = jwtUtils.extractUsername(jwt);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = authentificationService.loadUserByUsername(username);
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = authentificationService.loadUserByUsername(username);
 
-            if (jwtUtils.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    if (jwtUtils.validateToken(jwt, userDetails)) {
+                        UsernamePasswordAuthenticationToken authenticationToken = 
+                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    }
+                }
+            } catch (JwtException | IllegalArgumentException e) {
+                // Si le token est invalide, expiré ou si la signature ne correspond pas :
+                // On log l'avertissement et on laisse la requête poursuivre.
+                // Spring Security détectera l'absence d'authentification et renverra un statut 401 Unauthorized.
+                logger.warn("Token JWT invalide ou expiré intercepté dans le filtre : " + e.getMessage());
             }
         }
 

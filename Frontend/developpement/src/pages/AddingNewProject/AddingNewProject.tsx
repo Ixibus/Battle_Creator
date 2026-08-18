@@ -151,6 +151,7 @@ export default function AddingNewProject({ onClose }: propsInterface) {
       });
 
       const responseData = await response.json();
+      console.log(responseData)
 
       if (!response.ok) {
         if (responseData.error === "PROJECT_NAME_ALREADY_USED") {
@@ -186,7 +187,7 @@ export default function AddingNewProject({ onClose }: propsInterface) {
 
       if (response.status === 201) {
         showToast(
-          `La création du projet \"${responseData.name}\" a réussi !`,
+          `La création du projet \"${responseData.projectName}\" a réussi !`,
           "success",
         );
 

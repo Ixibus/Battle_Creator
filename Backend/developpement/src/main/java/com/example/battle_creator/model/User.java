@@ -1,5 +1,8 @@
 package com.example.battle_creator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -31,6 +34,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Project> projects = new ArrayList<>();
 
     public User() {}

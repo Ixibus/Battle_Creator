@@ -54,6 +54,7 @@ export const useProjectStore = create<ProjectStore>()(
             `http://localhost:8080/projects/user/${user.id}`,
             {
               method: "GET",
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
               },
