@@ -18,4 +18,4 @@ runs:
         SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db_battle_creator
         SPRING_DATASOURCE_USERNAME: app
         SPRING_DATASOURCE_PASSWORD: app_secret
-      run: mvn test.
+      run: mvn test
