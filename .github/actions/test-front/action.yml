@@ -1,0 +1,23 @@
+name: "Test Frontend"
+description: "Installe les dépendances et lance la suite de tests du Frontend"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configuration de Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "24"
+        cache: "npm"
+        # Précise à setup-node où trouver le package-lock.json pour le cache
+        cache-dependency-path: "Frontend/developpement/package-lock.json"
+
+    - name: Installation des dépendances
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npm ci
+
+    - name: Exécution des tests
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npm test

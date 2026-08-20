@@ -1,0 +1,21 @@
+name: "Test Backend"
+description: "Installe Java et exécute les tests Spring Boot"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configuration de Java (Temurin JDK 21)
+      uses: actions/setup-java@v4
+      with:
+        java-version: "21"
+        distribution: "temurin"
+        cache: "maven"
+
+    - name: Exécution des tests Spring Boot
+      shell: bash
+      working-directory: Backend/developpement
+      env:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/db_battle_creator
+        SPRING_DATASOURCE_USERNAME: app
+        SPRING_DATASOURCE_PASSWORD: app_secret
+      run: mvn test
