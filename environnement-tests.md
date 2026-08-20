@@ -18,7 +18,6 @@ Environnement de tests
             fileParallelism: false,
             },
         });
-        
     - back: back/src/test/resources/application-test.properties
 
 - Placement des fichiers de tests:
