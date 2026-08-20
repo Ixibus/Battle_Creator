@@ -1,0 +1,45 @@
+name: Main Branch CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-back:
+    runs-on: ubuntu-latest
+
+    # Service PostgreSQL lancé nativement par GitHub Actions
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: app
+          POSTGRES_PASSWORD: app_secret
+          POSTGRES_DB: db_battle_creator
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Backend Tests
+        uses: ./.github/actions/test-back
+
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Frontend Tests
+        uses: ./.github/actions/test-front
