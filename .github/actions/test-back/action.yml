@@ -1,5 +1,5 @@
 name: "Test Backend"
-description: "Installe Java et exécute les tests Spring Boot"
+description: "Installation Java et exécution des tests Spring Boot"
 
 runs:
   using: "composite"

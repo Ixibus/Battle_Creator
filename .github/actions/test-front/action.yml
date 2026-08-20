@@ -1,5 +1,5 @@
 name: "Test Frontend"
-description: "Installe les dépendances et lance la suite de tests du Frontend"
+description: "Installation des dépendances et lancement des tests du Frontend"
 
 runs:
   using: "composite"
