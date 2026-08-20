@@ -4,6 +4,7 @@ import '../style/buttonContainerStyle.css';
 import {useNavigate} from 'react-router-dom';
 
 interface interfaceProps {
+    id?: string,
     type?: "submit" | "button",
     nav?: number,
     styleClassName: string,
@@ -13,7 +14,7 @@ interface interfaceProps {
 }
 
 
-export default function NextButton({nav, type, styleClassName, mainClassName, text, onClick} : interfaceProps) {
+export default function NextButton({id, nav, type, styleClassName, mainClassName, text, onClick} : interfaceProps) {
   const navigate = useNavigate();
   
     const handleClick = () => {
@@ -26,7 +27,7 @@ export default function NextButton({nav, type, styleClassName, mainClassName, te
 
   return (
     <div className='buttonContainerStyle'>
-      <button type={type} className={`button ${styleClassName} ${mainClassName}`} onClick={handleClick}>
+      <button id={id} type={type} className={`button ${styleClassName} ${mainClassName}`} onClick={handleClick}>
       {text} 
       </button>
     </div>

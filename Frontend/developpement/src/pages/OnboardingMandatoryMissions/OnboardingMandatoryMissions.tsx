@@ -35,6 +35,7 @@ export default function OnboardingMandatoryMissions() {
           <p className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PHASE DE BATTLE</p>
         </div>
         <NextButton
+          id='onboardingMandatoryMissionsNextBtnId'
           nav={"/onboardingOptionalMissions"}
           styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
