@@ -1,13 +1,13 @@
 // tests/onboarding.spec.ts
 
 import { test, expect } from "./fixtures";
-// Adapte le chemin ci-dessus selon l'emplacement réel de ta fixture.
 
 test.describe("Onboarding complet", () => {
   test("créer un compte, un projet et accéder à la home page", async ({
     page,
   }) => {
     test.setTimeout(120_000);
+
     const login = `e2e_user_${Date.now()}`;
     const email = `${login}@example.com`;
     const password = "Password123!";
@@ -114,8 +114,24 @@ test.describe("Onboarding complet", () => {
 
       await page.getByRole("button", { name: "Valider" }).click();
 
+      // On doit arriver sur la page de sélection de projet
+      await expect(page).toHaveURL(/\/projectListAuthed$/);
+      await expect(
+        page.getByRole("heading", { name: "Choisissez un projet" }),
+      ).toBeVisible();
+    });
+
+    await test.step("Sélectionner le projet créé", async () => {
+      // On clique sur le bouton "Sélectionner" du projet qui vient d'être créé
+      const selectButton = page
+        .getByRole("button", { name: "Sélectionner" })
+        .first();
+
+      await expect(selectButton).toBeVisible();
+      await selectButton.click();
+
+      // On doit arriver sur la home page
       await expect(page).toHaveURL(/\/homePage$/);
-    //   await expect(page).toHaveURL(/\/home\/page$/);
     });
   });
 });
