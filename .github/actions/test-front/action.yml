@@ -29,4 +29,4 @@ runs:
     - name: Exécution des tests E2E (Playwright)
       shell: bash
       working-directory: Frontend/developpement
-      run: npm run test:e2e
+      run: npm run test:e2e -- --headed=false
