@@ -161,7 +161,8 @@ Environnement de tests
             - le rapport est disponible dans "target/site/jacoco/index.html"
                 
             
-- configuration variable d'environnement: 
-    prendre de "main/resources/application.properties" pour "test/resources/application.properties"
+- back : 
+    - configuration variable d'environnement: 
+        prendre de "main/resources/application.properties" pour "test/resources/application.properties"
 
 - Couverture : *non dispo*
