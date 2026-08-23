@@ -9,7 +9,6 @@ runs:
       with:
         node-version: "24"
         cache: "npm"
-        # Précise à setup-node où trouver le package-lock.json pour le cache
         cache-dependency-path: "Frontend/developpement/package-lock.json"
 
     - name: Installation des dépendances
@@ -17,7 +16,17 @@ runs:
       working-directory: Frontend/developpement
       run: npm ci
 
-    - name: Exécution des tests
+    - name: Exécution des tests unitaires (Vitest)
       shell: bash
       working-directory: Frontend/developpement
       run: npm test
+
+    - name: Installation des navigateurs Playwright
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npx playwright install --with-deps
+
+    - name: Exécution des tests E2E (Playwright)
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npm run test:e2e
