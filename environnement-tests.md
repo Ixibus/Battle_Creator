@@ -121,11 +121,22 @@ Environnement de tests
                     
                     import { defineConfig } from '@playwright/test';
 
+                    // CI est 'true' automatiquement sur GitHub Actions
+                    const isCI = !!process.env.CI; 
+
                     export default defineConfig({
-                        use: {
-                            baseURL: 'http://localhost:5173', // Remplacez par le port de votre serveur Dev (Vite, React, Vue, etc.)
-                            trace: 'on-first-retry',
+                    use: {
+                        baseURL: 'http://localhost:5173',
+                        trace: 'on-first-retry',
+
+                        // En local : headless false (pour l'interface graphique). En CI : headless true (sans interface graphique).
+                        headless: isCI ? true : false, 
+
+                        launchOptions: {
+                        // Ralentit seulement en local, pas en CI
+                        slowMo: isCI ? 0 : 500, 
                         },
+                    },
                     });
 
             - Lancer le test : 
