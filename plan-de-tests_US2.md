@@ -1,6 +1,6 @@
 US02 - Creation de mission et tache
 
-1. Périmètre : US1 - Creation de mission et tache
+1. Périmètre : US2 - Creation de mission et tache
 2. Approche : 
     - front-end : 1 test unitaire et 1 test E2E
     - back-end: 2 tests unitaires, 1 test intégration et 1 test E2E
