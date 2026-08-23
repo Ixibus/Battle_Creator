@@ -13,6 +13,6 @@ US01 - Création de compte
     [FRONT]cas-03-US1-02-création-d-un-projet_création-ok (code 200) (test d'intégration)
     [FRONT]cas-04-US1-01-création-de-compte-utilisateur_login-deja-utilisé (affichage "Login déjà utilisé") (test d'intégration)
     [BACK]cas-05-US1-01-création-de-compte-utilisateur_message-succès (affichage body "Compte créé avec succès") (test unitaire)
-    [BACK]cas-06-US1-02-création-d-un-projet_date-anterieur ("La date du projet ne peut pas être antérieure à aujourd'hui.") (test d'intégration)
+    [BACK]cas-06-US1-02-création-d-un-projet_date-anterieure ("La date du projet ne peut pas être antérieure à aujourd'hui.") (test d'intégration)
     [FRONT]cas-07-US1-création-de-compte_parcours-ok (affichage "homepage" personnalisé) (test E2E)
 5. Critères de sortie : les tests remplissent ce qui est défini dans le tableau des cas des tests
