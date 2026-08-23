@@ -11,6 +11,10 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+
+// CI est 'true' automatiquement sur GitHub Actions
+const isCI = !!process.env.CI;
+
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -31,9 +35,12 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
 
-    headless: false, // Nécessaire pour voir le navigateur s'ouvrir
+    // En local : headless false. En CI : headless true.
+    headless: isCI ? true : false,
+
     launchOptions: {
-      slowMo: 500, // Ajoute 1 seconde (1000 ms) de pause entre CHAQUE action
+      // Ralentit seulement en local, pas en CI
+      slowMo: isCI ? 0 : 500, 
     },
   },
 
