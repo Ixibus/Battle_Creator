@@ -50,6 +50,9 @@ export default defineConfig({
     url: 'http://localhost:5173',  // URL à attendre avant de lancer les tests
     reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
     timeout: 120 * 1000,           // Laisse 2 min max au serveur pour démarrer
+    env: {
+      VITE_API_URL: process.env.VITE_API_URL || 'http://localhost:8080', // Passe l'URL de l'API à Vite
+    },
   },
 
   /* Configure projects for major browsers */
