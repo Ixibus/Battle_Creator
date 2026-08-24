@@ -44,6 +44,14 @@ export default defineConfig({
     },
   },
 
+  // Configuration du serveur local/CI
+  webServer: {
+    command: 'npm run dev',        // Commande pour démarrer Vite
+    url: 'http://localhost:5173',  // URL à attendre avant de lancer les tests
+    reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
+    timeout: 120 * 1000,           // Laisse 2 min max au serveur pour démarrer
+  },
+
   /* Configure projects for major browsers */
   projects: [
     {
