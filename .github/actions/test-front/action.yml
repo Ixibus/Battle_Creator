@@ -47,7 +47,13 @@ runs:
       shell: bash
       run: |
         echo "Attente du backend..."
-        npx wait-on http://localhost:8080 --timeout 60000
+        npx wait-on tcp:8080 --timeout 120000
+
+    - name: Affichage des logs Docker (si échec)
+      if: failure()
+      shell: bash
+      working-directory: Backend/developpement
+      run: docker compose logs
 
     - name: Exécution des tests E2E (Playwright)
       shell: bash
