@@ -8,18 +8,56 @@ on:
 
 jobs:
   # ==========================================
-  # 1. BUILD & TEST FRONTEND (REACT / VITE)
+  # 1. BUILD & TEST FRONTEND (REACT / VITE + E2E)
   # ==========================================
   build-frontend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./Frontend/developpement
+
+    # Service PostgreSQL éphémère pour les tests Playwright
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: battle_creator_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout du code
         uses: actions/checkout@v4
 
+      # --- ÉTAPE A : DÉMARRER L'API SPRING BOOT POUR PLAYWRIGHT ---
+      - name: Configuration de Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Lancement du Backend Spring Boot en arrière-plan
+        working-directory: ./Backend/developpement
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/battle_creator_db
+          SPRING_DATASOURCE_USERNAME: test_user
+          SPRING_DATASOURCE_PASSWORD: test_password
+          PORT: 8080
+        run: |
+          chmod +x mvnw
+          ./mvnw spring-boot:run &
+
+      - name: Attente du démarrage de l'API Spring Boot
+        run: |
+          echo "Attente que l'API réponde sur le port 8080..."
+          timeout 60s bash -c 'until curl -s http://localhost:8080 ; do sleep 2; done' || true
+
+      # --- ÉTAPE B : EXÉCUTER PLAYWRIGHT ET BUILDER LE FRONT ---
       - name: Configuration de Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,16 +65,22 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './Frontend/developpement/package-lock.json'
 
-      - name: Installation des dépendances
+      - name: Installation des dépendances Frontend
+        working-directory: ./Frontend/developpement
         run: npm ci
 
       - name: Installation des navigateurs Playwright
+        working-directory: ./Frontend/developpement
         run: npx playwright install --with-deps
 
       - name: Exécution des tests Playwright
+        working-directory: ./Frontend/developpement
+        env:
+          VITE_API_URL: http://localhost:8080
         run: npx playwright test
 
       - name: Build du Frontend
+        working-directory: ./Frontend/developpement
         run: npm run build
 
       - name: Sauvegarde de l'artefact Frontend
@@ -137,5 +181,4 @@ jobs:
           script: |
             mkdir -p /home/${{ secrets.BACK_SSH_USER }}/backend
             mv /home/${{ secrets.BACK_SSH_USER }}/backend/*.jar /home/${{ secrets.BACK_SSH_USER }}/backend/app.jar
-            # Relancer le site via l'API Alwaysdata ou en touchant le fichier pour recharger
             touch /home/${{ secrets.BACK_SSH_USER }}/backend/app.jar
