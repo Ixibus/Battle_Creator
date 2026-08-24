@@ -125,18 +125,26 @@ Environnement de tests
                     const isCI = !!process.env.CI; 
 
                     export default defineConfig({
-                    use: {
-                        baseURL: 'http://localhost:5173',
-                        trace: 'on-first-retry',
+                        use: {
+                            baseURL: 'http://localhost:5173',
+                            trace: 'on-first-retry',
 
-                        // En local : headless false (pour l'interface graphique). En CI : headless true (sans interface graphique).
-                        headless: isCI ? true : false, 
+                            // En local : headless false (pour l'interface graphique). En CI : headless true (sans interface graphique).
+                            headless: isCI ? true : false, 
 
-                        launchOptions: {
-                        // Ralentit seulement en local, pas en CI
-                        slowMo: isCI ? 0 : 500, 
+                            launchOptions: {
+                            // Ralentit seulement en local, pas en CI
+                            slowMo: isCI ? 0 : 500, 
+                            },
                         },
-                    },
+
+                        // Configuration du serveur local/CI
+                        webServer: {
+                            command: 'npm run dev',        // Commande pour démarrer Vite
+                            url: 'http://localhost:5173',  // URL à attendre avant de lancer les tests
+                            reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
+                            timeout: 120 * 1000,           // Laisse 2 min max au serveur pour démarrer
+                        },
                     });
 
             - Lancer le test : 
