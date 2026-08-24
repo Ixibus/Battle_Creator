@@ -5,5 +5,6 @@ export default defineConfig({
     environment: "happy-dom",
     css: false,
     fileParallelism: false,
+    exclude: ['**/node_modules/**', '**/tests/**'],
   },
 });

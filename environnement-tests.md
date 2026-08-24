@@ -7,18 +7,41 @@ Environnement de tests
     - mettre dans package.json la ligne ""test:watch": "vitest"," dans "scripts"
 
 - Dossier de configuration de tests: 
-    - front: créer le fichier "vitest.config.ts" et mettre la config suivante pour des tests plus rapides :
+    - front: 
+        - pour des tests plus rapides (dans un "vitest.config.ts") :
 
-        import { defineConfig } from "vitest/config";
+            import { defineConfig } from "vitest/config";
 
-        export default defineConfig({
-        test: {
-            environment: "happy-dom",
-            css: false,
-            fileParallelism: false,
-            },
-        });
-    - back: back/src/test/resources/application-test.properties
+            export default defineConfig({
+            test: {
+                environment: "happy-dom",
+                css: false,
+                fileParallelism: false,
+                },
+            });
+
+        - CLIs anti-confusion playwright/vitest: 
+            - Dans package.json : 
+
+                "scripts": {
+                    "test": "vitest run", // donc CLI npm test
+                    "test:e2e": "playwright test", // donc CLI npm run est:e2e (utiliser "--" pour utiliser les flags. ex: "npx playwright test --ui" devient "npm run test:e2e -- --ui")
+                }
+            
+            (l'utilisation des flags )
+
+            - CLIs anti-confusion playwright/vitest (dans un "vitest.config.ts"): 
+                Dans ignorer la route de "playwright" (si les tests playwright se trouve dans "tests/"):
+
+                    export default defineConfig({
+                        test: {
+                            // Vitest va ignorer le dossier des tests Playwright
+                            exclude: ['**/node_modules/**', '**/tests/**'],
+                        },
+                        })
+    - back:    
+        - configuration variable d'environnement: 
+            - prendre de "main/resources/application.properties" pour "test/resources/application.properties" ou "test/resources/application-test.properties" suivant le profil de test choisi, normalement c'est "test"(ex: la "jwt.secret-key" pour éviter les erreurs de variable absente)
 
 - Placement des fichiers de tests:
     - front: au dossier racine de la commande de lancement (*.test.ts)
@@ -98,10 +121,29 @@ Environnement de tests
                     
                     import { defineConfig } from '@playwright/test';
 
+                    // CI est 'true' automatiquement sur GitHub Actions
+                    const isCI = !!process.env.CI; 
+
                     export default defineConfig({
                         use: {
-                            baseURL: 'http://localhost:5173', // Remplacez par le port de votre serveur Dev (Vite, React, Vue, etc.)
+                            baseURL: 'http://localhost:5173',
                             trace: 'on-first-retry',
+
+                            // En local : headless false (pour l'interface graphique). En CI : headless true (sans interface graphique).
+                            headless: isCI ? true : false, 
+
+                            launchOptions: {
+                            // Ralentit seulement en local, pas en CI
+                            slowMo: isCI ? 0 : 500, 
+                            },
+                        },
+
+                        // Configuration du serveur local/CI
+                        webServer: {
+                            command: 'npm run dev',        // Commande pour démarrer Vite
+                            url: 'http://localhost:5173',  // URL à attendre avant de lancer les tests
+                            reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
+                            timeout: 120 * 1000,           // Laisse 2 min max au serveur pour démarrer
                         },
                     });
 
@@ -161,7 +203,10 @@ Environnement de tests
             - le rapport est disponible dans "target/site/jacoco/index.html"
                 
             
-- configuration variable d'environnement: 
-    prendre de "main/resources/application.properties" pour "test/resources/application.properties"
+- back : 
+    - configuration variable d'environnement: 
+        - prendre de "main/resources/application.properties" pour "test/resources/application.properties" ou "test/resources/application-test.properties" suivant le profil de test choisi, normalement c'est "test"(ex: la "jwt.secret-key" pour éviter les erreurs de variable absente)
+        - 
+
 
 - Couverture : *non dispo*

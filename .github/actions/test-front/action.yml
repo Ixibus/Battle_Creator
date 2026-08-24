@@ -1,15 +1,14 @@
 name: "Test Frontend"
-description: "Installe les dépendances et lance la suite de tests du Frontend"
+description: "Installation des dépendances et lancement des tests du Frontend"
 
 runs:
   using: "composite"
   steps:
     - name: Configuration de Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: "24"
         cache: "npm"
-        # Précise à setup-node où trouver le package-lock.json pour le cache
         cache-dependency-path: "Frontend/developpement/package-lock.json"
 
     - name: Installation des dépendances
@@ -17,7 +16,46 @@ runs:
       working-directory: Frontend/developpement
       run: npm ci
 
-    - name: Exécution des tests
+    - name: Exécution des tests unitaires (Vitest)
       shell: bash
       working-directory: Frontend/developpement
       run: npm test
+
+    - name: Installation des navigateurs Playwright
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npx playwright install --with-deps
+
+    - name: Configuration de Java pour la génération du JAR
+      uses: actions/setup-java@v5
+      with:
+        java-version: "21"
+        distribution: "temurin"
+        cache: "maven"
+
+    - name: Génération du JAR Spring Boot
+      shell: bash
+      working-directory: Backend/developpement
+      run: mvn package -DskipTests
+
+    - name: Démarrage de l'application via Docker Compose
+      shell: bash
+      working-directory: Backend/developpement
+      run: docker compose up -d --build
+
+    - name: Attente du démarrage du backend Spring Boot
+      shell: bash
+      run: |
+        echo "Attente du backend..."
+        npx wait-on tcp:8080 --timeout 120000
+
+    - name: Affichage des logs Docker (si échec)
+      if: failure()
+      shell: bash
+      working-directory: Backend/developpement
+      run: docker compose logs
+
+    - name: Exécution des tests E2E (Playwright)
+      shell: bash
+      working-directory: Frontend/developpement
+      run: npm run test:e2e

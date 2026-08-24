@@ -63,7 +63,7 @@ public class ProjectDto {
         return projectLocation; 
     }
 
-    public void setProjectLocation(String location) { 
+    public void setProjectLocation(String projectLocation) { 
         this.projectLocation = projectLocation; 
     }
 
