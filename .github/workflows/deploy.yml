@@ -30,6 +30,12 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
+      - name: Installation des navigateurs Playwright
+        run: npx playwright install --with-deps
+
+      - name: Exécution des tests Playwright
+        run: npx playwright test
+
       - name: Build du Frontend
         run: npm run build
 
