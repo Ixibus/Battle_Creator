@@ -5,7 +5,7 @@ runs:
   using: "composite"
   steps:
     - name: Configuration de Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: "24"
         cache: "npm"
@@ -25,6 +25,16 @@ runs:
       shell: bash
       working-directory: Frontend/developpement
       run: npx playwright install --with-deps
+
+    - name: Démarrage de l'application via Docker Compose
+      shell: bash
+      run: docker compose up -d --build
+
+    - name: Attente du démarrage du backend Spring Boot
+      shell: bash
+      run: |
+        echo "Attente du backend..."
+        npx wait-on http://localhost:8080 --timeout 60000
 
     - name: Exécution des tests E2E (Playwright)
       shell: bash
