@@ -29,9 +29,9 @@ runs:
     - name: Configuration de Java pour la génération du JAR
       uses: actions/setup-java@v5
       with:
-      java-version: "21"
-      distribution: "temurin"
-      cache: "maven"
+        java-version: "21"
+        distribution: "temurin"
+        cache: "maven"
 
     - name: Génération du JAR Spring Boot
       shell: bash
