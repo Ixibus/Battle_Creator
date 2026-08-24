@@ -26,6 +26,18 @@ runs:
       working-directory: Frontend/developpement
       run: npx playwright install --with-deps
 
+    - name: Configuration de Java pour la génération du JAR
+      uses: actions/setup-java@v5
+      with:
+      java-version: "21"
+      distribution: "temurin"
+      cache: "maven"
+
+    - name: Génération du JAR Spring Boot
+      shell: bash
+      working-directory: Backend/developpement
+      run: mvn package -DskipTests
+
     - name: Démarrage de l'application via Docker Compose
       shell: bash
       working-directory: Backend/developpement
