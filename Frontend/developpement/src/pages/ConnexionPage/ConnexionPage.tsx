@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useProjectStore } from "../../store/useProjectStore";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 import './connexionPage.css';
 import "../../styles/form/formError.css";
 
@@ -53,7 +55,7 @@ export default function ConnexionPage() {
     if (hasError) return;
 
     try {
-      const res = await fetch("http://localhost:8080/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

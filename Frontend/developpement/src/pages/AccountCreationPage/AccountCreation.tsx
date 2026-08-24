@@ -16,6 +16,8 @@ import { useToastStore } from "../../store/toastStore";
 import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function AccountCreation() {
   const navigate = useNavigate();
 
@@ -117,7 +119,7 @@ export default function AccountCreation() {
     }
 
     try {
-      const res = await fetch("http://localhost:8080/auth/register", {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

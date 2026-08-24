@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export type ProjectType = {
   id: number;
   name: string;
@@ -51,7 +53,7 @@ export const useProjectStore = create<ProjectStore>()(
 
         try {
           const response = await fetch(
-            `http://localhost:8080/projects/user/${user.id}`,
+            `${API_URL}/projects/user/${user.id}`,
             {
               method: "GET",
               credentials: "include",
@@ -77,7 +79,7 @@ export const useProjectStore = create<ProjectStore>()(
 
       logout: async () => {
         try {
-          await fetch("http://localhost:8080/auth/logout", {
+          await fetch(`${API_URL}/auth/logout`, {
             method: "POST",
             credentials: "include",
           });

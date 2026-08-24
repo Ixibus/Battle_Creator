@@ -1,6 +1,9 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
@@ -8,7 +11,7 @@ const LoginButton = () => {
      const { data, isLoading, error } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:8080/users");
+      const response = await fetch(`${API_URL}/users`);
 
       return await response.json();
     },

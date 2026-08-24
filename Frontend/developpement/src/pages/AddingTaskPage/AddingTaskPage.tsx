@@ -22,6 +22,8 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 
 import { useToastStore } from "../../store/toastStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface AddingTaskPageProps {
   onClose: () => void;
   missionId: number;
@@ -76,7 +78,7 @@ export default function AddingTaskPage({
     };
 
     try {
-      const res = await fetch("http://localhost:8080/tasks", {
+      const res = await fetch(`${API_URL}/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

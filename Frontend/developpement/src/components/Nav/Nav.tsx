@@ -8,6 +8,8 @@ import Logout from "../../assets/icones/logout.svg?react";
 import { useNavigate } from "react-router-dom";
 import { useProjectStore } from "../../store/useProjectStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export default function Nav() {
 
@@ -21,7 +23,7 @@ export default function Nav() {
   }
 
   async function logoutHandler(navLinkLogout : string) {
-    const res = fetch("http://localhost:8080/auth/logout", {
+    const res = fetch(`${API_URL}/auth/logout`, {
       method: "POST",
       credentials: "include",
       headers: {

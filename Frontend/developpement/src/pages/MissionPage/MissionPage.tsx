@@ -15,6 +15,8 @@ import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
 import { useToastStore } from "../../store/toastStore";
 import { useMissionStore } from "../../store/useMissionStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function MissionPage() {
   interface Task {
     id: number;
@@ -92,7 +94,7 @@ export default function MissionPage() {
 
   async function loadMission(missionId: string) {
     try {
-      const res = await fetch(`http://localhost:8080/missions/${missionId}`, {
+      const res = await fetch(`${API_URL}/missions/${missionId}`, {
         credentials: "include",
         method: "GET",
         headers: {

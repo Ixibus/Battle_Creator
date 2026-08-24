@@ -42,6 +42,8 @@ type MissionStore = {
   logout: () => Promise<void>;
 };
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useMissionStore = create<MissionStore>()(
   persist(
     (set, get) => ({
@@ -65,7 +67,7 @@ export const useMissionStore = create<MissionStore>()(
 
         try {
           const response = await fetch(
-            `http://localhost:8080/missions/project/${projectId}`,
+            `${API_URL}/missions/project/${projectId}`,
             {
               method: "GET",
               headers: {
@@ -93,7 +95,7 @@ export const useMissionStore = create<MissionStore>()(
         set({ isLoading: true, error: null });
 
         try {
-          const response = await fetch("http://localhost:8080/missions", {
+          const response = await fetch(`${API_URL}/missions`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -134,7 +136,7 @@ export const useMissionStore = create<MissionStore>()(
 
       logout: async () => {
         try {
-          await fetch("http://localhost:8080/auth/logout", {
+          await fetch(`${API_URL}/auth/logout`, {
             method: "POST",
             credentials: "include",
           });
