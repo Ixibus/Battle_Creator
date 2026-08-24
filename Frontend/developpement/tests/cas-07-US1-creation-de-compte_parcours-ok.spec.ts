@@ -122,7 +122,7 @@ test.describe("Onboarding complet", () => {
     });
 
     await test.step("Sélectionner le projet créé", async () => {
-      // On clique sur le bouton "Sélectionner" du projet qui vient d'être créé
+      // On clique sur le bouton "Sélectionner" du projet qui vient d'être créé.
       const selectButton = page
         .getByRole("button", { name: "Sélectionner" })
         .first();
