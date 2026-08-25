@@ -41,21 +41,26 @@ jobs:
           java-version: '21'
           cache: 'maven'
 
+      - name: Build de l'application Backend
+        working-directory: ./Backend/developpement
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package -DskipTests
+
       - name: Lancement du Backend Spring Boot en arrière-plan
         working-directory: ./Backend/developpement
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/battle_creator_db
           SPRING_DATASOURCE_USERNAME: test_user
           SPRING_DATASOURCE_PASSWORD: test_password
-          PORT: 8080
+          SERVER_PORT: 8080
         run: |
-          chmod +x mvnw
-          ./mvnw spring-boot:run &
+          java -jar target/*.jar &
 
-      - name: Attente du démarrage de l'API Spring Boot
+      - name: Attente du démarrage complet de l'API Spring Boot
         run: |
-          echo "Attente que l'API réponde sur le port 8080..."
-          timeout 60s bash -c 'until curl -s http://localhost:8080 ; do sleep 2; done' || true
+          echo "Attente que l'API réponde sur http://localhost:8080..."
+          timeout 90s bash -c 'until curl -s http://localhost:8080 > /dev/null || curl -s http://localhost:8080/actuator/health > /dev/null; do sleep 3; echo "En attente du backend..."; done'
 
       # --- ÉTAPE B : EXÉCUTER PLAYWRIGHT ET BUILDER LE FRONT ---
       - name: Configuration de Node.js
