@@ -46,12 +46,10 @@ jobs:
           chmod +x mvnw
           ./mvnw clean package -DskipTests
 
-      - name: Lancement du Backend Spring Boot en arrière-plan
+      - name: Lancement du Backend Spring Boot en arrière-plan (Profil Test / H2)
         working-directory: ./Backend/developpement
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/battle_creator_db
-          SPRING_DATASOURCE_USERNAME: test_user
-          SPRING_DATASOURCE_PASSWORD: test_password
+          SPRING_PROFILES_ACTIVE: test
           SERVER_PORT: 8080
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
         run: |
@@ -114,21 +112,6 @@ jobs:
       run:
         working-directory: ./Backend/developpement
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_DB: battle_creator_db
-          POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_password
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout du code
         uses: actions/checkout@v4
@@ -143,11 +126,8 @@ jobs:
       - name: Donner les permissions d'exécution à Maven Wrapper
         run: chmod +x mvnw
 
-      - name: Build et Tests du Backend
+      - name: Build et Tests du Backend (avec H2)
         env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/battle_creator_db
-          SPRING_DATASOURCE_USERNAME: test_user
-          SPRING_DATASOURCE_PASSWORD: test_password
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
         run: ./mvnw clean package -DskipTests=false
 
