@@ -49,11 +49,14 @@ jobs:
       - name: Lancement du Backend Spring Boot en arrière-plan (Profil Test / H2)
         working-directory: ./Backend/developpement
         env:
-          SPRING_PROFILES_ACTIVE: test
           SERVER_PORT: 8080
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
         run: |
-          java -jar target/*.jar > backend.log 2>&1 &
+          java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
+      
+      - name: Attendre le démarrage du Backend
+        run: |
+          npx wait-on http://localhost:8080 --timeout 60000
 
       - name: Attente du démarrage complet de l'API Spring Boot
         run: |
