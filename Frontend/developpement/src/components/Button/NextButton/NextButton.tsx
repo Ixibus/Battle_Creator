@@ -10,11 +10,12 @@ interface interfaceProps {
     styleClassName: string,
     mainClassName: string,
     text?: string,
+    disabled?: boolean,
     onClick?: () => void,
 }
 
 
-export default function NextButton({id, nav, type, styleClassName, mainClassName, text, onClick} : interfaceProps) {
+export default function NextButton({id, nav, type, styleClassName, mainClassName, text, disabled, onClick} : interfaceProps) {
   const navigate = useNavigate();
   
     const handleClick = () => {
@@ -27,7 +28,7 @@ export default function NextButton({id, nav, type, styleClassName, mainClassName
 
   return (
     <div className='buttonContainerStyle'>
-      <button id={id} type={type} className={`button ${styleClassName} ${mainClassName}`} onClick={handleClick}>
+      <button id={id} type={type} className={`button ${styleClassName} ${mainClassName}`} onClick={handleClick} disabled={disabled}>
       {text} 
       </button>
     </div>
