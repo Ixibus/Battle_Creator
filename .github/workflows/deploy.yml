@@ -13,7 +13,6 @@ jobs:
   build-frontend:
     runs-on: ubuntu-latest
 
-    # Service PostgreSQL éphémère pour les tests Playwright
     services:
       postgres:
         image: postgres:15
@@ -55,12 +54,22 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: test_password
           SERVER_PORT: 8080
         run: |
-          java -jar target/*.jar &
+          java -jar target/*.jar > backend.log 2>&1 &
 
       - name: Attente du démarrage complet de l'API Spring Boot
         run: |
-          echo "Attente que l'API réponde sur http://localhost:8080..."
-          timeout 90s bash -c 'until curl -s http://localhost:8080 > /dev/null || curl -s http://localhost:8080/actuator/health > /dev/null; do sleep 3; echo "En attente du backend..."; done'
+          echo "Attente du démarrage du serveur sur le port 8080..."
+          for i in {1..30}; do
+            if nc -z localhost 8080; then
+              echo "✅ Le backend répond sur le port 8080 !"
+              exit 0
+            fi
+            echo "En attente du backend ($i/30)..."
+            sleep 3
+          done
+          echo "❌ Le backend n'a pas démarré à temps. Logs :"
+          cat ./Backend/developpement/backend.log
+          exit 1
 
       # --- ÉTAPE B : EXÉCUTER PLAYWRIGHT ET BUILDER LE FRONT ---
       - name: Configuration de Node.js
