@@ -58,7 +58,7 @@ jobs:
         run: |
           echo "Attente du démarrage du serveur sur le port 8080..."
           for i in {1..30}; do
-            if nc -z localhost 8080; then
+            if nc -z 127.0.0.1 8080; then
               echo "✅ Le backend répond sur le port 8080 !"
               exit 0
             fi
@@ -88,7 +88,7 @@ jobs:
       - name: Exécution des tests Playwright
         working-directory: ./Frontend/developpement
         env:
-          VITE_API_URL: http://localhost:8080
+          VITE_API_URL: http://127.0.0.1:8080
         run: npx playwright test
 
       - name: Afficher les logs du Backend si Playwright échoue
