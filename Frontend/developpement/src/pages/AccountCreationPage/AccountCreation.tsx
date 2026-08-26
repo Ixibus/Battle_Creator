@@ -15,7 +15,6 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
 import { useStepStore } from "../../store/useStepStore";
 
-// Fallback sur http://localhost:8080 si VITE_API_URL n'est pas définie
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export default function AccountCreation() {

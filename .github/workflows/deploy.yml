@@ -54,10 +54,6 @@ jobs:
         run: |
           java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
       
-      - name: Attendre le démarrage du Backend
-        run: |
-          npx wait-on http://localhost:8080 --timeout 60000
-
       - name: Attente du démarrage complet de l'API Spring Boot
         run: |
           echo "Attente du démarrage du serveur sur le port 8080..."
