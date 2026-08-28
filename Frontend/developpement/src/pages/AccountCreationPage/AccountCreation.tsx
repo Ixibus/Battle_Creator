@@ -15,7 +15,7 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
 import { useStepStore } from "../../store/useStepStore";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8080";
 
 export default function AccountCreation() {
   const navigate = useNavigate();
