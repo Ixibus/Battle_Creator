@@ -56,20 +56,16 @@ jobs:
           java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
       
       - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
-        timeout-minutes: 1
         run: |
-          echo "Attente du démarrage du serveur sur le port 8080..."
-          for i in {1..20}; do
-            if nc -z 127.0.0.1 8080; then
-              echo "✅ Le backend répond sur le port 8080 !"
-              exit 0
-            fi
-            echo "En attente du backend ($i/20)..."
-            sleep 3
-          done
-          echo "❌ Le backend n'a pas démarré à temps. Logs :"
-          cat ./Backend/developpement/backend.log
-          exit 1
+          echo "Attente que l'API réponde sur HTTP..."
+          # npx wait-on http://127.0.0.1:8080 attend une vraie réponse HTTP et non juste le port TCP
+          npx wait-on http://127.0.0.1:8080/auth/register --timeout 60000 || {
+            echo "❌ Le backend a planté ou n'a pas répondu à temps !"
+            echo "=== LOGS DU BACKEND (backend.log) ==="
+            cat ./Backend/developpement/backend.log
+            exit 1
+          }
+          echo "✅ Backend prêt !"
 
       - name: Vérification du processus Java et des logs avant Playwright
         run: |
