@@ -30,6 +30,19 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  
+  // 4. Timeout pour les assertions (ex: wait for element)
+  expect: {
+    timeout: 5000,
+  },
+  
+  // Configuration du serveur local/CI
+  webServer: {
+    command: 'npm run dev',        // Commande pour démarrer Vite
+    url: 'http://127.0.0.1:5173',  // URL à attendre avant de lancer les tests
+    reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
+    timeout: 60000,                // Timeout max pour le serveur Vite frontend (60s)
+  },
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'http://localhost:5173',
@@ -45,20 +58,7 @@ export default defineConfig({
       slowMo: isCI ? 0 : 500, 
     },
   },
-
-  // 4. Timeout pour les assertions (ex: wait for element)
-  expect: {
-    timeout: 5000,
-  },
-
-  // Configuration du serveur local/CI
-  webServer: {
-    command: 'npm run dev',        // Commande pour démarrer Vite
-    url: 'http://127.0.0.1:5173',  // URL à attendre avant de lancer les tests
-    reuseExistingServer: !isCI,    // En local, réutilise le dev server s'il tourne déjà
-    timeout: 30000,                // Timeout max pour le serveur Vite frontend (30s)
-  },
-
+  
   /* Configure projects for major browsers */
   projects: [
     {
