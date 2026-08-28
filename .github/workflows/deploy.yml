@@ -96,8 +96,8 @@ jobs:
           VITE_API_URL: http://127.0.0.1:8080
         run: npx playwright test
 
-      - name: Afficher les logs du Backend si Playwright échoue
-        if: failure()
+      - name: Afficher les logs Spring Boot après les tests
+        if: always()
         run: |
           echo "=== LOGS BACKEND SPRING BOOT ==="
           cat ./Backend/developpement/backend.log
