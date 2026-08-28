@@ -54,7 +54,12 @@ jobs:
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
         run: |
           java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
-      
+        env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD:
+
       - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
         run: |
           echo "Attente que l'API réponde sur HTTP..."
