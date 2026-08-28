@@ -45,6 +45,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Débloque explicitement toutes les requêtes Preflight OPTIONS
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers(HttpMethod.HEAD, "/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/auth/**", "/users", "/missions/**", "/tasks/**", "/members/**", "/projects/**").permitAll()
                 .anyRequest().authenticated()
