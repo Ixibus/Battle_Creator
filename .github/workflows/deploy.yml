@@ -71,6 +71,13 @@ jobs:
           cat ./Backend/developpement/backend.log
           exit 1
 
+      - name: Vérification du processus Java et des logs avant Playwright
+        run: |
+          echo "=== VERIFICATION PROCESSUS JAVA ==="
+          ps aux | grep java
+          echo "=== DERNIERES LIGNES DES LOGS BACKEND ==="
+          tail -n 30 ./Backend/developpement/backend.log
+
       # --- ÉTAPE B : EXÉCUTER PLAYWRIGHT ET BUILDER LE FRONT ---
       - name: Configuration de Node.js
         uses: actions/setup-node@v4
