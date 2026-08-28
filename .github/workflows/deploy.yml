@@ -12,6 +12,7 @@ jobs:
   # ==========================================
   build-frontend:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
 
     services:
       postgres:
@@ -54,15 +55,16 @@ jobs:
         run: |
           java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
       
-      - name: Attente du démarrage complet de l'API Spring Boot
+      - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
+        timeout-minutes: 1
         run: |
           echo "Attente du démarrage du serveur sur le port 8080..."
-          for i in {1..30}; do
+          for i in {1..20}; do
             if nc -z 127.0.0.1 8080; then
               echo "✅ Le backend répond sur le port 8080 !"
               exit 0
             fi
-            echo "En attente du backend ($i/30)..."
+            echo "En attente du backend ($i/20)..."
             sleep 3
           done
           echo "❌ Le backend n'a pas démarré à temps. Logs :"
