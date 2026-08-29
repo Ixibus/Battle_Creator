@@ -8,8 +8,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    # environment:
-    #   - SPRING_PROFILES_ACTIVE=docker
+    environment:
+      # Indiquer seulement le nom sans valeur permet à Docker d'hériter 
+      # de la variable d'environnement transmise par GitHub Actions / l'OS
+      - SPRING_DATASOURCE_URL
+      - SPRING_DATASOURCE_USERNAME
+      - SPRING_DATASOURCE_PASSWORD
 
   # La base de données
   postgres:
