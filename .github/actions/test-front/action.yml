@@ -9,6 +9,8 @@ inputs:
     required: true
   SPRING_DATASOURCE_PASSWORD:
     required: true
+  JWT_SECRET_TEST:
+    required: true
 
 runs:
   using: "composite"
@@ -51,6 +53,9 @@ runs:
       shell: bash
       working-directory: Backend/developpement
       env:
+        SERVER_PORT: 8080
+        SECURITY_JWT_SECRET_KEY: ${{ inputs.JWT_SECRET_TEST }}
+        SECURITY_JWT_EXPIRATION_TIME: 86400000
         SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
         SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
         SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
@@ -64,7 +69,6 @@ runs:
           npx wait-on http-get://127.0.0.1:8080/healthCheckForWaitOn --timeout 60000 || {
             echo "❌ Le backend a planté ou n'a pas répondu à temps !"
             echo "=== LOGS DU BACKEND (backend.log) ==="
-            cat ./Backend/developpement/backend.log
             exit 1
           }
           echo "✅ Backend prêt !"
