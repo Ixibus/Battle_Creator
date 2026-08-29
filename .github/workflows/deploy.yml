@@ -63,8 +63,8 @@ jobs:
       - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
         run: |
           echo "Attente que l'API réponde sur HTTP..."
-          # npx wait-on http://127.0.0.1:8080 attend une vraie réponse HTTP et non juste le port TCP
-          npx wait-on http://127.0.0.1:8080/auth/register --timeout 60000 || {
+          # npx wait-on http-get://127.0.0.1:8080 attend une vraie réponse HTTP et non juste le port TCP
+          npx wait-on http-get://127.0.0.1:8080/auth/register --timeout 60000 || {
             echo "❌ Le backend a planté ou n'a pas répondu à temps !"
             echo "=== LOGS DU BACKEND (backend.log) ==="
             cat ./Backend/developpement/backend.log
