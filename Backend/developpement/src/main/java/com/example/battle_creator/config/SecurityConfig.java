@@ -46,7 +46,7 @@ public class SecurityConfig {
                 // Débloque explicitement toutes les requêtes Preflight OPTIONS et les pings HEAD
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/**").permitAll()
-                .requestMatchers("/error").permitAll()
+                .requestMatchers("/error", "/healthForWaitOn").permitAll()
                 .requestMatchers("/auth/**", "/users", "/missions/**", "/tasks/**", "/members/**", "/projects/**").permitAll()
                 .anyRequest().authenticated()
             )
