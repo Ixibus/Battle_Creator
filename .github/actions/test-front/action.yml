@@ -1,6 +1,15 @@
 name: "Test Frontend"
 description: "Installation des dépendances et lancement des tests du Frontend"
 
+# 1. Déclarer les variables d'entrée acceptées par l'action
+inputs:
+  SPRING_DATASOURCE_URL:
+    required: true
+  SPRING_DATASOURCE_USERNAME:
+    required: true
+  SPRING_DATASOURCE_PASSWORD:
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -42,9 +51,9 @@ runs:
       shell: bash
       working-directory: Backend/developpement
       env:
-        SPRING_DATASOURCE_URL: ${{secrets.SPRING_DATASOURCE_URL}}
-        SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}}
-        SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}}
+        SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
       run: docker compose up -d --build
 
     - name: Attente du démarrage du backend Spring Boot
