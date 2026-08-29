@@ -41,6 +41,10 @@ runs:
     - name: Démarrage de l'application via Docker Compose
       shell: bash
       working-directory: Backend/developpement
+      env:
+        SPRING_DATASOURCE_URL: ${{secrets.SPRING_DATASOURCE_URL}}
+        SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}}
+        SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}}
       run: docker compose up -d --build
 
     - name: Attente du démarrage du backend Spring Boot
