@@ -43,7 +43,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                // Débloque explicitement toutes les requêtes Preflight OPTIONS
+                // Débloque explicitement toutes les requêtes Preflight OPTIONS et les pings HEAD
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/**").permitAll()
                 .requestMatchers("/error").permitAll()
@@ -66,8 +66,8 @@ public class SecurityConfig {
         // Origines autorisées (Vite local)
         config.setAllowedOrigins(List.of("http://localhost:5173", "http://127.0.0.1:5173"));
         config.setAllowedHeaders(List.of("*"));
-        // Activer impérativement OPTIONS
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // AJOUT DE "HEAD" ICI :
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         // Appliquer la config CORS sur l'ensemble de l'API
