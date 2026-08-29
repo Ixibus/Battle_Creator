@@ -46,7 +46,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export const useMissionStore = create<MissionStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       missions: [],
       selectedMission: null,

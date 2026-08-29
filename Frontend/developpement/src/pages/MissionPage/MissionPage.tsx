@@ -1,6 +1,4 @@
 import Icone, { StyleType } from "../../components/Icones/Icone";
-import Item from "../../assets/icones/tools.svg?react";
-import Checked from "../../assets/icones/checked.svg?react";
 import Cross from "../../assets/icones/crossCancelor.svg?react";
 import "./missionPage.css";
 import MaterialTag from "../../components/MaterialTag/MaterialTag";

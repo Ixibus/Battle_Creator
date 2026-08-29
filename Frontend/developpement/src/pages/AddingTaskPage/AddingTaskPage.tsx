@@ -6,7 +6,6 @@ import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/formError.css";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import InputContainer, {
   InputLabelStyle,
@@ -26,7 +25,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 interface AddingTaskPageProps {
   onClose: () => void;
-  missionId: number;
+  missionId: number | string;
   onTaskCreated: () => void | Promise<void>;
 }
 
@@ -35,7 +34,6 @@ export default function AddingTaskPage({
   missionId,
   onTaskCreated,
 }: AddingTaskPageProps) {
-  const navigate = useNavigate();
 
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");

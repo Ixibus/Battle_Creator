@@ -5,7 +5,6 @@ import "../../styles/global/marginTitle.css";
 
 import MissionTag from "../MissionTag/MissionTag";
 import Icone, {StyleType} from "../Icones/Icone";
-import NextButton from "../Button/NextButton/NextButton";
 import PlusButton from "../Button/PlusButton/PlusButton";
 
 

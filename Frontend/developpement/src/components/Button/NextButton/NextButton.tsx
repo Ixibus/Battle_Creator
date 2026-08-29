@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 interface interfaceProps {
     id?: string,
     type?: "submit" | "button",
-    nav?: number,
+    nav?: string | number,
     styleClassName: string,
     mainClassName: string,
     text?: string,
@@ -23,7 +23,11 @@ export default function NextButton({id, nav, type, styleClassName, mainClassName
       onClick();
       return;
     }
-    if (nav !== undefined) navigate(nav);
+    if (typeof nav === 'number') {
+      navigate(nav); // Appel à navigate(delta: number)
+    } else if (typeof nav === 'string') {
+      navigate(nav); // Appel à navigate(to: string)
+    }
   };
 
   return (

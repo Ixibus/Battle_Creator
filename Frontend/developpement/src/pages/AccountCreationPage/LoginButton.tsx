@@ -1,11 +1,9 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 
 const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
 
   // function trigger () {
      const { data, isLoading, error } = useQuery({
