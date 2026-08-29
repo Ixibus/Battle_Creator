@@ -1,4 +1,4 @@
-package com.example.battlecreator.controller; // Adapte selon le package de ton projet
+package com.example.battle_creator.controller; // Adapte selon le package de ton projet
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
