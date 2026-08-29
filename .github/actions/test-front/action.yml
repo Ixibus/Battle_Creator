@@ -46,8 +46,15 @@ runs:
     - name: Attente du démarrage du backend Spring Boot
       shell: bash
       run: |
-        echo "Attente du backend..."
-        npx wait-on tcp:8080 --timeout 120000
+          echo "Attente que l'API réponde sur HTTP..."
+          # npx wait-on http-get://127.0.0.1:8080 attend une vraie réponse HTTP et non juste le port TCP
+          npx wait-on http-get://127.0.0.1:8080/healthCheckForWaitOn --timeout 60000 || {
+            echo "❌ Le backend a planté ou n'a pas répondu à temps !"
+            echo "=== LOGS DU BACKEND (backend.log) ==="
+            cat ./Backend/developpement/backend.log
+            exit 1
+          }
+          echo "✅ Backend prêt !"
 
     - name: Affichage des logs Docker (si échec)
       if: failure()
