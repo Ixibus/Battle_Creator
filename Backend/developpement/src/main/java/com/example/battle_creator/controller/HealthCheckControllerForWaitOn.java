@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthCheckControllerForWaitOn {
 
     // Répond à la racine en GET avec un statut 200 OK
-    @GetMapping("/healthForWaitOn")
-    public ResponseEntity<Void> healthCheck() {
+    @GetMapping("/healthCheckForWaitOn")
+    public ResponseEntity<Void> healthCheckForWaitOn() {
         return ResponseEntity.ok().build();
     }
 }
