@@ -11,11 +11,12 @@ services:
     environment:
       # Indiquer seulement le nom sans valeur permet à Docker d'hériter 
       # de la variable d'environnement transmise par GitHub Actions / l'OS
-      - SPRING_DATASOURCE_URL
-      - SPRING_DATASOURCE_USERNAME
-      - SPRING_DATASOURCE_PASSWORD
-      - SECURITY_JWT_SECRET_KEY
-      - SECURITY_JWT_EXPIRATION_TIME
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      # Ajoute ces lignes :
+      - SECURITY_JWT_SECRET_KEY=${SECURITY_JWT_SECRET_KEY}
+      - SECURITY_JWT_EXPIRATION_TIME=${SECURITY_JWT_EXPIRATION_TIME}
 
   # La base de données
   postgres:
