@@ -59,7 +59,7 @@ runs:
       #   SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
       #   SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
       #   SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
-      run: docker compose --env-file $GITHUB_WORKSPACE/.env up -d --build
+      run: docker compose up -d --build
 
     - name: Attente du démarrage du backend Spring Boot
       shell: bash
