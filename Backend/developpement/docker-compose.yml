@@ -11,11 +11,11 @@ services:
     environment:
       # Indiquer seulement le nom sans valeur permet à Docker d'hériter 
       # de la variable d'environnement transmise par GitHub Actions / l'OS
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/db_battle_creator
-      - SPRING_DATASOURCE_USERNAME=app
-      - SPRING_DATASOURCE_PASSWORD=app_secret
-      - SECURITY_JWT_SECRET_KEY=9c14cadd104b002192aedcd27ecbfd23a80ff96095c3eb6403b9b18261d1b264
-      - SECURITY_JWT_EXPIRATION_TIME=28800000
+      - SPRING_DATASOURCE_URL
+      - SPRING_DATASOURCE_USERNAME
+      - SPRING_DATASOURCE_PASSWORD
+      - SECURITY_JWT_SECRET_KEY
+      - SECURITY_JWT_EXPIRATION_TIME
 
   # La base de données
   postgres:

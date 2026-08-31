@@ -52,13 +52,6 @@ runs:
     - name: Démarrage de l'application via Docker Compose (utilisation secrets)
       shell: bash
       working-directory: Backend/developpement
-      # env:
-      #   SERVER_PORT: 8080
-      #   SECURITY_JWT_SECRET_KEY: ${{ inputs.JWT_SECRET_TEST }}
-      #   SECURITY_JWT_EXPIRATION_TIME: 86400000
-      #   SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
-      #   SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
-      #   SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
       run: docker compose up -d --build
 
     - name: Attente du démarrage du backend Spring Boot
