@@ -82,4 +82,7 @@ runs:
     - name: Exécution des tests E2E (Playwright)
       shell: bash
       working-directory: Frontend/developpement
+      env:
+        # Indique l'URL cible de ton backend (ex: http://127.0.0.1:8080 ou http://localhost:8080)
+        VITE_API_URL: "http://localhost:8080"
       run: npm run test:e2e
