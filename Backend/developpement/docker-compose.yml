@@ -14,6 +14,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/db_battle_creator
       - SPRING_DATASOURCE_USERNAME=app
       - SPRING_DATASOURCE_PASSWORD=app_secret
+      - SECURITY_JWT_SECRET_KEY=9c14cadd104b002192aedcd27ecbfd23a80ff96095c3eb6403b9b18261d1b264
+      - SECURITY_JWT_EXPIRATION_TIME=28800000
 
   # La base de données
   postgres:
