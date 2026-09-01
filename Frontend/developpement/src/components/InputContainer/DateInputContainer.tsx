@@ -15,6 +15,7 @@ interface DateInputContainerProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   hasError?: boolean;
+  errorId?: string; // ID pour le lien aria-describedby
 }
 
 export default function DateInputContainer({
@@ -25,6 +26,7 @@ export default function DateInputContainer({
   onChange,
   onBlur,
   hasError = false,
+  errorId,
 }: DateInputContainerProps) {
   return (
     <div className={className}>
@@ -40,6 +42,9 @@ export default function DateInputContainer({
         id={htmlFor}
         onChange={onChange}
         onBlur={onBlur}
+        /* Attributs ARIA pour WCAG AA */
+        aria-invalid={hasError}
+        aria-describedby={hasError && errorId ? errorId : undefined}
       />
     </div>
   );
