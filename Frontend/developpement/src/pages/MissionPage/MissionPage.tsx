@@ -258,11 +258,11 @@ export default function MissionPage() {
       </div>
       <div className="missionPageContainerLeftContainerStyle">
         <div className="missionPageTitleAndDescriptionContainer">
-          <h2 className="missionPageMissionTitleStyle">{objResponse?.name}</h2>
+          <h1 className="missionPageMissionTitleStyle">{objResponse?.name}</h1>
           <p className="missionPageObjectifStyle">{objResponse?.goal}</p>
         </div>
         <div className="missionPageDescriptionContainer">
-          <h3 className="missionPageDescriptionTitleStyle">DESCRIPTION</h3>
+          <h2 className="missionPageDescriptionTitleStyle">DESCRIPTION</h2>
           <p className="missionPageDescriptionStyle">
             {objResponse?.description}
           </p>

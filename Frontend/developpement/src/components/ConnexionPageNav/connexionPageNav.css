@@ -1,21 +1,25 @@
 .connexionPageNavContainerStyle {
-    padding: 10px;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  height: auto;
+  align-self: flex-start; /* Empêche Flexbox d'étirer la barre en hauteur */
+  flex-shrink: 0;        /* Empêche la barre de se déformer */
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .connexionPageNavLogoutContainer {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    background-color: var(--backgroundColor18);
-    border-radius: var(--border-radius2);
-    padding: var(--cel-padding2);
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  background-color: var(--backgroundColor18);
+  border-radius: var(--border-radius2);
+  padding: var(--cel-padding2);
+  cursor: pointer;
 }
 
 .connexionPageNavLogoutText {
-    font-size: var(--font-size3);
-    font-weight: var(--font-weight2);
-    color: var(--fontColor4);
+  font-size: var(--font-size3);
+  font-weight: var(--font-weight2);
+  color: var(--fontColor4);
 }

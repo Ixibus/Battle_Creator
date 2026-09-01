@@ -5,3 +5,23 @@
     justify-content: center;
     background: var(--backgroundColor6);
 }
+
+/* Style du lien d'évitement accessible */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: #000000;
+  color: #ffffff;
+  padding: 12px 16px;
+  z-index: 9999;
+  font-weight: bold;
+  text-decoration: underline;
+  border-radius: 0 0 4px 0;
+  transition: top 0.2s ease;
+}
+
+/* Apparaît au focus clavier */
+.skip-link:focus {
+  top: 0;
+}

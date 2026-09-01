@@ -6,27 +6,61 @@ import Bin from "../../assets/icones/bin.svg?react";
 import "./taskTagStyle.css";
 import { useState } from "react";
 
-interface interfaceProps {
+interface InterfaceProps {
   mainClassName: string;
   text: string;
-  onClickSecondButton : () => void
+  onClickSecondButton: () => void;
 }
-
 
 export default function TaskTag({
   mainClassName,
   text,
-  onClickSecondButton
-}: interfaceProps) {
+  onClickSecondButton,
+}: InterfaceProps) {
+  const [isFirstButton, setIsFirstButton] = useState<boolean>(false);
 
-  const [isFirstButton, setIsFirstButton] = useState<Boolean>(false);
-
-  // console.log(is)
   return (
-    <span className={`taskTagStyleContainer btnStyle15 ${isFirstButton && "taskTagCheckedTaskBackground"} ${mainClassName}`}>
-      <p className={`taskTagTitle ${isFirstButton && "taskTagCheckedTitle"} `}>{text}</p>
-      <Icone SrcIcone={Checked} styleType={`${StyleType.style6} ${isFirstButton && "taskTagCheckedZindexCheckedIcone"}` } onClick={() => setIsFirstButton(!isFirstButton)}/>
-      <Icone SrcIcone={Bin} styleType={`${StyleType.style7} ${isFirstButton && "taskTagCheckedZindexBinIcone"}` } onClick={onClickSecondButton}/>
-    </span>
+    <div
+      className={`taskTagStyleContainer btnStyle15 ${
+        isFirstButton ? "taskTagCheckedTaskBackground" : ""
+      } ${mainClassName}`}
+    >
+      <p className={`taskTagTitle ${isFirstButton ? "taskTagCheckedTitle" : ""}`}>
+        {text}
+      </p>
+
+      {/* Bouton pour marquer la tâche comme terminée */}
+      <button
+        type="button"
+        aria-pressed={isFirstButton}
+        aria-label={isFirstButton ? `Marquer "${text}" comme non terminée` : `Marquer "${text}" comme terminée`}
+        onClick={() => setIsFirstButton(!isFirstButton)}
+        style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+      >
+        <Icone
+          SrcIcone={Checked}
+          styleType={`${StyleType.style6} ${
+            isFirstButton ? "taskTagCheckedZindexCheckedIcone" : ""
+          }`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {/* Bouton pour supprimer la tâche */}
+      <button
+        type="button"
+        aria-label={`Supprimer la tâche "${text}"`}
+        onClick={onClickSecondButton}
+        style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+      >
+        <Icone
+          SrcIcone={Bin}
+          styleType={`${StyleType.style7} ${
+            isFirstButton ? "taskTagCheckedZindexBinIcone" : ""
+          }`}
+          aria-hidden="true"
+        />
+      </button>
+    </div>
   );
 }
