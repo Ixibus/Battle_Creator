@@ -21,7 +21,9 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 export default function HomePage() {
   const { selectedProject } = useProjectStore();
   const [showAddingMissionPage, setShowAddingMissionPage] =
-    useState<Boolean>(false);
+    useState<boolean>(false);
+
+  const projectName = selectedProject?.name || "Aucun projet sélectionné";
 
   return (
     <div
@@ -31,68 +33,86 @@ export default function HomePage() {
           : "homePageContainer"
       }
     >
-      <div className="homePageProjectContainer">
-        <div className="homePageProjectTitleAndInfoContainer">
-          <h1 className="homePageProjectTitle">
-            {selectedProject?.name || "Aucun projet sélectionné"}
-          </h1>
-          <div className="homePageProjectInfoContainer">
-            <p>{selectedProject?.location}</p>
-            <Icone SrcIcone={FilledPoint} />
-            <p>
-              {formatDateFr(selectedProject?.projectDate) ||
-                "Aucun projet sélectionné"}
-            </p>
+      <main className="homePageContainer">
+        <section className="homePageProjectContainer" aria-label="Informations du projet">
+          <div className="homePageProjectTitleAndInfoContainer">
+            <h1 className="homePageProjectTitle">
+              {projectName}
+            </h1>
+            <div className="homePageProjectInfoContainer">
+              <p>{selectedProject?.location}</p>
+              <Icone SrcIcone={FilledPoint} aria-hidden="true" />
+              <p>
+                {formatDateFr(selectedProject?.projectDate) ||
+                  "Aucun projet sélectionné"}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="homePageProjectTitleProjectDetailsContainer">
-          <NextButton type="button" styleClassName="btnStyle21" mainClassName="homePageProjectContainerDetailsButton" text="Détails"/>
-        </div>
-        <div className="homePageProjectTitleProjectDeletionContainer">
-          <NextButton type="button" styleClassName="btnStyle22" mainClassName="homePageProjectContainerDetailsButton" text="Supprimer"/>
-        </div>
-      </div>
-      <div className="homePageFigureContainer">
-        <h2 className="homePageFigureProgressionText">PROGRESSION</h2>
-        <Figure2 number={60} symbol="%" />
-      </div>
-      <main className="homePageMainContainer">
-        <MissionTagsThumbnail
-          title="MISSIONS OBLIGATOIRES"
-          isOptional={false}
-          icone={MandatoryMission}
-        />
-        <MissionTagsThumbnail
-          title="MISSIONS OPTIONNELLES"
-          isOptional={true}
-          icone={OptionnalMission}
-          onClick={() => {
-          setShowAddingMissionPage(true);
-        }}
-        />
+          <div className="homePageProjectTitleProjectDetailsContainer">
+            <NextButton
+              type="button"
+              styleClassName="btnStyle21"
+              mainClassName="homePageProjectContainerDetailsButton"
+              text="Détails"
+              ariaLabel={`Voir les détails du projet ${projectName}`}
+            />
+          </div>
+          <div className="homePageProjectTitleProjectDeletionContainer">
+            <NextButton
+              type="button"
+              styleClassName="btnStyle22"
+              mainClassName="homePageProjectContainerDetailsButton"
+              text="Supprimer"
+              ariaLabel={`Supprimer le projet ${projectName}`}
+            />
+          </div>
+        </section>
+
+        <section className="homePageFigureContainer" aria-label="Progression du projet">
+          <h2 className="homePageFigureProgressionText">PROGRESSION</h2>
+          <Figure2 number={60} symbol="%" />
+        </section>
+
+        <section className="homePageMainContainer" aria-label="Missions du projet">
+          <MissionTagsThumbnail
+            title="MISSIONS OBLIGATOIRES"
+            isOptional={false}
+            icone={MandatoryMission}
+          />
+          <MissionTagsThumbnail
+            title="MISSIONS OPTIONNELLES"
+            isOptional={true}
+            icone={OptionnalMission}
+            onClick={() => {
+              setShowAddingMissionPage(true);
+            }}
+          />
+        </section>
+
+        <section className="secondaryThumbnailsContainer" aria-label="Ressources du projet">
+          <SecondaryThumbnail
+            isFigured={true}
+            figure={34}
+            text="Tâches"
+            icone={Checked}
+            buttonText="VOIR LES TACHES"
+          />
+          <SecondaryThumbnail
+            isFigured={true}
+            figure={15}
+            text="Bénévoles"
+            icone={Members}
+            buttonText="TOUS LES BENEVOLES"
+          />
+          <SecondaryThumbnail
+            isFigured={false}
+            text="Matériels"
+            icone={Tools}
+            buttonText="VOIR LA LISTE"
+          />
+        </section>
       </main>
-      <div className="secondaryThumbnailsContainer">
-        <SecondaryThumbnail
-          isFigured={true}
-          figure={34}
-          text="Tâches"
-          icone={Checked}
-          buttonText="VOIR LES TACHES"
-        />
-        <SecondaryThumbnail
-          isFigured={true}
-          figure={15}
-          text="Bénévoles"
-          icone={Members}
-          buttonText="TOUS LES BENEVOLES"
-        />
-        <SecondaryThumbnail
-          isFigured={false}
-          text="Matériels"
-          icone={Tools}
-          buttonText="VOIR LA LISTE"
-        />
-      </div>
+
       {showAddingMissionPage && (
         <AddingMissionPage
           onClose={() => {

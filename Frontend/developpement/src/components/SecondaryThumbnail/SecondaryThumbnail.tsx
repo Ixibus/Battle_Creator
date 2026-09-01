@@ -18,7 +18,7 @@ export default function SecondaryThumbnail({isFigured, figure, text, icone, butt
     return(
         <div className="secondaryThumbnail secondaryThumbnailStyle">
             {isFigured && <Figure number={figure}/>}
-            <p className="secondaryThumbnailTitleStyle">{text}</p>
+            <h3 className="secondaryThumbnailTitleStyle">{text}</h3>
             <Icone SrcIcone={icone} styleType={StyleType.style1}/>
             <NextButton styleClassName="btnStyle6" mainClassName="tasksButton" text={buttonText}/>
         </div>
