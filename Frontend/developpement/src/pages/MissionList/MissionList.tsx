@@ -16,8 +16,8 @@ import AddingMissionPage from "../AddingMissionPage/AddingMissionPage";
 export default function MissionList() {
   const navigate = useNavigate();
 
-    const [showAddingMissionPage, setShowAddingMissionPage] =
-      useState<Boolean>(false);
+  const [showAddingMissionPage, setShowAddingMissionPage] =
+    useState<boolean>(false);
 
   const {
     missions,
@@ -50,7 +50,6 @@ export default function MissionList() {
     }
   };
 
-  
   useEffect(() => {
     if (showAddingMissionPage) {
       document.body.style.overflow = "hidden";
@@ -80,72 +79,88 @@ export default function MissionList() {
 
   return (
     <div className={showAddingMissionPage ? "missionListContainer missionListContainerForOverlay" : "missionListContainer"}>
-      <div className="missionListTitleContainer">
-        <h2 className="missionListTitle">Missions personnalisées</h2>
-        <div className="missionListGoalContainerStyle">
-          <div className="btnStyle19 missionListGoalInnerContainerStyle">
-            {selectedProject?.name}
-          </div>
-        </div>
-      </div>
-
-      {!selectedProject && (
-        <p className="formErrorMessageStyle">
-          Veuillez d'abord sélectionner un projet pour afficher ses missions.
-        </p>
-      )}
-
-      {isLoading && <p>Chargement de vos missions...</p>}
-
-      {error && <p className="formErrorMessageStyle">{error}</p>}
-
-      {!isLoading && !error && selectedProject && missions.length === 0 && (
-        <p>Aucune mission trouvée pour ce projet.</p>
-      )}
-
-      <div className="missionListMissionsContainer">
-        {missions.map((mission, index) => (
-          <div
-            key={mission.id || index}
-            className="missionListMissionContainer"
-            onClick={() => handleSelectMission(mission)}
-          >
-            <div className="missionListIconeTitleAndGoalContainer">
-              <div className="missionIconeMissionListContainer">
-                <Icone SrcIcone={Mission} styleType={StyleType.style1} />
-              </div>
-              <div className="titleAndGoalMissionContainer">
-                <h3 className="missionListTitleMission">{mission.name}</h3>
-                <p className="missionListGoalMission">{mission.goal}</p>
+      <main className="missionListMainContent">
+        <div className="missionListTitleContainer">
+          <h1 className="missionListTitle">Missions personnalisées</h1>
+          {selectedProject?.name && (
+            <div className="missionListGoalContainerStyle">
+              <div className="btnStyle19 missionListGoalInnerContainerStyle">
+                {selectedProject.name}
               </div>
             </div>
-            <button className="misionSelectButtonListMissionContainer">
-              <Icone SrcIcone={Arrow} styleType={StyleType.style1} />
-            </button>
-          </div>
-        ))}
-          <PlusButton
-            topMarginButton="20px"
-            btnStyle="btnStyle14"
-            mainClassName="missionListAddingButton"
-            text="Ajouter une mission personalisée"
-            onClick={() => {
-          setShowAddingMissionPage(true);}}
-          />
-      </div>
+          )}
+        </div>
 
-      <NextButton
-        onClick={handleQuit}
-        type="button"
-        styleClassName="btnStyle11"
-        mainClassName="missionListExitButton"
-        text="Quitter"
-      />
-      {
-        showAddingMissionPage && (
-          <AddingMissionPage onClose={() => {setShowAddingMissionPage(false)} }/>
-        )
-      }
+        <div aria-live="polite">
+          {!selectedProject && (
+            <p className="formErrorMessageStyle" role="alert">
+              Veuillez d'abord sélectionner un projet pour afficher ses missions.
+            </p>
+          )}
+
+          {isLoading && <p>Chargement de vos missions...</p>}
+
+          {error && <p className="formErrorMessageStyle" role="alert">{error}</p>}
+
+          {!isLoading && !error && selectedProject && missions.length === 0 && (
+            <p>Aucune mission trouvée pour ce projet.</p>
+          )}
+        </div>
+
+        <ul className="missionListMissionsContainer" aria-label="Liste des missions personnalisées">
+          {missions.map((mission, index) => (
+            <li key={mission.id || index}>
+              <button
+                type="button"
+                className="missionListMissionContainer"
+                onClick={() => handleSelectMission(mission)}
+                aria-label={`Accéder à la mission ${mission.name}`}
+              >
+                <div className="missionListIconeTitleAndGoalContainer">
+                  <div className="missionIconeMissionListContainer">
+                    <Icone SrcIcone={Mission} styleType={StyleType.style1} aria-hidden="true" />
+                  </div>
+                  <div className="titleAndGoalMissionContainer">
+                    <h2 className="missionListTitleMission">{mission.name}</h2>
+                    <p className="missionListGoalMission">{mission.goal}</p>
+                  </div>
+                </div>
+                <span className="misionSelectButtonListMissionContainer" aria-hidden="true">
+                  <Icone SrcIcone={Arrow} styleType={StyleType.style1} />
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <PlusButton
+          topMarginButton="20px"
+          btnStyle="btnStyle14"
+          mainClassName="missionListAddingButton"
+          text="Ajouter une mission personnalisée"
+          ariaLabel="Ajouter une nouvelle mission personnalisée"
+          onClick={() => {
+            setShowAddingMissionPage(true);
+          }}
+        />
+
+        <NextButton
+          onClick={handleQuit}
+          type="button"
+          styleClassName="btnStyle11"
+          mainClassName="missionListExitButton"
+          text="Quitter"
+          ariaLabel="Quitter la liste des missions"
+        />
+      </main>
+
+      {showAddingMissionPage && (
+        <AddingMissionPage
+          onClose={() => {
+            setShowAddingMissionPage(false);
+          }}
+        />
+      )}
     </div>
   );
 }
