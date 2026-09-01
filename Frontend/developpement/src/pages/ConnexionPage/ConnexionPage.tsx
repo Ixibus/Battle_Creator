@@ -2,10 +2,9 @@ import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToastStore } from "../../store/toastStore";
-import { useEffect } from "react";
 import { useProjectStore } from "../../store/useProjectStore";
 import NextButton from "../../components/Button/NextButton/NextButton";
 
@@ -20,6 +19,7 @@ export default function ConnexionPage() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [touched, setTouched] = useState<{ login: boolean; password: boolean }>(
     {
       login: false,
@@ -54,6 +54,8 @@ export default function ConnexionPage() {
 
     if (hasError) return;
 
+    setIsLoading(true);
+
     try {
       const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
@@ -65,8 +67,7 @@ export default function ConnexionPage() {
       if (res.ok) {
         const userData = await res.json().catch(() => null);
 
-        // Accepte 'id' OU 'userId' selon la réponse JSON de votre backend
-        const loggedUserId = userData?.id
+        const loggedUserId = userData?.id;
 
         setUser({
           id: loggedUserId,
@@ -86,6 +87,8 @@ export default function ConnexionPage() {
       setErrorMessage("Une erreur est survenue lors de la connexion");
     } catch {
       setErrorMessage("Impossible de contacter le serveur");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -99,9 +102,11 @@ export default function ConnexionPage() {
 
   return (
     <div className="connexionPageContainer">
-      <form className="formStyle3" onSubmit={handleSubmit} autoComplete="new-password">
+      <form className="formStyle3" onSubmit={handleSubmit} noValidate autoComplete="on">
         <h1 className="titleFormStyle">Connexion</h1>
+
         <div className="inputsFormContainerStyle">
+          {/* Login */}
           <InputContainer
             inputLabelStyle={InputLabelStyle.style1}
             inputItemStyle={InputItemStyle.style1}
@@ -115,15 +120,18 @@ export default function ConnexionPage() {
             }}
             onBlur={() => setTouched((s) => ({ ...s, login: true }))}
             hasError={invalidCredentials || (touched.login && isLoginEmpty)}
+            errorId="loginError"
             hasAutoComplete={true}
-            />
-          <div className="errorSlot">
+          />
+          <div className="errorSlot" id="loginError" aria-live="polite">
             {touched.login && isLoginEmpty && (
               <p className="formErrorMessageStyle">
                 Merci de renseigner votre login
               </p>
             )}
           </div>
+
+          {/* Mot de passe */}
           <InputContainer
             inputLabelStyle={InputLabelStyle.style1}
             inputItemStyle={InputItemStyle.style1}
@@ -137,26 +145,33 @@ export default function ConnexionPage() {
             }}
             onBlur={() => setTouched((s) => ({ ...s, password: true }))}
             hasError={invalidCredentials || (touched.password && isPasswordEmpty)}
+            errorId="passwordError"
             hasAutoComplete={true}
           />
-          <div className="errorSlot">
+          <div className="errorSlot" id="passwordError" aria-live="polite">
             {touched.password && isPasswordEmpty && (
               <p className="formErrorMessageStyle">
                 Merci de renseigner votre mot de passe
               </p>
             )}
           </div>
-          <div className="errorSlot">
+
+          {/* Erreur globale du serveur (ex: Identifiants invalides) */}
+          <div className="errorSlot" id="globalConnexionError" aria-live="assertive" role="alert">
             {errorMessage && (
               <p className="formErrorMessageStyle">{errorMessage}</p>
             )}
           </div>
+
+          {/* Boutons d'action */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"
               styleClassName="btnStyle10"
               mainClassName="SubmitBtn_AccountCreation"
-              text="Valider"
+              text={isLoading ? "Connexion en cours..." : "Valider"}
+              disabled={isLoading}
+              ariaBusy={isLoading}
             />
             <NextButton
               type="button"
@@ -164,6 +179,7 @@ export default function ConnexionPage() {
               mainClassName="SubmitBtn_AccountCreation"
               text="Effacer"
               onClick={handleClear}
+              disabled={isLoading}
             />
           </div>
         </div>
