@@ -6,7 +6,6 @@ import "../../styles/form/titleFormStyle.css";
 import "../../styles/form/formError.css";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import InputContainer, {
   InputLabelStyle,
@@ -22,9 +21,11 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 
 import { useToastStore } from "../../store/toastStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface AddingTaskPageProps {
   onClose: () => void;
-  missionId: number;
+  missionId: number | string;
   onTaskCreated: () => void | Promise<void>;
 }
 
@@ -33,7 +34,6 @@ export default function AddingTaskPage({
   missionId,
   onTaskCreated,
 }: AddingTaskPageProps) {
-  const navigate = useNavigate();
 
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -76,7 +76,7 @@ export default function AddingTaskPage({
     };
 
     try {
-      const res = await fetch("http://localhost:8080/tasks", {
+      const res = await fetch(`${API_URL}/tasks`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

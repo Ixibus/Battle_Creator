@@ -17,6 +17,8 @@ import InputContainer, {
 
 import NextButton from "../../components/Button/NextButton/NextButton";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface Task {
   id: number;
   taskName: string;
@@ -80,7 +82,7 @@ export default function TaskAssignmentPage({
   const [serverError, setServerError] = useState(false);
 
   async function loadExistingMembers() {
-    const res = await fetch(`http://localhost:8080/members`, {
+    const res = await fetch(`${API_URL}/members`, {
       credentials: "include",
       method: "GET",
       headers: {
@@ -126,7 +128,7 @@ export default function TaskAssignmentPage({
     setServerError(false);
 
     try {
-      const res = await fetch("http://localhost:8080/members", {
+      const res = await fetch(`${API_URL}/members`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

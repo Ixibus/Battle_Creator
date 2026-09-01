@@ -1,6 +1,17 @@
 name: "Test Frontend"
 description: "Installation des dépendances et lancement des tests du Frontend"
 
+# 1. Déclarer les variables d'entrée acceptées par l'action
+inputs:
+  SPRING_DATASOURCE_URL:
+    required: true
+  SPRING_DATASOURCE_USERNAME:
+    required: true
+  SPRING_DATASOURCE_PASSWORD:
+    required: true
+  JWT_SECRET_TEST:
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -36,18 +47,36 @@ runs:
     - name: Génération du JAR Spring Boot
       shell: bash
       working-directory: Backend/developpement
+      env:
+        SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
+        SECURITY_JWT_SECRET_KEY: ${{ inputs.JWT_SECRET_TEST }}
+        SECURITY_JWT_EXPIRATION_TIME: "86400000"
       run: mvn package -DskipTests
 
-    - name: Démarrage de l'application via Docker Compose
+    - name: Démarrage de l'application via Docker Compose (utilisation secrets)
       shell: bash
       working-directory: Backend/developpement
+      env:
+        SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
+        SECURITY_JWT_SECRET_KEY: ${{ inputs.JWT_SECRET_TEST }}
+        SECURITY_JWT_EXPIRATION_TIME: "86400000"
       run: docker compose up -d --build
 
     - name: Attente du démarrage du backend Spring Boot
       shell: bash
       run: |
-        echo "Attente du backend..."
-        npx wait-on tcp:8080 --timeout 120000
+          echo "Attente que l'API réponde sur HTTP..."
+          # npx wait-on http-get://127.0.0.1:8080 attend une vraie réponse HTTP et non juste le port TCP
+          npx wait-on http-get://127.0.0.1:8080/healthCheckForWaitOn --timeout 60000 || {
+            echo "❌ Le backend a planté ou n'a pas répondu à temps !"
+            echo "=== LOGS DU BACKEND (backend.log) ==="
+            exit 1
+          }
+          echo "✅ Backend prêt !"
 
     - name: Affichage des logs Docker (si échec)
       if: failure()
@@ -58,4 +87,7 @@ runs:
     - name: Exécution des tests E2E (Playwright)
       shell: bash
       working-directory: Frontend/developpement
+      env:
+        # Indique l'URL cible de ton backend (ex: http://127.0.0.1:8080 ou http://localhost:8080)
+        VITE_API_URL: "http://localhost:8080"
       run: npm run test:e2e

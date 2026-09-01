@@ -1,6 +1,8 @@
 import { Navigate, Outlet, useLocation, useNavigationType } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function ProtectedRoute() {
   const [loading, setLoading] = useState(true);
   const [authed, setAuthed] = useState(false);
@@ -9,7 +11,7 @@ export default function ProtectedRoute() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:8080/auth/me", {
+    fetch(`${API_URL}/auth/me`, {
       credentials: "include",
       cache: "no-store",
     })

@@ -9,22 +9,23 @@ import InputContainer, {
   InputLabelStyle,
   InputItemStyle,
 } from "../../components/InputContainer/InputContainer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NextButton from "../../components/Button/NextButton/NextButton";
 import { useToastStore } from "../../store/toastStore";
-import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8080";
 
 export default function AccountCreation() {
   const navigate = useNavigate();
-
   const setActiveStep = useStepStore((state) => state.setActiveStep);
 
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Evite les soumissions multiples
 
   const [touched, setTouched] = useState<{
     login: boolean;
@@ -47,7 +48,6 @@ export default function AccountCreation() {
   });
 
   const [serverPasswordError, setServerPasswordError] = useState("");
-
   const showToast = useToastStore((state) => state.showToast);
 
   const isLoginEmpty = login.trim() === "";
@@ -64,8 +64,7 @@ export default function AccountCreation() {
     PASSWORD_MISSING_UPPERCASE: "- doit avoir au moins une majuscule.",
     PASSWORD_MISSING_LOWERCASE: "- doit avoir au moins une minuscule.",
     PASSWORD_MISSING_DIGIT: "- doit avoir au moins un chiffre.",
-    PASSWORD_MISSING_SPECIAL_CHARACTER:
-      "- doit avoir au moins un caractère spécial.",
+    PASSWORD_MISSING_SPECIAL_CHARACTER: "- doit avoir au moins un caractère spécial.",
     PASSWORD_CONTAINS_SPACE: "- ne doit pas contenir d'espace.",
   };
 
@@ -82,28 +81,20 @@ export default function AccountCreation() {
   }, [setActiveStep]);
 
   function clearLoginError() {
-    setServerFieldErrors((previousErrors) => ({
-      ...previousErrors,
-      login: "",
-    }));
+    setServerFieldErrors((prev) => ({ ...prev, login: "" }));
   }
 
   function clearEmailError() {
-    setServerFieldErrors((previousErrors) => ({
-      ...previousErrors,
-      email: "",
-    }));
+    setServerFieldErrors((prev) => ({ ...prev, email: "" }));
   }
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (isLoading) return; // Sécurité anti-rebond
+
     setServerPasswordError("");
-
-    setServerFieldErrors({
-      login: "",
-      email: "",
-    });
-
+    setServerFieldErrors({ login: "", email: "" });
     setTouched({
       login: true,
       email: true,
@@ -116,8 +107,10 @@ export default function AccountCreation() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const res = await fetch("http://localhost:8080/auth/register", {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,67 +127,35 @@ export default function AccountCreation() {
 
       if (!res.ok) {
         if (responseData.error === "LOGIN_ALREADY_USED") {
-          setServerFieldErrors({
-            login: responseData.message,
-            email: "",
-          });
-
-          setTouched((previousTouched) => ({
-            ...previousTouched,
-            login: true,
-          }));
-
+          setServerFieldErrors({ login: responseData.message, email: "" });
+          setTouched((prev) => ({ ...prev, login: true }));
           return;
         }
 
         if (responseData.error === "EMAIL_ALREADY_USED") {
-          setServerFieldErrors({
-            login: "",
-            email: responseData.message,
-          });
-
-          setTouched((previousTouched) => ({
-            ...previousTouched,
-            email: true,
-          }));
-
+          setServerFieldErrors({ login: "", email: responseData.message });
+          setTouched((prev) => ({ ...prev, email: true }));
           return;
         }
 
         if (responseData.code === "INVALID_PASSWORD") {
           setServerPasswordError(responseData.message);
-
-          setTouched((previousTouched) => ({
-            ...previousTouched,
-            password: true,
-          }));
+          setTouched((prev) => ({ ...prev, password: true }));
 
           const details =
             "Votre mot de passe : \n" +
             responseData.errors
-              .map(
-                (errorCode: string) =>
-                  passwordErrorMessages[errorCode] || errorCode,
-              )
+              .map((code: string) => passwordErrorMessages[code] || code)
               .join("\n");
 
           showToast(details, "error");
-          console.log(
-            responseData.errors.map(
-              (errorCode: string) =>
-                passwordErrorMessages[errorCode] || errorCode,
-            ),
-          );
-
           return;
         }
 
         showToast(
-          responseData.message ||
-            "Une erreur est survenue lors de la création du compte.",
-          "error",
+          responseData.message || "Une erreur est survenue lors de la création du compte.",
+          "error"
         );
-
         return;
       }
 
@@ -202,22 +163,21 @@ export default function AccountCreation() {
         if (!responseData.id) {
           showToast(
             "Le compte a été créé, mais son identifiant est introuvable.",
-            "error",
+            "error"
           );
-
           return;
         }
 
         sessionStorage.setItem("newAccountId", String(responseData.id));
-
         showToast("Création de compte réussie !", "success");
-
         handleClear();
         navigate("/projectCreation");
       }
     } catch (error) {
-      console.error("Erreur création projet :", error);
+      console.error("Erreur création compte :", error);
       showToast("Impossible de contacter le serveur.", "error");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -227,12 +187,7 @@ export default function AccountCreation() {
     setPassword("");
     setPasswordConfirmation("");
     setServerPasswordError("");
-
-    setServerFieldErrors({
-      login: "",
-      email: "",
-    });
-
+    setServerFieldErrors({ login: "", email: "" });
     setTouched({
       login: false,
       email: false,
@@ -242,159 +197,138 @@ export default function AccountCreation() {
   }
 
   return (
-    <>
-      <form noValidate className="formStyle3" onSubmit={handleSubmit}>
-        <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
+    <form noValidate className="formStyle3" onSubmit={handleSubmit}>
+      <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
 
-        <div className="inputsFormContainerStyle">
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Votre login de connexion"
-            htmlFor="login"
-            type="text"
-            value={login}
-            onChange={(e) => {
-              setLogin(e.target.value);
-              clearLoginError();
-            }}
-            onBlur={() => setTouched((s) => ({ ...s, login: true }))}
-            hasError={
-              (touched.login && isLoginEmpty) || serverFieldErrors.login !== ""
-            }
-            hasAutoComplete={true}
-            />
+      <div className="inputsFormContainerStyle">
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Votre login de connexion"
+          htmlFor="login"
+          type="text"
+          value={login}
+          onChange={(e) => {
+            setLogin(e.target.value);
+            clearLoginError();
+          }}
+          onBlur={() => setTouched((s) => ({ ...s, login: true }))}
+          hasError={
+            (touched.login && isLoginEmpty) || serverFieldErrors.login !== ""
+          }
+          hasAutoComplete={true}
+        />
 
-          <div className="errorSlot">
-            {touched.login && isLoginEmpty && (
-              <p className="formErrorMessageStyle">
-                Merci de renseigner votre login
-              </p>
-            )}
-            {serverFieldErrors.login && (
-              <p className="formErrorMessageStyle">{serverFieldErrors.login}</p>
-            )}
-          </div>
-
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Votre email"
-            htmlFor="email"
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              clearEmailError();
-            }}
-            onBlur={() => setTouched((s) => ({ ...s, email: true }))}
-            hasError={
-              (touched.email && (isEmailEmpty || isEmailInvalid)) ||
-              serverFieldErrors.email !== ""
-            }
-            hasAutoComplete={true}
-          />
-
-          <div className="errorSlot">
-            {touched.email && isEmailEmpty && (
-              <p className="formErrorMessageStyle">
-                Merci de renseigner votre email
-              </p>
-            )}
-
-            {touched.email && !isEmailEmpty && isEmailInvalid && (
-              <p className="formErrorMessageStyle">
-                Merci de renseigner une adresse email valide
-              </p>
-            )}
-
-            {serverFieldErrors.email && (
-              <p className="formErrorMessageStyle">{serverFieldErrors.email}</p>
-            )}
-          </div>
-
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Veuillez rentrer votre mot de passe"
-            htmlFor="password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setServerPasswordError("");
-            }}
-            onBlur={() => setTouched((s) => ({ ...s, password: true }))}
-            hasError={
-              (touched.password && isPasswordEmpty) ||
-              serverPasswordError !== ""
-            }
-          />
-
-          <div className="errorSlot">
-            {touched.password && isPasswordEmpty && (
-              <p className="formErrorMessageStyle">
-                Merci de renseigner votre mot de passe
-              </p>
-            )}
-
-            {serverPasswordError && (
-              <p className="formErrorMessageStyle">{serverPasswordError}</p>
-            )}
-          </div>
-
-          <InputContainer
-            inputLabelStyle={InputLabelStyle.style1}
-            inputItemStyle={InputItemStyle.style1}
-            labelName="Confirmer votre mot de passe"
-            htmlFor="passwordConfirmation"
-            type="password"
-            value={passwordConfirmation}
-            onChange={(e) => {
-              setPasswordConfirmation(e.target.value);
-            }}
-            onBlur={() =>
-              setTouched((s) => ({ ...s, passwordConfirmation: true }))
-            }
-            hasError={
-              touched.passwordConfirmation &&
-              (isPasswordConfirmationEmpty || !passwordsMatch)
-            }
-          />
-
-          <div className="errorSlot">
-            {touched.passwordConfirmation && isPasswordConfirmationEmpty && (
-              <p className="formErrorMessageStyle">
-                Merci de confirmer votre mot de passe
-              </p>
-            )}
-            {touched.passwordConfirmation &&
-              !isPasswordConfirmationEmpty &&
-              !passwordsMatch && (
-                <p className="formErrorMessageStyle">
-                  Les mots de passe ne correspondent pas
-                </p>
-              )}
-          </div>
-
-          <div className="buttonsContainerStyle">
-            <NextButton
-              type="submit"
-              styleClassName="btnStyle10"
-              mainClassName="SubmitBtn_AccountCreation"
-              text="Valider"
-            />
-            <NextButton
-              type="button"
-              styleClassName="btnStyle11"
-              mainClassName="SubmitBtn_AccountCreation"
-              text="Effacer"
-              onClick={handleClear}
-            />
-
-          </div>
+        <div className="errorSlot">
+          {touched.login && isLoginEmpty && (
+            <p className="formErrorMessageStyle">Merci de renseigner votre login</p>
+          )}
+          {serverFieldErrors.login && (
+            <p className="formErrorMessageStyle">{serverFieldErrors.login}</p>
+          )}
         </div>
-      </form>
-    </>
+
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Votre email"
+          htmlFor="email"
+          type="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            clearEmailError();
+          }}
+          onBlur={() => setTouched((s) => ({ ...s, email: true }))}
+          hasError={
+            (touched.email && (isEmailEmpty || isEmailInvalid)) ||
+            serverFieldErrors.email !== ""
+          }
+          hasAutoComplete={true}
+        />
+
+        <div className="errorSlot">
+          {touched.email && isEmailEmpty && (
+            <p className="formErrorMessageStyle">Merci de renseigner votre email</p>
+          )}
+          {touched.email && !isEmailEmpty && isEmailInvalid && (
+            <p className="formErrorMessageStyle">Merci de renseigner une adresse email valide</p>
+          )}
+          {serverFieldErrors.email && (
+            <p className="formErrorMessageStyle">{serverFieldErrors.email}</p>
+          )}
+        </div>
+
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Veuillez rentrer votre mot de passe"
+          htmlFor="password"
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setServerPasswordError("");
+          }}
+          onBlur={() => setTouched((s) => ({ ...s, password: true }))}
+          hasError={
+            (touched.password && isPasswordEmpty) || serverPasswordError !== ""
+          }
+        />
+
+        <div className="errorSlot">
+          {touched.password && isPasswordEmpty && (
+            <p className="formErrorMessageStyle">Merci de renseigner votre mot de passe</p>
+          )}
+          {serverPasswordError && (
+            <p className="formErrorMessageStyle">{serverPasswordError}</p>
+          )}
+        </div>
+
+        <InputContainer
+          inputLabelStyle={InputLabelStyle.style1}
+          inputItemStyle={InputItemStyle.style1}
+          labelName="Confirmer votre mot de passe"
+          htmlFor="passwordConfirmation"
+          type="password"
+          value={passwordConfirmation}
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+          onBlur={() => setTouched((s) => ({ ...s, passwordConfirmation: true }))}
+          hasError={
+            touched.passwordConfirmation &&
+            (isPasswordConfirmationEmpty || !passwordsMatch)
+          }
+        />
+
+        <div className="errorSlot">
+          {touched.passwordConfirmation && isPasswordConfirmationEmpty && (
+            <p className="formErrorMessageStyle">Merci de confirmer votre mot de passe</p>
+          )}
+          {touched.passwordConfirmation &&
+            !isPasswordConfirmationEmpty &&
+            !passwordsMatch && (
+              <p className="formErrorMessageStyle">Les mots de passe ne correspondent pas</p>
+            )}
+        </div>
+
+        <div className="buttonsContainerStyle">
+          <NextButton
+            type="submit"
+            styleClassName="btnStyle10"
+            mainClassName="SubmitBtn_AccountCreation"
+            text={isLoading ? "Chargement..." : "Valider"}
+            disabled={isLoading}
+          />
+          <NextButton
+            type="button"
+            styleClassName="btnStyle11"
+            mainClassName="SubmitBtn_AccountCreation"
+            text="Effacer"
+            onClick={handleClear}
+            disabled={isLoading}
+          />
+        </div>
+      </div>
+    </form>
   );
 }

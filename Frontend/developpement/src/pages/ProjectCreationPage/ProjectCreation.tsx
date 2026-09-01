@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 type TouchedFields = {
   projectName: boolean;
   projectLocation:boolean;
@@ -126,7 +128,7 @@ export default function ProjectCreation() {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/projects", {
+      const response = await fetch(`${API_URL}/projects`, {
         method: "POST",
         credentials: "omit",
         headers: {

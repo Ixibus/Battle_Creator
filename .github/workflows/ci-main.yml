@@ -43,3 +43,8 @@ jobs:
 
       - name: Run Frontend Tests
         uses: ./.github/actions/test-front
+        with:
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          JWT_SECRET_TEST: ${{ secrets.JWT_SECRET_TEST }}

@@ -6,6 +6,15 @@ test.describe("Onboarding complet", () => {
   test("créer un compte, un projet et accéder à la home page", async ({
     page,
   }) => {
+    page.on("response", (response) => {
+      if (response.status() >= 400) {
+        console.log(
+          `❌ Requête échouée: ${response.url()} -> Status ${response.status()}`,
+        );
+      }
+    });
+    page.on("console", (msg) => console.log("LOG FRONT:", msg.text()));
+
     test.setTimeout(120_000);
 
     const login = `e2e_user_${Date.now()}`;
@@ -46,6 +55,12 @@ test.describe("Onboarding complet", () => {
 
       await page.getByRole("button", { name: "Valider" }).click();
 
+      await page.waitForResponse(
+        (response) =>
+          (response.url().includes("/api/") && response.status() === 200) ||
+          response.status() === 201,
+      );
+
       await expect(page).toHaveURL(/\/projectCreation$/);
       await expect(
         page.getByRole("heading", { name: "CREATION DE PROJET" }),
@@ -82,9 +97,7 @@ test.describe("Onboarding complet", () => {
     });
 
     await test.step("Passer les missions obligatoires", async () => {
-      await page
-        .getByRole("button", { name: "Suivant" })
-        .click();
+      await page.getByRole("button", { name: "Suivant" }).click();
 
       await expect(page).toHaveURL(/\/onboardingOptionalMissions$/);
       await expect(
@@ -93,9 +106,7 @@ test.describe("Onboarding complet", () => {
     });
 
     await test.step("Passer les missions optionnelles", async () => {
-      await page
-        .getByRole("button", { name: "Se connecter" })
-        .click();
+      await page.getByRole("button", { name: "Se connecter" }).click();
 
       await expect(page).toHaveURL(/\/connexionPage$/);
       await expect(

@@ -1,6 +1,4 @@
 import Icone, { StyleType } from "../../components/Icones/Icone";
-import Item from "../../assets/icones/tools.svg?react";
-import Checked from "../../assets/icones/checked.svg?react";
 import Cross from "../../assets/icones/crossCancelor.svg?react";
 import "./missionPage.css";
 import MaterialTag from "../../components/MaterialTag/MaterialTag";
@@ -14,6 +12,8 @@ import TaskAssignmentPage from "../TaskAssignmentPage/TaskAssignmentPage";
 
 import { useToastStore } from "../../store/toastStore";
 import { useMissionStore } from "../../store/useMissionStore";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function MissionPage() {
   interface Task {
@@ -92,7 +92,7 @@ export default function MissionPage() {
 
   async function loadMission(missionId: string) {
     try {
-      const res = await fetch(`http://localhost:8080/missions/${missionId}`, {
+      const res = await fetch(`${API_URL}/missions/${missionId}`, {
         credentials: "include",
         method: "GET",
         headers: {

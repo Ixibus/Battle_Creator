@@ -20,7 +20,6 @@ export default function MissionList() {
       useState<Boolean>(false);
 
   const {
-    user,
     missions,
     isLoading,
     error,
