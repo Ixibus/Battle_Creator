@@ -1,10 +1,10 @@
 .formStyle {
     margin: 0 auto;
-    padding: 10px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: fit-content;
+    width: 500px;
     min-height: 0;
     background: transparent;
     gap : 1vh;
@@ -31,4 +31,18 @@
     height: fit-content;
     background: white;
     border-radius: var(--border-radius2);
+}
+
+/* Responsive */
+
+@media (max-width:1280px) {
+}
+
+@media (max-width:1023px) {
+}
+
+@media (max-width:767px) {
+    .formStyle {
+        width: 80vw;
+    }
 }
