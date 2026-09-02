@@ -7,7 +7,7 @@
     width: 500px;
     min-height: 0;
     background: transparent;
-    gap : 1vh;
+    gap: 1vh;
 }
 
 .formStyle2 {
@@ -28,7 +28,6 @@
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    height: fit-content;
     background: white;
     border-radius: var(--border-radius2);
 }
@@ -36,13 +35,19 @@
 /* Responsive */
 
 @media (max-width:1280px) {
+    .formStyle3 {
+        width : 400px;
+    }
 }
 
 @media (max-width:1023px) {
+    .formStyle3 {
+        width : 300px;
+    }
 }
 
 @media (max-width:767px) {
-    .formStyle {
-        width: 80vw;
+    .formStyle3 {
+        width : 250px;
     }
 }

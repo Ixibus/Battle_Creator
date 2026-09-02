@@ -11,6 +11,7 @@ import NextButton from "../../components/Button/NextButton/NextButton";
 const API_URL = import.meta.env.VITE_API_URL;
 
 import './connexionPage.css';
+import '../../styles/form/inputsFormContainerStyle.css'
 import "../../styles/form/formError.css";
 
 export default function ConnexionPage() {
