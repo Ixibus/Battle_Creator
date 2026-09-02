@@ -1,5 +1,5 @@
 .titleFormStyle{
-    /* margin-bottom: 15px; */
+    margin: 15px;
     color: var(--fontColor3);
     font-weight: var(--font-weight1);
     font-size: var(--font-size5);
