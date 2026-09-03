@@ -1,8 +1,8 @@
-.projectListContainer{
+.projectListContainer {
     /* border: 1px solid red; */
-    height: 750px;
+    height: fit-content;
     width: 40vw;
-    margin: auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -32,7 +32,8 @@
     border-radius: 50%;
 }
 
-.projectListTitle{
+.projectListTitle {
+    margin: 15px auto;
     text-align: center;
     font-size: 1.7em;
     font-weight: var(--font-weight1);
@@ -43,8 +44,8 @@
     /* height: 100%; */
     /* border: 1px solid red; */
     display: grid;
-    grid-template-columns: 1fr 1fr ;
-    grid-auto-rows: 1fr ;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
 }
 
 
@@ -61,32 +62,35 @@
     font-weight: var(--font-weight1);
 }
 
-.projectListProject1Style{
+.projectListProject1Style {
     background: var(--backgroundColor7);
     border-radius: var(--border-radius1);
-    
+
 }
-.projectListProject2Style{
+
+.projectListProject2Style {
     background: var(--backgroundColor4);
     border-radius: var(--border-radius1);
 }
-.projectListProject3Style{
+
+.projectListProject3Style {
     background: var(--backgroundColor11);
     border-radius: var(--border-radius1);
 }
-.projectListProject4Style{
+
+.projectListProject4Style {
     background: var(--backgroundColor12);
     border-radius: var(--border-radius1);
 }
 
-.projectListIconeAndSelectButtonContainer{
+.projectListIconeAndSelectButtonContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.projectListProjectSelectButton{
+.projectListProjectSelectButton {
     width: fit-content;
     font-size: var(--font-size3);
     letter-spacing: var(--letter-spacing1);
@@ -101,6 +105,30 @@
     align-items: baseline;
 }
 
-.projectListBackgroundForOverlay{
+.projectListBackgroundForOverlay {
     position: relative;
+}
+
+
+/* Responsive */
+
+@media (max-width:1280px) {
+    .projectListContainer {
+        width: 60vw;
+    }
+}
+
+@media (max-width:1023px) {
+    .projectListContainer {
+        width: 80vw;
+    }
+}
+
+@media (max-width:767px) {
+    .projectListProjectsContainer {
+        grid-template-columns: 1fr;
+        /* grid-auto-rows: 1fr; */
+
+    }
+
 }
