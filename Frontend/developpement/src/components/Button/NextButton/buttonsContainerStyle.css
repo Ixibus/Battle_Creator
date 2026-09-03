@@ -17,14 +17,18 @@
 
 /* Responsive */
 
-@media (max-width:768px) {
+@media (min-width:1280px) {
+}
+
+
+@media (max-width:1023px) {
     .buttonsContainerStyle {
         display: block;
     }
 }
 
-@media (max-width:1024px) {
-}
-
-@media (min-width:1280px) {
+@media (max-width:767px) {
+    .buttonsContainerStyle {
+        display: block;
+    }
 }
