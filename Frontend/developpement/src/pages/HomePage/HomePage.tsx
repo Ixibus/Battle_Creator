@@ -29,8 +29,8 @@ export default function HomePage() {
     <div
       className={
         showAddingMissionPage
-          ? "homePageContainer homePageBackgroundForOverlay"
-          : "homePageContainer"
+          ? "homePageUpperContainer homePageBackgroundForOverlay"
+          : "homePageUpperContainer"
       }
     >
       <main className="homePageContainer">

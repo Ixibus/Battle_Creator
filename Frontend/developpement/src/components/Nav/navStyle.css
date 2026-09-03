@@ -1,4 +1,6 @@
 .navContainerStyle {
+  border: 1px solid red;
+  gap: 20px;
   width: 100%;
   height: auto;
   min-height: fit-content;
@@ -29,7 +31,7 @@
   background: url('../../assets/img/Nico.jpg') center/cover no-repeat;
   border: var(--border1);
   border-radius: 50%;
-  margin-left: 10px;
+  margin: auto 10px;
 }
 
 .navigationNavContainer {

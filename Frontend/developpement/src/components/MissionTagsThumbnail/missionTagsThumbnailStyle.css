@@ -1,7 +1,7 @@
 .missionThumbnailContainerStyle {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--cel-padding);
     width: 100%;
     border: var(--border1);
     border-radius: var(--border-radius1);
@@ -16,8 +16,3 @@
     font-weight: var(--font-weight1);
     color: var(--fontColor4);
 }
-
-
-
-
-

@@ -52,7 +52,7 @@ export default function MissionTagsThumbnail({
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle" />
           ))
         : 
-          <div style={{height:"100%", display:"flex",flexDirection:"column", gap:"10px"}}>
+          <div style={{display:"flex",flexDirection:"column", gap:"var(--cel-padding)"}}>
             {optionalMissionsArray.map((mission) => (
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle2"/>
           ))

@@ -1,13 +1,17 @@
+.homePageUpperContainer {
+    height: 800px;
+}
+
 .homePageContainer {
-    /* border: 1px solid red; */
+    /* height: fit-content; */
+    height: 100%;
     width: 1080px;
     display: grid;
     grid-template:
         "A A A B" 40%
         /* "C C D D" 1fr / 2fr 3fr 1fr 2fr */
         "C C D D" 1fr / 3fr 3fr 1fr 3fr
-    ;
-    height: 600px;
+        ;
 }
 
 .homePageProjectContainer {
@@ -26,7 +30,7 @@
 .homePageProjectTitleAndInfoContainer {
     grid-column: 1;
     grid-row: 1 / 3;
-    align-content: flex-end;
+    align-self: flex-end;
     font-size: var(--font-size4);
     font-weight: var(--font-weight1);
 }
@@ -41,7 +45,7 @@
     grid-column: 2;
     grid-row: 2;
     justify-self: flex-end;
-    align-content: flex-end;
+    align-self: flex-end;
 }
 
 
@@ -86,4 +90,25 @@
 
 .homePageBackgroundForOverlay {
     position: relative;
+}
+
+
+/* Responsive */
+
+@media (max-width:1280px) {
+    /* .homePageContainer {
+    width: 100%;
+    display: grid;
+    grid-template:
+        "A A A B" 40%
+        "C C D D" 1fr / 3fr 3fr 1fr 3fr
+    ;
+    height: 600px;
+} */
+}
+
+@media (max-width:1023px) {
+}
+
+@media (max-width:767px) {
 }
