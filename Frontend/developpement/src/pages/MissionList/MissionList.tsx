@@ -109,10 +109,10 @@ export default function MissionList() {
 
         <ul className="missionListMissionsContainer" aria-label="Liste des missions personnalisées">
           {missions.map((mission, index) => (
-            <li key={mission.id || index}>
+            <li key={mission.id || index} className="missionListMissionContainer">
               <button
                 type="button"
-                className="missionListMissionContainer"
+                className="missionListMissionInnerContainer"
                 onClick={() => handleSelectMission(mission)}
                 aria-label={`Accéder à la mission ${mission.name}`}
               >

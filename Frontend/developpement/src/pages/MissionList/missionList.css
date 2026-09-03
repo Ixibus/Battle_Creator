@@ -1,8 +1,9 @@
 .missionListContainer {
     /* border: 1px solid red; */
     height: 750px;
+    height: fit-content;
     width: 40vw;
-    margin: auto;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -34,19 +35,24 @@
 
 .missionListMissionsContainer {
     display: flex;
-    flex-direction: column;
-    /* border: 1px solid rgb(0, 255, 13); */
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 13);
 }
 
 .missionListMissionContainer{
+    width: 100%;
+    display: flex;
+}
+
+.missionListMissionInnerContainer{
     margin: var(--cel-margin);
     padding: var(--cel-padding2);
     background-color: var(--backgroundColor9);
     display: flex;
     justify-content: space-between;
-    /* border: 1px solid red; */
     border-radius: var(--border-radius1);
     cursor: pointer;
+    width: 100%;
     
     /* margin: ; */
 }
@@ -98,4 +104,22 @@
 
 .missionListContainerForOverlay {
     position: relative;
+}
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+.missionListContainer{
+    width: 60vw
+}
+}
+
+@media (max-width:1023px) {
+    
+}
+
+@media (max-width:767px) {
+    .missionListContainer{
+        width: 90vw
+    }
 }
