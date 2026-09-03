@@ -3,15 +3,14 @@
 }
 
 .homePageContainer {
-    /* height: fit-content; */
-    height: 100%;
+    height: fit-content;
     width: 1080px;
     display: grid;
     grid-template:
         "A A A B" 40%
         /* "C C D D" 1fr / 2fr 3fr 1fr 2fr */
         "C C D D" 1fr / 3fr 3fr 1fr 3fr
-        ;
+    ;
 }
 
 .homePageProjectContainer {
@@ -95,20 +94,110 @@
 
 /* Responsive */
 
-@media (max-width:1280px) {
-    /* .homePageContainer {
-    width: 100%;
-    display: grid;
-    grid-template:
-        "A A A B" 40%
-        "C C D D" 1fr / 3fr 3fr 1fr 3fr
-    ;
-    height: 600px;
-} */
+@media (max-width: 1280px) {
+    .homePageUpperContainer {
+        margin: 50px;
+        height: auto;
+        /* Supprime la hauteur fixe de 800px */
+    }
+
+    .homePageContainer {
+        width: 100%;
+        max-width: auto;
+        height: auto;
+        /* Permet d'adapter la hauteur globale au contenu */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* Une seule colonne */
+        grid-template-rows: 1fr;
+        /* Chaque ligne prend la hauteur de son contenu */
+        grid-template-areas:
+            "A A B"
+            "C C C"
+            "D D D";
+    }
+
+    .homePageMainContainer {
+        flex-direction: column;
+        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
+    }
+
+    .homePageFigureContainer {
+        gap: 15px;
+        align-items: center;
+    }
 }
 
 @media (max-width:1023px) {
+    .homePageUpperContainer {
+        height: auto;
+        /* Supprime la hauteur fixe de 800px */
+    }
+
+    .homePageContainer {
+        width: 100%;
+        max-width: auto;
+        height: auto;
+        /* Permet d'adapter la hauteur globale au contenu */
+        display: grid;
+        grid-template-columns: 1fr;
+        /* Une seule colonne */
+        grid-template-rows: auto;
+        /* Chaque ligne prend la hauteur de son contenu */
+        grid-template-areas:
+            "A"
+            "B"
+            "C"
+            "D";
+    }
+
+    .homePageMainContainer {
+        flex-direction: column;
+        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
+    }
 }
 
 @media (max-width:767px) {
+    .homePageUpperContainer {
+        height: auto;
+        /* Supprime la hauteur fixe de 800px */
+    }
+
+    .homePageContainer {
+        width: 100%;
+        max-width: auto;
+        height: auto;
+        /* Permet d'adapter la hauteur globale au contenu */
+        display: grid;
+        grid-template-columns: 1fr;
+        /* Une seule colonne */
+        grid-template-rows: auto;
+        /* Chaque ligne prend la hauteur de son contenu */
+        grid-template-areas:
+            "A"
+            "B"
+            "C"
+            "D";
+    }
+
+
+    .homePageProjectContainer {
+        padding: 10px;
+        grid-template-columns: 1fr;
+        gap: 0px;
+    }
+
+    .homePageProjectTitleAndInfoContainer {
+        margin-top: 25px;
+        grid-row: 1 / 3;
+        align-self: auto;
+        width: fit-content;
+        font-size: var(--font-size4);
+        font-weight: var(--font-weight1);
+    }
+
+    .homePageMainContainer {
+        flex-direction: column;
+        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
+    }
 }
