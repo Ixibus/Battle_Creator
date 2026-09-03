@@ -26,6 +26,34 @@
     text-align: center;
 }
 
+.inputItemStyle4 {
+    background: var(--backgroundColor10);
+    border: var(--border1);
+    border-radius: var(--border-radius1);
+    height: 40px;
+    width: 100%;
+    padding: 5px 15px;
+    text-align: center;
+}
+
 .inputItemStyle3:focus {
     border-color: var(--border-color1);
+}
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+    .inputItemStyle3 {
+        width: 150%
+    }
+}
+
+@media (max-width:1023px) {
+
+}
+
+@media (max-width:767px) {
+    .inputItemStyle4 {
+        width: 60%
+    }
 }

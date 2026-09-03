@@ -344,9 +344,10 @@ export default function TaskAssignmentPage({
               <div className="taskAssignmentPageCreateAssignInnerContainer">
                 <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                   <InputContainer
+                    // className="responsiveOverloadedTaskAssignmentPageCreateAssignInputItemStyle"
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName="Prénom"
-                    inputItemStyle={InputItemStyle.style3}
+                    inputItemStyle={InputItemStyle.style4}
                     htmlFor="firstName"
                     type="text"
                     value={firstName}
@@ -376,7 +377,8 @@ export default function TaskAssignmentPage({
                   <InputContainer
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName="Nom"
-                    inputItemStyle={InputItemStyle.style3}
+                    inputItemStyle={InputItemStyle.style4}
+                    // className="responsiveOverloadedTaskAssignmentPageCreateAssignInputItemStyle"
                     htmlFor="lastName"
                     type="text"
                     value={lastName}

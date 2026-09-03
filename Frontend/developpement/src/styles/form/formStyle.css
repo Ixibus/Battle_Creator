@@ -38,10 +38,13 @@
     .formStyle3 {
         width : 400px;
     }
+    .formStyle2{
+        width : 500px
+    }
 }
 
 @media (max-width:1023px) {
-    .formStyle3 {
+    .formStyle3{
         width : 300px;
     }
 }
@@ -49,5 +52,8 @@
 @media (max-width:767px) {
     .formStyle3 {
         width : 250px;
+    }
+    .formStyle2{
+        width : 375px;
     }
 }

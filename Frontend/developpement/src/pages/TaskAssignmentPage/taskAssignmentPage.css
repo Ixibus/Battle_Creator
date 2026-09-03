@@ -17,6 +17,10 @@
     background: var(--backgroundColor15);
 }
 
+.taskAssignmentMemberContainerStyle{
+    margin: auto 25px auto 50px;
+}
+
 .taskAssignmentPageInnerInputsFormStyle {
     margin: 30px auto;
     display: grid;
@@ -107,4 +111,52 @@
 
 .taskAssignmentMemberInnerContainerStyle{
     padding: 7px 15px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+
+}
+
+@media (max-width:1023px) {
+
+}
+
+@media (max-width:767px) {
+/* 1. Permet au fond sombre/overlay de gérer le scroll si la modale dépasse */
+    .taskAssignmentPageOverlayStyle {
+        align-items: flex-start; /* Aligne en haut pour éviter que le haut de la modale soit coupé */
+        overflow-y: auto;
+        padding: 20px 10px;
+    }
+
+    /* 2. Rendre la modale scrollable si son contenu dépasse la hauteur de l'écran */
+    .taskAssignmentPageStyle {
+        height: auto;                   /* S'adapte au contenu au lieu d'imposer 100vh */
+        overflow-y: auto;               /* Active la barre de défilement verticale */
+        width: 100%;                    /* Prend toute la largeur disponible */
+        max-width: 500px;
+    }
+
+    /* 3. Ajustement de la grille intérieure */
+    .taskAssignmentPageInnerInputsFormStyle {
+        margin: 20px auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    /* 4. Gestion du titre et du membre sur mobile (passe en colonne) */
+    .taskAssignmentTitleContainerStyle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .taskAssignmentMemberContainerStyle {
+        margin: auto;
+    }
 }

@@ -247,7 +247,7 @@ export default function MissionPage() {
           : "missionPageContainerStyle"
       }
     >
-      <div style={{ gridColumn: "1 / -1", justifySelf: "end" }}>
+      <div style={{ gridColumn: "1 / -1", justifySelf: "end", marginBottom:"20px"}}>
       <Icone
         SrcIcone={Cross}
         styleType={StyleType.style9}
@@ -257,7 +257,7 @@ export default function MissionPage() {
       />
       </div>
       <div className="missionPageContainerLeftContainerStyle">
-        <div className="missionPageTitleAndDescriptionContainer">
+        <div className="missionPageTitleAndGoalContainer">
           <h1 className="missionPageMissionTitleStyle">{objResponse?.name}</h1>
           <p className="missionPageObjectifStyle">{objResponse?.goal}</p>
         </div>

@@ -15,6 +15,7 @@ export enum InputItemStyle {
   style1 = "inputItemStyle",
   style2 = "inputItemStyle2",
   style3 = "inputItemStyle3",
+  style4 = "inputItemStyle4",
 }
 
 interface InputContainerProps {

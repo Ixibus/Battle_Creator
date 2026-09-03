@@ -32,6 +32,7 @@ export default function TaskTag({
       {/* Bouton pour marquer la tâche comme terminée */}
       <button
         type="button"
+        className="firstButtonForChecking"
         aria-pressed={isFirstButton}
         aria-label={isFirstButton ? `Marquer "${text}" comme non terminée` : `Marquer "${text}" comme terminée`}
         onClick={() => setIsFirstButton(!isFirstButton)}
@@ -43,12 +44,13 @@ export default function TaskTag({
             isFirstButton ? "taskTagCheckedZindexCheckedIcone" : ""
           }`}
           aria-hidden="true"
-        />
+          />
       </button>
 
       {/* Bouton pour supprimer la tâche */}
       <button
         type="button"
+        className="secondButtonForDeleting"
         aria-label={`Supprimer la tâche "${text}"`}
         onClick={onClickSecondButton}
         style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}

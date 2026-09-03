@@ -8,9 +8,25 @@
 }
 
 .inputLabelStyle3 {
-    margin-right: auto ;
+    margin-right: auto;
     color: var(--fontColor4);
     font-size: var(--font-size7);
     font-weight: var(--font-weight1);
     text-align: left;
+}
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+    .inputLabelStyle3 {
+        width: 150%;
+        margin: 0px;
+    }
+}
+
+@media (max-width:1023px) {
+    
+}
+
+@media (max-width:767px) {
 }
