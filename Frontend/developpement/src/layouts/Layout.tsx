@@ -11,7 +11,7 @@ export default function Layout({ isDarkModeState = false }: LayoutProps) {
   return (
     <div
       id="page"
-      className={`layoutContainer ${isDarkModeState ? "dark" : "light"}`}
+      className="layoutContainer"
     >
       {/* Lien d'évitement (Skip Link) pour l'accessibilité clavier/lecteur d'écran */}
       <a href="#main-content" className="skip-link">
