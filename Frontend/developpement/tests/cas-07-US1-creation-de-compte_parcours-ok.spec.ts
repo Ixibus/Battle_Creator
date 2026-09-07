@@ -106,7 +106,7 @@ test.describe("Onboarding complet", () => {
     });
 
     await test.step("Passer les missions optionnelles", async () => {
-      await page.getByRole("button", { name: "Se connecter" }).click();
+      await page.getByRole("button", { name: "Finaliser la configuration et aller à la page de connexion" }).click();
 
       await expect(page).toHaveURL(/\/connexionPage$/);
       await expect(
