@@ -137,10 +137,6 @@ const router = createBrowserRouter([
                 element: <OnboardingOptionalMissions />,
               },
               {
-                path: "/overlayedWarning",
-                element: <OverlayedWarning />,
-              },
-              {
                 path: "/missionList",
                 element: <MissionList />,
               },
