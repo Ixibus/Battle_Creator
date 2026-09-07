@@ -1,6 +1,5 @@
 .missionPageContainerStyle {
-    width: 80vw;
-    height: 80vh;
+    width: 90vw;
     min-height: fit-content;
     padding: 15px;
     border: var(--border1);
@@ -14,6 +13,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* justify-content: space-between; */
     padding: 0 15px 15px;
     /* justify-content: space-between; */
     /* border: 1px red solid; */
@@ -33,7 +33,7 @@
 }
 
 .missionPageDescriptionContainer {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .missionPageDescriptionTitleStyle {
@@ -59,7 +59,7 @@
 
 .missionPageMaterialsTitle {
     text-align: center;
-    margin-bottom: 10px;
+    margin: 75px auto 10px;
     letter-spacing: var(--letter-spacing1);
     color: var(--fontColor4);
     font-weight: var(--font-weight1);
@@ -118,4 +118,53 @@
 /* Affichage ajout d'une tache */
 .missionPageBackgroundDisplay{
     position: relative;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+
+}
+
+@media (max-width: 1023px) {
+  /* 1. Passer le conteneur principal sur 1 colonne */
+  .missionPageContainerStyle {
+    grid-template-columns: 1fr;
+  }
+
+  /* 2. Neutraliser les conteneurs intermédiaires pour libérer leurs enfants */
+  .missionPageContainerLeftContainerStyle,
+  .missionPageContainerRightBackgroundStyle {
+    display: contents;
+  }
+
+  /* 3. Attribuer un ordre d'affichage (order) à chaque bloc */
+  
+  /* Titre + Objectifs */
+  .missionPageTitleAndGoalContainer {
+    order: 1;
+  }
+
+  /* Description */
+  .missionPageDescriptionContainer {
+    order: 2;
+  }
+
+  /* TÂCHES (Passe AVANT les matériels) */
+  .missionPageContainerRightContainerStyle {
+    margin: 50px auto;
+    width:100%;
+    background: var(--backgroundColor14);
+    order: 3;
+  }
+
+  /* MATÉRIELS (Passe APRÈS les tâches) */
+  .missionPageMaterialsContainerStyle {
+    order: 4;
+  }
+}
+
+@media (max-width: 767px) {
+
 }

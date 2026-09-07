@@ -1,21 +1,26 @@
-import { Outlet } from 'react-router-dom'
-import useThemeStore from '../store/useThemeStore'
-import Nav from '../components/Nav/Nav'
+import { Outlet } from "react-router-dom";
+import Nav from "../components/Nav/Nav";
 
-import './layout.css'
-
+import "./layout.css";
 
 export default function Layout() {
-  // Store du thème, on récupère l'état et l'action
-  const isDarkModeState = useThemeStore((state) => state.isDarkMode);
-  const setTheme = useThemeStore((state) => state.toggleDarkMode);
-
   return (
-        <div id="page" className='layoutContainer { isDarkModeState ? "dark" : "light"}'>
-            <Nav/>
-            <main className='mainContainer'>
-                <Outlet />
-            </main>
-        </div>
-  )
+    <div
+      id="page"
+      className="layoutContainer"
+    >
+      {/* Lien d'évitement (Skip Link) pour l'accessibilité clavier/lecteur d'écran */}
+      <a href="#main-content" className="skip-link">
+        Aller au contenu principal
+      </a>
+
+      {/* Navigation globale */}
+      <Nav />
+
+      {/* Zone de contenu principal dynamique */}
+      <main id="main-content" className="mainContainer" tabIndex={-1}>
+        <Outlet />
+      </main>
+    </div>
+  );
 }

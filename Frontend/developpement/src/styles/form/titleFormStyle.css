@@ -1,5 +1,5 @@
 .titleFormStyle{
-    /* margin-bottom: 15px; */
+    margin: 15px;
     color: var(--fontColor3);
     font-weight: var(--font-weight1);
     font-size: var(--font-size5);
@@ -37,4 +37,22 @@
     font-size: 1.5rem;
     letter-spacing: var(--letter-spacing1);
     text-align: center;
+}
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+    
+}
+
+@media (max-width:1023px) {
+    
+}
+
+@media (max-width:767px) {
+    .titleFormStyle4{
+        margin-top: 5px;
+        text-align: center;
+        font-size: 1.3rem;
+    }
 }

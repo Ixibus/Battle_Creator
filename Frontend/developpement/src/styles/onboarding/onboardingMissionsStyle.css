@@ -1,14 +1,14 @@
 .onboardingMandatoryMissionsStyle{
-    width: 400px;
+    width: 100%;
     background: var(--backgroundColor10);
     border-radius: var(--border-radius2);
-    padding: auto 10px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .onboardingOptionalMissionsStyle{
-    width: 400px;
+    width: 100%;
     background: var(--backgroundColor9);
     border-radius: var(--border-radius2);
     padding: auto 10px;

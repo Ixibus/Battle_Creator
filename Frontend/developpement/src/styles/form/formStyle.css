@@ -1,13 +1,13 @@
 .formStyle {
     margin: 0 auto;
-    padding: 10px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: fit-content;
+    width: 500px;
     min-height: 0;
     background: transparent;
-    gap : 1vh;
+    gap: 1vh;
 }
 
 .formStyle2 {
@@ -22,15 +22,38 @@
 }
 
 .formStyle3 {
-    margin: 0 auto;
-    padding: 10px;
+    margin: 20px auto;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: fit-content;
-    height: fit-content;
-    /* min-height: 0; */
     background: white;
-    /* gap : 1vh; */
     border-radius: var(--border-radius2);
+}
+
+/* Responsive */
+
+@media (max-width:1280px) {
+    .formStyle3 {
+        width : 400px;
+    }
+    .formStyle2{
+        width : 500px
+    }
+}
+
+@media (max-width:1023px) {
+    .formStyle3{
+        width : 300px;
+    }
+}
+
+@media (max-width:767px) {
+    .formStyle3 {
+        width : 250px;
+    }
+    .formStyle2{
+        width : 375px;
+    }
 }

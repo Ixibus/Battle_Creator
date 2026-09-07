@@ -15,3 +15,21 @@
     /* margin-top: 15px; */
     width: 75%;
 }
+
+/* Responsive */
+
+@media (max-width:1280px) {
+}
+
+@media (max-width:1023px) {
+    .inputContainerStyle {
+        width: 90%;
+    }
+}
+
+
+@media (max-width:767px) {
+    .inputContainerStyle {
+        width: 150%;
+    }
+}

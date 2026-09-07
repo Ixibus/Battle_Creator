@@ -12,6 +12,7 @@ interface interfaceProps {
   btnStyle: string;
   mainClassName: string;
   text?: string;
+  ariaLabel?: string
   onClick?: () => void;
 }
 
@@ -21,6 +22,7 @@ export default function PlusButton({
   btnStyle,
   mainClassName,
   text,
+  ariaLabel,
   onClick
 }: interfaceProps) {
 
@@ -37,7 +39,7 @@ export default function PlusButton({
   return (
     <div className={"buttonContainerStyle"} style={{marginTop:`${topMarginButton}`}} onClick={handleClick}>
       <button
-        className={`button plusButtonContainerStyle ${btnStyle} ${mainClassName}`}
+        className={`button plusButtonContainerStyle ${btnStyle} ${mainClassName}`} aria-label={ariaLabel}
       >
         <Icone SrcIcone={Plus} styleType={StyleType.style5}/>
         {text}

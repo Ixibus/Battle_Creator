@@ -1,9 +1,7 @@
-// import '../../styles/global/colors.css'
 import "../../styles/global/inputContainerStyle.css";
 import "../../styles/global/textAreaStyle.css";
 
 import type { ChangeEventHandler, FocusEventHandler } from "react";
-
 
 export enum AreaLabelStyle {
   style1 = "inputLabelStyle",
@@ -29,6 +27,7 @@ interface AreaContainerProps {
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
   hasError?: boolean;
+  errorId?: string; // ID pour le lien aria-describedby
 }
 
 export default function AreaTextContainer({
@@ -42,7 +41,8 @@ export default function AreaTextContainer({
   rows,
   onChange,
   onBlur,
-  hasError
+  hasError = false,
+  errorId,
 }: AreaContainerProps) {
   return (
     <div className={className}>
@@ -58,6 +58,9 @@ export default function AreaTextContainer({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        /* Attributs ARIA pour WCAG AA */
+        aria-invalid={hasError}
+        aria-describedby={hasError && errorId ? errorId : undefined}
       />
     </div>
   );

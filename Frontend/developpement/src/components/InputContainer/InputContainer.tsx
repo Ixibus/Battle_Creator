@@ -15,6 +15,7 @@ export enum InputItemStyle {
   style1 = "inputItemStyle",
   style2 = "inputItemStyle2",
   style3 = "inputItemStyle3",
+  style4 = "inputItemStyle4",
 }
 
 interface InputContainerProps {
@@ -28,6 +29,7 @@ interface InputContainerProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   hasError?: boolean;
+  errorId?: string; // ID pour le lien aria-describedby
   hasAutoComplete?: boolean;
 }
 
@@ -42,6 +44,7 @@ export default function InputContainer({
   onChange,
   onBlur,
   hasError = false,
+  errorId,
   hasAutoComplete = true
 }: InputContainerProps) {
   return (
@@ -56,6 +59,9 @@ export default function InputContainer({
         onChange={onChange}
         onBlur={onBlur}
         autoComplete={hasAutoComplete ? "new-password" : undefined}
+        /* Attributs ARIA pour WCAG AA */
+        aria-invalid={hasError}
+        aria-describedby={hasError && errorId ? errorId : undefined}
       />
     </div>
   );

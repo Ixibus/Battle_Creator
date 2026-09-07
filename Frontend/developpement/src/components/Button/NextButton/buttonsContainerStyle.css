@@ -14,3 +14,21 @@
     display: flex;
     gap: 10px;
 }
+
+/* Responsive */
+
+@media (min-width:1280px) {
+}
+
+
+@media (max-width:1023px) {
+    .buttonsContainerStyle {
+        display: block;
+    }
+}
+
+@media (max-width:767px) {
+    .buttonsContainerStyle {
+        display: block;
+    }
+}

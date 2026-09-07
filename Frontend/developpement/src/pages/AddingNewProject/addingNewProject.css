@@ -14,7 +14,31 @@
     margin: auto;
 }
 
-.addingNewProjectIconeCrossContainer{
-    margin: auto 20px auto auto ;
+.addingNewProjectIconeCrossContainer {
+    margin: auto 20px auto auto;
     /* border: 1px solid red; */
+}
+
+/* Responsive */
+
+@media (max-width:1280px) {
+    .addingNewProjectFormContainer {
+        width: 50vw
+    }
+}
+
+@media (max-width:1023px) {
+    .addingNewProjectFormContainer {
+        width: 60vw
+    }
+}
+
+@media (max-width:767px) {
+    .addingNewProjectIconeCrossContainer {
+        margin-right: 0;
+    }
+
+    .addingNewProjectFormContainer {
+        width: 90vw
+    }
 }

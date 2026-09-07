@@ -5,7 +5,6 @@ import "../../styles/global/marginTitle.css";
 
 import MissionTag from "../MissionTag/MissionTag";
 import Icone, {StyleType} from "../Icones/Icone";
-import NextButton from "../Button/NextButton/NextButton";
 import PlusButton from "../Button/PlusButton/PlusButton";
 
 
@@ -53,7 +52,7 @@ export default function MissionTagsThumbnail({
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle" />
           ))
         : 
-          <div style={{height:"100%", display:"flex",flexDirection:"column", gap:"10px"}}>
+          <div style={{display:"flex",flexDirection:"column", gap:"var(--cel-padding)"}}>
             {optionalMissionsArray.map((mission) => (
             <MissionTag key={mission} text={mission} styleClassName="missionTagStyle2"/>
           ))

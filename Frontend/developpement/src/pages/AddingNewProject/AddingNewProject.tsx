@@ -30,6 +30,8 @@ import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
 import { useProjectStore } from "../../store/useProjectStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface propsInterface {
   onClose: () => void;
 }
@@ -135,7 +137,7 @@ export default function AddingNewProject({ onClose }: propsInterface) {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/projects", {
+      const response = await fetch(`${API_URL}/projects`, {
         method: "POST",
         credentials: "include",
         headers: {

@@ -1,30 +1,41 @@
 import "../../styles/global/btnStyle.css";
 import Icone, { StyleType } from "../Icones/Icone";
-import Assign from '../../assets/icones/assign.svg?react';
+import Assign from "../../assets/icones/assign.svg?react";
 import "./memberAssignmentTagStyle.css";
 
-interface interfaceProps {
+interface InterfaceProps {
   mainClassName: string;
   memberName: string;
   onClick: () => void;
-  assignStyleTag: boolean
+  assignStyleTag: boolean;
 }
 
 export default function MemberAssignmentTag({
   mainClassName,
   memberName,
   onClick,
-  assignStyleTag
-}: interfaceProps) {
-
+  assignStyleTag,
+}: InterfaceProps) {
   return (
-    <>{assignStyleTag ? (<span className={`assignmentTagStyleContainer btnStyle19 ${mainClassName}`} onClick={onClick}>
-      <p className="assignedTaskTagText">{memberName}</p>
-    </span>) : (<span className={`assignmentTagStyleContainer btnStyle18 ${mainClassName}`} onClick={onClick}>
-      <p className="assignmentTagText">{memberName}</p>
-      <Icone SrcIcone={Assign} styleType={StyleType.style8}/>
-    </span>)
-    }
-    </>
+    <button
+      type="button"
+      className={`assignmentTagStyleContainer ${
+        assignStyleTag ? "btnStyle19" : "btnStyle18"
+      } ${mainClassName}`}
+      onClick={onClick}
+      aria-label={
+        assignStyleTag
+          ? `Bénévole assigné : ${memberName}. Cliquer pour modifier.`
+          : `Assigner un bénévole à cette tâche`
+      }
+      style={{ border: "none", cursor: "pointer", textAlign: "left" }}
+    >
+      <span className={assignStyleTag ? "assignedTaskTagText" : "assignmentTagText"}>
+        {memberName}
+      </span>
+      {!assignStyleTag && (
+        <Icone SrcIcone={Assign} styleType={StyleType.style8} aria-hidden="true" />
+      )}
+    </button>
   );
 }

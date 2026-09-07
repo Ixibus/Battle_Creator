@@ -26,6 +26,9 @@ import { useProjectStore } from "../../store/useProjectStore";
 import { useMissionStore, type MissionType } from "../../store/useMissionStore";
 import Icone, { StyleType } from "../../components/Icones/Icone";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 interface propsInterface {
   onClose: () => void;
 }
@@ -95,7 +98,7 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
     };
 
     try {
-      const res = await fetch("http://localhost:8080/missions", {
+      const res = await fetch(`${API_URL}/missions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

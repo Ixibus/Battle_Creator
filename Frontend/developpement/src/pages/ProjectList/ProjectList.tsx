@@ -18,7 +18,7 @@ export default function ProjectList() {
   const navigate = useNavigate();
 
   const [showAddingNewProject, setShowAddingNewProject] =
-    useState<Boolean>(false);
+    useState<boolean>(false);
 
   const {
     user,
@@ -62,64 +62,76 @@ export default function ProjectList() {
           : "projectListContainer"
       }
     >
-      <div className="projectListGreetingContainer">
-        <div className="projectListNicoPpStyle" />
-        <p className="projectListGreetingtext">
-          {user?.login || "Utilisateur"}
-        </p>
-      </div>
-      <h2 className="projectListTitle">Vos projets</h2>
+      <main className="projectListMainContent">
+        <div className="projectListGreetingContainer">
+          <div className="projectListNicoPpStyle" aria-hidden="true" />
+          {/* Remplacement du <p> par <span> pour éliminer l'alerte "Unmarked Heading" */}
+          <span className="projectListGreetingtext">
+            {user?.login || "Utilisateur"}
+          </span>
+        </div>
 
-      {isLoading && <p>Chargement de vos projets...</p>}
-      {error && <p className="formErrorMessageStyle">{error}</p>}
+        {/* Remonté en h1 car c'est le titre principal de cette vue */}
+        <h1 className="projectListTitle">Vos projets</h1>
 
-      {!isLoading && !error && projects.length === 0 && (
-        <p>Aucun projet trouvé.</p>
-      )}
+        <div aria-live="polite">
+          {isLoading && <p>Chargement de vos projets...</p>}
+          {error && <p className="formErrorMessageStyle" role="alert">{error}</p>}
 
-      <div className="projectListProjectsContainer">
-        {projects.map((project, index) => (
-          <div
-            key={project.id || index}
-            className={`projectListAuthedProjectContainer projectListAuthedProject${
-              (index % 4) + 1
-            }Style`}
-          >
-            <div className="projectListIconeAndSelectButtonContainer">
-              <Icone SrcIcone={Project} styleType={StyleType.style4} />
-              <button
-                className="projectListProjectSelectButton"
-                onClick={() => handleSelectProject(project)}
-              >
-                Sélectionner
-              </button>
-            </div>
-            <h3 className="projectListTitleProject">{project.name}</h3>
-            <div className="projectListProjectInfoContainer">
-              <p>{project.location}</p>
-              <Icone SrcIcone={FilledPoint} />
-              <p>{formatDateFr(project.projectDate)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+          {!isLoading && !error && projects.length === 0 && (
+            <p>Aucun projet trouvé.</p>
+          )}
+        </div>
 
-      <PlusButton
-        topMarginButton="20px"
-        btnStyle="btnStyle14"
-        mainClassName="missionListAddingButton"
-        text="Créer un nouveau projet"
-        onClick={() => {
-          setShowAddingNewProject(true);
-        }}
-      />
-      <NextButton
-        nav={-1}
-        type="button"
-        styleClassName="btnStyle11"
-        mainClassName="projectListExitButton"
-        text="Quitter"
-      />
+        <ul className="projectListProjectsContainer" aria-label="Liste de vos projets">
+          {projects.map((project, index) => (
+            <li
+              key={project.id || index}
+              className={`projectListAuthedProjectContainer projectListAuthedProject${
+                (index % 4) + 1
+              }Style`}
+            >
+              <div className="projectListIconeAndSelectButtonContainer">
+                <Icone SrcIcone={Project} styleType={StyleType.style4} aria-hidden="true" />
+                <button
+                  type="button"
+                  className="projectListProjectSelectButton"
+                  onClick={() => handleSelectProject(project)}
+                  aria-label={`Sélectionner le projet ${project.name}`}
+                >
+                  Sélectionner
+                </button>
+              </div>
+              <h2 className="projectListTitleProject">{project.name}</h2>
+              <div className="projectListProjectInfoContainer">
+                <p>{project.location}</p>
+                <Icone SrcIcone={FilledPoint} aria-hidden="true" />
+                <p>{formatDateFr(project.projectDate)}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <PlusButton
+          topMarginButton="20px"
+          btnStyle="btnStyle14"
+          mainClassName="missionListAddingButton"
+          text="Créer un nouveau projet"
+          ariaLabel="Créer un nouveau projet"
+          onClick={() => {
+            setShowAddingNewProject(true);
+          }}
+        />
+        <NextButton
+          nav={-1}
+          type="button"
+          styleClassName="btnStyle11"
+          mainClassName="projectListExitButton"
+          text="Quitter"
+          ariaLabel="Quitter la liste des projets"
+        />
+      </main>
+
       {showAddingNewProject && (
         <AddingNewProject
           onClose={() => {

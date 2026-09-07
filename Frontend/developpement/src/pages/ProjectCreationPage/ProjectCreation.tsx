@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useStepStore } from "../../store/useStepStore";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 type TouchedFields = {
   projectName: boolean;
   projectLocation:boolean;
@@ -126,7 +128,7 @@ export default function ProjectCreation() {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/projects", {
+      const response = await fetch(`${API_URL}/projects`, {
         method: "POST",
         credentials: "omit",
         headers: {
@@ -213,11 +215,12 @@ export default function ProjectCreation() {
   }
 
   return (
-    <>
+  <>
     <form className="formStyle3" onSubmit={handleSubmit}>
       <h1 className="titleFormStyle">CREATION DE PROJET</h1>
 
       <div className="inputsFormContainerStyle">
+        {/* Champ Nom du projet */}
         <InputContainer
           inputLabelStyle={InputLabelStyle.style1}
           inputItemStyle={InputItemStyle.style1}
@@ -239,9 +242,10 @@ export default function ProjectCreation() {
             (touched.projectName && isProjectNameEmpty) ||
             serverProjectNameError !== ""
           }
+          errorId="projectNameError"
         />
 
-        <div className="errorSlot">
+        <div className="errorSlot" id="projectNameError" aria-live="polite">
           {touched.projectName && isProjectNameEmpty && (
             <p className="formErrorMessageStyle">
               Merci de renseigner le nom du projet
@@ -253,10 +257,11 @@ export default function ProjectCreation() {
           )}
         </div>
 
+        {/* Champ Lieu du déroulement */}
         <InputContainer
           inputLabelStyle={InputLabelStyle.style1}
           inputItemStyle={InputItemStyle.style1}
-          labelName="lieu du déroulement"
+          labelName="Lieu du déroulement"
           htmlFor="projectLocation"
           type="text"
           value={projectLocation}
@@ -269,18 +274,19 @@ export default function ProjectCreation() {
               projectLocation: true,
             }))
           }
-          hasError={(touched.projectLocation && isProjectLocationEmpty)}
+          hasError={touched.projectLocation && isProjectLocationEmpty}
+          errorId="projectLocationError"
         />
 
-        <div className="errorSlot">
+        <div className="errorSlot" id="projectLocationError" aria-live="polite">
           {touched.projectLocation && isProjectLocationEmpty && (
             <p className="formErrorMessageStyle">
               Merci de renseigner le lieu du déroulement du projet
             </p>
           )}
-
         </div>
 
+        {/* Champ Date du déroulement */}
         <DateInputContainer
           labelName="Date du déroulement du projet"
           htmlFor="projectDate"
@@ -300,9 +306,10 @@ export default function ProjectCreation() {
               (isProjectDateEmpty || isProjectDateInThePast)) ||
             serverProjectDateError !== ""
           }
+          errorId="projectDateError"
         />
 
-        <div className="errorSlot">
+        <div className="errorSlot" id="projectDateError" aria-live="polite">
           {touched.projectDate && isProjectDateEmpty && (
             <p className="formErrorMessageStyle">
               Merci de renseigner la date du projet
@@ -320,6 +327,7 @@ export default function ProjectCreation() {
           )}
         </div>
 
+        {/* Champ Description du projet */}
         <AreaTextContainer
           areaLabelStyle={AreaLabelStyle.style1}
           areaTextStyle={AreaTextStyle.style1}
@@ -330,7 +338,6 @@ export default function ProjectCreation() {
           value={projectDescription}
           onChange={(e) => {
             setProjectDescription(e.target.value);
-            // clearProjectDescriptionErrorIfTyping();
           }}
           onBlur={() =>
             setTouched((state) => ({
@@ -339,21 +346,16 @@ export default function ProjectCreation() {
             }))
           }
           hasError={touched.projectDescription && isProjectDescriptionEmpty}
+          errorId="projectDescriptionError"
         />
 
-        <div className="errorSlot">
+        <div className="errorSlot" id="projectDescriptionError" aria-live="polite">
           {touched.projectDescription && isProjectDescriptionEmpty && (
             <p className="formErrorMessageStyle">
               Merci de décrire votre projet
             </p>
           )}
         </div>
-
-        {/* <div className="errorSlot">
-          {errorMessage && (
-            <p className="formErrorMessageStyle">{errorMessage}</p>
-          )}
-        </div> */}
 
         <div className="buttonsContainerStyle">
           <NextButton
@@ -373,6 +375,6 @@ export default function ProjectCreation() {
         </div>
       </div>
     </form>
-    </>
-  );
+  </>
+);
 }

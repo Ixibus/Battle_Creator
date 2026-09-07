@@ -9,7 +9,7 @@ interface AssignedMemberObject {
   lastName: string;
 }
 
-interface propInterface {
+interface PropInterface {
   id: number;
   taskName: string;
   assignedMember?: AssignedMemberObject;
@@ -22,9 +22,7 @@ export default function TaskAndAssignmentContainer({
   onClickSecondButton,
   onClickAssignTag,
   assignedMember,
-}: propInterface) {
-  console.log(assignedMember);
-
+}: PropInterface) {
   return (
     <div className="taskAndAssignmentTasksContainer">
       <TaskTag
@@ -41,7 +39,7 @@ export default function TaskAndAssignmentContainer({
         />
       ) : (
         <MemberAssignmentTag
-          memberName="assigner"
+          memberName="Assigner un bénévole"
           assignStyleTag={false}
           mainClassName="assigner"
           onClick={onClickAssignTag}

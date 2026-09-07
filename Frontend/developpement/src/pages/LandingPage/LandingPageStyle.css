@@ -10,7 +10,6 @@
     padding: 0 40px;
     height: 80vh;
     width: 90vw;
-    /* background: var(--containerColor1); */
     background: transparent;
 }
 
@@ -24,6 +23,7 @@
     font-size: var(--font-size3);
     color: var(--fontColor4);
     letter-spacing: var(--letter-spacing1);
+    text-align: center;
 }
 
 .btnsContainer_LandingPageContainer {

@@ -19,38 +19,44 @@ export default function OnboardingOptionalMissions() {
     <>
       <div className="formStyle">
         <h1 className="titleFormStyle">Missions Optionnelles</h1>
+        
         <p className="onboardingOptionalMissionsDescriptionContainer onboardingMissionsDescriptionStyle">
           Missions essentielles pour votre projet que vous pourrez supprimer une
           fois sur votre espace d'organisation.
         </p>
-        <div className="onboardingOptionalMissionContainer onboardingMissionsContainerStyle">
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+
+        {/* Structure de liste sémantique pour WAVE */}
+        <ul className="onboardingOptionalMissionContainer onboardingMissionsContainerStyle" aria-label="Liste des missions optionnelles">
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             COMMUNICATION EVENEMENT
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             VESTIAIRES
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             MATERIELS D'AMBIANCE
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             SIGNALETIQUES
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             MATERIELS PARTICIPANTS
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             PERSONNEL D'ENCADREMENT
-          </p>
-          <p className="onboardingOptionalMission onboardingOptionalMissionsStyle">
+          </li>
+          <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             COLLATION JUGE
-          </p>
-        </div>
+          </li>
+        </ul>
+
+        {/* Bouton avec ariaLabel contextuel */}
         <NextButton
           nav={"/connexionPage"}
           styleClassName="btnStyle10"
           mainClassName="onboardingMandatoryMissionsNextBtn"
           text="Se connecter"
+          ariaLabel="Finaliser la configuration et aller à la page de connexion"
         />
       </div>
     </>

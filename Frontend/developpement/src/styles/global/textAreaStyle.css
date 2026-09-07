@@ -25,3 +25,18 @@
 .textAreaStyle, .textAreaStyle2, .textAreaStyle3 {
     resize: vertical;
 }
+
+/* Responsive */
+
+@media (max-width: 1280px) {
+    .textAreaStyle3 {
+        width: 150%
+    }
+}
+
+@media (max-width:1023px) {
+
+}
+
+@media (max-width:767px) {
+}

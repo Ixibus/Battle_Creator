@@ -5,31 +5,34 @@ import Icone, { StyleType } from "../../components/Icones/Icone";
 import ProjectIcon from "../../assets/icones/project.svg?react";
 import FilledPoint from "../../assets/icones/filledPoint.svg?react";
 
-import {useProjectStore, type ProjectType} from "../../store/useProjectStore";
-
-import {formatDateFr} from "../../utils/toFrenchDateFormat";
+import { useProjectStore, type ProjectType } from "../../store/useProjectStore";
+import { formatDateFr } from "../../utils/toFrenchDateFormat";
 
 import "./projectListAuthed.css";
 
-
 export default function ProjectListAuthed() {
-  
   const navigate = useNavigate();
-  const { user, projects, isLoading, error, fetchUserProjects, logout, setSelectedProject } =
-  useProjectStore();
-  
+  const {
+    user,
+    projects,
+    isLoading,
+    error,
+    fetchUserProjects,
+    logout,
+    setSelectedProject,
+  } = useProjectStore();
+
   const handleExit = () => {
-    logout(); // Efface Zustand + localStorage
+    logout();
     navigate("/connexionPage");
   };
 
-  const handleSelectProject = (project : ProjectType) => {
+  const handleSelectProject = (project: ProjectType) => {
     setSelectedProject(project);
-    navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
+    navigate("/homePage");
   };
 
   useEffect(() => {
-
     if (user?.id) {
       fetchUserProjects();
     } else {
@@ -37,60 +40,68 @@ export default function ProjectListAuthed() {
     }
   }, [user?.id, fetchUserProjects]);
 
-  console.log(isLoading);
-  console.log(error);
-  console.log(projects.length);
-
   return (
-    <div className="projectListAuthedContainer">
+    <main className="projectListAuthedContainer">
       <div className="projectListAuthedGreetingContainer">
-        <div className="projectListAuthedNicoPpStyle" />
-        <p className="projectListAuthedGreetingtext">
+        <div className="projectListAuthedNicoPpStyle" aria-hidden="true" />
+        <h2 className="projectListAuthedGreetingtext">
           Bienvenue {user?.login || "Utilisateur"}
-        </p>
+        </h2>
       </div>
 
-      <h2 className="projectListAuthedTitle">Choisissez un projet</h2>
+      {/* Titre principal de la page pour une hiérarchie HTML valide */}
+      <h1 className="projectListAuthedTitle">Choisissez un projet</h1>
 
-      {isLoading && <p>Chargement de vos projets...</p>}
-      {error && <p className="formErrorMessageStyle">{error}</p>}
+      {/* Rendu des états de chargement et d'erreur avec annonce dynamique */}
+      <div aria-live="polite">
+        {isLoading && <p>Chargement de vos projets...</p>}
+        {error && <p className="formErrorMessageStyle" role="alert">{error}</p>}
 
-      {!isLoading && !error && projects.length === 0 && (
-        <p>Aucun projet trouvé. Veuillez en créer un !</p>
-      )}
+        {!isLoading && !error && projects.length === 0 && (
+          <p>Aucun projet trouvé. Veuillez en créer un !</p>
+        )}
+      </div>
 
-      <div className="projectListAuthedProjectsContainer">
+      {/* Liste sémantique des projets */}
+      <ul className="projectListAuthedProjectsContainer" aria-label="Liste de vos projets">
         {projects.map((project, index) => (
-          <div
+          <li
             key={project.id || index}
             className={`projectListAuthedProjectContainer projectListAuthedProject${
               (index % 4) + 1
             }Style`}
           >
             <div className="projectListAuthedIconeAndSelectButtonContainer">
-              <Icone SrcIcone={ProjectIcon} styleType={StyleType.style4} />
-              <button className="projectListAuthedProjectSelectButton" onClick={() => handleSelectProject(project)}>
+              <Icone SrcIcone={ProjectIcon} styleType={StyleType.style4} aria-hidden="true" />
+              <button
+                type="button"
+                className="projectListAuthedProjectSelectButton"
+                onClick={() => handleSelectProject(project)}
+                aria-label={`Sélectionner le projet ${project.name}`}
+              >
                 Sélectionner
               </button>
             </div>
-            <h3 className="projectListAuthedTitleProject">
+            <h2 className="projectListAuthedTitleProject">
               {project.name}
-            </h3>
+            </h2>
             <div className="projectListAuthedProjectInfoContainer">
               <p>{project.location}</p>
-              <Icone SrcIcone={FilledPoint} />
+              <Icone SrcIcone={FilledPoint} aria-hidden="true" />
               <p>{formatDateFr(project.projectDate)}</p>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
+
       <NextButton
         type="button"
         styleClassName="btnStyle11"
         mainClassName="projectListAuthedExitButton"
         text="Déconnexion"
         onClick={handleExit}
+        ariaLabel="Se déconnecter de l'application"
       />
-    </div>
+    </main>
   );
 }
