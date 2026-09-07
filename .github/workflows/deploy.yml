@@ -168,8 +168,8 @@ jobs:
           name: frontend-dist
           path: ./dist
 
-      - name: Déploiement via SSH / SFTP (Alwaysdata Front)
-        uses: meaganewaller/deploy-via-scp@v1.0.0
+      - name: Déploiement Frontend via SCP (Alwaysdata Front).
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FRONT_SSH_HOST }}
           username: ${{ secrets.FRONT_SSH_USER }}
