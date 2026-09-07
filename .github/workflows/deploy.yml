@@ -109,7 +109,11 @@ jobs:
 
       - name: Build du Frontend
         working-directory: ./Frontend/developpement
-        run: npm run build
+        env: 
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: |
+          cd Frontend/developpement
+          npm run build
 
       - name: Sauvegarde de l'artefact Frontend
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
