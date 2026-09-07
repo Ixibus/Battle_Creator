@@ -30,7 +30,6 @@ import ProjectList from "./pages/ProjectList/ProjectList";
 import MissionPage from "./pages/MissionPage/MissionPage";
 // import AddingTaskPage from "./pages/AddingTaskPage/AddingTaskPage";
 // import TaskAssignmentPage from "./pages/TaskAssignmentPage/TaskAssignmentPage";
-import OverlayedWarning from "./components/OverlayedWarning/OverlayedWarning";
 import { ToastContainer } from "./components/toast/Toast";
 import MissionList from "./pages/MissionList/MissionList";
 import ProjectListAuthed from "./pages/ProjectListAuthed/ProjectListAuthed";
