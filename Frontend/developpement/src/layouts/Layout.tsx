@@ -3,11 +3,7 @@ import Nav from "../components/Nav/Nav";
 
 import "./layout.css";
 
-interface LayoutProps {
-  isDarkModeState?: boolean;
-}
-
-export default function Layout({ isDarkModeState = false }: LayoutProps) {
+export default function Layout() {
   return (
     <div
       id="page"
