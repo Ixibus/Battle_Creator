@@ -109,6 +109,8 @@ jobs:
 
       - name: Build du Frontend
         working-directory: ./Frontend/developpement
+        env: 
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: npm run build
 
       - name: Sauvegarde de l'artefact Frontend
