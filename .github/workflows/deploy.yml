@@ -175,7 +175,7 @@ jobs:
           username: ${{ secrets.FRONT_SSH_USER }}
           password: ${{ secrets.FRONT_SSH_PASSWORD }}
           source: "./dist/*"
-          target: "/www/frontend"
+          target: "www/frontend"
           strip_components: 1
           overwrite: true
 
