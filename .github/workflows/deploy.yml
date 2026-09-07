@@ -168,7 +168,7 @@ jobs:
           name: frontend-dist
           path: ./dist
 
-      - name: Déploiement Frontend via SCP (Alwaysdata Front)
+      - name: Déploiement Frontend via SCP (Alwaysdata Front).
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.FRONT_SSH_HOST }}
