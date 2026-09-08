@@ -60,6 +60,7 @@ jobs:
           SPRING_DATASOURCE_USERNAME: sa
           SPRING_DATASOURCE_PASSWORD:
           SECURITY_JWT_EXPIRATION_TIME: 86400000
+        run: docker compose up -d --build
 
       - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
         run: |
