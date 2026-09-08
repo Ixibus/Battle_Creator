@@ -90,4 +90,8 @@ runs:
       env:
         # Indique l'URL cible de ton backend (ex: http://127.0.0.1:8080 ou http://localhost:8080)
         VITE_API_URL: "http://localhost:8080"
+        SPRING_PROFILES_ACTIVE: ci
+        SPRING_DATASOURCE_URL: ${{ inputs.SPRING_DATASOURCE_URL }}
+        SPRING_DATASOURCE_USERNAME: ${{ inputs.SPRING_DATASOURCE_USERNAME }}
+        SPRING_DATASOURCE_PASSWORD: ${{ inputs.SPRING_DATASOURCE_PASSWORD }}
       run: npm run test:e2e
