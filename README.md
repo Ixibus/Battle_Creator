@@ -1,5 +1,3 @@
-Le Saas pour les créateurs de battles Hip-Hop qui vous permet de gérer vos bénévoles, leurs tâches, le matériel et les priorités.
-
 # Battle Creator - Plateforme de Gestion de Battles Hip-Hop
 
 > **Projet présenté dans le cadre de la validation du Titre RNCP Niveau 6 : Concepteur Développeur d'Applications (CDA)**
