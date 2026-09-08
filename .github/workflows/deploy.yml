@@ -52,6 +52,7 @@ jobs:
         run: |
           java -Dspring.profiles.active=test -jar target/*.jar > backend.log 2>&1 &
         env:
+          SPRING_PROFILES_ACTIVE: "ci"
           SERVER_PORT: 8080
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
           SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
@@ -59,6 +60,7 @@ jobs:
           SPRING_DATASOURCE_USERNAME: sa
           SPRING_DATASOURCE_PASSWORD:
           SECURITY_JWT_EXPIRATION_TIME: 86400000
+        run: docker compose up -d --build
 
       - name: Attente du démarrage complet de l'API Spring Boot (max 1 min)
         run: |
