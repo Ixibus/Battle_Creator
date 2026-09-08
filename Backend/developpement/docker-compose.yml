@@ -11,6 +11,7 @@ services:
     environment:
       # Indiquer seulement le nom sans valeur permet à Docker d'hériter 
       # de la variable d'environnement transmise par GitHub Actions / l'OS
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-default}
       - SPRING_DATASOURCE_URL
       - SPRING_DATASOURCE_USERNAME
       - SPRING_DATASOURCE_PASSWORD
