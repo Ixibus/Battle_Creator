@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class AuthentificationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserCreateDto requestUserCreateDto) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreateDto requestUserCreateDto) {
 
         boolean isExistingLogin = userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent();
 
@@ -89,7 +90,7 @@ public class AuthentificationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequestDto authRequestDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
