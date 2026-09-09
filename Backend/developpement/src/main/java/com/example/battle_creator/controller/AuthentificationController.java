@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -32,10 +33,14 @@ public class AuthentificationController {
 //    this.authentificationService = authentificationService;
 //}
 
+    @Value("${security.jwt.expiration-time}")
+    private long expirationTime;
+
     private final AuthentificationService authentificationService;
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
+
 
     public AuthentificationController(AuthentificationService authentificationService, UserRepository userRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
         this.authentificationService = authentificationService;
@@ -106,7 +111,7 @@ public class AuthentificationController {
                 authData.put("token", tokenGenerated);
                 authData.put("type", "Bearer");
 
-                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(false).path("/").build();
+                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofMillis(expirationTime)).httpOnly(true).secure(false).path("/").build();
 
                 return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authData);
             }

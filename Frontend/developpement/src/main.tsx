@@ -10,7 +10,7 @@ import {
 import { Auth0Provider } from "@auth0/auth0-react";
 
 import Layout from "./layouts/Layout";
-// import ProtectedRoute from "./features/ProtectedRoute";
+import ProtectedRoute from "./features/ProtectedRoute";
 
 import LandingPage from "./pages/LandingPage/LandingPage";
 import AccountCreation from "./pages/AccountCreationPage/AccountCreation";
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        // element: <ProtectedRoute />,
+        element: <ProtectedRoute />,
         children: [
           {
             path: "/projectListAuthed",

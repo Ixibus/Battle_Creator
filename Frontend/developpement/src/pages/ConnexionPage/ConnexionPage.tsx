@@ -170,7 +170,7 @@ export default function ConnexionPage() {
               type="submit"
               styleClassName="btnStyle10"
               mainClassName="SubmitBtn_AccountCreation"
-              text={isLoading ? "Connexion en cours..." : "Valider"}
+              text={isLoading ? "Patientez..." : "Valider"}
               disabled={isLoading}
               ariaBusy={isLoading}
             />
