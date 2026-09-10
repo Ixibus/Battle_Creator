@@ -49,7 +49,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
 
   const showToast = useToastStore((state) => state.showToast);
 
-  // Récupération du projet sélectionné et de l'action Zustand
   const { selectedProject } = useProjectStore();
   const { addMission, setSelectedMission } = useMissionStore();
 
@@ -79,7 +78,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
       return;
     }
 
-    // Vérification qu'un projet est bien sélectionné avant de créer la mission
     if (!selectedProject?.id) {
       showToast(
         "Aucun projet n'est actuellement sélectionné pour y rattacher la mission",
@@ -127,10 +125,8 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
         return;
       }
 
-      // Synchronisation directe avec le store Zustand
       addMission(responseData);
       setSelectedMission(responseData);
-
       showToast("La mission a été créée avec succès", "success");
       handleClear();
       if (location.pathname.endsWith("/homePage") || location.pathname.endsWith("homePage")) {
@@ -174,9 +170,8 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
         }}
       />
         <h1 className="titleFormStyle4">AJOUTER UNE MISSION</h1>
-
         <div className="inputsFormContainerStyle">
-          {/* Nom de la mission */}
+
           <InputContainer
             inputLabelStyle={InputLabelStyle.style3}
             labelName="Nom de la mission"
@@ -193,7 +188,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             }
             hasError={touched.missionName && isMissionNameEmpty}
           />
-
           <div className="errorSlot">
             {touched.missionName && isMissionNameEmpty && (
               <p className="formErrorMessageStyle">
@@ -202,7 +196,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             )}
           </div>
 
-          {/* Objectif de la mission */}
           <AreaTextContainer
             htmlFor="missionGoal"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -220,7 +213,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             }
             hasError={touched.goal && isGoalEmpty}
           />
-
           <div className="errorSlot">
             {touched.goal && isGoalEmpty && (
               <p className="formErrorMessageStyle">
@@ -229,7 +221,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             )}
           </div>
 
-          {/* Description de la mission */}
           <AreaTextContainer
             htmlFor="missionDescription"
             areaLabelStyle={AreaLabelStyle.style3}
@@ -247,7 +238,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             }
             hasError={touched.description && isDescriptionEmpty}
           />
-
           <div className="errorSlot">
             {touched.description && isDescriptionEmpty && (
               <p className="formErrorMessageStyle">
@@ -256,7 +246,6 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
             )}
           </div>
 
-          {/* Boutons */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"

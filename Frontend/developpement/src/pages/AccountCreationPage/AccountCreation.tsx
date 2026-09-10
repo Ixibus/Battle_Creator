@@ -25,8 +25,7 @@ export default function AccountCreation() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Evite les soumissions multiples
-
+  const [isLoading, setIsLoading] = useState(false);
   const [touched, setTouched] = useState<{
     login: boolean;
     email: boolean;
@@ -38,7 +37,6 @@ export default function AccountCreation() {
     password: false,
     passwordConfirmation: false,
   });
-
   const [serverFieldErrors, setServerFieldErrors] = useState<{
     login: string;
     email: string;
@@ -88,10 +86,10 @@ export default function AccountCreation() {
     setServerFieldErrors((prev) => ({ ...prev, email: "" }));
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (isLoading) return; // Sécurité anti-rebond
+    if (isLoading) return;
 
     setServerPasswordError("");
     setServerFieldErrors({ login: "", email: "" });
@@ -201,7 +199,7 @@ export default function AccountCreation() {
   <h1 className="titleFormStyle">CREATION DE COMPTE</h1>
 
   <div className="inputsFormContainerStyle">
-    {/* Login */}
+
     <InputContainer
       inputLabelStyle={InputLabelStyle.style1}
       inputItemStyle={InputItemStyle.style1}
@@ -220,7 +218,6 @@ export default function AccountCreation() {
       errorId="loginError"
       hasAutoComplete={true}
     />
-
     <div className="errorSlot" id="loginError" aria-live="polite">
       {touched.login && isLoginEmpty && (
         <p className="formErrorMessageStyle">Merci de renseigner votre login</p>
@@ -230,7 +227,6 @@ export default function AccountCreation() {
       )}
     </div>
 
-    {/* Email */}
     <InputContainer
       inputLabelStyle={InputLabelStyle.style1}
       inputItemStyle={InputItemStyle.style1}
@@ -250,7 +246,6 @@ export default function AccountCreation() {
       errorId="emailError"
       hasAutoComplete={true}
     />
-
     <div className="errorSlot" id="emailError" aria-live="polite">
       {touched.email && isEmailEmpty && (
         <p className="formErrorMessageStyle">Merci de renseigner votre email</p>
@@ -263,7 +258,6 @@ export default function AccountCreation() {
       )}
     </div>
 
-    {/* Mot de passe */}
     <InputContainer
       inputLabelStyle={InputLabelStyle.style1}
       inputItemStyle={InputItemStyle.style1}
@@ -281,7 +275,6 @@ export default function AccountCreation() {
       }
       errorId="passwordError"
     />
-
     <div className="errorSlot" id="passwordError" aria-live="polite">
       {touched.password && isPasswordEmpty && (
         <p className="formErrorMessageStyle">Merci de renseigner votre mot de passe</p>
@@ -291,7 +284,6 @@ export default function AccountCreation() {
       )}
     </div>
 
-    {/* Confirmation du mot de passe */}
     <InputContainer
       inputLabelStyle={InputLabelStyle.style1}
       inputItemStyle={InputItemStyle.style1}
@@ -307,7 +299,6 @@ export default function AccountCreation() {
       }
       errorId="passwordConfirmationError"
     />
-
     <div className="errorSlot" id="passwordConfirmationError" aria-live="polite">
       {touched.passwordConfirmation && isPasswordConfirmationEmpty && (
         <p className="formErrorMessageStyle">Merci de confirmer votre mot de passe</p>
@@ -319,7 +310,6 @@ export default function AccountCreation() {
         )}
     </div>
 
-    {/* Boutons d'action */}
     <div className="buttonsContainerStyle">
       <NextButton
         type="submit"

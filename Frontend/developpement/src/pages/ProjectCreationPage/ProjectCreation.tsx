@@ -41,16 +41,12 @@ export default function ProjectCreation() {
   const [projectLocation, setProjectLocation] = useState("");
   const [projectDate, setProjectDate] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-
-  // const [errorMessage, setErrorMessage] = useState("");
-
   const [touched, setTouched] = useState<TouchedFields>({
     projectName: false,
     projectLocation: false,
     projectDate: false,
     projectDescription: false,
   });
-
   const [serverProjectNameError, setServerProjectNameError] = useState("");
   const [serverProjectDateError, setServerProjectDateError] = useState("");
 
@@ -60,7 +56,6 @@ export default function ProjectCreation() {
 
   const newAccountId = sessionStorage.getItem("newAccountId");
 
-  // console.log("newAccountId :", newAccountId);
 
   const isProjectNameEmpty = projectName.trim() === "";
   const isProjectLocationEmpty = projectLocation.trim() === "";
@@ -95,16 +90,9 @@ export default function ProjectCreation() {
     setServerProjectNameError("");
   }
 
-  // function clearProjectDescriptionErrorIfTyping() {
-  //   if (errorMessage) {
-  //     setErrorMessage("");
-  //   }
-  // }
-
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
@@ -201,8 +189,6 @@ export default function ProjectCreation() {
     setProjectLocation("");
     setProjectDate("");
     setProjectDescription("");
-
-    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
@@ -218,9 +204,8 @@ export default function ProjectCreation() {
   <>
     <form className="formStyle3" onSubmit={handleSubmit}>
       <h1 className="titleFormStyle">CREATION DE PROJET</h1>
-
       <div className="inputsFormContainerStyle">
-        {/* Champ Nom du projet */}
+        
         <InputContainer
           inputLabelStyle={InputLabelStyle.style1}
           inputItemStyle={InputItemStyle.style1}
@@ -244,20 +229,17 @@ export default function ProjectCreation() {
           }
           errorId="projectNameError"
         />
-
         <div className="errorSlot" id="projectNameError" aria-live="polite">
           {touched.projectName && isProjectNameEmpty && (
             <p className="formErrorMessageStyle">
               Merci de renseigner le nom du projet
             </p>
           )}
-
           {serverProjectNameError && (
             <p className="formErrorMessageStyle">{serverProjectNameError}</p>
           )}
         </div>
 
-        {/* Champ Lieu du déroulement */}
         <InputContainer
           inputLabelStyle={InputLabelStyle.style1}
           inputItemStyle={InputItemStyle.style1}
@@ -277,7 +259,6 @@ export default function ProjectCreation() {
           hasError={touched.projectLocation && isProjectLocationEmpty}
           errorId="projectLocationError"
         />
-
         <div className="errorSlot" id="projectLocationError" aria-live="polite">
           {touched.projectLocation && isProjectLocationEmpty && (
             <p className="formErrorMessageStyle">
@@ -286,7 +267,6 @@ export default function ProjectCreation() {
           )}
         </div>
 
-        {/* Champ Date du déroulement */}
         <DateInputContainer
           labelName="Date du déroulement du projet"
           htmlFor="projectDate"
@@ -308,7 +288,6 @@ export default function ProjectCreation() {
           }
           errorId="projectDateError"
         />
-
         <div className="errorSlot" id="projectDateError" aria-live="polite">
           {touched.projectDate && isProjectDateEmpty && (
             <p className="formErrorMessageStyle">
@@ -321,13 +300,11 @@ export default function ProjectCreation() {
               La date du projet ne peut pas être antérieure à aujourd'hui
             </p>
           )}
-
           {serverProjectDateError && (
             <p className="formErrorMessageStyle">{serverProjectDateError}</p>
           )}
         </div>
 
-        {/* Champ Description du projet */}
         <AreaTextContainer
           areaLabelStyle={AreaLabelStyle.style1}
           areaTextStyle={AreaTextStyle.style1}
@@ -348,7 +325,6 @@ export default function ProjectCreation() {
           hasError={touched.projectDescription && isProjectDescriptionEmpty}
           errorId="projectDescriptionError"
         />
-
         <div className="errorSlot" id="projectDescriptionError" aria-live="polite">
           {touched.projectDescription && isProjectDescriptionEmpty && (
             <p className="formErrorMessageStyle">
@@ -364,7 +340,6 @@ export default function ProjectCreation() {
             mainClassName="SubmitBtn_AccountCreation"
             text="Valider"
           />
-
           <NextButton
             type="button"
             styleClassName="btnStyle11"

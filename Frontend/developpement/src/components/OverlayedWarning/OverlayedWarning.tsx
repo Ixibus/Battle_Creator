@@ -24,7 +24,6 @@ export default function OverlayedWarning({
   onDeleteTask,
   onClose,
 }: OverlayedWarningProps) {
-  // Gestion de la fermeture avec la touche Échap
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -39,14 +38,14 @@ export default function OverlayedWarning({
   return (
     <div
       className="overlayedWarningOverlayStyle"
-      onClick={onClose} // Ferme si on clique en dehors de la boîte modale
+      onClick={onClose} 
     >
       <div
         className="overlayedWarningContainerStyle"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-warning-title"
-        onClick={(e) => e.stopPropagation()} // Empêche la fermeture lors du clic à l'intérieur
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="inputsFormContainerStyle3">
           <p id="modal-warning-title" className="overlayedWarningMessage">

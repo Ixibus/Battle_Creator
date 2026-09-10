@@ -344,7 +344,6 @@ export default function TaskAssignmentPage({
               <div className="taskAssignmentPageCreateAssignInnerContainer">
                 <div className="taskAssignmentPageCreateAssignInputsContainerStyle">
                   <InputContainer
-                    // className="responsiveOverloadedTaskAssignmentPageCreateAssignInputItemStyle"
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName="Prénom"
                     inputItemStyle={InputItemStyle.style4}
@@ -378,7 +377,6 @@ export default function TaskAssignmentPage({
                     inputLabelStyle={InputLabelStyle.style1}
                     labelName="Nom"
                     inputItemStyle={InputItemStyle.style4}
-                    // className="responsiveOverloadedTaskAssignmentPageCreateAssignInputItemStyle"
                     htmlFor="lastName"
                     type="text"
                     value={lastName}
@@ -412,20 +410,11 @@ export default function TaskAssignmentPage({
                     text="Créer et Assigner"
                   />
                 </div>
+                
               </div>
             </form>
           </div>
         </div>
-
-        {/* <div className="buttonsContainerStyle">
-          <NextButton
-            type="button"
-            styleClassName="btnStyle11"
-            mainClassName="SubmitBtn_LeaveTaskAssignmentPage"
-            text="Quitter"
-            onClick={handleClose}
-          />
-        </div> */}
       </div>
     </div>
   );

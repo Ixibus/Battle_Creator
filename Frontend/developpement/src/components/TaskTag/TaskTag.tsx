@@ -29,7 +29,6 @@ export default function TaskTag({
         {text}
       </p>
 
-      {/* Bouton pour marquer la tâche comme terminée */}
       <button
         type="button"
         className="firstButtonForChecking"
@@ -47,7 +46,6 @@ export default function TaskTag({
           />
       </button>
 
-      {/* Bouton pour supprimer la tâche */}
       <button
         type="button"
         className="secondButtonForDeleting"

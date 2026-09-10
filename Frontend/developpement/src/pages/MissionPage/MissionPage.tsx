@@ -35,7 +35,6 @@ export default function MissionPage() {
   const { selectedMission, setSelectedMission } = useMissionStore();
   const navigate = useNavigate();
 
-  // Récupération dynamique de l'ID (depuis l'URL ou le store Zustand)
   const activeMissionId =
     id || (selectedMission?.id ? String(selectedMission.id) : null);
 
@@ -63,7 +62,6 @@ export default function MissionPage() {
 
   const showToast = useToastStore((state) => state.showToast);
 
-  // Rechargement dès que l'ID actif change
   useEffect(() => {
     if (activeMissionId) {
       loadMission(activeMissionId);

@@ -44,7 +44,6 @@ type TouchedFields = {
 };
 
 export default function AddingNewProject({ onClose }: propsInterface) {
-  console.log("Props reçues par AddingNewProject:", onClose);
 
   const navigate = useNavigate();
 
@@ -53,7 +52,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
   const [projectDate, setProjectDate] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
 
-  // const [errorMessage, setErrorMessage] = useState("");
 
   const [touched, setTouched] = useState<TouchedFields>({
     projectName: false,
@@ -104,16 +102,9 @@ export default function AddingNewProject({ onClose }: propsInterface) {
     setServerProjectNameError("");
   }
 
-  // function clearProjectDescriptionErrorIfTyping() {
-  //   if (errorMessage) {
-  //     setErrorMessage("");
-  //   }
-  // }
-
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
@@ -207,7 +198,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
     setProjectDate("");
     setProjectDescription("");
 
-    // setErrorMessage("");
     setServerProjectNameError("");
     setServerProjectDateError("");
 
@@ -237,8 +227,8 @@ export default function AddingNewProject({ onClose }: propsInterface) {
           />
         </div>
         <h1 className="titleFormStyle">CREATION DE PROJET</h1>
-
         <div className="inputsFormContainerStyle3">
+          
           <InputContainer
             className="inputContainerStyle2"
             inputLabelStyle={InputLabelStyle.style1}
@@ -262,7 +252,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
               serverProjectNameError !== ""
             }
           />
-
           <div className="errorSlot">
             {touched.projectName && isProjectNameEmpty && (
               <p className="formErrorMessageStyle">
@@ -294,7 +283,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
             }
             hasError={touched.projectLocation && isProjectLocationEmpty}
           />
-
           <div className="errorSlot">
             {touched.projectLocation && isProjectLocationEmpty && (
               <p className="formErrorMessageStyle">
@@ -324,14 +312,12 @@ export default function AddingNewProject({ onClose }: propsInterface) {
               serverProjectDateError !== ""
             }
           />
-
           <div className="errorSlot">
             {touched.projectDate && isProjectDateEmpty && (
               <p className="formErrorMessageStyle">
                 Merci de renseigner la date du projet
               </p>
             )}
-
             {touched.projectDate && isProjectDateInThePast && (
               <p className="formErrorMessageStyle">
                 La date du projet ne peut pas être antérieure à aujourd'hui
@@ -364,7 +350,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
             }
             hasError={touched.projectDescription && isProjectDescriptionEmpty}
           />
-
           <div className="errorSlot">
             {touched.projectDescription && isProjectDescriptionEmpty && (
               <p className="formErrorMessageStyle">
@@ -373,12 +358,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
             )}
           </div>
 
-          {/* <div className="errorSlot">
-          {errorMessage && (
-            <p className="formErrorMessageStyle">{errorMessage}</p>
-          )}
-        </div> */}
-
           <div className="buttonsContainerStyle3">
             <NextButton
               type="submit"
@@ -386,7 +365,6 @@ export default function AddingNewProject({ onClose }: propsInterface) {
               mainClassName="SubmitBtn_AccountCreation"
               text="Valider"
             />
-
             <NextButton
               type="button"
               styleClassName="btnStyle11"

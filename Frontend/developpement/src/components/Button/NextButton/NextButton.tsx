@@ -26,9 +26,9 @@ export default function NextButton({id, nav, type, styleClassName, mainClassName
       return;
     }
     if (typeof nav === 'number') {
-      navigate(nav); // Appel à navigate(delta: number)
+      navigate(nav);
     } else if (typeof nav === 'string') {
-      navigate(nav); // Appel à navigate(to: string)
+      navigate(nav);
     }
   };
 
