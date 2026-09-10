@@ -47,7 +47,7 @@ export default function ConnexionPage() {
     logout();
   }, [logout]);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
     setInvalidCredentials(false);

@@ -122,6 +122,7 @@ export default function AccountCreation() {
       });
 
       const responseData = await res.json();
+      console.log(responseData);
 
       if (!res.ok) {
         if (responseData.error === "LOGIN_ALREADY_USED") {

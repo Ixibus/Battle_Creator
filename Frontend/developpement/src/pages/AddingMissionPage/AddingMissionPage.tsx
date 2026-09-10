@@ -98,6 +98,7 @@ export default function AddingMissionPage({ onClose }: propsInterface) {
     try {
       const res = await fetch(`${API_URL}/missions`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },

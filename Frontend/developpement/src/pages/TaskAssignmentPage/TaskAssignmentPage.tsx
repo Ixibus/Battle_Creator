@@ -83,8 +83,8 @@ export default function TaskAssignmentPage({
 
   async function loadExistingMembers() {
     const res = await fetch(`${API_URL}/members`, {
-      credentials: "include",
       method: "GET",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -130,6 +130,7 @@ export default function TaskAssignmentPage({
     try {
       const res = await fetch(`${API_URL}/members`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },

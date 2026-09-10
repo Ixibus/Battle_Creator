@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/**").permitAll()
                 .requestMatchers("/error", "/healthCheckForWaitOn").permitAll()
-                .requestMatchers("/auth/**", "/users", "/missions/**", "/tasks/**", "/members/**", "/projects/**").permitAll()
+                .requestMatchers("/auth/**", "/projects/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

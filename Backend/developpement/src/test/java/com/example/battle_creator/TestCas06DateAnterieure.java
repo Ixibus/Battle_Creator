@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@ActiveProfiles("test") // Charge src/test/resources/application-test.properties
+@ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 @Transactional
 class TestCas06DateAnterieure {
@@ -43,7 +43,6 @@ class TestCas06DateAnterieure {
     void setUp() {
         objectMapper.registerModule(new JavaTimeModule());
         User user = new User();
-        // Ajoute des setters si des champs de User sont indispensables à la création
         user.setLogin("testuser");
         user.setEmail("test@example.com");
         savedUser = userRepository.save(user);

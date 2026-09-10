@@ -163,6 +163,7 @@ export default function MissionPage() {
     try {
       const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
         method: "DELETE",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -203,6 +204,7 @@ export default function MissionPage() {
           `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
           {
             method: "PUT",
+            credentials: 'include',
             headers: {
               "Content-Type": "application/json",
             },

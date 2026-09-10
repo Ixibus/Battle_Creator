@@ -78,6 +78,7 @@ export default function AddingTaskPage({
     try {
       const res = await fetch(`${API_URL}/tasks`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
