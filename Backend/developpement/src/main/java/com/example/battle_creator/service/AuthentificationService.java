@@ -70,13 +70,6 @@ public class AuthentificationService implements UserDetailsService {
 
         UserCredentials credentials = optionalCredentials.get();
 
-
-
-//        return org.springframework.security.core.userdetails.User
-//                .withUsername(loginFound.getLogin())
-//                .password(credentials.getPasswordHash())
-//                .authorities(Collections.emptyList())
-//                .build();
         return new org.springframework.security.core.userdetails.User(loginFound.getLogin(), credentials.getPasswordHash(), Collections.emptyList());
     }
 
@@ -133,28 +126,3 @@ public class AuthentificationService implements UserDetailsService {
         }
 }
 }
-
-
-
-// // Config authentification simple (sans encoder, sans token)
-//    @Transactional(readOnly = true)
-//    public boolean isAuthValid(String login, String rawPassword) {
-//        Optional<User> optionalUser = userRepository.findByLogin(login);
-//
-//        if (optionalUser.isEmpty()) {
-//            return false;
-//        }
-//
-//        User user = optionalUser.get();
-//
-//        Optional<UserCredentials> optionalCredentials =
-//                userCredentialsRepository.findByUserId(user.getId());
-//
-//        if (optionalCredentials.isEmpty()) {
-//            return false;
-//        }
-//
-//        UserCredentials credentials = optionalCredentials.get();
-//
-//        return rawPassword.equals(credentials.getPasswordHash());
-//    }

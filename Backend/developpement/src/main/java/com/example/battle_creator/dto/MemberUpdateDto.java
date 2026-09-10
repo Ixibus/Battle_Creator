@@ -29,7 +29,6 @@ public class MemberUpdateDto {
         this.lastName = lastName;
     }
 
-
     public Long getId() {
         return id;
     }

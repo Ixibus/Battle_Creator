@@ -8,13 +8,6 @@ public class BackendBattleCreator {
 
     public static void main(String[] args) {
         SpringApplication.run(BackendBattleCreator.class, args);
-
-        //        var context = SpringApplication.run(BackendBattleCreator.class, args);
-//
-//        AuthentificationService service = context.getBean(AuthentificationService.class);
-//        UserDetails userDetails = service.loadUserByUsername("testUser34");
-//
-//        System.out.println(userDetails);
     }
 
 }

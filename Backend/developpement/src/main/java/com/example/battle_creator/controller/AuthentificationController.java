@@ -27,12 +27,6 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class AuthentificationController {
 
-// // Config authentification simple (sans encoder, sans token)
-//    private final AuthentificationService authentificationService;
-//public AuthentificationController(AuthentificationService authentificationService) {
-//    this.authentificationService = authentificationService;
-//}
-
     @Value("${security.jwt.expiration-time}")
     private long expirationTime;
 
@@ -153,27 +147,4 @@ public class AuthentificationController {
             .body("Déconnexion réussie");
     }
 
-//    @GetMapping("/test")
-//    public ResponseEntity<?> test() {
-//        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
-//
-//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
-//    }
-
-// // Config authentification simple (sans encoder, sans token)
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody AuthRequestDto request) {
-//
-//
-//
-//        boolean isValid = authentificationService.isAuthValid(request.getLogin(), request.getPassword());
-//
-//        if (isValid) {
-//            return ResponseEntity.ok("L'authentification a fonctionné 🥳");
-//        }
-//
-//
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                .body("Login ou mot de passe incorrect 😕");
-//    }
 }

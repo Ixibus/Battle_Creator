@@ -112,7 +112,6 @@ public class ProjectController {
             Project createdProject =
                 projectService.create(projectDto, owner);
 
-            // Construction de la réponse pour éviter les boucles JSON
             Map<String, Object> response = new HashMap<>();
             response.put("id", createdProject.getId());
             response.put("projectName", createdProject.getName());
@@ -126,7 +125,6 @@ public class ProjectController {
                 .body(response);
 
         } catch (Throwable e) {
-            // C'EST CETTE LIGNE QUI FORCE L'AFFICHAGE ROUGE DANS VOTRE TERMINAL
             e.printStackTrace();
 
             Map<String, String> errorDetails = new HashMap<>();

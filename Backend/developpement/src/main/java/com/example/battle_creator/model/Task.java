@@ -35,14 +35,6 @@ public class Task {
 
     public Task() {};
 
-//    // 7. Constructeur pratique si pas DTO d'installé dans le controller et le service avec ses methodes
-//    public Task(String name, Boolean isLeader, Boolean isDone, Integer numberTaskPosition) {
-//        this.name = name;
-//        this.isLeader = isLeader;
-//        this.isDone = isDone;
-//        this.numberTaskPosition = numberTaskPosition;
-//    };
-
     public Long getId() {
         return this.id;
     }

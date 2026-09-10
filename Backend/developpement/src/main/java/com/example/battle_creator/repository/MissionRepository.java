@@ -11,16 +11,3 @@ import java.util.List;
 public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findByProjectId(Long projectId);
 }
-
-
-// ----- Rappel Méthode JpaRepository -----
-
-//     Project save(Project project);
-
-//     Optional<Project> findById(Long id);
-
-//     List<Project> findAll();
-
-//     Project update(Project project); <-- inacessible quand JPAREpository est utilisé. Il faut prendre save() à la place
-
-//     void deleteById(Long id);

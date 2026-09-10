@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheckController {
 
-    // Accepte GET et HEAD pour parer à toute éventualité
     @RequestMapping(value = "/healthCheckForWaitOn", method = {RequestMethod.GET, RequestMethod.HEAD})
     public ResponseEntity<Void> healthCheck() {
         return ResponseEntity.ok().build();

@@ -9,8 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MissionDto {
 
-    // private Long id;
-
     @NotNull(message = "merci de choisir un type")
     private MissionType type;
 
@@ -35,7 +33,6 @@ public class MissionDto {
     public MissionDto(){};
 
     public MissionDto(MissionType type, Boolean isDefault, String name, String goal, String description) {
-        // this.id = id;
         this.type = type;
         this.isDefault = isDefault;
         this.name = name;
@@ -43,9 +40,6 @@ public class MissionDto {
         this.description = description;
     }
 
-    // public Long getId() {
-    //     return this.id;
-    // }
     public MissionType getType() {
         return type;
     }
@@ -65,10 +59,6 @@ public class MissionDto {
     public Long getProjectId() { 
         return projectId;
     }
-
-    // public void setId(Long id) {
-    //     this.id = id;
-    // }
 
     public void setType(MissionType type) {
         this.type = type;
