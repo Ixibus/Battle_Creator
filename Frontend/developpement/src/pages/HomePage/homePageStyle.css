@@ -8,7 +8,6 @@
     display: grid;
     grid-template:
         "A A A B" 40%
-        /* "C C D D" 1fr / 2fr 3fr 1fr 2fr */
         "C C D D" 1fr / 3fr 3fr 1fr 3fr
     ;
 }
@@ -98,19 +97,15 @@
     .homePageUpperContainer {
         margin: 50px;
         height: auto;
-        /* Supprime la hauteur fixe de 800px */
     }
 
     .homePageContainer {
         width: 100%;
         max-width: auto;
         height: auto;
-        /* Permet d'adapter la hauteur globale au contenu */
         display: grid;
         grid-template-columns: 1fr 1fr;
-        /* Une seule colonne */
         grid-template-rows: 1fr;
-        /* Chaque ligne prend la hauteur de son contenu */
         grid-template-areas:
             "A A B"
             "C C C"
@@ -119,7 +114,6 @@
 
     .homePageMainContainer {
         flex-direction: column;
-        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
     }
 
     .homePageFigureContainer {
@@ -131,19 +125,15 @@
 @media (max-width:1023px) {
     .homePageUpperContainer {
         height: auto;
-        /* Supprime la hauteur fixe de 800px */
     }
 
     .homePageContainer {
         width: 100%;
         max-width: auto;
         height: auto;
-        /* Permet d'adapter la hauteur globale au contenu */
         display: grid;
         grid-template-columns: 1fr;
-        /* Une seule colonne */
         grid-template-rows: auto;
-        /* Chaque ligne prend la hauteur de son contenu */
         grid-template-areas:
             "A"
             "B"
@@ -153,26 +143,21 @@
 
     .homePageMainContainer {
         flex-direction: column;
-        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
     }
 }
 
 @media (max-width:767px) {
     .homePageUpperContainer {
         height: auto;
-        /* Supprime la hauteur fixe de 800px */
     }
 
     .homePageContainer {
         width: 100%;
         max-width: auto;
         height: auto;
-        /* Permet d'adapter la hauteur globale au contenu */
         display: grid;
         grid-template-columns: 1fr;
-        /* Une seule colonne */
         grid-template-rows: auto;
-        /* Chaque ligne prend la hauteur de son contenu */
         grid-template-areas:
             "A"
             "B"
@@ -198,6 +183,5 @@
 
     .homePageMainContainer {
         flex-direction: column;
-        /* Alignement vertical si besoin pour le bloc C sur mobile/tablette */
     }
 }
