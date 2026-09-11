@@ -1,8 +1,6 @@
 @import "reset.css";
 /* themes */
 @import "./global/colors.css";
-@import "./themes/light.css";
-@import "./themes/dark.css";
 @font-face {
   font-family: Inter;
   src: url(../assets/fonts/inter.ttf);
