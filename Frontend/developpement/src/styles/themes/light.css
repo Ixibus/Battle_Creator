@@ -1,8 +1,0 @@
-.light {
-    background-color: var(--background-light-01);
-    color: var(--color-light-01);
-}
-nav.light a:any-link.active, button.light {
-    background-color: var(--background-light-02);
-    color: var(--color-light-01);
-}

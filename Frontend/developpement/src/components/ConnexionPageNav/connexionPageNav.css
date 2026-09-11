@@ -1,8 +1,8 @@
 .connexionPageNavContainerStyle {
   width: 100%;
   height: auto;
-  align-self: flex-start; /* Empêche Flexbox d'étirer la barre en hauteur */
-  flex-shrink: 0;        /* Empêche la barre de se déformer */
+  align-self: flex-start; 
+  flex-shrink: 0; 
   padding: 10px;
   display: flex;
   align-items: center;

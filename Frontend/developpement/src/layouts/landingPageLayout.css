@@ -6,7 +6,6 @@
     background: var(--backgroundColor6);
 }
 
-/* Style du lien d'évitement accessible */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -21,7 +20,6 @@
   transition: top 0.2s ease;
 }
 
-/* Apparaît au focus clavier */
 .skip-link:focus {
   top: 0;
 }
