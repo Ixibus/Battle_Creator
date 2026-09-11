@@ -48,8 +48,6 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    // Pour les valeurs par défaut, on utilise plutôt la logique Java avec @PrePersist / @PreUpdate
-    // @PrePersist : Spring/JPA remplit automatiquement createdAt et updatedAt au moment de l’insertion
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -59,7 +57,6 @@ public class User {
         }
     }
 
-    // @PreUpdate : met à jour updatedAt quand l’objet change.
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();

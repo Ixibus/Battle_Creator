@@ -19,7 +19,6 @@ public class MissionMapper {
             mission.setDescription(null);
         }
 
-        // Association au Projet si le projectId est fourni dans le DTO
         if (dto.getProjectId() != null) {
             Project project = projectRepository.findById(dto.getProjectId()).orElseThrow(() -> new IllegalArgumentException("Projet introuvable pour l'ID : " + dto.getProjectId()));
             mission.setProject(project);

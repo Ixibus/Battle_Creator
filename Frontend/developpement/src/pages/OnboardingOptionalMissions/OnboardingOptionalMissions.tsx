@@ -25,7 +25,6 @@ export default function OnboardingOptionalMissions() {
           fois sur votre espace d'organisation.
         </p>
 
-        {/* Structure de liste sémantique pour WAVE */}
         <ul className="onboardingOptionalMissionContainer onboardingMissionsContainerStyle" aria-label="Liste des missions optionnelles">
           <li className="onboardingOptionalMission onboardingOptionalMissionsStyle">
             COMMUNICATION EVENEMENT
@@ -50,7 +49,6 @@ export default function OnboardingOptionalMissions() {
           </li>
         </ul>
 
-        {/* Bouton avec ariaLabel contextuel */}
         <NextButton
           nav={"/connexionPage"}
           styleClassName="btnStyle10"

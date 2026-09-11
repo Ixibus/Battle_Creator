@@ -1,5 +1,4 @@
 .navContainerStyle {
-  border: 1px solid red;
   gap: 20px;
   width: 100%;
   height: auto;
@@ -8,7 +7,7 @@
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Calfeutre les éléments aux extrémités */
+  justify-content: space-between;
   border-bottom: var(--border1);
   box-sizing: border-box;
 }
@@ -40,7 +39,6 @@
   gap: 20px;
 }
 
-/* On réinitialise le style par défaut des boutons */
 .iconeNavContainerStyle {
   background: none;
   border: none;
@@ -58,7 +56,7 @@
 }
 
 .logoutWrapper {
-  margin-left: auto; /* Pousse le bouton de déconnexion tout à droite */
+  margin-left: auto;
 }
 
 .logoutContainer {

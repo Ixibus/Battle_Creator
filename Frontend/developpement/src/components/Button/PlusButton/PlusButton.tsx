@@ -2,7 +2,6 @@ import Icone, { StyleType } from "../../Icones/Icone";
 import Plus from "../../../assets/icones/plus.svg?react";
 
 import "../../../styles/global/btnStyle.css";
-// import "../style/buttonContainerStyle.css";
 import "../PlusButton/plusButtonStyle.css";
 import { useNavigate } from "react-router-dom";
 

@@ -26,7 +26,6 @@ public class JwtFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
     }
 
-    // Le filtre de cookie n'est pas exécuté sur ces routes
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
@@ -63,9 +62,6 @@ public class JwtFilter extends OncePerRequestFilter {
                     }
                 }
             } catch (JwtException | IllegalArgumentException e) {
-                // Si le token est invalide, expiré ou si la signature ne correspond pas :
-                // On log l'avertissement et on laisse la requête poursuivre.
-                // Spring Security détectera l'absence d'authentification et renverra un statut 401 Unauthorized.
                 logger.warn("Token JWT invalide ou expiré intercepté dans le filtre : " + e.getMessage());
             }
         }

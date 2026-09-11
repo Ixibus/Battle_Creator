@@ -29,13 +29,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         return ResponseEntity.of(taskService.getById(id));
-        // avec cette méthode, ResponseEntity.of(Optional) renvoie directement 200 OK si l’objet existe, ou 404 Not Found s’il est absent
     }
-
-    // @GetMapping("/mission/{missionId}")
-    // public ResponseEntity<List<Task>> getTasksByMissionId(@PathVariable Long missionId) {
-    //     return ResponseEntity.ok(taskService.getByMissionId(missionId));
-    // }
 
     @GetMapping("/mission/{missionId}")
     public List<TaskResponseDto> getTasksByMission(@PathVariable Long missionId) {

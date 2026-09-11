@@ -1,5 +1,4 @@
 .missionListContainer {
-    /* border: 1px solid red; */
     height: 750px;
     height: fit-content;
     width: 40vw;
@@ -9,14 +8,12 @@
     gap: 40px;
     background: rgba(245, 245, 245, 0.753);
     border-radius: var(--border-radius2);
-    /* border: 1px solid red; */
 
 }
 
 .missionListTitle {
     margin-top: 20px;
     text-align: center;
-    /* border: 1px solid red; */
     font-size: var(--font-size2);
     font-weight: var(--font-weight1);
     letter-spacing: var(--letter-spacing1);
@@ -24,7 +21,6 @@
 }
 
 .missionListGoalContainerStyle{
-    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
 }
@@ -36,7 +32,6 @@
 .missionListMissionsContainer {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 13);
 }
 
 .missionListMissionContainer{
@@ -53,34 +48,28 @@
     border-radius: var(--border-radius1);
     cursor: pointer;
     width: 100%;
-    
-    /* margin: ; */
 }
 
 .missionListIconeTitleAndGoalContainer {
     display: flex;
     gap: 15px;
-    /* border: 1px solid blue; */
 }
 
 .missionListTitleMission{
     font-size: var(--font-size5);
     font-weight: var(--font-weight1);
     color: var(--fontColor4);
-    /* border: 1px solid red; */
 }
 
 .missionListGoalMission{
     font-size: var(--font-size3);
     color: var(--fontColor4);
-    /* border: 1px solid red; */
 }
 
 
 .missionIconeMissionListContainer {
     margin: auto 0;
     height: fit-content;
-    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
     align-items: center;

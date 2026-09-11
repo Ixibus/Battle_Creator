@@ -32,7 +32,7 @@ export default function ProjectList() {
   const handleSelectProject = (project: ProjectType) => {
     console.log("hit");
     setSelectedProject(project);
-    navigate("/homePage"); // <--- Remplacez par votre route vers HomePage
+    navigate("/homePage");
   };
 
   useEffect(() => {
@@ -65,19 +65,16 @@ export default function ProjectList() {
       <main className="projectListMainContent">
         <div className="projectListGreetingContainer">
           <div className="projectListNicoPpStyle" aria-hidden="true" />
-          {/* Remplacement du <p> par <span> pour éliminer l'alerte "Unmarked Heading" */}
           <span className="projectListGreetingtext">
             {user?.login || "Utilisateur"}
           </span>
         </div>
 
-        {/* Remonté en h1 car c'est le titre principal de cette vue */}
         <h1 className="projectListTitle">Vos projets</h1>
 
         <div aria-live="polite">
           {isLoading && <p>Chargement de vos projets...</p>}
           {error && <p className="formErrorMessageStyle" role="alert">{error}</p>}
-
           {!isLoading && !error && projects.length === 0 && (
             <p>Aucun projet trouvé.</p>
           )}

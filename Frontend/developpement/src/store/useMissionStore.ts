@@ -12,7 +12,7 @@ export type ProjectType = {
 export type MissionType = {
   id: number;
   type: MissionTypeEnum;
-  isDefault: boolean; // Ou "is_default" si votre sérialiseur JSON conserve le snake_case
+  isDefault: boolean;
   name: string;
   goal: string;
   description?: string | null;
@@ -31,7 +31,6 @@ type MissionStore = {
   isLoading: boolean;
   error: string | null;
 
-  // Actions
   setUser: (user: User | null) => void;
   setSelectedMission: (mission: MissionType | null) => void;
   fetchMissionsByProject: (projectId: number | undefined) => Promise<void>;
@@ -56,7 +55,6 @@ export const useMissionStore = create<MissionStore>()(
       setUser: (user) => set({ user }),
       setSelectedMission: (mission) => set({ selectedMission: mission }),
 
-      // Récupérer les missions associées à un projet spécifique
       fetchMissionsByProject: async (projectId) => {
         if (!projectId || projectId <= 0) {
           set({ error: "ID de projet invalide.", missions: [] });
@@ -70,6 +68,7 @@ export const useMissionStore = create<MissionStore>()(
             `${API_URL}/missions/project/${projectId}`,
             {
               method: "GET",
+              credentials: 'include',
               headers: {
                 "Content-Type": "application/json",
               },
@@ -90,13 +89,13 @@ export const useMissionStore = create<MissionStore>()(
         }
       },
 
-      // Récupérer TOUTES les missions (optionnel si besoin)
       fetchAllMissions: async () => {
         set({ isLoading: true, error: null });
 
         try {
           const response = await fetch(`${API_URL}/missions`, {
             method: "GET",
+            credentials: 'include',
             headers: {
               "Content-Type": "application/json",
             },
@@ -116,7 +115,6 @@ export const useMissionStore = create<MissionStore>()(
         }
       },
 
-      // Méthodes utilitaires pour modifier le state sans refaire un fetch
       addMission: (mission) =>
         set((state) => ({ missions: [...state.missions, mission] })),
 

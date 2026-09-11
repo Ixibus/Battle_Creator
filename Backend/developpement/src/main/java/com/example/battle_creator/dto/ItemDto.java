@@ -19,7 +19,7 @@ public class ItemDto {
 
     @NotNull(message = "La quantité est obligatoire")
     @Min(value = 1, message = "La quantité doit être au moins 1")
-    private Integer quantity;  // Integer au lieu de int pour permettre null
+    private Integer quantity;
 
     private String source;
 
@@ -33,7 +33,6 @@ public class ItemDto {
         this.source = source;
     }
 
-    // Getters
     public String getName() {
         return name;
     }
@@ -54,7 +53,6 @@ public class ItemDto {
         return source;
     }
 
-    // Setters
     public void setName(String name) {
         this.name = name;
     }

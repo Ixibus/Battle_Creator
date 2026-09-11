@@ -78,6 +78,7 @@ export default function AddingTaskPage({
     try {
       const res = await fetch(`${API_URL}/tasks`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -93,7 +94,6 @@ export default function AddingTaskPage({
       }
 
       showToast("La tâche a été ajoutée avec succès", "success");
-
       await onTaskCreated();
       onClose();
     } catch (error) {
@@ -119,8 +119,8 @@ export default function AddingTaskPage({
       <div className="addingTaskPageStyle" onClick={(e) => e.stopPropagation()}>
         <form className="formStyle2" onSubmit={handleSubmit}>
           <h1 className="titleFormStyle4">AJOUTER UNE TACHE</h1>
-
           <div className="inputsFormContainerStyle">
+            
             <InputContainer
               inputLabelStyle={InputLabelStyle.style3}
               labelName="Nom de la tâche"
@@ -162,7 +162,6 @@ export default function AddingTaskPage({
               }
               hasError={touched.taskDescription && isTaskDescriptionEmpty}
             />
-
             <div className="errorSlot">
               {touched.taskDescription && isTaskDescriptionEmpty && (
                 <p className="formErrorMessageStyle">
@@ -178,7 +177,6 @@ export default function AddingTaskPage({
               >
                 Statut "Leader" de la tâche
               </label>
-
               <input
                 type="checkbox"
                 name="isLeaderTaskCheckbox"
@@ -196,7 +194,6 @@ export default function AddingTaskPage({
                 mainClassName="SubmitBtn_AddingTaskPage"
                 text="Valider"
               />
-
               <NextButton
                 type="button"
                 styleClassName="btnStyle11"

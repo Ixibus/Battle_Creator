@@ -32,7 +32,6 @@ public class Mission {
     @Column(name = "description")
     private String description;
 
-    // Clé étrangère vers Project
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_project", foreignKey = @ForeignKey(name = "fk_missions_projects_id"))
     @JsonIgnore

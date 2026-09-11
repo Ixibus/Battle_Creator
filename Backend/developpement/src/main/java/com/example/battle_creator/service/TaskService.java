@@ -71,7 +71,6 @@ public class TaskService {
         taskCreated.setTaskName(cleanText(taskDto.getTaskName()));
         taskCreated.setTaskDescription(cleanText(taskDto.getTaskDescription()));
         
-        // Sécurisation contre les valeurs null pour éviter les erreurs de contrainte BDD (409)
         taskCreated.setLeader(Boolean.TRUE.equals(taskDto.isLeader()));
         taskCreated.setDone(Boolean.TRUE.equals(taskDto.isDone()));
         

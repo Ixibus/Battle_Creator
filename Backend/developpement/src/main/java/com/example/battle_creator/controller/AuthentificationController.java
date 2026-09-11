@@ -15,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -25,16 +27,14 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class AuthentificationController {
 
-// // Config authentification simple (sans encoder, sans token)
-//    private final AuthentificationService authentificationService;
-//public AuthentificationController(AuthentificationService authentificationService) {
-//    this.authentificationService = authentificationService;
-//}
+    @Value("${security.jwt.expiration-time}")
+    private long expirationTime;
 
     private final AuthentificationService authentificationService;
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
+
 
     public AuthentificationController(AuthentificationService authentificationService, UserRepository userRepository, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
         this.authentificationService = authentificationService;
@@ -48,7 +48,7 @@ public class AuthentificationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserCreateDto requestUserCreateDto) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserCreateDto requestUserCreateDto) {
 
         boolean isExistingLogin = userRepository.findByLogin(requestUserCreateDto.getLogin()).isPresent();
 
@@ -89,7 +89,7 @@ public class AuthentificationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequestDto authRequestDto) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthRequestDto authRequestDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getLogin(), authRequestDto.getRawPassword()));
             if (authentication.isAuthenticated()) {
@@ -105,7 +105,7 @@ public class AuthentificationController {
                 authData.put("token", tokenGenerated);
                 authData.put("type", "Bearer");
 
-                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(false).path("/").build();
+                ResponseCookie cookie = ResponseCookie.from("token").value(tokenGenerated).maxAge(Duration.ofMillis(expirationTime)).httpOnly(true).secure(false).path("/").build();
 
                 return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(authData);
             }
@@ -147,27 +147,4 @@ public class AuthentificationController {
             .body("Déconnexion réussie");
     }
 
-//    @GetMapping("/test")
-//    public ResponseEntity<?> test() {
-//        ResponseCookie cookie = ResponseCookie.from("testCookie").value("test1").maxAge(Duration.ofSeconds(60)).httpOnly(true).secure(true).path("/").build();
-//
-//        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).build();
-//    }
-
-// // Config authentification simple (sans encoder, sans token)
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody AuthRequestDto request) {
-//
-//
-//
-//        boolean isValid = authentificationService.isAuthValid(request.getLogin(), request.getPassword());
-//
-//        if (isValid) {
-//            return ResponseEntity.ok("L'authentification a fonctionné 🥳");
-//        }
-//
-//
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                .body("Login ou mot de passe incorrect 😕");
-//    }
 }

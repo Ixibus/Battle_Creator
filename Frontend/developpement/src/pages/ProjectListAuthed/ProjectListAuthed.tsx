@@ -49,10 +49,8 @@ export default function ProjectListAuthed() {
         </h2>
       </div>
 
-      {/* Titre principal de la page pour une hiérarchie HTML valide */}
       <h1 className="projectListAuthedTitle">Choisissez un projet</h1>
 
-      {/* Rendu des états de chargement et d'erreur avec annonce dynamique */}
       <div aria-live="polite">
         {isLoading && <p>Chargement de vos projets...</p>}
         {error && <p className="formErrorMessageStyle" role="alert">{error}</p>}
@@ -62,7 +60,6 @@ export default function ProjectListAuthed() {
         )}
       </div>
 
-      {/* Liste sémantique des projets */}
       <ul className="projectListAuthedProjectsContainer" aria-label="Liste de vos projets">
         {projects.map((project, index) => (
           <li

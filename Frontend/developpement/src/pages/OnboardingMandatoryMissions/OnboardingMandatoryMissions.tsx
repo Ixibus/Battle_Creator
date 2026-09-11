@@ -23,7 +23,6 @@ export default function OnboardingMandatoryMissions() {
           Vos missions indispensables pour réaliser le projet d'évènement de danse Hiphop
         </p>
 
-        {/* Transformation des <p> en <ul> / <li> pour une sémantique de liste reconnue par WAVE */}
         <ul className="onboardingMandatoryMissionContainer onboardingMissionsContainerStyle" aria-label="Liste des missions obligatoires">
           <li className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">ESPACE</li>
           <li className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">GESTION MC</li>
@@ -35,7 +34,6 @@ export default function OnboardingMandatoryMissions() {
           <li className="onboardingMandatoryMission onboardingMandatoryMissionsStyle">PHASE DE BATTLE</li>
         </ul>
 
-        {/* Précision du contexte du bouton via ariaLabel */}
         <NextButton
           id='onboardingMandatoryMissionsNextBtnId'
           nav={"/onboardingOptionalMissions"}

@@ -30,13 +30,11 @@ export default function MissionList() {
 
   const { selectedProject } = useProjectStore();
 
-  // 1. Sélection d'une NOUVELLE mission : on met à jour le store + navigation
   const handleSelectMission = (mission: MissionType) => {
     setSelectedMission(mission);
     navigate(`/missionPage/${mission.id}`);
   };
 
-  // 2. Bouton "Quitter" : Retourne sur la MissionPage courante SI elle existe toujours, sinon sur HomePage
   const handleQuit = () => {
     const isMissionStillValid = missions.some(
       (m) => m.id === selectedMission?.id,
@@ -45,7 +43,6 @@ export default function MissionList() {
     if (selectedMission?.id && isMissionStillValid) {
       navigate(`/missionPage/${selectedMission.id}`);
     } else {
-      // Si aucune mission n'était sélectionnée ou si la mission a été supprimée en BDD
       navigate("/homePage");
     }
   };
@@ -68,13 +65,13 @@ export default function MissionList() {
   }, [selectedProject?.id, fetchMissionsByProject]);
 
   useEffect(() => {
-    // On ne nettoie QUE si le chargement est terminé ET qu'il y a des missions chargées
     if (!isLoading && missions.length > 0 && selectedMission) {
       const exists = missions.some((m) => m.id === selectedMission.id);
       if (!exists) {
         setSelectedMission(null);
       }
-    }
+    };
+    console.log(error)
   }, [missions, isLoading, selectedMission, setSelectedMission]);
 
   return (

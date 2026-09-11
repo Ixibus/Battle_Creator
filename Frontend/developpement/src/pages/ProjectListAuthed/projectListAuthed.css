@@ -1,5 +1,4 @@
 .projectListAuthedContainer {
-    border: 1px solid red;
     height: 100%;
     width: 40vw;
     margin: auto;
@@ -42,17 +41,14 @@
 
 .projectListAuthedProjectsContainer {
     height: fit-content;
-    /* border: 1px solid red; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 1fr;
-    border: 1px solid rgb(25, 0, 255);
 }
 
 
 .projectListAuthedProjectContainer {
     margin: var(--cel-margin);
-    /* border: var(--border1); */
     border-radius: var(--border-radius1);
     padding: var(--cel-padding);
     display: flex;
@@ -62,7 +58,6 @@
     font-size: 0.6em;
     font-size: var(--font-size4);
     font-weight: var(--font-weight1);
-    border: 1px solid rgb(21, 255, 0);
 }
 
 .projectListAuthedProject1Style {
@@ -102,7 +97,6 @@
 }
 
 .projectListAuthedProjectInfoContainer {
-    /* border: 1px solid red; */
     font-size: 0.496em;
     display: flex;
     align-items: baseline;

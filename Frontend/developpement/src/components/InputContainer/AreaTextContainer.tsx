@@ -27,7 +27,7 @@ interface AreaContainerProps {
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
   hasError?: boolean;
-  errorId?: string; // ID pour le lien aria-describedby
+  errorId?: string;
 }
 
 export default function AreaTextContainer({
@@ -58,7 +58,6 @@ export default function AreaTextContainer({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        /* Attributs ARIA pour WCAG AA */
         aria-invalid={hasError}
         aria-describedby={hasError && errorId ? errorId : undefined}
       />

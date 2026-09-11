@@ -48,11 +48,10 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                // Débloque explicitement toutes les requêtes Preflight OPTIONS et les pings HEAD
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.HEAD, "/**").permitAll()
                 .requestMatchers("/error", "/healthCheckForWaitOn").permitAll()
-                .requestMatchers("/auth/**", "/users", "/missions/**", "/tasks/**", "/members/**", "/projects/**").permitAll()
+                .requestMatchers("/auth/**", "/projects/**").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -66,16 +65,14 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        // Origines autorisées (Vite local)
         config.setAllowedOrigins(Arrays.asList(allowedOrigins));
         config.setAllowedHeaders(List.of("*"));
-        // AJOUT DE "HEAD" ICI :
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Appliquer la config CORS sur l'ensemble de l'API
         source.registerCorsConfiguration("/**", config);
         return source;
     }

@@ -35,7 +35,6 @@ export default function MissionPage() {
   const { selectedMission, setSelectedMission } = useMissionStore();
   const navigate = useNavigate();
 
-  // Récupération dynamique de l'ID (depuis l'URL ou le store Zustand)
   const activeMissionId =
     id || (selectedMission?.id ? String(selectedMission.id) : null);
 
@@ -63,7 +62,6 @@ export default function MissionPage() {
 
   const showToast = useToastStore((state) => state.showToast);
 
-  // Rechargement dès que l'ID actif change
   useEffect(() => {
     if (activeMissionId) {
       loadMission(activeMissionId);
@@ -165,6 +163,7 @@ export default function MissionPage() {
     try {
       const res = await fetch(`http://localhost:8080/tasks/${taskId}`, {
         method: "DELETE",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -205,6 +204,7 @@ export default function MissionPage() {
           `http://localhost:8080/tasks/${taskToBeAssignedObject.id}`,
           {
             method: "PUT",
+            credentials: 'include',
             headers: {
               "Content-Type": "application/json",
             },

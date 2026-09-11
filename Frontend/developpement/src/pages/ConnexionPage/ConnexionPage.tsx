@@ -47,7 +47,7 @@ export default function ConnexionPage() {
     logout();
   }, [logout]);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage("");
     setInvalidCredentials(false);
@@ -105,9 +105,8 @@ export default function ConnexionPage() {
     <div className="connexionPageContainer">
       <form className="formStyle3" onSubmit={handleSubmit} noValidate autoComplete="on">
         <h1 className="titleFormStyle">Connexion</h1>
-
         <div className="inputsFormContainerStyle">
-          {/* Login */}
+
           <InputContainer
             inputLabelStyle={InputLabelStyle.style1}
             inputItemStyle={InputItemStyle.style1}
@@ -132,7 +131,6 @@ export default function ConnexionPage() {
             )}
           </div>
 
-          {/* Mot de passe */}
           <InputContainer
             inputLabelStyle={InputLabelStyle.style1}
             inputItemStyle={InputItemStyle.style1}
@@ -156,21 +154,18 @@ export default function ConnexionPage() {
               </p>
             )}
           </div>
-
-          {/* Erreur globale du serveur (ex: Identifiants invalides) */}
           <div className="errorSlot" id="globalConnexionError" aria-live="assertive" role="alert">
             {errorMessage && (
               <p className="formErrorMessageStyle">{errorMessage}</p>
             )}
           </div>
 
-          {/* Boutons d'action */}
           <div className="buttonsContainerStyle">
             <NextButton
               type="submit"
               styleClassName="btnStyle10"
               mainClassName="SubmitBtn_AccountCreation"
-              text={isLoading ? "Connexion en cours..." : "Valider"}
+              text={isLoading ? "Patientez..." : "Valider"}
               disabled={isLoading}
               ariaBusy={isLoading}
             />
