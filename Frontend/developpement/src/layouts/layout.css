@@ -8,6 +8,7 @@
     margin: auto;
 }
 
+/* Style du lien d'évitement accessible (Skip link) */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -22,6 +23,7 @@
   transition: top 0.2s ease;
 }
 
+/* Devient visible au sommet de l'écran dès la première pression de la touche TAB */
 .skip-link:focus {
   top: 0;
 }

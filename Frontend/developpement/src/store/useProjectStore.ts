@@ -28,6 +28,7 @@ type ProjectStore = {
   logout: () => void;
 };
 
+// Envelopper le store avec persist(...)
 export const useProjectStore = create<ProjectStore>()(
   persist(
     (set, get) => ({
@@ -92,7 +93,8 @@ export const useProjectStore = create<ProjectStore>()(
       },
     }),
     {
-      name: "project-auth-storage",
+      name: "project-auth-storage", // 👈 Nom de la clé dans le localStorage
+      // Optionnel : enregistrer seulement 'user' et 'projects' (pas les états temporaires comme 'isLoading')
       partialize: (state) => ({ user: state.user, projects: state.projects, selectedProject: state.selectedProject }),
     },
   ),

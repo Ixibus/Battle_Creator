@@ -1,4 +1,5 @@
 .projectListContainer {
+    /* border: 1px solid red; */
     height: fit-content;
     width: 40vw;
     margin: 20px auto;
@@ -40,6 +41,8 @@
 }
 
 .projectListProjectsContainer {
+    /* height: 100%; */
+    /* border: 1px solid red; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 1fr;
@@ -48,6 +51,7 @@
 
 .projectListProjectContainer {
     margin: var(--cel-margin);
+    /* border: var(--border1); */
     border-radius: var(--border-radius1);
     padding: var(--cel-padding);
     display: flex;
@@ -95,6 +99,7 @@
 }
 
 .projectListProjectInfoContainer {
+    /* border: 1px solid red; */
     font-size: 0.496em;
     display: flex;
     align-items: baseline;
@@ -122,6 +127,7 @@
 @media (max-width:767px) {
     .projectListProjectsContainer {
         grid-template-columns: 1fr;
+        /* grid-auto-rows: 1fr; */
 
     }
 

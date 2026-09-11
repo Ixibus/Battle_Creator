@@ -13,7 +13,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* justify-content: space-between; */
     padding: 0 15px 15px;
+    /* justify-content: space-between; */
+    /* border: 1px red solid; */
 }
 
 .missionPageMissionTitleStyle {
@@ -89,7 +92,9 @@
 }
 
 
+/* style du conteneur des tâches (ref: ProjectList.css) */
 
+/* style du conteneur entier */
 .missionPageTasksTitleContainerStyle {
     display: flex;
     align-items: center;
@@ -99,6 +104,7 @@
     font-weight: var(--font-weight1);
 }
 
+/* style de l'infographie du nb de tâches */
 .missionPageTasksnumber {
     background: var(--backgroundColor13);
     width: fit-content;
@@ -109,6 +115,7 @@
 }
 
 
+/* Affichage ajout d'une tache */
 .missionPageBackgroundDisplay{
     position: relative;
 }
@@ -121,24 +128,30 @@
 }
 
 @media (max-width: 1023px) {
+  /* 1. Passer le conteneur principal sur 1 colonne */
   .missionPageContainerStyle {
     grid-template-columns: 1fr;
   }
 
+  /* 2. Neutraliser les conteneurs intermédiaires pour libérer leurs enfants */
   .missionPageContainerLeftContainerStyle,
   .missionPageContainerRightBackgroundStyle {
     display: contents;
   }
 
+  /* 3. Attribuer un ordre d'affichage (order) à chaque bloc */
   
+  /* Titre + Objectifs */
   .missionPageTitleAndGoalContainer {
     order: 1;
   }
 
+  /* Description */
   .missionPageDescriptionContainer {
     order: 2;
   }
 
+  /* TÂCHES (Passe AVANT les matériels) */
   .missionPageContainerRightContainerStyle {
     margin: 50px auto;
     width:100%;
@@ -146,6 +159,7 @@
     order: 3;
   }
 
+  /* MATÉRIELS (Passe APRÈS les tâches) */
   .missionPageMaterialsContainerStyle {
     order: 4;
   }

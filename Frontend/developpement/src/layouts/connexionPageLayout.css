@@ -6,6 +6,7 @@
     background: var(--backgroundColor6);
 }
 
+/* Style du lien d'évitement (Skip Link) */
 .skip-link {
   position: absolute;
   top: -100px;
@@ -20,6 +21,7 @@
   transition: top 0.2s ease;
 }
 
+/* Devient visible au focus clavier (Tab) */
 .skip-link:focus {
   top: 0;
 }
