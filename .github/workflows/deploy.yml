@@ -53,10 +53,11 @@ jobs:
           SPRING_PROFILES_ACTIVE: test
           SERVER_PORT: 8080
           SECURITY_JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_TEST }}
-          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
           SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
           SPRING_DATASOURCE_USERNAME: sa
           SPRING_DATASOURCE_PASSWORD: ""
+          SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
           SECURITY_JWT_EXPIRATION_TIME: 86400000
         run: |
           java -jar target/*.jar > backend.log 2>&1 &
